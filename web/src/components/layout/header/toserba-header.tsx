@@ -24,6 +24,8 @@ type UserInfo = {
   avatar?: string | null;
 };
 
+const HIDE_HEADER = ["/"];
+
 export function ToserbaHeader() {
   const pathname = usePathname();
 
@@ -35,6 +37,8 @@ export function ToserbaHeader() {
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
+
+  if(HIDE_HEADER.includes(pathname)) return null;
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
