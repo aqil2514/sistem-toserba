@@ -11,34 +11,32 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/provider/auth-provider";
 
 const NAV_ITEMS = [
   { title: "Produk", href: "/products" },
   { title: "Penjualan", href: "/sales" },
 ];
 
-type UserInfo = {
-  name: string;
-  avatar?: string | null;
-};
-
+// Route yang tidak menampilkan header
 const HIDE_HEADER = ["/"];
 
 export function ToserbaHeader() {
   const pathname = usePathname();
-
-  // ⛳ sementara (nanti bisa dari API / context)
-  const user: UserInfo = {
-    name: "Admin Toserba",
-    avatar: null,
-  };
+  const { user, isAuthenticated } = useAuth();
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
 
-  if(HIDE_HEADER.includes(pathname)) return null;
+  // Sembunyikan header di route tertentu atau saat belum login
+  if (!isAuthenticated || HIDE_HEADER.includes(pathname)) {
+    return null;
+  }
+
+  const displayName = user?.name ?? "User";
+  const initial = displayName.charAt(0).toUpperCase();
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
@@ -63,9 +61,7 @@ export function ToserbaHeader() {
                         : "text-muted-foreground hover:text-foreground"
                     )}
                   >
-                    <Link href={item.href} passHref>
-                      {item.title}
-                    </Link>
+                    <Link href={item.href}>{item.title}</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
@@ -80,9 +76,14 @@ export function ToserbaHeader() {
         <div className="hidden md:flex items-center gap-3">
           <div className="flex items-center gap-2 text-sm">
             <Avatar className="h-7 w-7">
-              <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+              {/* Jika nanti ada avatar URL dari Google */}
+              {user?.avatar ? (
+                <AvatarImage src={user.avatar} alt={displayName} />
+              ) : (
+                <AvatarFallback>{initial}</AvatarFallback>
+              )}
             </Avatar>
-            <span className="text-muted-foreground">{user.name}</span>
+            <span className="text-muted-foreground">{displayName}</span>
           </div>
 
           <form action="http://localhost:3001/auth/logout" method="post">
@@ -107,9 +108,13 @@ export function ToserbaHeader() {
                 {/* User Info (Mobile) */}
                 <div className="flex items-center gap-3 px-1">
                   <Avatar>
-                    <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                    {user?.avatar ? (
+                      <AvatarImage src={user.avatar} alt={displayName} />
+                    ) : (
+                      <AvatarFallback>{initial}</AvatarFallback>
+                    )}
                   </Avatar>
-                  <span className="text-sm font-medium">{user.name}</span>
+                  <span className="text-sm font-medium">{displayName}</span>
                 </div>
 
                 {/* Mobile Nav */}

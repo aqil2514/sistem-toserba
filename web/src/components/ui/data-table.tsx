@@ -8,6 +8,8 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
+  SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 import {
@@ -27,6 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -45,19 +48,18 @@ export function DataTable<TData extends Record<string, any>, TValue>({
   categoryKey,
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = React.useState("");
-  const [columnFilters, setColumnFilters] =
-    React.useState<ColumnFiltersState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
 
   const categories = React.useMemo(() => {
     if (!categoryKey) return [];
     return Array.from(
-      new Set(
-        data
-          .map((item) => item[categoryKey])
-          .filter(Boolean)
-      )
+      new Set(data.map((item) => item[categoryKey]).filter(Boolean))
     );
   }, [data, categoryKey]);
+
+  const [sorting, setSorting] = React.useState<SortingState>([]);
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
@@ -66,17 +68,18 @@ export function DataTable<TData extends Record<string, any>, TValue>({
     state: {
       globalFilter,
       columnFilters,
+      sorting,
     },
     onGlobalFilterChange: setGlobalFilter,
     onColumnFiltersChange: setColumnFilters,
+    onSortingChange: setSorting,
     globalFilterFn: "includesString",
     initialState: {
-      pagination: {
-        pageSize,
-      },
+      pagination: { pageSize },
     },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(), // ⬅️ INI KUNCI
     getPaginationRowModel: getPaginationRowModel(),
   });
 
@@ -84,7 +87,6 @@ export function DataTable<TData extends Record<string, any>, TValue>({
     <div className="space-y-4">
       {/* Toolbar */}
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        
         {/* Search */}
         {searchKey && (
           <Input
@@ -106,18 +108,14 @@ export function DataTable<TData extends Record<string, any>, TValue>({
             onValueChange={(value) =>
               table
                 .getColumn(categoryKey as string)
-                ?.setFilterValue(
-                  value === "all" ? undefined : value
-                )
+                ?.setFilterValue(value === "all" ? undefined : value)
             }
           >
             <SelectTrigger className="md:max-w-xs">
               <SelectValue placeholder="Filter kategori" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">
-                Semua Kategori
-              </SelectItem>
+              <SelectItem value="all">Semua Kategori</SelectItem>
               {categories.map((cat) => (
                 <SelectItem key={cat} value={cat}>
                   {cat}
@@ -135,13 +133,29 @@ export function DataTable<TData extends Record<string, any>, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                  <TableHead
+                    key={header.id}
+                    onClick={header.column.getToggleSortingHandler()}
+                    className={cn(
+                      header.column.getCanSort() &&
+                        "cursor-pointer select-none hover:bg-muted"
+                    )}
+                  >
+                    <div className="flex items-center gap-1">
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+
+                      {header.column.getCanSort() && (
+                        <span className="text-xs text-muted-foreground">
+                          {{
+                            asc: "↑",
+                            desc: "↓",
+                          }[header.column.getIsSorted() as string] ?? "↕"}
+                        </span>
+                      )}
+                    </div>
                   </TableHead>
                 ))}
               </TableRow>

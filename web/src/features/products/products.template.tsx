@@ -16,9 +16,14 @@ import { productColumns } from "./components/columns.product";
 import { Product } from "./type";
 import { ProductFormValues } from "./schema/product.schema";
 import { productToFormValues } from "./utils/product-to-form";
+import { useProductTaxonomy } from "./hooks/use-product-taxonomy";
+import { ConfirmDeleteDialog } from "@/components/ui/confirm-delete-dialog";
 
 export function ProductTemplate() {
   const { data, isLoading, error, mutate } = useProducts();
+  const [deleting, setDeleting] = useState<Product | null>(null);
+
+  const { categories, subcategoriesMap } = useProductTaxonomy(data);
 
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Product | null>(null);
@@ -34,8 +39,7 @@ export function ProductTemplate() {
   }
 
   function handleDelete(product: Product) {
-    // sementara
-    console.log("delete", product.id);
+    setDeleting(product);
   }
 
   function handleSubmit(values: ProductFormValues) {
@@ -47,7 +51,7 @@ export function ProductTemplate() {
 
     setOpen(false);
     setEditing(null);
-    mutate(); // refresh data (SWR)
+    mutate();
   }
 
   return (
@@ -87,6 +91,24 @@ export function ProductTemplate() {
         title={editing ? "Edit Produk" : "Tambah Produk"}
         defaultValues={editing ? productToFormValues(editing) : undefined}
         onSubmit={handleSubmit}
+        categories={categories}
+        subcategoriesMap={subcategoriesMap}
+      />
+
+      <ConfirmDeleteDialog
+        open={!!deleting}
+        onOpenChange={(open) => {
+          if (!open) setDeleting(null);
+        }}
+        title="Hapus Produk"
+        description={`Produk "${deleting?.name}" akan dihapus. Produk ini masih dapat dipulihkan`}
+        confirmText="Hapus Produk"
+        onConfirm={async () => {
+          if (!deleting) return;
+
+          setDeleting(null);
+          mutate();
+        }}
       />
     </MainContainer>
   );

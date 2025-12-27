@@ -1,6 +1,7 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
@@ -19,14 +20,26 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { productSchema, ProductFormValues } from "../schema/product.schema";
+import { CurrencyInputID } from "@/components/ui/currency-input-id";
+import { CategoryCombobox } from "./category-combobox.product";
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  defaultValues?: Partial<ProductFormValues>;
+  defaultValues?: ProductFormValues;
   onSubmit: (values: ProductFormValues) => void;
   title: string;
+  categories: string[];
+  subcategoriesMap: Map<string, Set<string>>;
 }
+
+const EMPTY_VALUES: ProductFormValues = {
+  name: "",
+  price: 0,
+  category: "",
+  subcategory: "",
+  unit: "pcs",
+};
 
 export function ProductFormDialog({
   open,
@@ -34,18 +47,25 @@ export function ProductFormDialog({
   defaultValues,
   onSubmit,
   title,
+  categories,
+  subcategoriesMap,
 }: Props) {
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
-    defaultValues: {
-      name: "",
-      price: 0,
-      category: "",
-      subcategory: "",
-      unit: "pcs",
-      ...defaultValues,
-    },
+    defaultValues: EMPTY_VALUES,
   });
+
+  const selectedCategory = useWatch({
+    control: form.control,
+    name: "category",
+  });
+
+  // 🔑 INI KUNCINYA
+  useEffect(() => {
+    if (open) {
+      form.reset(defaultValues ?? EMPTY_VALUES);
+    }
+  }, [open, defaultValues, form]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -77,10 +97,9 @@ export function ProductFormDialog({
                 <FormItem>
                   <FormLabel>Harga</FormLabel>
                   <FormControl>
-                    <Input
-                      type="number"
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                    <CurrencyInputID
+                      value={field.value}
+                      onValueChange={field.onChange}
                     />
                   </FormControl>
                   <FormMessage />
@@ -95,7 +114,12 @@ export function ProductFormDialog({
                 <FormItem>
                   <FormLabel>Kategori</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <CategoryCombobox
+                      value={field.value}
+                      options={categories}
+                      placeholder="Pilih atau ketik kategori"
+                      onChange={field.onChange}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -105,14 +129,26 @@ export function ProductFormDialog({
             <FormField
               control={form.control}
               name="subcategory"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Subkategori</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
+              render={({ field }) => {
+                const subs =
+                  selectedCategory && subcategoriesMap.get(selectedCategory)
+                    ? Array.from(subcategoriesMap.get(selectedCategory)!)
+                    : [];
+
+                return (
+                  <FormItem>
+                    <FormLabel>Subkategori</FormLabel>
+                    <FormControl>
+                      <CategoryCombobox
+                        value={field.value}
+                        options={subs}
+                        placeholder="Pilih atau ketik subkategori"
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                );
+              }}
             />
 
             <FormField
