@@ -1,7 +1,12 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
   InternalServerErrorException,
+  Param,
+  Patch,
+  Post,
   UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
@@ -11,6 +16,7 @@ import { PasetoGuard } from 'src/guards/paseto.guard';
 import path from 'node:path';
 import fs from 'fs';
 import { createClient } from '@supabase/supabase-js';
+import { CreateProductDto } from './dto/create-product.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -26,6 +32,27 @@ export class ProductsController {
   @Get()
   async getProducts() {
     return await this.productService.findAll();
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Post()
+  async addProduct(@Body() dto: CreateProductDto) {
+    return await this.productService.create(dto);
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Patch(':id')
+  async patchProduct(@Body() dto: CreateProductDto, @Param('id') id: string) {
+    return await this.productService.update(id, dto);
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Delete(':id')
+  async softDeleteProduct(@Param('id') id: string) {
+    return await this.productService.remove(id);
   }
 
   // ⚠️ ENDPOINT SEMENTARA – HAPUS SETELAH MIGRASI
