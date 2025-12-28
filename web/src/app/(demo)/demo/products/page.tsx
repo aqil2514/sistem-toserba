@@ -2,7 +2,7 @@ import { DemoProductsContainer } from "@/features/products/containers/demo-produ
 import { Metadata } from "next";
 
 export const metadata:Metadata = {
-    title:"Demo Demo Produk"
+    title:"Produk"
 }
 
 export default function ProductDemo(){
