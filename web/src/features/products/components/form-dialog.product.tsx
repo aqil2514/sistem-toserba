@@ -60,7 +60,6 @@ export function ProductFormDialog({
     name: "category",
   });
 
-  // 🔑 INI KUNCINYA
   useEffect(() => {
     if (open) {
       form.reset(defaultValues ?? EMPTY_VALUES);
