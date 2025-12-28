@@ -1,0 +1,2872 @@
+[
+  {
+    "id": "00fecb5d-3eaf-4343-a2da-51185bd98bcd",
+    "purchase_date": "2025-06-13 09:32:00",
+    "supplier_name": "Murce Acc",
+    "notes": "",
+    "created_at": "2025-06-13 02:32:39.775183",
+    "purchase_code": "PUR-20250613-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "02dd2e6e-1c37-4c0e-a26d-dd7a89b78521",
+    "purchase_date": "2025-09-12 13:16:00",
+    "supplier_name": "Candy Snack",
+    "notes": "",
+    "created_at": "2025-09-12 06:16:50.438116",
+    "purchase_code": "PUR-20250912-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "030b4762-b926-4b43-9396-664b8e414899",
+    "purchase_date": "2025-09-28 18:20:00",
+    "supplier_name": "Mashira Olshope25",
+    "notes": "",
+    "created_at": "2025-09-28 11:21:20.095456",
+    "purchase_code": "PUR-20250928-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "0333ffc5-e189-4c18-8311-3f976a8c45ea",
+    "purchase_date": "2025-10-17 18:25:00",
+    "supplier_name": "Toyago Toys",
+    "notes": "",
+    "created_at": "2025-10-17 11:25:44.173209",
+    "purchase_code": "PUR-20251017-0002",
+    "supplier_type": "",
+    "deleted_at": "2025-10-17 11:26:31.075+00"
+  },
+  {
+    "id": "0683fdc5-9672-46c0-a703-4523a7460700",
+    "purchase_date": "2025-07-06 16:21:00",
+    "supplier_name": "Snack Mazter",
+    "notes": "",
+    "created_at": "2025-07-07 09:23:54.140527",
+    "purchase_code": "PUR-20250706-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "08ac7fc1-11d0-4620-bb65-cadc90dbc4b9",
+    "purchase_date": "2025-09-28 18:19:00",
+    "supplier_name": "Djoyo Toys",
+    "notes": "",
+    "created_at": "2025-09-28 11:19:57.793553",
+    "purchase_code": "PUR-20250928-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "09406ad5-4f0a-4b61-92b7-b7fc91cd86dc",
+    "purchase_date": "2025-07-31 18:18:00",
+    "supplier_name": "Nirvana Packaging",
+    "notes": "",
+    "created_at": "2025-07-31 11:20:02.043821",
+    "purchase_code": "PUR-20250731-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "0c1167c5-57dc-4ca5-a8f0-87ca389603cc",
+    "purchase_date": "2025-06-20 09:30:00",
+    "supplier_name": "Snack Mazter",
+    "notes": "",
+    "created_at": "2025-06-20 02:30:47.804055",
+    "purchase_code": "PUR-20250620-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "0c2fe6ad-1387-4764-a8df-5ca23d4201b6",
+    "purchase_date": "2025-05-12 11:46:00",
+    "supplier_name": "Toko Ramdani Nayla",
+    "notes": "",
+    "created_at": "2025-06-15 04:48:25.439358",
+    "purchase_code": "PUR-20250512-0002",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "0c88ce8e-efe7-4b41-8edb-e2a73d3e91a7",
+    "purchase_date": "2025-07-13 14:35:00",
+    "supplier_name": "Mulyatek Official Store",
+    "notes": "",
+    "created_at": "2025-07-13 07:36:44.605658",
+    "purchase_code": "PUR-20250713-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "0ca80435-6c3c-4e2c-ac71-cc7c3d20270f",
+    "purchase_date": "2025-06-20 15:37:00",
+    "supplier_name": "Tiga Naga",
+    "notes": "",
+    "created_at": "2025-06-20 08:37:49.510632",
+    "purchase_code": "PUR-20250620-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "0fca2ad2-3303-4053-9ddd-14fcd4e76993",
+    "purchase_date": "2025-06-16 12:53:00",
+    "supplier_name": "Feri",
+    "notes": "",
+    "created_at": "2025-06-16 05:54:33.155722",
+    "purchase_code": "PUR-20250616-0001",
+    "supplier_type": "Sales",
+    "deleted_at": ""
+  },
+  {
+    "id": "1286bb96-f55c-4391-9810-1f598efbc06f",
+    "purchase_date": "2025-10-17 18:26:00",
+    "supplier_name": "Toyago Toys",
+    "notes": "",
+    "created_at": "2025-10-17 11:26:54.094299",
+    "purchase_code": "PUR-20251017-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "12c84974-7eac-4144-80e1-84e93361eb1c",
+    "purchase_date": "2025-04-18 09:42:00",
+    "supplier_name": "gayakan",
+    "notes": "",
+    "created_at": "2025-06-01 02:42:58.913453",
+    "purchase_code": "PUR-20250418-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "13be4e6a-2c37-4ace-bf6e-e1c70db8d7e4",
+    "purchase_date": "2025-07-25 18:25:00",
+    "supplier_name": "Duta Snack.id",
+    "notes": "",
+    "created_at": "2025-07-25 11:25:33.748158",
+    "purchase_code": "PUR-20250725-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "13d1d314-1813-4b1a-bbc9-5a4a11b40113",
+    "purchase_date": "2025-04-06 07:45:00",
+    "supplier_name": "Naura Pramuk",
+    "notes": "",
+    "created_at": "2025-11-06 00:46:27.390781",
+    "purchase_code": "PUR-20250406-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "1683e65f-0d51-4fd8-9964-48e1aa40260c",
+    "purchase_date": "2025-12-25 16:07:00",
+    "supplier_name": "Galaxy Lolipop",
+    "notes": "",
+    "created_at": "2025-12-25 09:08:22.17531",
+    "purchase_code": "PUR-20251225-0002",
+    "supplier_type": "Online Shop - Tiktok Shop",
+    "deleted_at": ""
+  },
+  {
+    "id": "1697c1a7-06f5-4015-a236-69237dfd8ad5",
+    "purchase_date": "2025-05-30 09:05:00",
+    "supplier_name": "AlQolam_Stationary",
+    "notes": "",
+    "created_at": "2025-05-30 02:07:35.840713",
+    "purchase_code": "PUR-20250530-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "17e14f1c-7e8e-435e-abf3-a58eac6794dd",
+    "purchase_date": "2025-08-14 18:26:00",
+    "supplier_name": "Brother Stationery",
+    "notes": "",
+    "created_at": "2025-08-14 11:27:20.557695",
+    "purchase_code": "PUR-20250814-0001",
+    "supplier_type": "Online Shop - Lazada",
+    "deleted_at": ""
+  },
+  {
+    "id": "18498dc7-8bb1-4769-8d40-589ab7d036e8",
+    "purchase_date": "2025-10-28 18:40:00",
+    "supplier_name": "ABC_TAPE",
+    "notes": "",
+    "created_at": "2025-10-28 11:40:22.163537",
+    "purchase_code": "PUR-20251028-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "185f003e-5db7-4e7a-a990-574ac6a68700",
+    "purchase_date": "2025-05-31 16:52:00",
+    "supplier_name": "Handmade",
+    "notes": "",
+    "created_at": "2025-05-31 09:52:50.756988",
+    "purchase_code": "PUR-20250531-0004",
+    "supplier_type": "Handmade",
+    "deleted_at": ""
+  },
+  {
+    "id": "186da330-2044-4da4-8ce5-1e53e8d9d139",
+    "purchase_date": "2025-09-13 17:14:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-09-13 10:16:16.586434",
+    "purchase_code": "PUR-20250913-0003",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "1871f6c8-2164-497a-988b-84f6f6716a19",
+    "purchase_date": "2025-05-17 19:19:00",
+    "supplier_name": "Montana Official Shop",
+    "notes": "",
+    "created_at": "2025-07-01 12:19:43.112177",
+    "purchase_code": "PUR-20250517-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "188e97a9-7274-43e4-add4-1eaff4a5a0b9",
+    "purchase_date": "2025-06-19 17:35:00",
+    "supplier_name": "Mulyatek Official Store",
+    "notes": "",
+    "created_at": "2025-06-19 10:37:33.119192",
+    "purchase_code": "PUR-20250619-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "1976a4ca-eb71-486c-8249-d3c683775b8f",
+    "purchase_date": "2025-06-07 14:15:00",
+    "supplier_name": "Handmade",
+    "notes": "",
+    "created_at": "2025-06-07 07:16:20.107333",
+    "purchase_code": "PUR-20250607-0002",
+    "supplier_type": "Handmade",
+    "deleted_at": ""
+  },
+  {
+    "id": "1b5d2e61-acb6-443e-968c-61cf9e2375f8",
+    "purchase_date": "2025-07-19 12:33:00",
+    "supplier_name": "Feri",
+    "notes": "",
+    "created_at": "2025-07-19 05:34:10.301731",
+    "purchase_code": "PUR-20250719-0002",
+    "supplier_type": "Sales",
+    "deleted_at": ""
+  },
+  {
+    "id": "1bade6f1-1ff8-4ae0-af56-e4f225a167ac",
+    "purchase_date": "2025-08-06 16:29:00",
+    "supplier_name": "Rejeki Snack",
+    "notes": "",
+    "created_at": "2025-08-06 09:30:27.121455",
+    "purchase_code": "PUR-20250806-0005",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "1d77bcfc-dfcf-42ed-a076-9e7b65e4db41",
+    "purchase_date": "2025-06-12 15:04:00",
+    "supplier_name": "PD AA Snack",
+    "notes": "",
+    "created_at": "2025-06-12 08:07:18.201654",
+    "purchase_code": "PUR-20250612-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "1dbb4c33-ad33-466f-afca-244e00da3733",
+    "purchase_date": "2025-07-05 18:00:00",
+    "supplier_name": "Handmade",
+    "notes": "",
+    "created_at": "2025-07-05 11:01:01.203163",
+    "purchase_code": "PUR-20250705-0004",
+    "supplier_type": "Handmade",
+    "deleted_at": ""
+  },
+  {
+    "id": "1e0f69b7-25fd-45fc-9a8c-9c9ab2d3bdd3",
+    "purchase_date": "2025-07-30 18:15:00",
+    "supplier_name": "Ozer Shop",
+    "notes": "",
+    "created_at": "2025-07-30 11:18:21.281338",
+    "purchase_code": "PUR-20250730-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "216c00a4-98c6-4990-8ab2-1f4ee904134f",
+    "purchase_date": "2025-11-02 18:31:00",
+    "supplier_name": "PD AA Snack",
+    "notes": "",
+    "created_at": "2025-11-02 11:31:52.772951",
+    "purchase_code": "PUR-20251102-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "21c90803-03be-4681-badd-67c863b9cdeb",
+    "purchase_date": "2025-12-12 18:21:00",
+    "supplier_name": "Sonji Store",
+    "notes": "",
+    "created_at": "2025-12-13 11:22:35.510776",
+    "purchase_code": "PUR-20251212-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "22e38648-8c6b-4b5b-85a5-0e50432b6aef",
+    "purchase_date": "2025-07-10 15:58:00",
+    "supplier_name": "Jodud_Shop",
+    "notes": "",
+    "created_at": "2025-07-10 08:59:20.545341",
+    "purchase_code": "PUR-20250710-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "238ba347-0982-46f3-8331-8fd7a32f1466",
+    "purchase_date": "2025-06-05 13:09:00",
+    "supplier_name": "Marwah Shop 1",
+    "notes": "",
+    "created_at": "2025-06-05 06:11:45.651443",
+    "purchase_code": "PUR-20250605-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "24079ac7-e337-4389-abf9-4ebc43b111ef",
+    "purchase_date": "2025-07-28 12:23:00",
+    "supplier_name": "Montana Official Shop",
+    "notes": "",
+    "created_at": "2025-07-28 05:24:24.384869",
+    "purchase_code": "PUR-20250728-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "240c5b78-d7c1-43b3-aab8-5dd818c8d2a0",
+    "purchase_date": "2025-04-17 09:39:00",
+    "supplier_name": "Putri Indah 84",
+    "notes": "",
+    "created_at": "2025-06-01 02:39:53.98669",
+    "purchase_code": "PUR-20250417-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "24614514-4d85-49a6-9dc8-c34e08bd9040",
+    "purchase_date": "2025-05-26 09:20:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-05-26 02:21:03.261202",
+    "purchase_code": "PUR-20250526-0002",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "24f90c71-c002-473f-9369-34964b27204d",
+    "purchase_date": "2025-05-17 10:25:00",
+    "supplier_name": "Montana Official Shop",
+    "notes": "",
+    "created_at": "2025-11-19 03:27:22.902908",
+    "purchase_code": "PUR-20250517-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "26233352-76a0-4a87-a4ba-f93d4c1895d7",
+    "purchase_date": "2025-09-12 16:25:00",
+    "supplier_name": "BonBon Factory",
+    "notes": "",
+    "created_at": "2025-09-12 09:26:27.382553",
+    "purchase_code": "PUR-20250912-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "280990c0-5b60-44b2-bb80-ceaeefe19535",
+    "purchase_date": "2025-08-06 16:54:00",
+    "supplier_name": "Fiaa Cherry_Store",
+    "notes": "",
+    "created_at": "2025-08-06 09:54:56.475491",
+    "purchase_code": "PUR-20250806-0006",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "28567d94-3837-4fba-9ac1-a002fbb57b95",
+    "purchase_date": "2025-06-05 14:44:00",
+    "supplier_name": "Handmade",
+    "notes": "",
+    "created_at": "2025-06-05 07:44:44.001286",
+    "purchase_code": "PUR-20250605-0004",
+    "supplier_type": "Handmade",
+    "deleted_at": ""
+  },
+  {
+    "id": "29eeba32-735a-4755-acfa-285cbde4efad",
+    "purchase_date": "2025-06-26 16:41:00",
+    "supplier_name": "Suara Pohon",
+    "notes": "",
+    "created_at": "2025-06-26 09:41:56.115869",
+    "purchase_code": "PUR-20250626-0008",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "2bc6da19-dda8-4264-9f36-e8ba2b6ebb11",
+    "purchase_date": "2025-05-26 09:17:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-05-26 02:18:43.614698",
+    "purchase_code": "PUR-20250526-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "2cb7ae8a-bdae-4316-89fe-1eb58cf1b086",
+    "purchase_date": "2025-06-01 15:46:00",
+    "supplier_name": "Tape Supplies",
+    "notes": "",
+    "created_at": "2025-06-01 08:47:44.748293",
+    "purchase_code": "PUR-20250601-0004",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": "2025-06-01 08:51:28.347+00"
+  },
+  {
+    "id": "2e311bf2-a747-4cb4-83da-2c034cc14312",
+    "purchase_date": "2025-08-13 13:51:00",
+    "supplier_name": "Feri",
+    "notes": "",
+    "created_at": "2025-08-13 11:52:22.988683",
+    "purchase_code": "PUR-20250813-0001",
+    "supplier_type": "Sales",
+    "deleted_at": ""
+  },
+  {
+    "id": "2f50b744-d4b4-45c2-ace1-b3221b88e071",
+    "purchase_date": "2025-10-12 16:22:00",
+    "supplier_name": "Warung Diva Berkah Cimory",
+    "notes": "",
+    "created_at": "2025-10-12 09:23:25.545506",
+    "purchase_code": "PUR-20251012-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "3168d656-2af9-464d-986f-2f29327adf66",
+    "purchase_date": "2025-06-28 09:00:00",
+    "supplier_name": "Aneka Cokelat",
+    "notes": "",
+    "created_at": "2025-06-28 07:48:12.894316",
+    "purchase_code": "PUR-20250628-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "320e0fe3-69ed-43fe-af06-4321c2848ca5",
+    "purchase_date": "2025-05-25 11:19:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-05-25 04:19:31.685818",
+    "purchase_code": "PUR-20250525-0003",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "327ef526-f3b1-4b1f-bef8-91d9c7e2839f",
+    "purchase_date": "2025-07-28 12:21:00",
+    "supplier_name": "Yollanda16",
+    "notes": "",
+    "created_at": "2025-07-28 05:22:57.384939",
+    "purchase_code": "PUR-20250728-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "32ba7200-3a54-4040-8285-1282cd8d1833",
+    "purchase_date": "2025-08-05 18:20:00",
+    "supplier_name": "Montana Official Shop",
+    "notes": "",
+    "created_at": "2025-08-05 11:28:07.891035",
+    "purchase_code": "PUR-20250805-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "36c81486-06b1-454b-9e95-f88f140270d7",
+    "purchase_date": "2025-07-09 15:36:00",
+    "supplier_name": "Toko Diva Grosir",
+    "notes": "",
+    "created_at": "2025-07-09 08:41:36.010853",
+    "purchase_code": "PUR-20250709-0004",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "373046e3-09b4-42e2-b92f-c3ffca7954f1",
+    "purchase_date": "2025-06-08 12:56:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-06-08 05:57:16.571265",
+    "purchase_code": "PUR-20250608-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "38ca2aec-1caf-4e2b-91e8-9a45fe8202ba",
+    "purchase_date": "2025-06-13 10:42:00",
+    "supplier_name": "Langgan mm",
+    "notes": "",
+    "created_at": "2025-06-13 03:46:08.717047",
+    "purchase_code": "PUR-20250613-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "39b6036c-8895-4a6c-92b7-e6dab5031bc7",
+    "purchase_date": "2025-06-27 10:29:00",
+    "supplier_name": "Grosir Lilin",
+    "notes": "",
+    "created_at": "2025-06-27 03:30:20.067589",
+    "purchase_code": "PUR-20250627-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "3aaf8a63-6acc-4f6c-8580-de287352fc15",
+    "purchase_date": "2025-04-18 09:44:00",
+    "supplier_name": "Casual18",
+    "notes": "",
+    "created_at": "2025-06-01 02:45:14.042672",
+    "purchase_code": "PUR-20250614-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "3b4b33a5-dbbc-4f36-a302-8b3f87bddd09",
+    "purchase_date": "2025-11-06 18:10:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-11-06 11:11:45.123615",
+    "purchase_code": "PUR-20251106-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "3c19f022-e9e5-477e-ac4a-7e793701548f",
+    "purchase_date": "2025-10-29 18:47:00",
+    "supplier_name": "M2000 Official Store",
+    "notes": "",
+    "created_at": "2025-10-29 11:48:20.857017",
+    "purchase_code": "PUR-20251029-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "3c5b6292-0b3c-49d3-84d3-81feca7ca5d8",
+    "purchase_date": "2025-06-02 09:44:00",
+    "supplier_name": "Pelangi Mainan",
+    "notes": "",
+    "created_at": "2025-06-02 02:45:51.327188",
+    "purchase_code": "PUR-20250602-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "3e82158a-a4f6-4e79-9360-f89ec1a5f72d",
+    "purchase_date": "2025-06-04 10:37:00",
+    "supplier_name": "Kantor Pos",
+    "notes": "",
+    "created_at": "2025-06-04 03:37:56.594218",
+    "purchase_code": "PUR-20250604-0002",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "40a5411d-7a0a-42cc-a8e9-d202fca99716",
+    "purchase_date": "2025-05-28 08:28:00",
+    "supplier_name": "Tester",
+    "notes": "",
+    "created_at": "2025-05-28 01:28:58.510934",
+    "purchase_code": "PUR-20250528-0003",
+    "supplier_type": "Tester",
+    "deleted_at": "2025-05-28 02:06:14.3+00"
+  },
+  {
+    "id": "41b88535-230a-4e08-8e45-31b8eb56c1ce",
+    "purchase_date": "2025-05-15 16:52:00",
+    "supplier_name": "Primer Grosir Asemka",
+    "notes": "",
+    "created_at": "2025-06-07 09:55:20.730956",
+    "purchase_code": "PUR-20250515-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "41c6930f-7ad3-46ef-8b69-4ed442aa298e",
+    "purchase_date": "2025-10-31 17:13:00",
+    "supplier_name": "difie toys",
+    "notes": "",
+    "created_at": "2025-10-31 10:14:10.903794",
+    "purchase_code": "PUR-20251031-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "41c6d8eb-a244-4ec2-bcab-74e6573833d1",
+    "purchase_date": "2025-05-31 10:35:00",
+    "supplier_name": "Sales",
+    "notes": "",
+    "created_at": "2025-05-31 03:35:38.59284",
+    "purchase_code": "PUR-20250531-0001",
+    "supplier_type": "Sales",
+    "deleted_at": ""
+  },
+  {
+    "id": "42441642-027b-412b-84e7-a3d17074f112",
+    "purchase_date": "2025-05-30 17:00:00",
+    "supplier_name": "Handmade",
+    "notes": "",
+    "created_at": "2025-05-30 12:41:36.740795",
+    "purchase_code": "PUR-20250530-0005",
+    "supplier_type": "Handmade",
+    "deleted_at": ""
+  },
+  {
+    "id": "42614bee-f2bf-413e-8e49-fc4569a12e4a",
+    "purchase_date": "2025-09-23 18:51:00",
+    "supplier_name": "Tissue cleanplus",
+    "notes": "",
+    "created_at": "2025-09-23 11:51:53.29282",
+    "purchase_code": "PUR-20250923-0002",
+    "supplier_type": "Online Shop - Tiktok Shop",
+    "deleted_at": ""
+  },
+  {
+    "id": "42e3d89d-e146-4919-bf30-7510552b4668",
+    "purchase_date": "2025-06-12 08:38:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-06-12 01:39:05.667524",
+    "purchase_code": "PUR-20250612-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "42efabb2-43d4-476c-a132-72eef8114d6c",
+    "purchase_date": "2025-07-03 12:39:00",
+    "supplier_name": "Feri",
+    "notes": "",
+    "created_at": "2025-07-03 10:39:26.731865",
+    "purchase_code": "PUR-20250703-0001",
+    "supplier_type": "Sales",
+    "deleted_at": ""
+  },
+  {
+    "id": "43ac33dc-1e1b-4b2a-8c0a-db27c397fa37",
+    "purchase_date": "2025-10-19 18:21:00",
+    "supplier_name": "Eselon Stationary",
+    "notes": "",
+    "created_at": "2025-10-19 11:22:04.213286",
+    "purchase_code": "PUR-20251019-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "43ed1513-5a70-4d7c-a10b-bb0ba2350971",
+    "purchase_date": "2025-04-24 10:36:00",
+    "supplier_name": "Toko Lulu - Pasar Induk Cibitung",
+    "notes": "",
+    "created_at": "2025-06-12 03:36:59.88834",
+    "purchase_code": "PUR-20250424-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "470a948a-8123-4ea4-9fc3-b715a1e6028f",
+    "purchase_date": "2025-06-26 09:38:00",
+    "supplier_name": "Trusted Official Store",
+    "notes": "",
+    "created_at": "2025-06-26 08:52:47.840457",
+    "purchase_code": "PUR-20250626-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "47648965-d0ba-4970-badb-aa6359815bcb",
+    "purchase_date": "2025-07-23 18:47:00",
+    "supplier_name": "snack_makocoh",
+    "notes": "",
+    "created_at": "2025-07-23 11:49:08.385191",
+    "purchase_code": "PUR-20250723-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "47812b91-2c8c-4ced-982c-811190902df5",
+    "purchase_date": "2025-08-07 08:41:00",
+    "supplier_name": "Havyn Shop",
+    "notes": "",
+    "created_at": "2025-08-08 01:41:56.955099",
+    "purchase_code": "PUR-20250807-0004",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "47eb1f18-e0c8-4be4-9e6b-35e2d5e1d46e",
+    "purchase_date": "2025-09-14 18:32:00",
+    "supplier_name": "ATKABAGUS88",
+    "notes": "",
+    "created_at": "2025-09-14 11:33:03.638429",
+    "purchase_code": "PUR-20250914-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "482aed8c-3793-4afa-9f4f-9329f9fae00a",
+    "purchase_date": "2025-09-15 16:19:00",
+    "supplier_name": "BonBon Factory",
+    "notes": "",
+    "created_at": "2025-09-15 09:20:15.639223",
+    "purchase_code": "PUR-20250915-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "4964a5fc-6383-48bc-9b84-c2b9425bf692",
+    "purchase_date": "2025-07-09 15:42:00",
+    "supplier_name": "Yollanda16",
+    "notes": "",
+    "created_at": "2025-07-09 08:42:46.50339",
+    "purchase_code": "PUR-20250709-0005",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "49854982-0484-483f-9f91-6484d6a42027",
+    "purchase_date": "2025-07-18 18:56:00",
+    "supplier_name": "Putra Indah 84",
+    "notes": "",
+    "created_at": "2025-07-18 11:57:20.517246",
+    "purchase_code": "PUR-20250718-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "49bc7b03-0ff8-4786-8f10-f7aaabe3f159",
+    "purchase_date": "2025-08-04 09:46:00",
+    "supplier_name": "Montana Official Shop",
+    "notes": "",
+    "created_at": "2025-08-05 02:46:57.912912",
+    "purchase_code": "PUR-20250804-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "4a304809-5bf8-41d1-ae29-4f55a186ac4e",
+    "purchase_date": "2025-12-19 18:25:00",
+    "supplier_name": "Ethes Jaya",
+    "notes": "",
+    "created_at": "2025-12-19 11:26:19.460985",
+    "purchase_code": "PUR-20251219-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "4a326847-2681-40be-ba42-8047f3ae14a8",
+    "purchase_date": "2025-08-06 15:12:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-08-06 08:15:22.358471",
+    "purchase_code": "PUR-20250806-0004",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "4ad88b0e-e920-455e-8ea9-1c35127fa108",
+    "purchase_date": "2025-04-15 08:16:00",
+    "supplier_name": "ASNER_SHOP",
+    "notes": "",
+    "created_at": "2025-06-24 01:17:26.600884",
+    "purchase_code": "PUR-20250415-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "4b021c05-19dd-473c-9848-8b7a808d060c",
+    "purchase_date": "2025-09-18 17:53:00",
+    "supplier_name": "Brother Stationery",
+    "notes": "",
+    "created_at": "2025-09-18 10:54:02.213278",
+    "purchase_code": "PUR-20250918-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "4c017573-4520-4e64-aa14-f51073807304",
+    "purchase_date": "2025-12-22 18:31:00",
+    "supplier_name": "Aqila Azzahra",
+    "notes": "",
+    "created_at": "2025-12-22 11:32:26.949728",
+    "purchase_code": "PUR-20251222-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "4cc77a95-a9fa-4387-bd07-8d927a76977b",
+    "purchase_date": "2025-05-25 14:16:00",
+    "supplier_name": "Hidup Sahabat Baru",
+    "notes": "",
+    "created_at": "2025-05-25 07:18:26.190863",
+    "purchase_code": "PUR-20250525-0005",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "4db0798d-edf9-4854-a7ab-d5b49b3b4161",
+    "purchase_date": "2025-09-17 17:23:00",
+    "supplier_name": "Fahmi Toys",
+    "notes": "",
+    "created_at": "2025-09-17 10:23:52.643342",
+    "purchase_code": "PUR-20250917-0004",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "4e0c19ca-0471-45d5-94c0-832c789713b8",
+    "purchase_date": "2025-11-03 18:48:00",
+    "supplier_name": "Wok Office",
+    "notes": "",
+    "created_at": "2025-11-03 11:48:52.29448",
+    "purchase_code": "PUR-20251103-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "504db6f3-40a9-45e1-90e4-f0b3811fe0a9",
+    "purchase_date": "2025-07-15 16:34:00",
+    "supplier_name": "Kedai Jamu Herbal",
+    "notes": "",
+    "created_at": "2025-07-15 09:37:07.994438",
+    "purchase_code": "PUR-20250715-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "51dd4a3e-bd92-458e-8a9d-59e95ad4bd46",
+    "purchase_date": "2025-07-26 12:03:00",
+    "supplier_name": "Si Mpay Snack",
+    "notes": "",
+    "created_at": "2025-07-26 05:04:06.630107",
+    "purchase_code": "PUR-20250726-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "52936a73-5d84-404b-90bf-4a3f6ad0e7d5",
+    "purchase_date": "2025-07-24 14:11:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-07-24 07:52:39.286369",
+    "purchase_code": "PUR-20250724-0002",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "54b8f6f1-7c97-4aa7-b62d-bb4fb76a2a25",
+    "purchase_date": "2025-05-28 08:25:00",
+    "supplier_name": "Tester",
+    "notes": "",
+    "created_at": "2025-05-28 01:25:31.602239",
+    "purchase_code": "PUR-20250528-0001",
+    "supplier_type": "Tester",
+    "deleted_at": "2025-05-28 01:26:01.745+00"
+  },
+  {
+    "id": "558ff743-494a-48b9-ac54-ee47bdd52227",
+    "purchase_date": "2025-10-22 18:23:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-10-22 11:25:02.160091",
+    "purchase_code": "PUR-20251022-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "55a75e0f-fb28-4b6b-90f5-72d43ad7fa75",
+    "purchase_date": "2025-05-28 15:14:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-05-28 08:15:09.350817",
+    "purchase_code": "PUR-20250528-0006",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "5900ff33-fead-428e-bf18-08de5ddb9fba",
+    "purchase_date": "2025-06-01 15:55:00",
+    "supplier_name": "Tape Supplies",
+    "notes": "",
+    "created_at": "2025-06-01 09:01:52.049901",
+    "purchase_code": "PUR-20250601-0005",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "5970533c-456d-4042-a2a1-af2097380dc5",
+    "purchase_date": "2025-09-18 17:48:00",
+    "supplier_name": "Bantex Indonesia Official Shop",
+    "notes": "",
+    "created_at": "2025-09-18 10:51:58.094751",
+    "purchase_code": "PUR-20250918-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "599b2900-e909-40af-928a-e8f462beeb66",
+    "purchase_date": "2025-11-11 17:09:00",
+    "supplier_name": "Bossco",
+    "notes": "",
+    "created_at": "2025-11-12 10:16:37.200505",
+    "purchase_code": "PUR-20251111-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "5a66791c-259f-4a72-8743-8232caa05b83",
+    "purchase_date": "2025-12-01 17:33:00",
+    "supplier_name": "Candy Snack",
+    "notes": "",
+    "created_at": "2025-12-01 10:33:38.329413",
+    "purchase_code": "PUR-20251201-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "5a758edd-94f0-415f-b818-cd8d218bd79d",
+    "purchase_date": "2025-07-11 17:02:00",
+    "supplier_name": "snack_makocoh",
+    "notes": "",
+    "created_at": "2025-07-11 10:03:40.658317",
+    "purchase_code": "PUR-20250711-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "5b62a7c1-45ad-4ca9-98a3-38bde334d0ab",
+    "purchase_date": "2025-11-12 17:16:00",
+    "supplier_name": "Havyn Shop",
+    "notes": "",
+    "created_at": "2025-11-12 10:17:34.459616",
+    "purchase_code": "PUR-20251112-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "5d5ede20-11f6-495a-a99c-833220a3a229",
+    "purchase_date": "2025-07-24 10:24:00",
+    "supplier_name": "Doremi Toko Alat Tulis",
+    "notes": "",
+    "created_at": "2025-07-24 03:25:18.163799",
+    "purchase_code": "PUR-20250724-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "5dc764e0-882b-4cd6-a3be-53b713c163c7",
+    "purchase_date": "2025-04-18 09:46:00",
+    "supplier_name": "Abhizar Store",
+    "notes": "",
+    "created_at": "2025-06-01 02:46:48.184762",
+    "purchase_code": "PUR-20250418-0004",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "5e4b16b5-5eec-427d-a788-114688ec7c9e",
+    "purchase_date": "2025-09-19 18:46:00",
+    "supplier_name": "HRShop74",
+    "notes": "",
+    "created_at": "2025-09-19 11:46:58.558735",
+    "purchase_code": "PUR-20250919-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "5ea71faf-5254-4e33-adcc-11540ecf43ac",
+    "purchase_date": "2025-05-27 16:30:00",
+    "supplier_name": "PD AA Snack",
+    "notes": "",
+    "created_at": "2025-05-27 09:31:56.554658",
+    "purchase_code": "PUR-20250527-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "5f0764f9-6824-4447-bc35-db313c39d9a5",
+    "purchase_date": "2025-07-30 18:18:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-07-30 11:19:23.993056",
+    "purchase_code": "PUR-20250730-0002",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "5f47d244-52d3-4d79-8e5d-a8c72e03867c",
+    "purchase_date": "2025-05-27 09:22:00",
+    "supplier_name": "Testing",
+    "notes": "",
+    "created_at": "2025-05-27 02:23:23.709359",
+    "purchase_code": "PUR-20250527-0001",
+    "supplier_type": "Testing",
+    "deleted_at": "2025-05-27 02:24:12.456+00"
+  },
+  {
+    "id": "5fb2ef15-4323-4cc7-af35-ebb69540511c",
+    "purchase_date": "2025-11-26 18:10:00",
+    "supplier_name": "Havyn Shop",
+    "notes": "",
+    "created_at": "2025-11-26 11:12:21.508529",
+    "purchase_code": "PUR-20251126-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "600de11b-3dca-4f18-a454-f12eed587df0",
+    "purchase_date": "2025-07-11 17:01:00",
+    "supplier_name": "PD AA Snack",
+    "notes": "",
+    "created_at": "2025-07-11 10:02:54.036392",
+    "purchase_code": "PUR-20250711-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "60d4731f-a1b2-4e6f-898a-18dda6aea7da",
+    "purchase_date": "2025-12-22 18:30:00",
+    "supplier_name": "LB Lahan Berkah",
+    "notes": "",
+    "created_at": "2025-12-22 11:31:24.135141",
+    "purchase_code": "PUR-20251222-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "62af5ab6-6f7e-4dac-94c5-222f7e872972",
+    "purchase_date": "2025-11-05 07:48:00",
+    "supplier_name": "Snack Bang Jago Official",
+    "notes": "",
+    "created_at": "2025-11-06 00:49:42.543005",
+    "purchase_code": "PUR-20251105-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "62df7039-eb76-423b-ad48-774c4009fb6b",
+    "purchase_date": "2025-09-13 15:12:00",
+    "supplier_name": "LB Lahan Berkah",
+    "notes": "",
+    "created_at": "2025-09-13 10:11:44.971825",
+    "purchase_code": "PUR-20250913-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "64c00b9e-8af9-4867-98d2-a9f642e2213b",
+    "purchase_date": "2025-08-18 16:02:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-08-18 09:03:56.058416",
+    "purchase_code": "PUR-20250818-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "64e26c91-a79b-44f8-ad03-5a9ed9218881",
+    "purchase_date": "2025-07-28 11:43:00",
+    "supplier_name": "tbao.toko",
+    "notes": "",
+    "created_at": "2025-07-28 04:44:56.683972",
+    "purchase_code": "PUR-20250728-0001",
+    "supplier_type": "Online Shop - Tiktok Shop",
+    "deleted_at": ""
+  },
+  {
+    "id": "653d2556-277f-4091-92ac-976d7f4b4f4b",
+    "purchase_date": "2025-07-14 11:03:00",
+    "supplier_name": "snack_makocoh",
+    "notes": "",
+    "created_at": "2025-07-14 04:05:41.302169",
+    "purchase_code": "PUR-20250714-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "65437466-38ee-46cd-b1e5-49c2a9fd1dd2",
+    "purchase_date": "2025-08-07 17:59:00",
+    "supplier_name": "Masa Kecil Hepi",
+    "notes": "",
+    "created_at": "2025-08-08 01:26:43.3551",
+    "purchase_code": "PUR-20250807-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "656bb0d9-6386-4e8e-ae25-0fb455d30754",
+    "purchase_date": "2025-10-21 13:17:00",
+    "supplier_name": "difie toys",
+    "notes": "",
+    "created_at": "2025-10-21 06:19:12.757087",
+    "purchase_code": "PUR-20251021-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "660b9f98-9f40-490a-8e5d-187e2d7dc69b",
+    "purchase_date": "2025-12-15 18:33:00",
+    "supplier_name": "Johan Toys",
+    "notes": "",
+    "created_at": "2025-12-15 11:33:55.126937",
+    "purchase_code": "PUR-20251215-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "66c9acda-5e93-430f-a318-b4c2190fa8ba",
+    "purchase_date": "2025-09-12 16:25:00",
+    "supplier_name": "Yollanda16",
+    "notes": "",
+    "created_at": "2025-09-12 09:27:31.504092",
+    "purchase_code": "PUR-20250912-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "67427530-ed60-4f4d-bf26-cc3f196e105a",
+    "purchase_date": "2025-05-12 13:33:00",
+    "supplier_name": "Montana Official Shop",
+    "notes": "",
+    "created_at": "2025-06-02 06:40:51.860612",
+    "purchase_code": "PUR-20250512-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "67767c3e-b713-40e5-9f42-2de18b8f980f",
+    "purchase_date": "2025-05-25 14:01:00",
+    "supplier_name": "Tian & Yi",
+    "notes": "",
+    "created_at": "2025-05-25 07:04:03.946642",
+    "purchase_code": "PUR-20250525-0004",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "68a41a6e-c67c-4b90-b0f8-bd9b4512c801",
+    "purchase_date": "2025-09-27 18:11:00",
+    "supplier_name": "Havyn Shop",
+    "notes": "",
+    "created_at": "2025-09-27 11:12:06.954933",
+    "purchase_code": "PUR-20250927-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "69a42091-da37-4f72-b51b-5b0cd38f71b9",
+    "purchase_date": "2025-06-16 12:54:00",
+    "supplier_name": "Feri",
+    "notes": "",
+    "created_at": "2025-06-16 05:55:17.106219",
+    "purchase_code": "PUR-20250616-0002",
+    "supplier_type": "Sales",
+    "deleted_at": ""
+  },
+  {
+    "id": "6b3cf5d1-91a3-4c14-9b10-6ee64da8a029",
+    "purchase_date": "2025-07-02 10:15:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-07-02 03:17:16.203996",
+    "purchase_code": "PUR-20250702-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "6c47e83b-9ec4-4f5e-a0db-21ec309f85f2",
+    "purchase_date": "2025-11-26 18:12:00",
+    "supplier_name": "SJ Store 17",
+    "notes": "",
+    "created_at": "2025-11-26 11:12:59.633329",
+    "purchase_code": "PUR-20251126-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "6e7efe97-365c-4444-a0bc-10d2134bfdba",
+    "purchase_date": "2025-09-17 08:38:00",
+    "supplier_name": "AlQolam_Stationary",
+    "notes": "",
+    "created_at": "2025-09-17 01:40:25.995819",
+    "purchase_code": "PUR-20250917-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "6ee79e2c-30e0-4759-b32d-56dd8cce8a14",
+    "purchase_date": "2025-07-10 16:57:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-07-10 09:58:45.979521",
+    "purchase_code": "PUR-20250710-0003",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "6f58cb3f-5e0d-49d4-8e92-a39d40c429a3",
+    "purchase_date": "2025-10-25 18:02:00",
+    "supplier_name": "Mood Idea",
+    "notes": "",
+    "created_at": "2025-10-26 11:04:21.784968",
+    "purchase_code": "PUR-20251025-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "71263fba-648f-4568-8b01-b45cb6ca88af",
+    "purchase_date": "2025-07-17 18:42:00",
+    "supplier_name": "Yollanda16",
+    "notes": "",
+    "created_at": "2025-07-17 11:44:35.394297",
+    "purchase_code": "PUR-20250717-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "7181b9d1-4e92-4b89-beaf-42edb1a100d4",
+    "purchase_date": "2025-07-19 12:31:00",
+    "supplier_name": "Snack Mazter",
+    "notes": "",
+    "created_at": "2025-07-19 05:33:02.829665",
+    "purchase_code": "PUR-20250719-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "723bfc7e-7463-407d-8bdc-001a98fe4c02",
+    "purchase_date": "2025-08-06 11:41:00",
+    "supplier_name": "Pusat Grosir Impor",
+    "notes": "",
+    "created_at": "2025-08-06 04:41:46.006327",
+    "purchase_code": "PUR-20250806-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "728cd21f-079f-4fdf-a6b4-9eb0cd7ea652",
+    "purchase_date": "2025-06-26 11:30:00",
+    "supplier_name": "Sales",
+    "notes": "",
+    "created_at": "2025-06-26 08:55:48.540393",
+    "purchase_code": "PUR-20250626-0004",
+    "supplier_type": "Sales",
+    "deleted_at": ""
+  },
+  {
+    "id": "747ea1a7-d309-4211-aef7-44efdc661e3c",
+    "purchase_date": "2025-05-31 16:39:00",
+    "supplier_name": "Koboy Snack",
+    "notes": "",
+    "created_at": "2025-05-31 09:39:34.317441",
+    "purchase_code": "PUR-20250531-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "7646ef13-ac7e-4677-95cc-95b3cf6b3915",
+    "purchase_date": "2025-07-09 18:09:00",
+    "supplier_name": "Handmade",
+    "notes": "",
+    "created_at": "2025-07-09 11:10:21.241902",
+    "purchase_code": "PUR-20250709-0006",
+    "supplier_type": "Handmade",
+    "deleted_at": ""
+  },
+  {
+    "id": "7832c912-6a7d-4144-9f9f-24f5f5d725d9",
+    "purchase_date": "2025-08-05 12:06:00",
+    "supplier_name": "PD AA Snack",
+    "notes": "",
+    "created_at": "2025-08-05 05:07:42.02712",
+    "purchase_code": "PUR-20250805-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "7840c541-583f-4717-9656-9526b5cd50d3",
+    "purchase_date": "2025-09-15 15:09:00",
+    "supplier_name": "rian key",
+    "notes": "",
+    "created_at": "2025-09-15 09:19:26.302767",
+    "purchase_code": "PUR-20250915-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "79506143-704c-41cb-aa1e-e8f1ed651e2c",
+    "purchase_date": "2025-05-25 09:26:00",
+    "supplier_name": "Davis Stationery",
+    "notes": "",
+    "created_at": "2025-05-25 02:26:46.872059",
+    "purchase_code": "PUR-20250525-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "79ea58da-514f-4a42-95ab-ff20c39fadee",
+    "purchase_date": "2025-12-13 18:24:00",
+    "supplier_name": "KINANDI OLSHOP",
+    "notes": "",
+    "created_at": "2025-12-13 11:25:24.583277",
+    "purchase_code": "PUR-20251213-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "7a33c0a6-65d2-4cfe-9c72-1069da6d3cfb",
+    "purchase_date": "2025-08-02 18:30:00",
+    "supplier_name": "Tape Supplies",
+    "notes": "",
+    "created_at": "2025-08-02 11:31:12.464151",
+    "purchase_code": "PUR-20250802-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "7b61eaa9-0dca-4572-ae07-1e852282d488",
+    "purchase_date": "2025-07-18 09:52:00",
+    "supplier_name": "H.S. Yono",
+    "notes": "",
+    "created_at": "2025-07-18 02:52:52.882319",
+    "purchase_code": "PUR-20250718-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "7c9c6298-ee53-401c-9d52-de4d0fb1ee8c",
+    "purchase_date": "2025-06-01 10:09:00",
+    "supplier_name": "b2bmart",
+    "notes": "",
+    "created_at": "2025-06-01 03:10:52.281162",
+    "purchase_code": "PUR-20250601-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "7d2aa18c-0233-4753-ae17-3227c7a726cb",
+    "purchase_date": "2025-06-08 16:42:00",
+    "supplier_name": "Unifam Official Store",
+    "notes": "",
+    "created_at": "2025-06-09 02:26:18.472231",
+    "purchase_code": "PUR-20250608-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "7d783275-f7bf-4b36-992a-5919633ad44b",
+    "purchase_date": "2025-07-29 18:15:00",
+    "supplier_name": "Adel",
+    "notes": "",
+    "created_at": "2025-07-30 11:15:45.160994",
+    "purchase_code": "PUR-20250729-0002",
+    "supplier_type": "Keluarga",
+    "deleted_at": ""
+  },
+  {
+    "id": "7dae6daa-264c-4c14-975f-e696a4707228",
+    "purchase_date": "2025-05-25 16:39:00",
+    "supplier_name": "Sentral Parts",
+    "notes": "Diskon pembelian pertama",
+    "created_at": "2025-05-25 09:44:59.405215",
+    "purchase_code": "PUR-20250525-0007",
+    "supplier_type": "Online Shop - Lazada",
+    "deleted_at": ""
+  },
+  {
+    "id": "7ed49f2c-492b-4fbf-bc70-3a689e56d5de",
+    "purchase_date": "2025-09-16 07:59:00",
+    "supplier_name": "Ozer Shop",
+    "notes": "",
+    "created_at": "2025-09-16 11:07:06.664094",
+    "purchase_code": "PUR-20250916-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "800498aa-a1ff-42a2-8039-b892ff189d13",
+    "purchase_date": "2025-06-27 10:33:00",
+    "supplier_name": "Mawar Store 01",
+    "notes": "",
+    "created_at": "2025-06-27 03:33:55.684294",
+    "purchase_code": "PUR-20250627-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "806bf8be-2853-40e0-b37d-71051f90fbd0",
+    "purchase_date": "2025-08-03 09:44:00",
+    "supplier_name": "Fivevoo Official Store",
+    "notes": "",
+    "created_at": "2025-08-05 02:45:27.401121",
+    "purchase_code": "PUR-20250803-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "8151876d-3a19-4227-91b1-0d810fc8d20a",
+    "purchase_date": "2025-08-10 09:53:00",
+    "supplier_name": "Putri Indah 84",
+    "notes": "",
+    "created_at": "2025-08-10 12:21:21.546752",
+    "purchase_code": "PUR-20250810-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "829f83bb-558d-47bd-8921-f337c8f11993",
+    "purchase_date": "2025-12-23 13:12:00",
+    "supplier_name": "Jajanan Medan Official",
+    "notes": "",
+    "created_at": "2025-12-23 06:14:35.872764",
+    "purchase_code": "PUR-20251223-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "83001715-e273-4b54-9198-a4448a686ed3",
+    "purchase_date": "2025-06-18 09:51:00",
+    "supplier_name": "AkuSukaJajann",
+    "notes": "",
+    "created_at": "2025-06-18 02:56:25.484176",
+    "purchase_code": "PUR-20250618-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "839070a0-c4ad-467f-b6a3-ea606982170b",
+    "purchase_date": "2025-08-06 17:09:00",
+    "supplier_name": "Z.A_SHOP",
+    "notes": "",
+    "created_at": "2025-08-06 10:11:28.246262",
+    "purchase_code": "PUR-20250806-0008",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "83dfe4d3-8b7d-4939-b13b-bf084d0deb64",
+    "purchase_date": "2025-12-05 10:01:00",
+    "supplier_name": "Toko Ramdani Nayla",
+    "notes": "",
+    "created_at": "2025-06-06 03:11:12.073617",
+    "purchase_code": "PUR-20251205-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "856ce2b6-424d-4911-bef6-521cc68aa093",
+    "purchase_date": "2025-08-03 09:45:00",
+    "supplier_name": "Unifam Official Store",
+    "notes": "",
+    "created_at": "2025-08-05 02:46:09.739874",
+    "purchase_code": "PUR-20250803-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "85738dc9-93bb-4477-8b08-7a7f845b7d5f",
+    "purchase_date": "2025-05-29 11:16:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-05-29 04:19:33.234843",
+    "purchase_code": "PUR-20250529-0002",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "85794bca-29b1-4bd1-b775-256d88fb74cb",
+    "purchase_date": "2025-10-04 18:52:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-10-04 11:53:28.088055",
+    "purchase_code": "PUR-20251004-0003",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "8774a630-fb4e-41e3-b505-2081f2a8a6ec",
+    "purchase_date": "2025-07-20 10:10:00",
+    "supplier_name": "PD AA Snack",
+    "notes": "",
+    "created_at": "2025-07-20 03:11:09.000387",
+    "purchase_code": "PUR-20250720-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "87d6d20d-15ac-47b8-b3a7-c29589e7c8c3",
+    "purchase_date": "2025-06-18 09:57:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-06-18 02:59:55.448874",
+    "purchase_code": "PUR-20250618-0002",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "88008f55-096f-4d25-9ad6-7d78ddd9291e",
+    "purchase_date": "2025-06-23 09:51:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-06-23 03:03:26.904594",
+    "purchase_code": "PUR-20250623-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "8807fb04-4549-4dd1-adb1-b718637a2a1c",
+    "purchase_date": "2025-07-03 18:07:00",
+    "supplier_name": "Unifam Official Store",
+    "notes": "",
+    "created_at": "2025-07-03 11:08:14.618849",
+    "purchase_code": "PUR-20250703-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "88137a30-d01c-43bb-87a5-3e5194cd0856",
+    "purchase_date": "2025-05-29 09:10:00",
+    "supplier_name": "Tian & Yi",
+    "notes": "",
+    "created_at": "2025-05-29 02:14:42.091756",
+    "purchase_code": "PUR-20250529-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "8814df28-3904-4b0e-bebf-19d4c5a8f0eb",
+    "purchase_date": "2025-10-04 18:50:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-10-04 11:50:49.035931",
+    "purchase_code": "PUR-20251004-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": "2025-10-04 11:52:49.664+00"
+  },
+  {
+    "id": "893642cd-f47f-4046-9dde-02cfd62519ff",
+    "purchase_date": "2025-05-28 08:26:00",
+    "supplier_name": "Tester",
+    "notes": "",
+    "created_at": "2025-05-28 01:26:38.824871",
+    "purchase_code": "PUR-20250528-0002",
+    "supplier_type": "Tester",
+    "deleted_at": "2025-05-28 01:27:25.932+00"
+  },
+  {
+    "id": "897d9ad5-2d00-43e3-ab15-c7e8f2be3631",
+    "purchase_date": "2025-07-10 16:58:00",
+    "supplier_name": "Handmade",
+    "notes": "",
+    "created_at": "2025-07-10 09:59:12.431667",
+    "purchase_code": "PUR-20250710-0004",
+    "supplier_type": "Handmade",
+    "deleted_at": ""
+  },
+  {
+    "id": "89959c72-7b01-4190-9126-89897c969cc3",
+    "purchase_date": "2025-12-19 18:22:00",
+    "supplier_name": "SJ Store 17",
+    "notes": "",
+    "created_at": "2025-12-19 11:23:05.366328",
+    "purchase_code": "PUR-20251219-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "8ad7fe30-e0f8-472c-8938-5a43058a4a86",
+    "purchase_date": "2025-09-22 09:48:00",
+    "supplier_name": "difie toys",
+    "notes": "",
+    "created_at": "2025-09-22 10:31:20.638297",
+    "purchase_code": "PUR-20250922-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "8b24421a-23da-4488-a215-48368a4293d0",
+    "purchase_date": "2025-06-13 14:01:00",
+    "supplier_name": "Toko Yabana",
+    "notes": "",
+    "created_at": "2025-06-13 07:01:31.407324",
+    "purchase_code": "PUR-20250613-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "8bc90478-4694-46a0-a08d-d1ca95a53bb8",
+    "purchase_date": "2025-05-28 17:10:00",
+    "supplier_name": "Candy Snack",
+    "notes": "",
+    "created_at": "2025-05-28 10:39:34.116617",
+    "purchase_code": "PUR-20250528-0007",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "8c2cd434-e745-420a-82ef-ea622947f46c",
+    "purchase_date": "2025-07-16 13:53:00",
+    "supplier_name": "Toko Cemilan Depok",
+    "notes": "",
+    "created_at": "2025-07-16 06:54:42.325084",
+    "purchase_code": "PUR-20250716-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "8cc9b40f-3d58-4204-b6a3-a0c910ff57e4",
+    "purchase_date": "2025-06-05 13:03:00",
+    "supplier_name": "SC Johnson Home Hygiene Official",
+    "notes": "",
+    "created_at": "2025-06-05 06:04:10.81689",
+    "purchase_code": "PUR-20250605-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "8d87cf87-a690-427b-9234-7f7f6c10957c",
+    "purchase_date": "2025-06-19 14:40:00",
+    "supplier_name": "Yollanda16",
+    "notes": "",
+    "created_at": "2025-06-19 07:42:08.268355",
+    "purchase_code": "PUR-20250619-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "9127f2b4-f8e0-4bae-95ba-71418aa5688b",
+    "purchase_date": "2025-05-26 12:47:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-06-03 05:48:15.311545",
+    "purchase_code": "PUR-20250526-0005",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "91577893-150d-46c3-ac6c-45180257a9ef",
+    "purchase_date": "2025-05-30 23:52:00",
+    "supplier_name": "Montana Official Shop",
+    "notes": "",
+    "created_at": "2025-05-30 06:18:25.029014",
+    "purchase_code": "PUR-20250530-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "91670016-464b-46b0-a271-5b1028aae23a",
+    "purchase_date": "2025-05-16 18:47:00",
+    "supplier_name": "Brother Stationery",
+    "notes": "",
+    "created_at": "2025-07-07 11:47:44.896045",
+    "purchase_code": "PUR-20250516-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "91f060b2-e529-4d58-ae3e-000b41e85173",
+    "purchase_date": "2025-05-31 16:44:00",
+    "supplier_name": "CNH_MART",
+    "notes": "",
+    "created_at": "2025-05-31 09:46:03.206074",
+    "purchase_code": "PUR-20250531-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "921e325c-2650-4905-9df3-24a0400c5db7",
+    "purchase_date": "2025-04-21 09:48:00",
+    "supplier_name": "Yukinawa Home & Living",
+    "notes": "",
+    "created_at": "2025-06-01 02:49:39.280083",
+    "purchase_code": "PUR-20250421-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "95992979-7312-4362-9934-e4771eb61e5c",
+    "purchase_date": "2025-06-10 17:02:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-06-10 10:03:43.557803",
+    "purchase_code": "PUR-20250610-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "95ceeb5e-4b01-499e-b6ac-8930fcdbc3e9",
+    "purchase_date": "2025-11-09 16:21:00",
+    "supplier_name": "Yollanda16",
+    "notes": "",
+    "created_at": "2025-11-09 09:22:18.007427",
+    "purchase_code": "PUR-20251109-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "969d055d-d927-4632-adb6-4a12387790cd",
+    "purchase_date": "2025-09-11 16:07:00",
+    "supplier_name": "rian key",
+    "notes": "",
+    "created_at": "2025-09-11 09:08:34.062632",
+    "purchase_code": "PUR-20250911-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "9702dfba-5930-4a50-bcca-105f82d91803",
+    "purchase_date": "2025-06-04 09:15:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-06-04 02:17:05.945188",
+    "purchase_code": "PUR-20250604-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "975b8b51-4687-490d-a16c-810d1bb7832d",
+    "purchase_date": "2025-06-12 17:21:00",
+    "supplier_name": "Pusat Njajan",
+    "notes": "",
+    "created_at": "2025-06-12 10:23:21.306041",
+    "purchase_code": "PUR-20250612-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "9789cc03-d609-47a9-bae8-f5efc3414d97",
+    "purchase_date": "2025-10-17 18:24:00",
+    "supplier_name": "difie toys",
+    "notes": "",
+    "created_at": "2025-10-17 11:25:16.163598",
+    "purchase_code": "PUR-20251017-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "984e3a5d-5e67-46b3-a688-d155dc2682a9",
+    "purchase_date": "2025-05-26 14:26:00",
+    "supplier_name": "Toko Arief Aksesoris",
+    "notes": "",
+    "created_at": "2025-05-26 07:26:50.866709",
+    "purchase_code": "PUR-20250526-0004",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "99404fa1-4097-4792-a21f-989806a6de74",
+    "purchase_date": "2025-05-30 17:36:00",
+    "supplier_name": "Black_Acc",
+    "notes": "",
+    "created_at": "2025-05-30 10:38:30.869505",
+    "purchase_code": "PUR-20250530-0004",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "9af9f4ad-b071-4fa4-9d91-cc4d45757822",
+    "purchase_date": "2025-11-10 17:06:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-11-12 10:07:02.306871",
+    "purchase_code": "PUR-20251110-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "9b2c6129-83a2-40ba-88ee-0b19fe0823e3",
+    "purchase_date": "2025-10-21 13:19:00",
+    "supplier_name": "Mawar Store 01",
+    "notes": "",
+    "created_at": "2025-10-21 06:19:46.654839",
+    "purchase_code": "PUR-20251021-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "9ba10e18-5ce3-45d3-988f-cd1ec7f87a98",
+    "purchase_date": "2025-08-01 10:37:00",
+    "supplier_name": "Kiky Stationary",
+    "notes": "",
+    "created_at": "2025-08-01 03:38:15.374563",
+    "purchase_code": "PUR-20250801-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "9eab49b4-179c-4d66-8068-fb4262b4a0ee",
+    "purchase_date": "2025-12-23 18:31:00",
+    "supplier_name": "Dunia Tape",
+    "notes": "",
+    "created_at": "2025-12-23 11:33:01.019519",
+    "purchase_code": "PUR-20251223-0002",
+    "supplier_type": "Online Shop - Tiktok Shop",
+    "deleted_at": ""
+  },
+  {
+    "id": "9ffa431a-0a40-4c81-8bf1-4093aa770227",
+    "purchase_date": "2025-05-24 16:47:00",
+    "supplier_name": "PD AA Snack",
+    "notes": "",
+    "created_at": "2025-05-24 09:48:47.506119",
+    "purchase_code": "PUR-20250524-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "a028b2b1-4175-41e3-9128-6d6f51a5a65e",
+    "purchase_date": "2025-04-18 09:41:00",
+    "supplier_name": "F&R Online Store",
+    "notes": "",
+    "created_at": "2025-06-01 02:41:48.800027",
+    "purchase_code": "PUR-20250418-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "a104d009-b6cf-4d78-a951-754df569694d",
+    "purchase_date": "2025-05-27 13:56:00",
+    "supplier_name": "Toys Center Group",
+    "notes": "",
+    "created_at": "2025-05-27 06:56:49.583452",
+    "purchase_code": "PUR-20250527-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "a142221d-f95b-4e04-a906-232174bd6f9d",
+    "purchase_date": "2025-10-27 17:08:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-10-27 10:09:46.849805",
+    "purchase_code": "PUR-20251027-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "a232dd2e-75e1-4a48-929f-811b004b250e",
+    "purchase_date": "2025-10-09 18:18:00",
+    "supplier_name": "Montana Official Shop",
+    "notes": "",
+    "created_at": "2025-10-09 11:18:30.986972",
+    "purchase_code": "PUR-20251009-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "a2c90c42-bf84-474c-a4b3-aa438cb23acb",
+    "purchase_date": "2025-06-05 11:47:00",
+    "supplier_name": "Montana Official Shop",
+    "notes": "",
+    "created_at": "2025-06-05 04:47:37.760126",
+    "purchase_code": "PUR-20250605-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "a347e75b-b56e-4c35-a418-6e7086cec2ee",
+    "purchase_date": "2025-12-01 10:52:00",
+    "supplier_name": "foursisters.id",
+    "notes": "",
+    "created_at": "2025-12-01 10:30:22.175754",
+    "purchase_code": "PUR-20251201-0001",
+    "supplier_type": "Online Shop - Tiktok Shop",
+    "deleted_at": ""
+  },
+  {
+    "id": "a4a65892-3990-4fec-968a-f59989c4556a",
+    "purchase_date": "2025-04-17 09:34:00",
+    "supplier_name": "Kunasu Official Store",
+    "notes": "",
+    "created_at": "2025-06-01 02:35:44.925673",
+    "purchase_code": "PUR-20250417-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "a4e1c239-e8b6-4fbf-a9b7-8365a2cbd347",
+    "purchase_date": "2025-05-25 15:47:00",
+    "supplier_name": "Sales",
+    "notes": "",
+    "created_at": "2025-05-25 08:48:27.05865",
+    "purchase_code": "PUR-20250525-0006",
+    "supplier_type": "Sales",
+    "deleted_at": ""
+  },
+  {
+    "id": "a4fdd2eb-c560-4bd8-90ac-7d4b68d9e8bb",
+    "purchase_date": "2025-07-04 11:32:00",
+    "supplier_name": "Pusat Grosir Impor",
+    "notes": "",
+    "created_at": "2025-07-04 04:33:06.118279",
+    "purchase_code": "PUR-20250704-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "a5cb926c-6cb7-4e62-8fd0-5f2610f2cdec",
+    "purchase_date": "2025-05-30 10:14:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-05-30 03:15:38.262772",
+    "purchase_code": "PUR-20250530-0002",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "a63735b9-ce61-4459-963c-b3ee61274ffe",
+    "purchase_date": "2025-06-26 16:46:00",
+    "supplier_name": "GTMA Store New",
+    "notes": "",
+    "created_at": "2025-06-26 09:46:56.269758",
+    "purchase_code": "PUR-20250626-0009",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "a6daf579-5b3d-4e90-99ef-d3932a6173ff",
+    "purchase_date": "2025-07-14 16:33:00",
+    "supplier_name": "Handmade",
+    "notes": "",
+    "created_at": "2025-07-15 09:34:13.946281",
+    "purchase_code": "PUR-20250714-0003",
+    "supplier_type": "Handmade",
+    "deleted_at": ""
+  },
+  {
+    "id": "a721f380-28f5-4cb1-bab8-8277e7f090df",
+    "purchase_date": "2025-06-01 10:02:00",
+    "supplier_name": "Remon_Jaya1991",
+    "notes": "",
+    "created_at": "2025-06-01 03:02:57.389523",
+    "purchase_code": "PUR-20250601-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "a8bb9363-ea49-48ea-aa0c-a38aa02a5b41",
+    "purchase_date": "2025-08-07 16:44:00",
+    "supplier_name": "Shareeva_sovia99",
+    "notes": "",
+    "created_at": "2025-08-08 01:43:17.270005",
+    "purchase_code": "PUR-20250807-0005",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "aa0ad5c8-2402-4240-9e58-ad1f9362f714",
+    "purchase_date": "2025-06-08 16:42:00",
+    "supplier_name": "Unifam Official Store",
+    "notes": "",
+    "created_at": "2025-06-08 09:42:59.878862",
+    "purchase_code": "PUR-20250608-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "ab1dba2a-72ae-4e4e-b15b-77160338a5de",
+    "purchase_date": "2025-07-16 09:10:00",
+    "supplier_name": "DM Medical",
+    "notes": "",
+    "created_at": "2025-07-16 02:12:05.638812",
+    "purchase_code": "PUR-20250716-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "af1840e8-e3a9-4e5d-9ff0-05171125b13a",
+    "purchase_date": "2025-09-22 17:33:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-09-22 10:35:30.484527",
+    "purchase_code": "PUR-20250922-0002",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "af2be25b-5a3b-4e4a-88ea-13a71c89c957",
+    "purchase_date": "2025-07-05 12:33:00",
+    "supplier_name": "snack_makocoh",
+    "notes": "",
+    "created_at": "2025-07-05 05:35:00.075496",
+    "purchase_code": "PUR-20250705-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "affa2967-0d1e-4db1-92a3-73ad4f0cd83c",
+    "purchase_date": "2025-05-21 14:28:00",
+    "supplier_name": "Kantor Pos",
+    "notes": "",
+    "created_at": "2025-06-02 07:29:26.927779",
+    "purchase_code": "PUR-20250521-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "b0218023-6861-4c91-ab7e-5250a5c73f56",
+    "purchase_date": "2025-06-26 16:32:00",
+    "supplier_name": "PD AA Snack",
+    "notes": "",
+    "created_at": "2025-06-26 09:33:21.07741",
+    "purchase_code": "PUR-20250626-0006",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "b1623a5a-e562-4b28-b639-02d806d9e6f7",
+    "purchase_date": "2025-06-26 15:54:00",
+    "supplier_name": "Sales",
+    "notes": "",
+    "created_at": "2025-06-26 08:54:21.779242",
+    "purchase_code": "PUR-20250626-0003",
+    "supplier_type": "Sales",
+    "deleted_at": "2025-06-26 08:55:12.729+00"
+  },
+  {
+    "id": "b210e029-9c49-47d1-ae1a-32f21196ab1f",
+    "purchase_date": "2025-10-04 18:51:00",
+    "supplier_name": "Jember Stationery",
+    "notes": "",
+    "created_at": "2025-10-04 11:52:25.194233",
+    "purchase_code": "PUR-20251004-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "b240b1a4-5739-46d2-a29a-543f163cbfb6",
+    "purchase_date": "2025-08-06 17:01:00",
+    "supplier_name": "snack_makocoh",
+    "notes": "",
+    "created_at": "2025-08-06 10:02:26.799785",
+    "purchase_code": "PUR-20250806-0007",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "b2df21a1-a0bc-4ec5-af1f-b38383be60b0",
+    "purchase_date": "2025-07-28 12:28:00",
+    "supplier_name": "Hemat Peking",
+    "notes": "",
+    "created_at": "2025-07-28 05:28:46.944733",
+    "purchase_code": "PUR-20250728-0004",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "b38111a0-9f02-497a-a902-7be6d78016ab",
+    "purchase_date": "2025-05-10 09:50:00",
+    "supplier_name": "PapershopJKT Official Shop",
+    "notes": "",
+    "created_at": "2025-06-01 02:54:18.809128",
+    "purchase_code": "PUR-20250510-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "b391b9cb-6039-4f3f-951c-20a71d87bbc3",
+    "purchase_date": "2025-11-15 18:16:00",
+    "supplier_name": "Candy Snack",
+    "notes": "",
+    "created_at": "2025-11-15 11:16:52.588454",
+    "purchase_code": "PUR-20251115-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "b4f4e6c2-33fb-4d34-8efa-04e419ca9498",
+    "purchase_date": "2025-06-27 14:58:00",
+    "supplier_name": "Zahra Store 21",
+    "notes": "",
+    "created_at": "2025-06-27 07:59:27.612996",
+    "purchase_code": "PUR-20250627-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "b58dfa07-b3a5-4bba-b3c7-0fe4b1d71f3f",
+    "purchase_date": "2025-08-08 18:11:00",
+    "supplier_name": "Si Mpay Snack",
+    "notes": "",
+    "created_at": "2025-08-08 11:13:57.886952",
+    "purchase_code": "PUR-20250808-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "b594e688-1ab0-45ee-8355-61f918b57e7e",
+    "purchase_date": "2025-05-25 09:54:00",
+    "supplier_name": "Montana Official Shop",
+    "notes": "",
+    "created_at": "2025-05-25 03:01:59.218003",
+    "purchase_code": "PUR-20250525-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "b71b53c9-f370-4218-ba2b-8b9d5bcea882",
+    "purchase_date": "2025-06-21 10:37:00",
+    "supplier_name": "Qween Beauty",
+    "notes": "",
+    "created_at": "2025-06-21 03:39:01.413567",
+    "purchase_code": "PUR-20250621-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "b9e2e3d7-1d9d-407f-8ff6-f68ee63346fa",
+    "purchase_date": "2025-09-11 16:08:00",
+    "supplier_name": "Si Mpay Snack",
+    "notes": "",
+    "created_at": "2025-09-11 09:09:36.42704",
+    "purchase_code": "PUR-20250911-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "ba3be217-da7c-4d1d-89b2-ecfc92377eb4",
+    "purchase_date": "2025-08-05 11:56:00",
+    "supplier_name": "maccshop",
+    "notes": "",
+    "created_at": "2025-08-05 05:06:16.747612",
+    "purchase_code": "PUR-20250805-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "bab295df-ae7e-4a95-95f6-18212f844491",
+    "purchase_date": "2025-10-08 18:13:00",
+    "supplier_name": "Toko Arief Aksesoris",
+    "notes": "",
+    "created_at": "2025-10-09 11:14:21.255472",
+    "purchase_code": "PUR-20251008-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "bb072747-2142-4931-a18e-db24febc9d1a",
+    "purchase_date": "2025-12-10 19:05:00",
+    "supplier_name": "Montana Official Shop",
+    "notes": "",
+    "created_at": "2025-12-10 12:06:27.954595",
+    "purchase_code": "PUR-20251210-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "bc5011ee-02a3-4c37-9e78-3c705dfd0b67",
+    "purchase_date": "2025-08-06 11:40:00",
+    "supplier_name": "Barayana Shop",
+    "notes": "",
+    "created_at": "2025-08-06 04:41:04.866538",
+    "purchase_code": "PUR-20250806-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "be0da407-f648-42fe-95f0-2a56884a5b53",
+    "purchase_date": "2025-07-14 13:58:00",
+    "supplier_name": "snack_makocoh",
+    "notes": "",
+    "created_at": "2025-07-14 06:59:30.47457",
+    "purchase_code": "PUR-20250714-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "be358b78-6fb8-4578-9217-405ab5ad48d5",
+    "purchase_date": "2025-08-28 18:58:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-08-28 12:00:13.747384",
+    "purchase_code": "PUR-20250828-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "bfdf8f77-9825-4140-8677-623f0fe7dd66",
+    "purchase_date": "2025-11-29 18:20:00",
+    "supplier_name": "\"bintang 999 \"",
+    "notes": "",
+    "created_at": "2025-11-29 11:21:17.604156",
+    "purchase_code": "PUR-20251129-0002",
+    "supplier_type": "Online Shop - Tiktok Shop",
+    "deleted_at": ""
+  },
+  {
+    "id": "c0801b18-4547-4171-b20a-56c3236a6336",
+    "purchase_date": "2025-07-29 14:29:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-07-29 07:29:38.082013",
+    "purchase_code": "PUR-20250729-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "c0880f43-1457-4a56-a59b-a420b0645b74",
+    "purchase_date": "2025-11-05 07:47:00",
+    "supplier_name": "Gudang Grosir GG",
+    "notes": "",
+    "created_at": "2025-11-06 00:48:27.94817",
+    "purchase_code": "PUR-20251105-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "c0bd28c0-f680-4a52-87db-5d981338d1d3",
+    "purchase_date": "2025-05-14 14:11:00",
+    "supplier_name": "Toko Sinar Mulia 1 (Balong Prapatan)",
+    "notes": "",
+    "created_at": "2025-06-07 07:12:45.823614",
+    "purchase_code": "PUR-20250514-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "c29d5823-badd-4d59-b752-64fdf6f91221",
+    "purchase_date": "2025-04-18 09:43:00",
+    "supplier_name": "Casual18",
+    "notes": "",
+    "created_at": "2025-06-01 02:44:00.222607",
+    "purchase_code": "PUR-20250418-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": "2025-06-01 02:44:39.56+00"
+  },
+  {
+    "id": "c3fbb337-10af-478e-9f9c-258d28542857",
+    "purchase_date": "2025-09-26 08:05:00",
+    "supplier_name": "THETOYS",
+    "notes": "",
+    "created_at": "2025-09-26 01:08:47.013417",
+    "purchase_code": "PUR-20250926-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "c42747b7-a64c-4030-817a-b9693aa6b760",
+    "purchase_date": "2025-09-30 18:05:00",
+    "supplier_name": "chanatoys",
+    "notes": "",
+    "created_at": "2025-09-30 11:07:11.748082",
+    "purchase_code": "PUR-20250930-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "c5f61b0c-7c90-42c4-b8be-7636454aec5b",
+    "purchase_date": "2025-09-05 14:30:00",
+    "supplier_name": "AmaliaHerbal21_",
+    "notes": "",
+    "created_at": "2025-09-07 07:30:54.137299",
+    "purchase_code": "PUR-20250905-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "c6fbc8ba-a83e-45b5-9ec2-a8d2f9a56901",
+    "purchase_date": "2025-12-23 18:36:00",
+    "supplier_name": "SJ Store 17",
+    "notes": "",
+    "created_at": "2025-12-23 11:37:14.70072",
+    "purchase_code": "PUR-20251223-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "c7859613-dcc9-4639-b07f-db2c51974355",
+    "purchase_date": "2025-07-10 15:14:00",
+    "supplier_name": "Snack Chiki",
+    "notes": "",
+    "created_at": "2025-07-10 08:14:40.635686",
+    "purchase_code": "PUR-20250710-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "c799cec6-9772-4187-aa27-bd3b7833d370",
+    "purchase_date": "2025-09-17 11:37:00",
+    "supplier_name": "mafakhirzen",
+    "notes": "",
+    "created_at": "2025-09-17 04:37:42.236795",
+    "purchase_code": "PUR-20250917-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "c9620f28-7f24-4e55-b4b8-6db7bfcbbd95",
+    "purchase_date": "2025-10-11 18:48:00",
+    "supplier_name": "CTR Grosir Cikarang",
+    "notes": "",
+    "created_at": "2025-10-11 11:49:21.908514",
+    "purchase_code": "PUR-20251011-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "cc6b80a0-c64e-4eea-bd36-be619fad22ae",
+    "purchase_date": "2025-07-09 08:54:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-07-09 01:55:51.522393",
+    "purchase_code": "PUR-20250709-0002",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "ccd25147-7ecf-46ae-8455-a0ccf6a2bdd4",
+    "purchase_date": "2025-09-11 18:10:00",
+    "supplier_name": "Acc Andi",
+    "notes": "",
+    "created_at": "2025-09-11 11:11:47.670732",
+    "purchase_code": "PUR-20250911-0004",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "cd136b89-38f3-4bf6-81f3-9f6dfc25b563",
+    "purchase_date": "2025-09-20 18:11:00",
+    "supplier_name": "Candy Snack",
+    "notes": "",
+    "created_at": "2025-09-20 11:12:18.96413",
+    "purchase_code": "PUR-20250920-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "ce9f79af-c55c-450b-95bc-e6530291c974",
+    "purchase_date": "2025-05-28 09:06:00",
+    "supplier_name": "Tester",
+    "notes": "",
+    "created_at": "2025-05-28 02:06:51.439813",
+    "purchase_code": "PUR-20250528-0004",
+    "supplier_type": "Tester",
+    "deleted_at": "2025-05-28 02:19:23.721+00"
+  },
+  {
+    "id": "d1b44a33-852c-43e4-8277-761116b51953",
+    "purchase_date": "2025-07-04 11:32:00",
+    "supplier_name": "Pusat Grosir Impor",
+    "notes": "",
+    "created_at": "2025-07-04 04:32:29.10473",
+    "purchase_code": "PUR-20250704-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": "2025-07-04 04:32:45.16+00"
+  },
+  {
+    "id": "d23783cb-1eae-49d1-b902-6f8823d751e0",
+    "purchase_date": "2025-09-11 16:00:00",
+    "supplier_name": "Kedai Jamu Herbal",
+    "notes": "",
+    "created_at": "2025-09-11 09:01:17.023607",
+    "purchase_code": "PUR-20250911-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "d47b1eb4-8753-45bc-83a9-a5771dad2e59",
+    "purchase_date": "2025-08-04 09:47:00",
+    "supplier_name": "GioGlenn Shop",
+    "notes": "",
+    "created_at": "2025-08-05 02:47:32.749223",
+    "purchase_code": "PUR-20250804-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "d5665745-50e5-4ea3-9c3b-01d7b65276f7",
+    "purchase_date": "2025-09-24 16:02:00",
+    "supplier_name": "CTR Grosir Bogor",
+    "notes": "",
+    "created_at": "2025-09-24 09:03:21.813003",
+    "purchase_code": "PUR-20250924-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "d5f635ff-7489-44eb-a486-64c971a74f25",
+    "purchase_date": "2025-09-13 15:12:00",
+    "supplier_name": "CV Tangkur",
+    "notes": "",
+    "created_at": "2025-09-13 10:09:32.678209",
+    "purchase_code": "PUR-20250913-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "d607d673-137b-4705-ac95-28680db1c974",
+    "purchase_date": "2025-08-06 19:23:00",
+    "supplier_name": "Mulyatek Official Store",
+    "notes": "",
+    "created_at": "2025-08-08 01:24:23.765242",
+    "purchase_code": "PUR-20250806-0009",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "d73ce79e-0ab1-4881-bdfd-93b9bea71063",
+    "purchase_date": "2025-09-13 18:13:00",
+    "supplier_name": "Montana Official Shop",
+    "notes": "",
+    "created_at": "2025-09-13 11:14:43.712689",
+    "purchase_code": "PUR-20250913-0004",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "d8e7d0b9-df21-4a38-a3a7-3f3379482dee",
+    "purchase_date": "2025-12-10 19:06:00",
+    "supplier_name": "Zakiya Store",
+    "notes": "",
+    "created_at": "2025-12-10 12:07:09.209404",
+    "purchase_code": "PUR-20251210-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "d93691ef-a8b3-4c31-80f4-2deb84ccab3f",
+    "purchase_date": "2025-11-08 18:21:00",
+    "supplier_name": "CTR Grosir Cikarang",
+    "notes": "",
+    "created_at": "2025-11-08 11:21:52.053033",
+    "purchase_code": "PUR-20251108-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "dacfbbdd-5a5f-4e4d-bc32-47958d26fb7b",
+    "purchase_date": "2025-07-09 08:12:00",
+    "supplier_name": "Tiga Naga",
+    "notes": "",
+    "created_at": "2025-07-09 01:13:34.062407",
+    "purchase_code": "PUR-20250709-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "db5676f9-e242-46a4-b744-34ce9300d07c",
+    "purchase_date": "2025-09-17 08:40:00",
+    "supplier_name": "ayo.klik",
+    "notes": "",
+    "created_at": "2025-09-17 01:41:04.824541",
+    "purchase_code": "PUR-20250917-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "dc63e463-80cc-40e9-afc6-d8788bec63f8",
+    "purchase_date": "2025-06-26 22:30:00",
+    "supplier_name": "Sales",
+    "notes": "",
+    "created_at": "2025-06-26 08:53:43.308414",
+    "purchase_code": "PUR-20250626-0002",
+    "supplier_type": "Sales",
+    "deleted_at": "2025-06-26 08:54:03.545+00"
+  },
+  {
+    "id": "dcda2e4f-ac78-48b5-bf30-ac93bd01edba",
+    "purchase_date": "2025-09-26 08:03:00",
+    "supplier_name": "Online Express",
+    "notes": "",
+    "created_at": "2025-09-26 01:03:43.053847",
+    "purchase_code": "PUR-20250926-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "dcef3ecf-7a0c-4762-8c2e-33695eeda654",
+    "purchase_date": "2025-12-01 08:41:00",
+    "supplier_name": "Mainan Azka Toys",
+    "notes": "",
+    "created_at": "2025-12-01 10:32:38.550112",
+    "purchase_code": "PUR-20251201-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "de37ca0c-9dc4-436c-8aa2-6df4aee2e77f",
+    "purchase_date": "2025-05-26 09:41:00",
+    "supplier_name": "Lianggui Food",
+    "notes": "",
+    "created_at": "2025-05-26 02:55:55.466102",
+    "purchase_code": "PUR-20250526-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "de4b903e-4d59-4def-8b8f-768c23d036d8",
+    "purchase_date": "2025-04-14 15:34:00",
+    "supplier_name": "NSS Frozen Food",
+    "notes": "",
+    "created_at": "2025-06-04 08:37:23.304011",
+    "purchase_code": "PUR-20250414-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "dec0a633-45dd-42cc-865e-6642300a19f8",
+    "purchase_date": "2025-05-23 16:52:00",
+    "supplier_name": "toko.cemilancepuluh",
+    "notes": "",
+    "created_at": "2025-05-24 09:53:59.136881",
+    "purchase_code": "PUR-20250524-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "decd898c-6d12-43f1-9f10-43e88bc8448c",
+    "purchase_date": "2025-07-18 19:00:00",
+    "supplier_name": "Si Mpay Snack",
+    "notes": "",
+    "created_at": "2025-07-18 12:01:18.242189",
+    "purchase_code": "PUR-20250718-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "dfa9e74d-0ddb-45d3-b36c-f5b22c9028d9",
+    "purchase_date": "2025-04-19 09:47:00",
+    "supplier_name": "Montana Official Shop",
+    "notes": "",
+    "created_at": "2025-06-01 02:48:21.449569",
+    "purchase_code": "PUR-20250419-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "dfffad0e-7a77-44f9-b529-77db13a61035",
+    "purchase_date": "2025-05-28 11:33:00",
+    "supplier_name": "Bossco",
+    "notes": "",
+    "created_at": "2025-05-28 04:45:46.415318",
+    "purchase_code": "PUR-20250528-0005",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "e1379ef0-75de-4632-9262-9c2d506fb96c",
+    "purchase_date": "2025-06-26 16:38:00",
+    "supplier_name": "INA Grocery",
+    "notes": "",
+    "created_at": "2025-06-26 09:38:40.580863",
+    "purchase_code": "PUR-20250626-0007",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "e220c510-a41a-4a41-8bdc-c5512a89b63f",
+    "purchase_date": "2025-06-07 09:34:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-06-07 02:35:27.647747",
+    "purchase_code": "PUR-20250607-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "e2266a36-f1da-496a-a22b-81faba8ed4cc",
+    "purchase_date": "2025-05-20 09:38:00",
+    "supplier_name": "Tester",
+    "notes": "",
+    "created_at": "2025-05-28 02:39:01.896874",
+    "purchase_code": "PUR-20250520-0001",
+    "supplier_type": "Tester",
+    "deleted_at": "2025-05-28 02:40:31.159+00"
+  },
+  {
+    "id": "e5c2b404-78a4-401f-b892-94734928f1b2",
+    "purchase_date": "2025-09-23 15:54:00",
+    "supplier_name": "chanatoys",
+    "notes": "",
+    "created_at": "2025-09-23 08:55:41.751416",
+    "purchase_code": "PUR-20250923-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "e6f2d74e-2cc6-426c-b521-a0d9b1d07edc",
+    "purchase_date": "2025-12-08 17:15:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-12-08 10:16:54.38901",
+    "purchase_code": "PUR-20251208-0001",
+    "supplier_type": "Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "e6fa74c2-12e9-48d1-9409-536f88d48e9c",
+    "purchase_date": "2025-04-17 09:36:00",
+    "supplier_name": "Murce Acc",
+    "notes": "",
+    "created_at": "2025-06-01 02:37:52.369201",
+    "purchase_code": "PUR-20250417-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "e7cb0bc1-3fd6-4fba-880c-a1fbcdf12eb4",
+    "purchase_date": "2025-07-04 11:33:00",
+    "supplier_name": "Snack Chiki",
+    "notes": "",
+    "created_at": "2025-07-04 04:34:09.922148",
+    "purchase_code": "PUR-20250704-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "e9ec6054-7329-4ac7-9457-a5d11051025d",
+    "purchase_date": "2025-07-09 15:08:00",
+    "supplier_name": "Havyn Shop",
+    "notes": "",
+    "created_at": "2025-07-09 08:09:20.01447",
+    "purchase_code": "PUR-20250709-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "ebecd16f-6b05-47d2-8992-5c2fec758372",
+    "purchase_date": "2025-08-06 11:38:00",
+    "supplier_name": "Yollanda16",
+    "notes": "",
+    "created_at": "2025-08-06 04:39:58.066092",
+    "purchase_code": "PUR-20250806-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "ec8669c6-07a3-4ffc-96a3-5018b18e2c6e",
+    "purchase_date": "2025-07-16 09:19:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-07-16 02:22:16.7084",
+    "purchase_code": "PUR-20250716-0002",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "ecb95445-8750-4278-a44f-886aeb488eef",
+    "purchase_date": "2025-07-05 09:35:00",
+    "supplier_name": "HN's Grosir Store",
+    "notes": "",
+    "created_at": "2025-07-05 02:36:27.038254",
+    "purchase_code": "PUR-20250705-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "eceeae75-530e-4d21-b5fb-ffa1f16b7b70",
+    "purchase_date": "2025-12-06 18:41:00",
+    "supplier_name": "\"bintang 999 \"",
+    "notes": "",
+    "created_at": "2025-12-06 11:41:49.375099",
+    "purchase_code": "PUR-20251206-0001",
+    "supplier_type": "Online Shop - Tiktok Shop",
+    "deleted_at": ""
+  },
+  {
+    "id": "ecfedebd-f771-4a55-94b6-0d718974e5bb",
+    "purchase_date": "2025-07-05 09:36:00",
+    "supplier_name": "yenny_yang",
+    "notes": "",
+    "created_at": "2025-07-05 02:37:37.793372",
+    "purchase_code": "PUR-20250705-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "ed3cac5c-adec-4ecb-beef-51821e486dff",
+    "purchase_date": "2025-12-25 16:04:00",
+    "supplier_name": "Koboy Snack",
+    "notes": "",
+    "created_at": "2025-12-25 09:04:58.945981",
+    "purchase_code": "PUR-20251225-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "ee2f31bf-91bb-455b-ad75-f5e0e40ec6e8",
+    "purchase_date": "2025-07-23 10:40:00",
+    "supplier_name": "Oscar Mart",
+    "notes": "",
+    "created_at": "2025-07-23 03:43:20.401804",
+    "purchase_code": "PUR-20250723-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "ef8e6869-03b0-46eb-b9f0-736b3068cab5",
+    "purchase_date": "2025-11-29 18:17:00",
+    "supplier_name": "bitang 999",
+    "notes": "",
+    "created_at": "2025-11-29 11:20:08.429241",
+    "purchase_code": "PUR-20251129-0001",
+    "supplier_type": "Online Shop - Tiktok Shop",
+    "deleted_at": "2025-11-29 11:20:59.163+00"
+  },
+  {
+    "id": "f2bdb285-df5c-4050-baee-4a121dd8d420",
+    "purchase_date": "2025-09-03 08:57:00",
+    "supplier_name": "Rahmaan Snack",
+    "notes": "",
+    "created_at": "2025-09-04 01:57:56.739327",
+    "purchase_code": "PUR-20250903-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "f3a3cf9b-1b80-47dc-a8d3-78c7ff422b97",
+    "purchase_date": "2025-05-16 07:03:00",
+    "supplier_name": "Acc Andi",
+    "notes": "",
+    "created_at": "2025-07-15 00:03:43.254669",
+    "purchase_code": "PUR-20250516-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "f4e94b01-66cb-429b-8ba3-138889ca62e6",
+    "purchase_date": "2025-12-11 18:22:00",
+    "supplier_name": "BAI_STORE",
+    "notes": "",
+    "created_at": "2025-12-13 11:24:35.48892",
+    "purchase_code": "PUR-20251211-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "f5e983a2-7eec-48e0-9f99-98f6bc2e60ae",
+    "purchase_date": "2025-09-18 17:54:00",
+    "supplier_name": "JayaBersama_939",
+    "notes": "",
+    "created_at": "2025-09-18 10:56:20.28396",
+    "purchase_code": "PUR-20250918-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "f6d734a3-68e0-4286-a234-7b80e83dee13",
+    "purchase_date": "2025-08-07 08:21:00",
+    "supplier_name": "Tiga Naga",
+    "notes": "",
+    "created_at": "2025-08-08 01:22:28.990191",
+    "purchase_code": "PUR-20250807-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "f759de60-7344-4110-8598-8272f9f9fd15",
+    "purchase_date": "2025-08-07 08:06:00",
+    "supplier_name": "Cing Dewi",
+    "notes": "",
+    "created_at": "2025-08-08 01:07:05.392984",
+    "purchase_code": "PUR-20250807-0001",
+    "supplier_type": "Toko Fisik",
+    "deleted_at": ""
+  },
+  {
+    "id": "f79a8852-0765-48af-b3b4-c920180bfc46",
+    "purchase_date": "2025-06-23 17:29:00",
+    "supplier_name": "Handmade",
+    "notes": "",
+    "created_at": "2025-06-24 10:30:04.20024",
+    "purchase_code": "PUR-20250623-0002",
+    "supplier_type": "Handmade",
+    "deleted_at": ""
+  },
+  {
+    "id": "f82f021e-7370-4615-be4e-5ce1c50a3bc4",
+    "purchase_date": "2025-06-01 09:38:00",
+    "supplier_name": "Putri Indah 84",
+    "notes": "",
+    "created_at": "2025-06-01 02:38:47.799656",
+    "purchase_code": "PUR-20250601-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": "2025-06-01 02:39:02.096+00"
+  },
+  {
+    "id": "f8b5594b-7d09-4ebd-a27e-ec54eeeff223",
+    "purchase_date": "2025-09-26 08:14:00",
+    "supplier_name": "Toko Sport Murah",
+    "notes": "",
+    "created_at": "2025-09-26 01:15:12.201022",
+    "purchase_code": "PUR-20250926-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "fb6c3cc3-2ab1-4547-9ba1-311112e393d1",
+    "purchase_date": "2025-06-18 16:13:00",
+    "supplier_name": "Kriuk Joss",
+    "notes": "",
+    "created_at": "2025-06-18 09:13:53.312613",
+    "purchase_code": "PUR-20250618-0003",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "fc7eed2c-e882-469b-9f5d-243ab4ec65b4",
+    "purchase_date": "2025-11-08 18:21:00",
+    "supplier_name": "Havyn Shop",
+    "notes": "",
+    "created_at": "2025-11-08 11:22:26.440613",
+    "purchase_code": "PUR-20251108-0002",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "fd6a81e8-3fd6-46ae-9885-7a31e1ceb6fb",
+    "purchase_date": "2025-06-29 18:19:00",
+    "supplier_name": "Havyn Shop",
+    "notes": "",
+    "created_at": "2025-06-29 11:20:01.231393",
+    "purchase_code": "PUR-20250629-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "fd81c47f-c05e-41d5-bfe0-c65d14863771",
+    "purchase_date": "2025-06-26 16:28:00",
+    "supplier_name": "Wiwi_onlineshop",
+    "notes": "",
+    "created_at": "2025-06-26 09:30:12.354611",
+    "purchase_code": "PUR-20250626-0005",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  },
+  {
+    "id": "fec202f4-8158-4cea-80cc-d9400154e984",
+    "purchase_date": "2025-04-15 16:39:00",
+    "supplier_name": "ASNER_SHOP",
+    "notes": "",
+    "created_at": "2025-06-22 09:39:44.871501",
+    "purchase_code": "PUR-20250415-0001",
+    "supplier_type": "Online Shop - Shopee",
+    "deleted_at": ""
+  }
+]

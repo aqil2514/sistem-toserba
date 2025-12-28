@@ -14,7 +14,7 @@ interface ApiErrorResponse {
 
 export function usePurchases() {
   const fetcher = useFetch<Purchase[]>(
-    `${SERVER_URL}/purchases`
+    `${SERVER_URL}/purchase`
   );
 
   const productsFetcher = useFetch<Product[]>(

@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 export function useToserbaHeader() {
   const NAV_ITEMS = [
     { title: "Produk", href: "/products" },
-    { title: "Penjualan", href: "/sales" },
+    { title: "Pembelian", href: "/purchase" },
   ];
 
   // Route yang tidak menampilkan header

@@ -28,9 +28,9 @@ import { purchaseSchema, PurchaseFormValues } from "../schema/purchase.schema";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
+  ProductInput,
   ProductOption,
-  ProductSelector,
-} from "@/components/molecules/product-selector";
+} from "@/components/molecules/product-input";
 
 interface Props {
   open: boolean;
@@ -84,12 +84,26 @@ export function PurchaseFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-3xl">
+      <DialogContent
+        className="sm:max-w-3xl"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Tambah Barang Masuk</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                const target = e.target as HTMLElement;
+                if (target.getAttribute("role") === "combobox") {
+                  e.preventDefault();
+                }
+              }
+            }}
+            className="space-y-6"
+          >
             <ScrollArea className="h-96 pr-4">
               {/* ================= HEADER ================= */}
               <div className="grid grid-cols-2 gap-4">
@@ -230,7 +244,7 @@ export function PurchaseFormDialog({
                             <FormItem>
                               <FormLabel>Produk</FormLabel>
                               <FormControl>
-                                <ProductSelector
+                                <ProductInput
                                   mode={mode}
                                   value={field.value}
                                   onChange={field.onChange}

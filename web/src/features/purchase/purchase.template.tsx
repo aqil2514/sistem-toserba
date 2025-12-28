@@ -15,6 +15,7 @@ import { purchaseColumns } from "./components/columns.purchase";
 import { PurchaseFormDialog } from "./components/form.purchase";
 import { PurchaseFormValues } from "./schema/purchase.schema";
 import { Product } from "../products/type";
+import { PurchaseDetailDialog } from "./components/detail-dialog.purchase";
 
 type PurchaseTemplateProps = {
   mode: "private" | "demo";
@@ -40,6 +41,7 @@ export function PurchaseTemplate({
 }: PurchaseTemplateProps) {
   const [open, setOpen] = useState(false);
   const [deleting, setDeleting] = useState<Purchase | null>(null);
+  const [detailing, setDetailing] = useState<Purchase | null>(null);
 
   function handleAdd() {
     setOpen(true);
@@ -70,7 +72,10 @@ export function PurchaseTemplate({
 
           {!isLoading && !error && data.length > 0 && (
             <DataTable
-              columns={purchaseColumns(setDeleting)}
+              columns={purchaseColumns({
+                onDelete: setDeleting,
+                onDetail: setDetailing,
+              })}
               data={data}
               pageSize={10}
               searchKey="purchase_code"
@@ -100,6 +105,12 @@ export function PurchaseTemplate({
           onDelete(deleting.id);
           setDeleting(null);
         }}
+      />
+
+      <PurchaseDetailDialog
+        open={!!detailing}
+        onOpenChange={(open) => !open && setDetailing(null)}
+        purchase={detailing}
       />
     </MainContainer>
   );
