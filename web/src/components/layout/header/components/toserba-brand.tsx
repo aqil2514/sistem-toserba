@@ -1,30 +1,32 @@
 import Link from "next/link";
 import { useToserbaHeader } from "../hooks/use-toserba-header";
 
-interface Props {
-  isDemo: boolean;
-}
-
-export function ToserbaBrand({ isDemo }: Props) {
-  const { pathname } = useToserbaHeader();
+export function ToserbaBrand() {
+  const { pathname, isDemo, isAuthenticated } = useToserbaHeader();
 
   const basePath = normalizePath(pathname);
 
+  const modeBadge = isDemo ? (
+    <span className="rounded bg-yellow-100 px-2 py-0.5 text-xs text-yellow-800">
+      Demo Mode
+    </span>
+  ) : (
+    <span className="rounded bg-green-100 px-2 py-0.5 text-xs text-green-800">
+      Private Mode
+    </span>
+  );
+
   return (
     <div className="flex items-center gap-3">
-      {/* MODE SWITCH */}
-      {isDemo ? (
-        <Link href={basePath || "/dashboard"}>
-          <span className="rounded bg-yellow-100 px-2 py-0.5 text-xs text-yellow-800 cursor-pointer">
-            Demo Mode
-          </span>
-        </Link>
+      {/* MODE BADGE */}
+      {isAuthenticated ? (
+        isDemo ? (
+          <Link href={basePath || "/dashboard"}>{modeBadge}</Link>
+        ) : (
+          <Link href={`/demo${basePath || "/dashboard"}`}>{modeBadge}</Link>
+        )
       ) : (
-        <Link href={`/demo${basePath || "/dashboard"}`}>
-          <span className="rounded bg-green-100 px-2 py-0.5 text-xs text-green-800 cursor-pointer">
-            Private Mode
-          </span>
-        </Link>
+        <span className="cursor-default opacity-80">{modeBadge}</span>
       )}
 
       {/* BRAND */}
