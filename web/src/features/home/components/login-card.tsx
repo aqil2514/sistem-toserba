@@ -8,14 +8,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Chrome } from "lucide-react";
+import { Chrome, Eye } from "lucide-react";
+import Link from "next/link";
 import { useToastHome } from "../hooks/use-toast-home";
-
-const BACKEND_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://localhost:3001";
+import { SERVER_URL } from "@/constants/url";
 
 export function LoginCard() {
   useToastHome();
+
   return (
     <Card className="w-full max-w-sm shadow-lg">
       <CardHeader className="space-y-2 text-center">
@@ -24,15 +24,25 @@ export function LoginCard() {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <a href={`${BACKEND_URL}/auth/google`} className="block">
+        {/* LOGIN GOOGLE */}
+        <a href={`${SERVER_URL}/auth/google`} className="block">
           <Button className="w-full gap-2" size="lg">
-            <Chrome className="w-4 h-4" />
+            <Chrome className="h-4 w-4" />
             Login dengan Google
           </Button>
         </a>
 
+        {/* DEMO MODE */}
+        <Link href="/demo/dashboard" className="block">
+          <Button variant="outline" className="w-full gap-2" size="lg">
+            <Eye className="h-4 w-4" />
+            Coba Demo
+          </Button>
+        </Link>
+
         <p className="text-xs text-muted-foreground text-center">
-          Hanya email yang terdaftar yang dapat mengakses sistem ini.
+          Login hanya untuk admin terdaftar. <br />
+          Mode demo tidak menyimpan data ke server.
         </p>
       </CardContent>
     </Card>

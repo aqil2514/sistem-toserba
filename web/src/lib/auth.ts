@@ -1,4 +1,5 @@
 import { AuthUser } from "@/@types/auth";
+import { SERVER_URL } from "@/constants/url";
 import { headers } from "next/headers";
 
 export async function getMe(): Promise<AuthUser | null> {
@@ -6,7 +7,7 @@ export async function getMe(): Promise<AuthUser | null> {
     const headerStore = await headers();
     const cookieHeader = headerStore.get("cookie") ?? "";
 
-    const res = await fetch("http://localhost:3001/auth/me", {
+    const res = await fetch(`${SERVER_URL}/auth/me`, {
       method: "GET",
       headers: {
         Cookie: cookieHeader,

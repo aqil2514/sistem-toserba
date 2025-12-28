@@ -10,9 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { useToastDashboard } from "../hooks/use-toast-dashboard";
-
-const BACKEND_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://localhost:3001";
+import { SERVER_URL } from "@/constants/url";
 
 export function DashboardCard() {
   useToastDashboard();
@@ -24,7 +22,7 @@ export function DashboardCard() {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <form action={`${BACKEND_URL}/auth/logout`} method="post">
+        <form action={`${SERVER_URL}/auth/logout`} method="post">
           <Button variant="destructive" className="w-full gap-2" size="lg">
             <LogOut className="w-4 h-4" />
             Logout
