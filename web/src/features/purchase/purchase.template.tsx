@@ -17,13 +17,14 @@ import { PurchaseFormValues } from "./schema/purchase.schema";
 import { Product } from "../products/type";
 import { PurchaseDetailDialog } from "./components/detail-dialog.purchase";
 import { usePurchaseItems } from "./hooks/use-purchase-items";
-import { mapPurchaseToFormValues } from "./utils/map";
+import { mapPurchaseToFormValues } from "./utils/map-purchase-to-form-values";
+import { getDemoPurchaseItems } from "./utils/get-demo-purchase-item";
 
 type PurchaseTemplateProps = {
   mode: "private" | "demo";
 
   data?: Purchase[];
-  products?: Product[]; // ✅ BARU
+  products?: Product[];
 
   isLoading?: boolean;
   error?: Error;
@@ -76,9 +77,15 @@ export function PurchaseTemplate({
   );
 
   const initialValues =
-    editing && editItems
-      ? mapPurchaseToFormValues(editing, editItems)
+    mode === "private"
+      ? editing && editItems
+        ? mapPurchaseToFormValues(editing, editItems)
+        : undefined
+      : editing
+      ? mapPurchaseToFormValues(editing, getDemoPurchaseItems(editing.id))
       : undefined;
+
+  const isFormLoading = mode === "private" ? isEditing && loadingItems : false;
 
   return (
     <MainContainer>
@@ -122,7 +129,7 @@ export function PurchaseTemplate({
         products={products}
         title={editing ? "Edit Barang Masuk" : "Tambah Barang Masuk"}
         initialValues={initialValues}
-        isLoading={isEditing && loadingItems}
+        isLoading={isFormLoading}
       />
 
       {/* DELETE */}
@@ -140,6 +147,7 @@ export function PurchaseTemplate({
       />
 
       <PurchaseDetailDialog
+        mode={mode}
         open={!!detailing}
         onOpenChange={(open) => !open && setDetailing(null)}
         purchase={detailing}

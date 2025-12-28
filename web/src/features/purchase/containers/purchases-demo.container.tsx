@@ -1,8 +1,7 @@
 "use client";
-
-import { PurchaseTemplate } from "../purchase.template";
+import { useDemoProducts } from "@/features/products/hooks/use-demo-products";
 import { useDemoPurchases } from "../hooks/use-demo-purchases";
-import { useDemoProducts } from "../../products/hooks/use-demo-products";
+import { PurchaseTemplate } from "../purchase.template";
 
 export function DemoPurchasesContainer() {
   const purchases = useDemoPurchases();
@@ -16,6 +15,7 @@ export function DemoPurchasesContainer() {
       isLoading={false}
       onCreate={purchases.create}
       onDelete={purchases.remove}
+      onUpdate={purchases.update}
     />
   );
 }

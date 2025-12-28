@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Product } from "../type";
 import { DEMO_PRODUCTS } from "../data/demo-products";
+import { toast } from "sonner";
 
 const STORAGE_KEY = "toserba-demo-products";
 
@@ -32,7 +33,7 @@ export function useDemoProducts() {
     setData(next);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   }
-
+  
   function create(
     values: Omit<Product, "id" | "created_at" | "updated_at">
   ) {
@@ -43,6 +44,9 @@ export function useDemoProducts() {
       updated_at: new Date().toISOString(),
     };
     save([newItem, ...data]);
+    toast.success("Tambah barang berhasil", {
+      description:`Produk "${values.name}" berhasil ditambah`
+    })
   }
 
   function update(id: string, values: Partial<Product>) {
@@ -53,10 +57,14 @@ export function useDemoProducts() {
           : p
       )
     );
+    toast.success("Barang berhasil diupdate", {
+      description:`Produk "${values.name}" berhasil diupdate`
+    })
   }
 
   function remove(id: string) {
     save(data.filter((p) => p.id !== id));
+    toast.success("Barang berhasil dihapus")
   }
 
   return {

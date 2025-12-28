@@ -21,7 +21,7 @@ export function ToserbaHeader() {
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="mx-auto flex h-14 max-w-7xl items-center px-4 gap-4">
-        <ToserbaBrand isDemo={isDemo} />
+        <ToserbaBrand />
         <ToserbaNavigationDesktop />
 
         <div className="flex-1" />
