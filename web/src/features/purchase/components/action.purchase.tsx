@@ -7,19 +7,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, Trash, Eye } from "lucide-react";
+import { MoreHorizontal, Trash, Eye, Pencil } from "lucide-react";
 import { Purchase } from "../types/purchase";
 
 interface PurchaseActionsProps {
   purchase: Purchase;
   onDelete: (purchase: Purchase) => void;
   onDetail: (purchase: Purchase) => void;
+  onEdit: (purchase: Purchase) => void;
 }
 
 export function PurchaseActions({
   purchase,
   onDelete,
   onDetail,
+  onEdit,
 }: PurchaseActionsProps) {
   return (
     <DropdownMenu>
@@ -33,6 +35,11 @@ export function PurchaseActions({
         <DropdownMenuItem onClick={() => onDetail(purchase)}>
           <Eye className="mr-2 h-4 w-4" />
           Detail
+        </DropdownMenuItem>
+
+        <DropdownMenuItem onClick={() => onEdit(purchase)}>
+          <Pencil className="mr-2 h-4 w-4" />
+          Edit
         </DropdownMenuItem>
 
         <DropdownMenuItem

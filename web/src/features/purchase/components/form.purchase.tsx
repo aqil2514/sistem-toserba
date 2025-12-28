@@ -31,22 +31,36 @@ import {
   ProductInput,
   ProductOption,
 } from "@/components/molecules/product-input";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { CurrencyInputID } from "@/components/ui/currency-input-id";
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: (values: PurchaseFormValues) => void;
   mode: "demo" | "private";
+
   products?: ProductOption[];
+
+  initialValues?: PurchaseFormValues; // ⬅️ BARU
+  title?: string; // ⬅️ BARU
+
+  isLoading?: boolean;
 }
 
 const EMPTY_VALUES: PurchaseFormValues = {
-  purchase_date: undefined,
+  purchase_date: new Date(),
   purchase_code: "",
   supplier_name: "",
   supplier_type: "",
   notes: "",
-  items: [],
+  items: [
+    {
+      price: 0,
+      product_id: "",
+      quantity: 0,
+    },
+  ],
 };
 
 export function PurchaseFormDialog({
@@ -55,10 +69,13 @@ export function PurchaseFormDialog({
   onSubmit,
   mode,
   products,
+  initialValues,
+  title,
+  isLoading,
 }: Props) {
   const form = useForm<PurchaseFormValues>({
     resolver: zodResolver(purchaseSchema),
-    defaultValues: EMPTY_VALUES,
+    defaultValues: initialValues ?? EMPTY_VALUES,
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -68,9 +85,9 @@ export function PurchaseFormDialog({
 
   useEffect(() => {
     if (open) {
-      form.reset(EMPTY_VALUES);
+      form.reset(initialValues ?? EMPTY_VALUES);
     }
-  }, [open, form]);
+  }, [open, initialValues, form]);
 
   const items = useWatch({
     control: form.control,
@@ -78,9 +95,19 @@ export function PurchaseFormDialog({
   });
 
   const total = (items ?? []).reduce(
-    (sum, item) => sum + (item?.price ?? 0) * (item?.quantity ?? 0),
+    (sum, item) => sum + (item?.price ?? 0),
     0
   );
+
+  if (isLoading) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-3xl h-80 flex items-center justify-center">
+          <LoadingSpinner label="Memuat data pembelian..." />
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -89,7 +116,7 @@ export function PurchaseFormDialog({
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <DialogHeader>
-          <DialogTitle>Tambah Barang Masuk</DialogTitle>
+          <DialogTitle>{title ?? "Tambah Barang Masuk"}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -230,48 +257,30 @@ export function PurchaseFormDialog({
                       ))}
                     </TabsList>
 
-                    {fields.map((field, index) => (
-                      <TabsContent
-                        key={field.id}
-                        value={`item-${index}`}
-                        className="border rounded-md p-4 mt-4 space-y-4"
-                      >
-                        {/* ===== PRODUK ===== */}
-                        <FormField
-                          control={form.control}
-                          name={`items.${index}.product_id`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Produk</FormLabel>
-                              <FormControl>
-                                <ProductInput
-                                  mode={mode}
-                                  value={field.value}
-                                  onChange={field.onChange}
-                                  products={products}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                    {fields.map((field, index) => {
+                      const buyPrice = items?.[index]?.price;
+                      const quantity = items?.[index]?.quantity;
+                      const hpp = formatRupiah(buyPrice / quantity, 2);
 
-                        <div className="grid grid-cols-2 gap-4">
-                          {/* ===== JUMLAH ===== */}
+                      return (
+                        <TabsContent
+                          key={field.id}
+                          value={`item-${index}`}
+                          className="border rounded-md p-4 mt-4 space-y-4"
+                        >
+                          {/* ===== PRODUK ===== */}
                           <FormField
                             control={form.control}
-                            name={`items.${index}.quantity`}
+                            name={`items.${index}.product_id`}
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Jumlah</FormLabel>
+                                <FormLabel>Produk</FormLabel>
                                 <FormControl>
-                                  <Input
-                                    type="number"
-                                    {...field}
+                                  <ProductInput
+                                    mode={mode}
                                     value={field.value}
-                                    onChange={(e) =>
-                                      field.onChange(Number(e.target.value))
-                                    }
+                                    onChange={field.onChange}
+                                    products={products}
                                   />
                                 </FormControl>
                                 <FormMessage />
@@ -279,54 +288,79 @@ export function PurchaseFormDialog({
                             )}
                           />
 
-                          {/* ===== HARGA BELI ===== */}
-                          <FormField
-                            control={form.control}
-                            name={`items.${index}.price`}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Harga Beli</FormLabel>
-                                <FormControl>
-                                  <Input
-                                    type="number"
-                                    {...field}
-                                    value={field.value}
-                                    onChange={(e) =>
-                                      field.onChange(Number(e.target.value))
-                                    }
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
+                          <div className="grid grid-cols-2 gap-4">
+                            {/* ===== JUMLAH ===== */}
+                            <FormField
+                              control={form.control}
+                              name={`items.${index}.quantity`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Jumlah</FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      type="number"
+                                      {...field}
+                                      value={field.value}
+                                      onChange={(e) =>
+                                        field.onChange(Number(e.target.value))
+                                      }
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            {/* ===== HARGA BELI ===== */}
+                            <FormField
+                              control={form.control}
+                              name={`items.${index}.price`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Harga Beli</FormLabel>
+                                  <FormControl>
+                                    <CurrencyInputID
+                                      {...field}
+                                      value={field.value}
+                                      onValueChange={(e) =>
+                                        field.onChange(Number(e))
+                                      }
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+
+                          {/* ===== INFO HPP (READ ONLY) ===== */}
+                          <div className="rounded-md bg-muted/50 p-3 text-sm">
+                            <p className="font-medium">Informasi HPP</p>
+
+                            <p className="text-muted-foreground">
+                              HPP :
+                              <span className="font-semibold text-foreground">
+                                {hpp}
+                              </span>
+                            </p>
+                          </div>
+
+                          {/* ===== ACTION ===== */}
+                          <div className="flex justify-end">
+                            {fields.length > 1 && (
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                className="text-destructive"
+                                onClick={() => remove(index)}
+                              >
+                                Hapus Barang Ini
+                              </Button>
                             )}
-                          />
-                        </div>
-
-                        {/* ===== INFO HPP (READ ONLY) ===== */}
-                        <div className="rounded-md bg-muted/50 p-3 text-sm">
-                          <p className="font-medium">Informasi HPP</p>
-
-                          <p className="text-muted-foreground">
-                            HPP :
-                            <span className="font-semibold text-foreground">
-                              {formatRupiah(items?.[index]?.price ?? 0)}
-                            </span>
-                          </p>
-                        </div>
-
-                        {/* ===== ACTION ===== */}
-                        <div className="flex justify-end">
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            className="text-destructive"
-                            onClick={() => remove(index)}
-                          >
-                            Hapus Barang Ini
-                          </Button>
-                        </div>
-                      </TabsContent>
-                    ))}
+                          </div>
+                        </TabsContent>
+                      );
+                    })}
                   </Tabs>
                 )}
               </div>

@@ -16,6 +16,8 @@ import { PurchaseFormDialog } from "./components/form.purchase";
 import { PurchaseFormValues } from "./schema/purchase.schema";
 import { Product } from "../products/type";
 import { PurchaseDetailDialog } from "./components/detail-dialog.purchase";
+import { usePurchaseItems } from "./hooks/use-purchase-items";
+import { mapPurchaseToFormValues } from "./utils/map";
 
 type PurchaseTemplateProps = {
   mode: "private" | "demo";
@@ -28,6 +30,7 @@ type PurchaseTemplateProps = {
 
   onCreate: (values: PurchaseFormValues) => void;
   onDelete: (id: string) => void;
+  onUpdate: (id: string, values: PurchaseFormValues) => void;
 };
 
 export function PurchaseTemplate({
@@ -37,20 +40,45 @@ export function PurchaseTemplate({
   error,
   onCreate,
   onDelete,
+  onUpdate,
   products,
 }: PurchaseTemplateProps) {
   const [open, setOpen] = useState(false);
   const [deleting, setDeleting] = useState<Purchase | null>(null);
   const [detailing, setDetailing] = useState<Purchase | null>(null);
+  const [editing, setEditing] = useState<Purchase | null>(null);
 
   function handleAdd() {
+    setEditing(null);
+    setOpen(true);
+  }
+
+  function handleEdit(purchase: Purchase) {
+    setEditing(purchase);
     setOpen(true);
   }
 
   function handleSubmit(values: PurchaseFormValues) {
-    onCreate(values);
+    if (editing) {
+      onUpdate(editing.id, values); // ⬅️ BARU
+      setEditing(null);
+    } else {
+      onCreate(values);
+    }
     setOpen(false);
   }
+
+  const isEditing = Boolean(open && editing);
+
+  const { data: editItems, isLoading: loadingItems } = usePurchaseItems(
+    editing?.id,
+    isEditing
+  );
+
+  const initialValues =
+    editing && editItems
+      ? mapPurchaseToFormValues(editing, editItems)
+      : undefined;
 
   return (
     <MainContainer>
@@ -75,6 +103,7 @@ export function PurchaseTemplate({
               columns={purchaseColumns({
                 onDelete: setDeleting,
                 onDetail: setDetailing,
+                onEdit: handleEdit,
               })}
               data={data}
               pageSize={10}
@@ -91,6 +120,9 @@ export function PurchaseTemplate({
         onSubmit={handleSubmit}
         mode={mode}
         products={products}
+        title={editing ? "Edit Barang Masuk" : "Tambah Barang Masuk"}
+        initialValues={initialValues}
+        isLoading={isEditing && loadingItems}
       />
 
       {/* DELETE */}

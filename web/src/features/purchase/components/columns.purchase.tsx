@@ -6,11 +6,13 @@ import { PurchaseActions } from "./action.purchase";
 type PurchaseColumnActions = {
   onDelete: (purchase: Purchase) => void;
   onDetail: (purchase: Purchase) => void;
+  onEdit: (purchase: Purchase) => void;
 };
 
 export const purchaseColumns = ({
   onDelete,
   onDetail,
+  onEdit,
 }: PurchaseColumnActions): ColumnDef<Purchase>[] => [
   {
     accessorKey: "purchase_code",
@@ -47,6 +49,7 @@ export const purchaseColumns = ({
           purchase={row.original}
           onDelete={onDelete}
           onDetail={onDetail}
+          onEdit={onEdit}
         />
       </div>
     ),

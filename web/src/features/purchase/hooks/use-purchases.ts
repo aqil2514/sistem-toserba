@@ -27,7 +27,7 @@ export function usePurchases() {
   const create = async (values: PurchaseFormValues) => {
     try {
       const { data } = await api.post<Purchase>(
-        "/purchases",
+        "/purchase",
         values
       );
 
@@ -45,11 +45,12 @@ export function usePurchases() {
   // ======================
   const update = async (
     id: string,
-    values: Partial<Purchase>
+    values: PurchaseFormValues
   ) => {
+    console.log(values);
     try {
       const { data } = await api.patch<Purchase>(
-        `/purchases/${id}`,
+        `/purchase/${id}`,
         values
       );
 
@@ -67,7 +68,7 @@ export function usePurchases() {
   // ======================
   const remove = async (id: string) => {
     try {
-      await api.delete(`/purchases/${id}`);
+      await api.delete(`/purchase/${id}`);
       toast.success("Pembelian berhasil dihapus");
       fetcher.mutate();
     } catch (error: unknown) {

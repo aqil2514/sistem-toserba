@@ -22,7 +22,8 @@ interface PurchaseDetailDialogProps {
   purchase: Purchase | null;
 }
 
-interface MappedResponse {
+export interface MappedResponse {
+  product_id: string;
   id: string;
   name: string;
   price: number;
@@ -44,7 +45,6 @@ export function PurchaseDetailDialog({
   );
 
   if (!purchase) return null;
-
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -189,7 +189,7 @@ function ItemCard({ item }: { item: MappedResponse }) {
 
 function ItemSummaryFooter({ items }: { items: MappedResponse[] }) {
   const totalQty = items.reduce((s, i) => s + i.quantity, 0);
-  const totalValue = items.reduce((s, i) => s + i.quantity * i.price, 0);
+  const totalValue = items.reduce((s, i) => s + i.price, 0);
 
   return (
     <div className="border-t pt-4 mt-2 space-y-2">

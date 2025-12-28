@@ -1,8 +1,12 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
   InternalServerErrorException,
   Param,
+  Patch,
+  Post,
   UseGuards,
 } from '@nestjs/common';
 import path from 'node:path';
@@ -12,6 +16,8 @@ import { PasetoGuard } from 'src/guards/paseto.guard';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Roles } from 'src/decorator/roles.decorator';
 import { PurchaseService } from './purchase.service';
+import { CreatePurchaseDto } from './dto/create-purchase.dto';
+import { UpdatePurchaseDto } from './dto/update-purchase.dto';
 
 @Controller('purchase')
 export class PurchaseController {
@@ -29,6 +35,30 @@ export class PurchaseController {
   @Get(':id')
   async getPurchaseItem(@Param('id') id: string) {
     return await this.purchaseService.findByIdWithItems(id);
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Delete(':id')
+  async softDeletePurchase(@Param('id') id: string) {
+    return await this.purchaseService.softDeletePurchase(id);
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Patch(':id')
+  async updatePurchase(
+    @Param('id') id: string,
+    @Body() body: UpdatePurchaseDto,
+  ) {
+    return await this.purchaseService.updatePurchase(id, body);
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Post()
+  async addPurchase(@Body() body: CreatePurchaseDto) {
+    return await this.purchaseService.createPurchase(body);
   }
 
   //   private supabase = createClient(

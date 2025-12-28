@@ -22,9 +22,9 @@ export const purchaseSchema = z.object({
 
   purchase_code: z.string().optional(),
 
-  supplier_name: z.string().optional(),
+  supplier_name: z.string().min(1, "Nama Suplier wajib diisi"),
 
-  supplier_type: z.string().optional(),
+  supplier_type: z.string().min(1, "Tipe supplier wajib diisi"),
 
   notes: z.string().optional(),
 

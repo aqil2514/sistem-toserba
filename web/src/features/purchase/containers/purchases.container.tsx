@@ -17,6 +17,7 @@ export function PurchasesContainer() {
       error={purchases.error || products.error}
       onCreate={purchases.create}
       onDelete={purchases.remove}
+      onUpdate={purchases.update}
     />
   );
 }

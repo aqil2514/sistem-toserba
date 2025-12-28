@@ -1,4 +1,5 @@
 export interface MappedResponse {
+  product_id: string;
   id: string;
   name: string;
   price: number;

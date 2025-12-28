@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { Product } from './interface/products.interface';
 
 @Injectable()
 export class ProductsService {
@@ -16,6 +17,18 @@ export class ProductsService {
       .select('*')
       .is('deleted_at', null)
       .order('name');
+
+    if (error) throw error;
+    return data;
+  }
+
+  async findById(productId: string): Promise<Product[]> {
+    const { data, error } = await this.supabase
+      .from('products')
+      .select('*')
+      .is('deleted_at', null)
+      .order('name')
+      .eq('id', productId);
 
     if (error) throw error;
     return data;
