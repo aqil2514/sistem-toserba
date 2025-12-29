@@ -6,8 +6,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { CreditCard, HandCoins, User } from "lucide-react";
+import { CalendarIcon, CreditCard, HandCoins, User } from "lucide-react";
 import React, { useState } from "react";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { DateRange } from "react-day-picker";
 
 type QueryFilter = "sales_code" | "customer_name" | "payment_method";
 
@@ -83,9 +86,39 @@ export function SalesToolbar() {
         <Input className="pl-10" placeholder={placeHolderMapper[query]} />
       </div>
 
-      <div>
-        Filter Tanggal Transaksi
-      </div>
+      <DatePicker />
     </div>
   );
 }
+
+// TODO : LANJUT KE SINI
+const DatePicker = () => {
+  const [date, setDate] = React.useState<DateRange>({
+    from: new Date(),
+  });
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          data-empty={!date}
+          className="data-[empty=true]:text-muted-foreground w-70 justify-start text-left font-normal"
+        >
+          <CalendarIcon />
+          {date ? format(date.from!, "PPP") : <span>Pick a date</span>}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0">
+        <Calendar
+          mode="range"
+          selected={date}
+          onSelect={(e) => {
+            if (!e) return;
+            setDate(e);
+          }}
+        />
+      </PopoverContent>
+    </Popover>
+  );
+};
