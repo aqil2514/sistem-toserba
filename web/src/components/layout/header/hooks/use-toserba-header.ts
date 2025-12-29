@@ -5,6 +5,7 @@ export function useToserbaHeader() {
   const NAV_ITEMS = [
     { title: "Produk", href: "/products" },
     { title: "Pembelian", href: "/purchase" },
+    { title: "Penjualan", href: "/sales" },
   ];
 
   // Route yang tidak menampilkan header

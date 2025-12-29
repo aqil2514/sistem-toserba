@@ -20,16 +20,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { PaginationDataTable } from "./pagination";
+import { ToolbarTable } from "./toolbar";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -37,6 +30,7 @@ interface DataTableProps<TData, TValue> {
   pageSize?: number;
   searchKey?: keyof TData;
   categoryKey?: keyof TData;
+  withPagination?: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -46,18 +40,12 @@ export function DataTable<TData extends Record<string, any>, TValue>({
   pageSize = 10,
   searchKey,
   categoryKey,
+  withPagination = true
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-
-  const categories = React.useMemo(() => {
-    if (!categoryKey) return [];
-    return Array.from(
-      new Set(data.map((item) => item[categoryKey]).filter(Boolean))
-    );
-  }, [data, categoryKey]);
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
@@ -85,63 +73,31 @@ export function DataTable<TData extends Record<string, any>, TValue>({
 
   return (
     <div className="space-y-4">
-      {/* Toolbar */}
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        {/* Search */}
-        {searchKey && (
-          <Input
-            placeholder="Cari produk..."
-            value={globalFilter ?? ""}
-            onChange={(e) => setGlobalFilter(e.target.value)}
-            className="md:max-w-xs"
-          />
-        )}
-
-        {/* Category Filter */}
-        {categoryKey && (
-          <Select
-            value={
-              (table
-                .getColumn(categoryKey as string)
-                ?.getFilterValue() as string) ?? "all"
-            }
-            onValueChange={(value) =>
-              table
-                .getColumn(categoryKey as string)
-                ?.setFilterValue(value === "all" ? undefined : value)
-            }
-          >
-            <SelectTrigger className="md:max-w-xs">
-              <SelectValue placeholder="Filter kategori" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Semua Kategori</SelectItem>
-              {categories.map((cat) => (
-                <SelectItem key={cat} value={cat}>
-                  {cat}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        )}
-      </div>
+      <ToolbarTable
+        categoryKey={categoryKey}
+        data={data}
+        globalFilter={globalFilter}
+        searchKey={searchKey}
+        setGlobalFilter={setGlobalFilter}
+        table={table}
+      />
 
       {/* Table */}
       <div className="rounded-md border">
         <Table>
-          <TableHeader>
+          <TableHeader className="sticky top-0 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="text-center">
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
                     onClick={header.column.getToggleSortingHandler()}
                     className={cn(
                       header.column.getCanSort() &&
-                        "cursor-pointer select-none hover:bg-muted"
+                        "cursor-pointer select-none hover:bg-muted text-center "
                     )}
                   >
-                    <div className="flex items-center gap-1">
+                    <div className="flex justify-center items-center gap-1">
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext()
@@ -165,7 +121,7 @@ export function DataTable<TData extends Record<string, any>, TValue>({
           <TableBody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow key={row.id} className="text-center">
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
@@ -190,32 +146,7 @@ export function DataTable<TData extends Record<string, any>, TValue>({
         </Table>
       </div>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">
-          Halaman {table.getState().pagination.pageIndex + 1} dari{" "}
-          {table.getPageCount()}
-        </p>
-
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Sebelumnya
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Berikutnya
-          </Button>
-        </div>
-      </div>
+      {withPagination && <PaginationDataTable table={table} />}
     </div>
   );
 }

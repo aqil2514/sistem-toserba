@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { MainContainer } from "@/components/layout/container/main-container";
-import { DataTable } from "@/components/ui/data-table";
+import { DataTable } from "@/components/organisms/data-table/core-table";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Separator } from "@/components/ui/separator";
 import { ConfirmDeleteDialog } from "@/components/ui/confirm-delete-dialog";

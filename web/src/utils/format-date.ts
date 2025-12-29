@@ -1,7 +1,15 @@
-export function formatDate(iso: string) {
+const defaultOptions: Intl.DateTimeFormatOptions = {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+};
+
+export function formatDate(
+  iso: string,
+  options: Intl.DateTimeFormatOptions = defaultOptions
+) {
   return new Intl.DateTimeFormat("id-ID", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
+    ...defaultOptions,
+    ...options,
   }).format(new Date(iso));
 }
