@@ -6,6 +6,8 @@ import {
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SalesQuery } from './interface/sales-query.interface';
 import { SalesHeaderQueryResponse } from './interface/sales-header-response';
+import { endOfDayUTC, startOfDayUTC } from 'src/utils/format-date';
+import { applyDateRangeFilter, applyPagination } from 'src/utils/query-builder';
 
 @Injectable()
 export class SalesService {
@@ -15,25 +17,17 @@ export class SalesService {
   ) {}
 
   async findByQuery(query: SalesQuery): Promise<SalesHeaderQueryResponse> {
-    const { page, limit, from, to } = query;
+    const { page, limit, from, to, toggleColumnKey, toggleColumnValue } = query;
     let client = this.supabase
       .from('sales')
       .select('*', { count: 'exact' })
       .order('transaction_at', { ascending: false });
 
-    if (page && limit) {
-      const pageNum = Number(page ?? 1);
-      const limitNum = Number(limit ?? 20);
+    if (page && limit) applyPagination(client, page, limit);
 
-      const from = (pageNum - 1) * limitNum;
-      const to = from + limitNum - 1;
-
-      client = client.range(from, to);
-    }
-
-    if (from) client = client.gte('transaction_at', from);
-
-    if (to) client = client.lte('transaction_at', to);
+    if (from) applyDateRangeFilter(client, 'transaction_at', from, to);
+    if (toggleColumnKey && toggleColumnValue)
+      client.ilike(toggleColumnKey, `%${toggleColumnValue}%`);
 
     const { data, error, count } = await client;
 

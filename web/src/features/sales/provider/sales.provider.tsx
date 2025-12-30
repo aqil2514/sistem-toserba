@@ -7,6 +7,7 @@ import { SalesQuery } from "../types/query";
 import { defaultQuery } from "../constants/default-query";
 import { KeyedMutator } from "swr";
 import { SalesHeaderQueryResponse } from "../types/sales-header-api";
+import { buildUrl } from "@/utils/build-url";
 
 interface SalesContextType {
   query: SalesQuery;
@@ -42,14 +43,16 @@ export function SalesProvider({
     setQuery((prev) => ({ ...prev, [key]: value }));
   };
 
-  const fetcher = useFetch<SalesHeaderQueryResponse>(
-    `${SERVER_URL}/sales?
-    page=${query.page}
-    &limit=${query.limit}
-    &from=${query.date.from?.toISOString()}
-    &to=${query.date.to?.toISOString()}
-  `
-  );
+  const url = buildUrl<SalesQuery>(SERVER_URL, "sales", {
+    page: query.page,
+    limit: query.limit,
+    from: query?.from,
+    to: query?.to,
+    toggleColumnKey: query.toggleColumnKey,
+    toggleColumnValue: query.toggleColumnValue,
+  });
+
+  const fetcher = useFetch<SalesHeaderQueryResponse>(url);
 
   const data = mode === "private" ? fetcher.data : undefined;
   const isLoading = mode === "private" ? fetcher.isLoading : false;

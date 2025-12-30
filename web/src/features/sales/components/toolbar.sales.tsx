@@ -6,47 +6,55 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { CreditCard, HandCoins, User } from "lucide-react";
-import React, { useState } from "react";
+import { CreditCard, HandCoins, Search, User } from "lucide-react";
+import React, { useRef, useState } from "react";
 import { ToolbarDatepicker } from "@/components/molecules/toolbar-datepicker";
 import { useSales } from "../provider/sales.provider";
+import { ToggleColumnKey } from "../types/query";
 
-type QueryFilter = "sales_code" | "customer_name" | "payment_method";
-
-const queryKeys: QueryFilter[] = [
+const queryKeys: ToggleColumnKey[] = [
   "customer_name",
   "payment_method",
   "sales_code",
 ];
 
-const IconMapper: Record<QueryFilter, React.ReactNode> = {
+const IconMapper: Record<ToggleColumnKey, React.ReactNode> = {
   customer_name: <User />,
   payment_method: <HandCoins />,
   sales_code: <CreditCard />,
 };
 
-const placeHolderMapper: Record<QueryFilter, string> = {
+const placeHolderMapper: Record<ToggleColumnKey, string> = {
   customer_name: "Contoh : Budi...",
   payment_method: "Contoh : Cash",
   sales_code: "Contoh : SALE25032....",
 };
 
-const queryLabel: Record<QueryFilter, string> = {
+const queryLabel: Record<ToggleColumnKey, string> = {
   customer_name: "Nama Pembeli",
   payment_method: "Metode Pembayaran",
   sales_code: "Kode Penjualan",
 };
 
 export function SalesToolbar() {
-  const [query, setQuery] = useState<QueryFilter>("customer_name");
+  const [queryColumn, setQueryColumn] =
+    useState<ToggleColumnKey>("customer_name");
   const { query: queryFilter, updateQuery } = useSales();
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const searchHandler = () => {
+    const element = inputRef.current;
+    if (!element) return;
+    const value = element.value;
+    updateQuery("toggleColumnValue", value);
+  };
 
   return (
     <div className="flex gap-2 items-center">
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline" size="icon">
-            {IconMapper[query]}
+            {IconMapper[queryColumn]}
           </Button>
         </PopoverTrigger>
 
@@ -61,9 +69,12 @@ export function SalesToolbar() {
             {queryKeys.map((queryKey) => (
               <Button
                 key={queryKey}
-                variant={query === queryKey ? "default" : "outline"}
+                variant={queryColumn === queryKey ? "default" : "outline"}
                 size="icon"
-                onClick={() => setQuery(queryKey)}
+                onClick={() => {
+                  setQueryColumn(queryKey);
+                  updateQuery("toggleColumnKey", queryKey);
+                }}
               >
                 {IconMapper[queryKey]}
               </Button>
@@ -73,24 +84,49 @@ export function SalesToolbar() {
           <Separator />
 
           <div className="flex items-center gap-3 rounded-md bg-muted px-3 py-2">
-            {IconMapper[query]}
-            <span className="text-sm font-medium">{queryLabel[query]}</span>
+            {IconMapper[queryColumn]}
+            <span className="text-sm font-medium">
+              {queryLabel[queryColumn]}
+            </span>
           </div>
         </PopoverContent>
       </Popover>
 
       <div className="relative flex-1">
         <div className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-          {IconMapper[query]}
+          {IconMapper[queryColumn]}
         </div>
 
-        <Input className="pl-10" placeholder={placeHolderMapper[query]} />
+        <div className="relative">
+          <Input
+            className="pl-10"
+            ref={inputRef}
+            placeholder={placeHolderMapper[queryColumn]}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") return searchHandler();
+            }}
+          />
+          <Button
+            className="absolute right-0"
+            variant={"ghost"}
+            size={"icon"}
+            onClick={searchHandler}
+          >
+            <Search />
+          </Button>
+        </div>
       </div>
 
       <ToolbarDatepicker
-        onApply={(date) => updateQuery("date", date)}
-        date={queryFilter.date}
-        setDate={(date) => updateQuery("date", date)}
+        onApply={(date) => {
+          updateQuery("from", date.from);
+          updateQuery("to", date.to);
+        }}
+        date={{ from: queryFilter.from, to: queryFilter.to }}
+        setDate={(date) => {
+          updateQuery("from", date.from);
+          updateQuery("to", date.to);
+        }}
       />
     </div>
   );
