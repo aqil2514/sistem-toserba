@@ -5,7 +5,8 @@ import { ValidationPipe } from '@nestjs/common';
 
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://sistem-toserba-web.vercel.app',
+  'https://www.sistem-toserba.shop',
+'https://sistem-toserba.shop'
 ];
 
 async function bootstrap() {
