@@ -10,9 +10,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { RoleGuard } from 'src/guards/role.guard';
-import { Roles } from 'src/decorator/roles.decorator';
-import { PasetoGuard } from 'src/guards/paseto.guard';
+import { RoleGuard } from '../../guards/role.guard';
+import { Roles } from '../../decorator/roles.decorator';
+import { PasetoGuard } from '../../guards/paseto.guard';
 import path from 'node:path';
 import fs from 'fs';
 import { createClient } from '@supabase/supabase-js';

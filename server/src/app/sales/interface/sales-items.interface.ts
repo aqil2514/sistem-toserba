@@ -1,4 +1,4 @@
-import { Product } from 'src/app/products/interface/products.interface';
+import { Product } from '../../../app/products/interface/products.interface';
 import { SalesDb } from './sales.interface';
 
 export interface SalesItemDb {

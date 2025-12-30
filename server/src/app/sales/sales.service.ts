@@ -7,9 +7,8 @@ import {
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SalesQuery } from './interface/sales-query.interface';
 import { SalesHeaderQueryResponse } from './interface/sales-header-response';
-import { endOfDayUTC, startOfDayUTC } from 'src/utils/format-date';
-import { applyDateRangeFilter, applyPagination } from 'src/utils/query-builder';
-import { SalesItemApiResponse, SalesItemDb } from './interface/sales-items.interface';
+import { applyDateRangeFilter, applyPagination } from '../../utils/query-builder';
+import { SalesItemApiResponse } from './interface/sales-items.interface';
 
 @Injectable()
 export class SalesService {

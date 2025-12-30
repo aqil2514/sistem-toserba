@@ -1,8 +1,7 @@
 import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
-import { GoogleAuthGuard } from 'src/guards/google-auth.guard';
-import { PasetoGuard } from 'src/guards/paseto.guard';
+import { PasetoGuard } from '../../guards/paseto.guard';
 import passport from 'passport';
 
 @Controller('auth')

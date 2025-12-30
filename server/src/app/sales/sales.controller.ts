@@ -7,6 +7,7 @@ export class SalesController {
   constructor(private readonly salesService: SalesService) {}
   @Get()
   async getTransaction(@Query() query: SalesQuery) {
+    // TODO : Sorting dari DB
     return await this.salesService.findByQuery(query);
   }
 
@@ -14,6 +15,9 @@ export class SalesController {
   async getTransactionBySalesId(@Param('sales_id') sales_id: string) {
     return await this.salesService.findItemBySalesId(sales_id);
   }
+
+  // TODO : BUAT Post untuk upload ke db
+
   //   private supabase = createClient(
   //     process.env.SUPABASE_URL!,
   //     process.env.SUPABASE_SERVICE_ROLE_KEY!,
