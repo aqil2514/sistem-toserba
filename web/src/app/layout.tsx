@@ -3,6 +3,8 @@ import { AuthProvider } from "@/provider/auth-provider";
 import { getMe } from "@/lib/auth";
 import { Toaster } from "sonner";
 
+export const dynamic = "force-dynamic";
+
 export default async function RootLayout({
   children,
 }: {
