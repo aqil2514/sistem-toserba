@@ -10,6 +10,9 @@ import { useSales } from "../provider/sales.provider";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { defaultQuery } from "../constants/default-query";
+import { FormSales } from "./form.sales";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export function SalesHeader() {
   const { mode, data, resetQuery, query } = useSales();
@@ -28,31 +31,41 @@ export function SalesHeader() {
         )}
       </div>
       <div className="md:flex gap-4 grid grid-cols-2">
-        <DialogForm />
-        {isFiltered && <Button onClick={resetQuery} variant={"destructive"}>
-          Reset Filter
-        </Button>}
+        <HeaderDialog />
+        {isFiltered && (
+          <Button onClick={resetQuery} variant={"destructive"}>
+            Reset Filter
+          </Button>
+        )}
       </div>
     </div>
   );
 }
 
-const DialogForm = () => {
+const HeaderDialog = () => {
+  const [open, setOpen] = useState<boolean>(false);
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant={"outline"} className="w-full md:w-auto">
           <Plus /> Tambah Data
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="sm:max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogTitle>Tambah Data Penjualan</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Isi informasi di bawah ini untuk melakukan penambahan data penjualan
           </DialogDescription>
         </DialogHeader>
+
+        <FormSales
+          setOpen={setOpen}
+          submitHandler={(values) => {
+            toast.success("Tambah data penjualan berhasil")
+            console.log(values);
+          }}
+        />
       </DialogContent>
     </Dialog>
   );

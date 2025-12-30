@@ -13,6 +13,7 @@ import { SalesItemApiResponse } from "../types/sales-item-api";
 import React from "react";
 import { SalesDetailHeader } from "./detail-header.sales";
 import { DetailItem } from "./detail-item.sales";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export function SalesDetailDialog() {
   const { detailSalesId, setDetailSalesId } = useSales();
@@ -61,6 +62,8 @@ const ContentReady: React.FC<{ data?: SalesItemApiResponse[] }> = ({
 
   return (
     <DialogContent className="sm:max-w-5xl">
+      <ScrollArea className="h-96 lg:h-auto">
+
       <DialogHeader>
         <DialogTitle>Data {salesHeader.sales_code}</DialogTitle>
         <DialogDescription>
@@ -71,6 +74,7 @@ const ContentReady: React.FC<{ data?: SalesItemApiResponse[] }> = ({
         <SalesDetailHeader salesHeader={salesHeader} />
         <DetailItem items={data} />
       </div>
+      </ScrollArea>
     </DialogContent>
   );
 };
