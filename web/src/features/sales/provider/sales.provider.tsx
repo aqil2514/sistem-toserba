@@ -43,7 +43,12 @@ export function SalesProvider({
   };
 
   const fetcher = useFetch<SalesHeaderQueryResponse>(
-    `${SERVER_URL}/sales?page=${query.page}&limit=${query.limit}`
+    `${SERVER_URL}/sales?
+    page=${query.page}
+    &limit=${query.limit}
+    &from=${query.date.from?.toISOString()}
+    &to=${query.date.to?.toISOString()}
+  `
   );
 
   const data = mode === "private" ? fetcher.data : undefined;

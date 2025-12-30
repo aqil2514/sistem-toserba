@@ -15,7 +15,7 @@ export class SalesService {
   ) {}
 
   async findByQuery(query: SalesQuery): Promise<SalesHeaderQueryResponse> {
-    const { page, limit } = query;
+    const { page, limit, from, to } = query;
     let client = this.supabase
       .from('sales')
       .select('*', { count: 'exact' })
@@ -30,6 +30,10 @@ export class SalesService {
 
       client = client.range(from, to);
     }
+
+    if (from) client = client.gte('transaction_at', from);
+
+    if (to) client = client.lte('transaction_at', to);
 
     const { data, error, count } = await client;
 

@@ -6,11 +6,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { CalendarIcon, CreditCard, HandCoins, User } from "lucide-react";
+import { CreditCard, HandCoins, User } from "lucide-react";
 import React, { useState } from "react";
-import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
-import { DateRange } from "react-day-picker";
+import { ToolbarDatepicker } from "@/components/molecules/toolbar-datepicker";
+import { useSales } from "../provider/sales.provider";
 
 type QueryFilter = "sales_code" | "customer_name" | "payment_method";
 
@@ -40,6 +39,8 @@ const queryLabel: Record<QueryFilter, string> = {
 
 export function SalesToolbar() {
   const [query, setQuery] = useState<QueryFilter>("customer_name");
+  const { query: queryFilter, updateQuery } = useSales();
+
   return (
     <div className="flex gap-2 items-center">
       <Popover>
@@ -86,39 +87,11 @@ export function SalesToolbar() {
         <Input className="pl-10" placeholder={placeHolderMapper[query]} />
       </div>
 
-      <DatePicker />
+      <ToolbarDatepicker
+        onApply={(date) => updateQuery("date", date)}
+        date={queryFilter.date}
+        setDate={(date) => updateQuery("date", date)}
+      />
     </div>
   );
 }
-
-// TODO : LANJUT KE SINI
-const DatePicker = () => {
-  const [date, setDate] = React.useState<DateRange>({
-    from: new Date(),
-  });
-
-  return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          data-empty={!date}
-          className="data-[empty=true]:text-muted-foreground w-70 justify-start text-left font-normal"
-        >
-          <CalendarIcon />
-          {date ? format(date.from!, "PPP") : <span>Pick a date</span>}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
-        <Calendar
-          mode="range"
-          selected={date}
-          onSelect={(e) => {
-            if (!e) return;
-            setDate(e);
-          }}
-        />
-      </PopoverContent>
-    </Popover>
-  );
-};
