@@ -16,6 +16,7 @@ interface SalesContextType {
     key: T,
     value: SalesQuery[T]
   ) => void;
+  resetQuery: () => void;
 
   mode: "private" | "demo";
 
@@ -43,6 +44,8 @@ export function SalesProvider({
     setQuery((prev) => ({ ...prev, [key]: value }));
   };
 
+  const resetQuery = () => setQuery(defaultQuery);
+
   const url = buildUrl<SalesQuery>(SERVER_URL, "sales", {
     page: query.page,
     limit: query.limit,
@@ -60,6 +63,7 @@ export function SalesProvider({
   const values: SalesContextType = {
     query,
     updateQuery,
+    resetQuery,
 
     mode,
 
