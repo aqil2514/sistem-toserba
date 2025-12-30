@@ -50,70 +50,72 @@ export function SalesToolbar() {
   };
 
   return (
-    <div className="flex gap-2 items-center">
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button variant="outline" size="icon">
+    <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
+      <div className="flex gap-1">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" size="icon">
+              {IconMapper[queryColumn]}
+            </Button>
+          </PopoverTrigger>
+
+          <PopoverContent className="w-72 space-y-4 p-4">
+            <p className="text-sm font-semibold text-muted-foreground">
+              Cari data berdasarkan
+            </p>
+
+            <Separator />
+
+            <div className="flex justify-center gap-2">
+              {queryKeys.map((queryKey) => (
+                <Button
+                  key={queryKey}
+                  variant={queryColumn === queryKey ? "default" : "outline"}
+                  size="icon"
+                  onClick={() => {
+                    setQueryColumn(queryKey);
+                    updateQuery("toggleColumnKey", queryKey);
+                  }}
+                >
+                  {IconMapper[queryKey]}
+                </Button>
+              ))}
+            </div>
+
+            <Separator />
+
+            <div className="flex items-center gap-3 rounded-md bg-muted px-3 py-2">
+              {IconMapper[queryColumn]}
+              <span className="text-sm font-medium">
+                {queryLabel[queryColumn]}
+              </span>
+            </div>
+          </PopoverContent>
+        </Popover>
+
+        <div className="relative flex-1">
+          <div className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
             {IconMapper[queryColumn]}
-          </Button>
-        </PopoverTrigger>
-
-        <PopoverContent className="w-72 space-y-4 p-4">
-          <p className="text-sm font-semibold text-muted-foreground">
-            Cari data berdasarkan
-          </p>
-
-          <Separator />
-
-          <div className="flex justify-center gap-2">
-            {queryKeys.map((queryKey) => (
-              <Button
-                key={queryKey}
-                variant={queryColumn === queryKey ? "default" : "outline"}
-                size="icon"
-                onClick={() => {
-                  setQueryColumn(queryKey);
-                  updateQuery("toggleColumnKey", queryKey);
-                }}
-              >
-                {IconMapper[queryKey]}
-              </Button>
-            ))}
           </div>
 
-          <Separator />
-
-          <div className="flex items-center gap-3 rounded-md bg-muted px-3 py-2">
-            {IconMapper[queryColumn]}
-            <span className="text-sm font-medium">
-              {queryLabel[queryColumn]}
-            </span>
+          <div className="relative">
+            <Input
+              className="pl-10"
+              ref={inputRef}
+              placeholder={placeHolderMapper[queryColumn]}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") return searchHandler();
+              }}
+            />
+            <Button
+              className="absolute right-0"
+              variant={"ghost"}
+              size={"icon"}
+              onClick={searchHandler}
+            >
+              <Search />
+            </Button>
           </div>
-        </PopoverContent>
-      </Popover>
-
-      <div className="relative flex-1">
-        <div className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-          {IconMapper[queryColumn]}
-        </div>
-
-        <div className="relative">
-          <Input
-            className="pl-10"
-            ref={inputRef}
-            placeholder={placeHolderMapper[queryColumn]}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") return searchHandler();
-            }}
-          />
-          <Button
-            className="absolute right-0"
-            variant={"ghost"}
-            size={"icon"}
-            onClick={searchHandler}
-          >
-            <Search />
-          </Button>
         </div>
       </div>
 

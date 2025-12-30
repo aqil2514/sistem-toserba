@@ -11,12 +11,16 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
 export function SalesHeader() {
-  const { mode } = useSales();
+  const { mode, data } = useSales();
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="flex gap-4 items-center">
+
       <h1 className="text-lg font-semibold">
         Data Penjualan {mode === "demo" && "(DEMO)"}
       </h1>
+      {data && <p>Total {new Intl.NumberFormat("id-ID").format(data.meta.total)} data</p>}
+      </div>
       <DialogForm />
     </div>
   );
@@ -26,7 +30,7 @@ const DialogForm = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant={"outline"}>
+        <Button variant={"outline"} className="w-full md:w-auto">
             <Plus /> Tambah Data
         </Button>
       </DialogTrigger>
