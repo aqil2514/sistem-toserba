@@ -15,6 +15,9 @@ import { SERVER_URL } from "@/constants/url";
 
 export function LoginCard() {
   useToastHome();
+  const loginGoogleUrl = `${SERVER_URL}/auth/google`;
+
+  console.log(loginGoogleUrl);
 
   return (
     <Card className="w-full max-w-sm shadow-lg">
@@ -25,7 +28,7 @@ export function LoginCard() {
 
       <CardContent className="space-y-4">
         {/* LOGIN GOOGLE */}
-        <a href={`${SERVER_URL}/auth/google`} className="block">
+        <a href={loginGoogleUrl} className="block">
           <Button className="w-full gap-2" size="lg">
             <Chrome className="h-4 w-4" />
             Login dengan Google
