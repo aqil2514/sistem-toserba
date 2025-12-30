@@ -15,6 +15,15 @@ interface Props {
 }
 
 export default function SalesTemplate({ mode }: Props) {
+  if (mode === "demo")
+    return (
+      <MainContainer>
+        <SectionContainer>
+          <h1>Versi Demo Belum Tersedia</h1>
+        </SectionContainer>
+      </MainContainer>
+    );
+    
   return (
     <SalesProvider mode={mode}>
       <InnerTemplate />
