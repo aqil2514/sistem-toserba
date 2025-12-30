@@ -37,7 +37,10 @@ interface Props {
 export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
   const form = useForm<SalesSchemaType>({
     resolver: zodResolver(salesSchema),
-    defaultValues: defaultValues ?? defaultSalesSchema,
+    defaultValues: defaultValues ?? {
+      ...defaultSalesSchema,
+      transaction_at: new Date().toISOString(),
+    },
   });
 
   const totalAmount = useWatch({
