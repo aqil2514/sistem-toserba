@@ -11,12 +11,14 @@ import { buildUrl } from "@/utils/build-url";
 
 interface SalesContextType {
   query: SalesQuery;
-
   updateQuery: <T extends keyof SalesQuery>(
     key: T,
     value: SalesQuery[T]
   ) => void;
   resetQuery: () => void;
+
+  detailSalesId: string;
+  setDetailSalesId: React.Dispatch<React.SetStateAction<string>>;
 
   mode: "private" | "demo";
 
@@ -36,6 +38,7 @@ export function SalesProvider({
   mode: "private" | "demo";
 }) {
   const [query, setQuery] = useState<SalesQuery>(defaultQuery);
+  const [detailSalesId, setDetailSalesId] = useState<string>("");
 
   const updateQuery = <T extends keyof SalesQuery>(
     key: T,
@@ -64,6 +67,9 @@ export function SalesProvider({
     query,
     updateQuery,
     resetQuery,
+
+    detailSalesId,
+    setDetailSalesId,
 
     mode,
 

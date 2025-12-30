@@ -9,6 +9,7 @@ import { PaginationSales } from "./components/pagination.sales";
 import { SalesHeader } from "./components/header.sales";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SalesToolbar } from "./components/toolbar.sales";
+import { SalesDetailDialog } from "./components/detail.sales";
 
 interface Props {
   mode: "private" | "demo";
@@ -23,7 +24,7 @@ export default function SalesTemplate({ mode }: Props) {
         </SectionContainer>
       </MainContainer>
     );
-    
+
   return (
     <SalesProvider mode={mode}>
       <InnerTemplate />
@@ -35,26 +36,30 @@ const InnerTemplate = () => {
   const { data, isLoading, query } = useSales();
 
   return (
-    <MainContainer>
-      <SectionContainer>
-        <SalesHeader />
-        <SalesToolbar />
+    <>
+      <MainContainer>
+        <SectionContainer>
+          <SalesHeader />
+          <SalesToolbar />
 
-        {isLoading || !data ? (
-          <LoadingSpinner label="Mengambil Data..." />
-        ) : (
-          <ScrollArea className="h-[60vh] w-full rounded-md border">
-            <DataTable
-              withPagination={false}
-              pageSize={query.limit}
-              data={data.data}
-              columns={salesColumns}
-            />
-          </ScrollArea>
-        )}
+          {isLoading || !data ? (
+            <LoadingSpinner label="Mengambil Data..." />
+          ) : (
+            <ScrollArea className="h-[60vh] w-full rounded-md border">
+              <DataTable
+                withPagination={false}
+                pageSize={query.limit}
+                data={data.data}
+                columns={salesColumns}
+              />
+            </ScrollArea>
+          )}
 
-        <PaginationSales />
-      </SectionContainer>
-    </MainContainer>
+          <PaginationSales />
+        </SectionContainer>
+      </MainContainer>
+
+      <SalesDetailDialog />
+    </>
   );
 };

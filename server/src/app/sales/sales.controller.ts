@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { SalesService } from './sales.service';
 import { SalesQuery } from './interface/sales-query.interface';
 
@@ -8,6 +8,11 @@ export class SalesController {
   @Get()
   async getTransaction(@Query() query: SalesQuery) {
     return await this.salesService.findByQuery(query);
+  }
+
+  @Get(':sales_id')
+  async getTransactionBySalesId(@Param('sales_id') sales_id: string) {
+    return await this.salesService.findItemBySalesId(sales_id);
   }
   //   private supabase = createClient(
   //     process.env.SUPABASE_URL!,
