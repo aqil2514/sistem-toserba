@@ -6,6 +6,8 @@ import passport from 'passport';
 
 @Controller('auth')
 export class AuthController {
+  private isDevelopment = process.env.NODE_ENV === 'development';
+  private webUrl = this.isDevelopment ? "http://localhost:3000" :"https://sistem-toserba-web.vercel.app"
   @Get('me')
   @UseGuards(PasetoGuard)
   me(@Req() req) {
@@ -25,7 +27,7 @@ export class AuthController {
       { session: false },
       (err: any, user: string) => {
         if (err || !user) {
-          return res.redirect('http://localhost:3000?error=unauthorized');
+          return res.redirect(`${this.webUrl}?error=unauthorized`);
         }
 
         res.cookie('auth_token', user, {
@@ -35,7 +37,7 @@ export class AuthController {
           maxAge: 60 * 60 * 1000,
         });
 
-        return res.redirect('http://localhost:3000/dashboard?login=success');
+        return res.redirect(`${this.webUrl}/dashboard?login=success`);
       },
     )(req, res);
   }
@@ -49,6 +51,6 @@ export class AuthController {
       path: '/',
     });
 
-    return res.redirect('http://localhost:3000?logout=success');
+    return res.redirect(`${this.webUrl}?logout=success`);
   }
 }
