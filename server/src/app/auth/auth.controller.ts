@@ -7,7 +7,7 @@ import passport from 'passport';
 @Controller('auth')
 export class AuthController {
   private isDevelopment = process.env.NODE_ENV === 'development';
-  private webUrl = this.isDevelopment ? "http://localhost:3000" :"https://sistem-toserba-web.vercel.app"
+  private webUrl = this.isDevelopment ? "http://localhost:3000" :"https://www.sistem-toserba.shop"
   @Get('me')
   @UseGuards(PasetoGuard)
   me(@Req() req) {
