@@ -9,13 +9,18 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     super({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3001/auth/google/callback',
-      failureRedirect: 'http://localhost:3001/me',
+      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+      failureRedirect: process.env.FRONTEND_URL + '/login',
       scope: ['email', 'profile'],
     });
   }
 
-  async validate(accessToken: string, refreshToken: string, profile: Profile, err) {
+  async validate(
+    accessToken: string,
+    refreshToken: string,
+    profile: Profile,
+    err,
+  ) {
     try {
       return this.authService.validateOAuthLogin({
         provider: 'google',
@@ -24,9 +29,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
         name: profile.displayName,
         avatar: profile.photos?.[0]?.value,
       });
-      
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
 }

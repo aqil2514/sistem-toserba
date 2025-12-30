@@ -3,6 +3,11 @@ import { AppModule } from './app/app.module';
 import cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
 
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://sistem-toserba-web.vercel.app',
+];
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -17,7 +22,13 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ['http://localhost:3000', 'https://sistem-toserba-web.vercel.app'],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   });
 
