@@ -31,11 +31,13 @@ export class AuthController {
         }
 
         res.cookie('auth_token', user, {
-          httpOnly: true,
-          sameSite: 'lax',
-          secure: process.env.NODE_ENV === 'production',
-          maxAge: 60 * 60 * 1000,
-        });
+  httpOnly: true,
+  sameSite: 'none',
+  secure: true,
+  domain: '.sistem-toserba.shop',
+  maxAge: 60 * 60 * 1000,
+  path: '/',
+});
 
         return res.redirect(`${this.webUrl}/dashboard?login=success`);
       },
