@@ -11,9 +11,9 @@ import {
 } from '@nestjs/common';
 import { SalesService } from './sales.service';
 import { SalesQuery } from './interface/sales-query.interface';
-import { PasetoGuard } from 'src/guards/paseto.guard';
-import { RoleGuard } from 'src/guards/role.guard';
-import { Roles } from 'src/decorator/roles.decorator';
+import { PasetoGuard } from '../../guards/paseto.guard';
+import { RoleGuard } from '../../guards/role.guard';
+import { Roles } from '../../decorator/roles.decorator';
 import { CreateSalesDto } from './dto/create-sales.dto';
 
 @Controller('sales')
@@ -47,7 +47,6 @@ export class SalesController {
     @Body() body: CreateSalesDto,
     @Param('sales_id') sales_id: string,
   ) {
-    console.log(body);
     return await this.salesService.updateTransaction(sales_id, body);
   }
 
@@ -57,8 +56,8 @@ export class SalesController {
   async deleteTransaction(@Param('sales_id') sales_id: string) {
     return await this.salesService.deleteTransaction(sales_id);
   }
-  // TODO : BUAT Post untuk upload ke db
 
+  // WARNING : INI JANGAN DIHAPUS. BUAT NANTI MIGRASI
   //   private supabase = createClient(
   //     process.env.SUPABASE_URL!,
   //     process.env.SUPABASE_SERVICE_ROLE_KEY!,

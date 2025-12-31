@@ -20,7 +20,7 @@ import {
 import { CreateSalesDto } from './dto/create-sales.dto';
 import { SalesItemDto } from './dto/sales-item.dto';
 import { SalesDbInsert } from './interface/sales.interface';
-import { formatDateYYYYMMDD } from 'src/utils/format-date';
+import { formatDateYYYYMMDD } from '../../utils/format-date';
 import { SalesStockService } from './helper/sales-stock.service';
 
 @Injectable()
@@ -124,7 +124,7 @@ export class SalesService {
       .single();
 
     if (error) {
-      console.log(error);
+      console.error(error);
       throw error;
     }
 
@@ -141,7 +141,7 @@ export class SalesService {
       .single();
 
     if (error) {
-      console.log(error);
+      console.error(error);
       throw error;
     }
 
