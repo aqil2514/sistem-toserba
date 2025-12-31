@@ -16,7 +16,7 @@ interface Props {
   row: Row<SalesHeader>;
 }
 export function SalesColumnAction({ row }: Props) {
-  const { setDetailSalesId, setEditSalesId } = useSales();
+  const { setDetailSalesId, setEditSalesId, setDeleteSalesId } = useSales();
 
   return (
     <DropdownMenu>
@@ -35,6 +35,9 @@ export function SalesColumnAction({ row }: Props) {
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setEditSalesId(row.original.id)}>
           Edit
+        </DropdownMenuItem>
+        <DropdownMenuItem className="text-red-500" onClick={() => setDeleteSalesId(row.original.id)}>
+          Hapus
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

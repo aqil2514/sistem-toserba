@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -48,6 +49,13 @@ export class SalesController {
   ) {
     console.log(body);
     return await this.salesService.updateTransaction(sales_id, body);
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Delete(':sales_id')
+  async deleteTransaction(@Param('sales_id') sales_id: string) {
+    return await this.salesService.deleteTransaction(sales_id);
   }
   // TODO : BUAT Post untuk upload ke db
 

@@ -23,6 +23,9 @@ interface SalesContextType {
   editSalesId: string;
   setEditSalesId: React.Dispatch<React.SetStateAction<string>>;
 
+  deleteSalesId: string;
+  setDeleteSalesId: React.Dispatch<React.SetStateAction<string>>;
+
   mode: "private" | "demo";
 
   isLoading: boolean;
@@ -43,6 +46,7 @@ export function SalesProvider({
   const [query, setQuery] = useState<SalesQuery>(defaultQuery);
   const [detailSalesId, setDetailSalesId] = useState<string>("");
   const [editSalesId, setEditSalesId] = useState<string>("");
+  const [deleteSalesId, setDeleteSalesId] = useState<string>("");
 
   const updateQuery = <T extends keyof SalesQuery>(
     key: T,
@@ -79,6 +83,9 @@ export function SalesProvider({
 
     editSalesId,
     setEditSalesId,
+
+    deleteSalesId,
+    setDeleteSalesId,
 
     mode,
 

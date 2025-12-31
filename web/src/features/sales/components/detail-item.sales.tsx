@@ -6,19 +6,26 @@ import { InfoItem } from "@/components/ui/info-item";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { formatPercent } from "@/utils/format-percent";
 import { calculateProfit } from "../utils/calculate-profit";
+import { useClipboard } from "@/hooks/use-clipboard";
+import { Copy } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   items: SalesItemApiResponse[];
 }
 
 export function DetailItem({ items }: Props) {
+  const { copy } = useClipboard();
+
+  if (!items || items.length === 0) return null;
+
   return (
     <div className="space-y-2">
       <h3 className="font-semibold text-lg text-center text-gray-500">
         Barang Yang Dibeli
       </h3>
       <Separator />
-      <Tabs className="w-full max-w-md">
+      <Tabs className="w-full max-w-md" defaultValue={items?.[0]?.id}>
         <ScrollArea className="w-full whitespace-nowrap rounded-md">
           <TabsList>
             {items.map((item, i) => (
@@ -39,7 +46,20 @@ export function DetailItem({ items }: Props) {
 
           return (
             <TabsContent value={item.id} key={item.id} className="space-y-4">
-              <InfoItem label="Nama Produk : " value={item.product_id.name} />
+              <div className="flex items-center gap-4">
+                <InfoItem label="Nama Produk : " value={item.product_id.name} />
+                <Button
+                  size={"icon-sm"}
+                  variant={"ghost"}
+                  onClick={() =>
+                    copy(item.product_id.id, {
+                      successMessage: "ID Produk berhasil dicopy",
+                    })
+                  }
+                >
+                  <Copy />
+                </Button>
+              </div>
               <InfoItem
                 label={`Jumlah (${item.product_id.unit}) : `}
                 value={`${item.quantity} ${item.product_id.unit}`}
