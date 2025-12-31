@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -38,6 +39,16 @@ export class SalesController {
     return await this.salesService.createNewTransaction(body);
   }
 
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Put(':sales_id')
+  async editTransaction(
+    @Body() body: CreateSalesDto,
+    @Param('sales_id') sales_id: string,
+  ) {
+    console.log(body);
+    return await this.salesService.updateTransaction(sales_id, body);
+  }
   // TODO : BUAT Post untuk upload ke db
 
   //   private supabase = createClient(

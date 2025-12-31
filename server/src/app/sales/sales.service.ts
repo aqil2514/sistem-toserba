@@ -131,6 +131,23 @@ export class SalesService {
     return data;
   }
 
+  private async updateSales(transaction_id: string, raw: CreateSalesDto) {
+    const salesPayload = await this.mapToDbSales(raw);
+    const { data, error } = await this.supabase
+      .from('sales')
+      .update(salesPayload)
+      .eq('id', transaction_id)
+      .select('id, transaction_at')
+      .single();
+
+    if (error) {
+      console.log(error);
+      throw error;
+    }
+
+    return data;
+  }
+
   private async createNewSalesItem(
     raw: CreateSalesDto,
     transaction: { id: string; transaction_at: string },
@@ -212,6 +229,7 @@ export class SalesService {
   }
 
   async updateTransaction(transaction_id: string, raw: CreateSalesDto) {
+    const newSalesData = await this.updateSales(transaction_id, raw);
     // 1️⃣ Ambil sales_items lama
     const { data: oldItems } = await this.supabase
       .from('sales_items')

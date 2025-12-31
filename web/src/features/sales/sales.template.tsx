@@ -10,6 +10,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { SalesToolbar } from "./components/toolbar.sales";
 import { SalesDetailDialog } from "./components/detail.sales";
 import { DataTable } from "@/components/organisms/ori-data-table/data-table";
+import { SalesEditDialog } from "./components/edit-item.sales";
 
 interface Props {
   mode: "private" | "demo";
@@ -57,6 +58,7 @@ const InnerTemplate = () => {
       </MainContainer>
 
       <SalesDetailDialog />
+      <SalesEditDialog />
     </>
   );
 };
