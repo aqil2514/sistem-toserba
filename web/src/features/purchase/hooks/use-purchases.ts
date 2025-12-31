@@ -13,23 +13,16 @@ interface ApiErrorResponse {
 }
 
 export function usePurchases() {
-  const fetcher = useFetch<Purchase[]>(
-    `${SERVER_URL}/purchase`
-  );
+  const fetcher = useFetch<Purchase[]>(`${SERVER_URL}/purchase`);
 
-  const productsFetcher = useFetch<Product[]>(
-    `${SERVER_URL}/products`
-  );
+  const productsFetcher = useFetch<Product[]>(`${SERVER_URL}/products`);
 
   // ======================
   // CREATE
   // ======================
   const create = async (values: PurchaseFormValues) => {
     try {
-      const { data } = await api.post<Purchase>(
-        "/purchase",
-        values
-      );
+      const { data } = await api.post<Purchase>("/purchase", values);
 
       toast.success("Barang masuk berhasil dicatat");
       fetcher.mutate();
@@ -43,16 +36,9 @@ export function usePurchases() {
   // ======================
   // UPDATE
   // ======================
-  const update = async (
-    id: string,
-    values: PurchaseFormValues
-  ) => {
-    console.log(values);
+  const update = async (id: string, values: PurchaseFormValues) => {
     try {
-      const { data } = await api.patch<Purchase>(
-        `/purchase/${id}`,
-        values
-      );
+      const { data } = await api.patch<Purchase>(`/purchase/${id}`, values);
 
       toast.success("Pembelian berhasil diperbarui");
       fetcher.mutate();
@@ -83,8 +69,7 @@ export function usePurchases() {
   function getProductName(productId: string): string {
     const products = productsFetcher.data ?? [];
     return (
-      products.find((p) => p.id === productId)?.name ??
-      "Produk tidak ditemukan"
+      products.find((p) => p.id === productId)?.name ?? "Produk tidak ditemukan"
     );
   }
 
@@ -103,9 +88,7 @@ export function usePurchases() {
 // ======================
 function handleApiError(error: unknown) {
   if (axios.isAxiosError<ApiErrorResponse>(error)) {
-    toast.error(
-      error.response?.data?.message ?? "Terjadi kesalahan"
-    );
+    toast.error(error.response?.data?.message ?? "Terjadi kesalahan");
   } else if (error instanceof Error) {
     toast.error(error.message);
   } else {

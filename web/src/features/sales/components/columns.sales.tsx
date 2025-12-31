@@ -1,8 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { SalesHeader } from "../types/sales-header";
 import { formatRupiah } from "@/utils/format-to-rupiah";
-import { formatDate } from "@/utils/format-date";
 import { SalesColumnAction } from "./dropdown-cells.sales";
+import { formatDate } from "@/utils/format-date.fns";
 
 export const salesColumns: ColumnDef<SalesHeader>[] = [
   {
@@ -25,11 +25,7 @@ export const salesColumns: ColumnDef<SalesHeader>[] = [
   {
     accessorKey: "transaction_at",
     header: "Tanggal Pembelian",
-    cell: ({ row }) =>
-      formatDate(row.original.transaction_at, {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+    cell: ({ row }) => formatDate(row.original.transaction_at, "29 Desember 2025, 09:21 WIB"),
   },
   {
     accessorKey: "action",
