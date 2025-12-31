@@ -6,8 +6,8 @@ import passport from 'passport';
 
 @Controller('auth')
 export class AuthController {
-  private isDevelopment = process.env.NODE_ENV === 'development';
-  private webUrl = this.isDevelopment ? "http://localhost:3000" :"https://www.sistem-toserba.shop"
+  private webUrl = process.env.FRONTEND_URL;
+  private isProd = process.env.NODE_ENV === 'production';
   @Get('me')
   @UseGuards(PasetoGuard)
   me(@Req() req) {
@@ -31,13 +31,13 @@ export class AuthController {
         }
 
         res.cookie('auth_token', user, {
-  httpOnly: true,
-  sameSite: 'none',
-  secure: true,
-  domain: '.sistem-toserba.shop',
-  maxAge: 60 * 60 * 1000,
-  path: '/',
-});
+          httpOnly: true,
+          sameSite: this.isProd ? 'none' : 'lax',
+          secure: this.isProd,
+          domain: this.isProd ? '.sistem-toserba.shop' : undefined,
+          maxAge: 60 * 60 * 1000,
+          path: '/',
+        });
 
         return res.redirect(`${this.webUrl}/dashboard?login=success`);
       },
@@ -48,8 +48,9 @@ export class AuthController {
   logout(@Res() res: Response) {
     res.clearCookie('auth_token', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: this.isProd,
+      sameSite: this.isProd ? 'none' : 'lax',
+      domain: this.isProd ? '.sistem-toserba.shop' : undefined,
       path: '/',
     });
 
