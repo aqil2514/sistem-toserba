@@ -1,18 +1,41 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { SalesService } from './sales.service';
 import { SalesQuery } from './interface/sales-query.interface';
+import { PasetoGuard } from 'src/guards/paseto.guard';
+import { RoleGuard } from 'src/guards/role.guard';
+import { Roles } from 'src/decorator/roles.decorator';
+import { CreateSalesDto } from './dto/create-sales.dto';
 
 @Controller('sales')
 export class SalesController {
   constructor(private readonly salesService: SalesService) {}
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
   @Get()
   async getTransaction(@Query() query: SalesQuery) {
     return await this.salesService.findByQuery(query);
   }
 
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
   @Get(':sales_id')
   async getTransactionBySalesId(@Param('sales_id') sales_id: string) {
     return await this.salesService.findItemBySalesId(sales_id);
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Post()
+  async createNewTransaction(@Body() body: CreateSalesDto) {
+    return await this.salesService.createNewTransaction(body);
   }
 
   // TODO : BUAT Post untuk upload ke db

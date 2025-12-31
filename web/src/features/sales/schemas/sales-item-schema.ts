@@ -16,7 +16,7 @@ export const defaultSalesItemSchema: SalesItemSchemaType = {
   discount: 0,
   price: 0,
   product_id: "",
-  quantity: 0,
+  quantity: 1,
   subtotal: 0,
   tip: 0,
   transaction_date: new Date().toISOString(),

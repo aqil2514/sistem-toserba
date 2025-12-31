@@ -13,6 +13,9 @@ import { defaultQuery } from "../constants/default-query";
 import { FormSales } from "./form.sales";
 import { useState } from "react";
 import { toast } from "sonner";
+import { SalesSchemaType } from "../schemas/sales-schema";
+import { api } from "@/lib/api";
+import { isAxiosError } from "axios";
 
 export function SalesHeader() {
   const { mode, data, resetQuery, query } = useSales();
@@ -44,6 +47,24 @@ export function SalesHeader() {
 
 const HeaderDialog = () => {
   const [open, setOpen] = useState<boolean>(false);
+  const { mutate } = useSales();
+
+  const submitHandler = async (values: SalesSchemaType) => {
+    try {
+      await api.post("/sales", values);
+      toast.success("Data penjualan berhasil ditambah");
+      mutate?.();
+    } catch (error) {
+      if (isAxiosError(error)) {
+        const data = error.response?.data;
+
+        toast.error(data.message ?? "Terjadi kesalahan");
+        return;
+      }
+      toast.error("Terjadi kesalahan");
+      console.error(error);
+    }
+  };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -59,13 +80,7 @@ const HeaderDialog = () => {
           </DialogDescription>
         </DialogHeader>
 
-        <FormSales
-          setOpen={setOpen}
-          submitHandler={(values) => {
-            toast.success("Tambah data penjualan berhasil")
-            console.log(values);
-          }}
-        />
+        <FormSales setOpen={setOpen} submitHandler={submitHandler} />
       </DialogContent>
     </Dialog>
   );
