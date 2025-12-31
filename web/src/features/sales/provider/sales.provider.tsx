@@ -56,6 +56,8 @@ export function SalesProvider({
     to: query?.to,
     toggleColumnKey: query.toggleColumnKey,
     toggleColumnValue: query.toggleColumnValue,
+    sortedKey: query.sortedKey,
+    sortedValue: query.sortedValue,
   });
 
   const fetcher = useFetch<SalesHeaderQueryResponse>(url);

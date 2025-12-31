@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DataTable } from "@/components/organisms/data-table/core-table";
+import { DataTable } from "@/components/organisms/custom-data-table/core-table";
 import { MainContainer } from "@/components/layout/container/main-container";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Separator } from "@/components/ui/separator";

@@ -1,4 +1,4 @@
-export type ToggleColumnKey =  "sales_code" | "customer_name" | "payment_method";
+export type ToggleColumnKey = 'sales_code' | 'customer_name' | 'payment_method';
 
 export interface SalesQuery {
   page: number;
@@ -7,4 +7,6 @@ export interface SalesQuery {
   to?: Date;
   toggleColumnKey?: ToggleColumnKey;
   toggleColumnValue?: string;
+  sortedKey?: string;
+  sortedValue?: string;
 }

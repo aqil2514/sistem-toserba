@@ -7,7 +7,10 @@ import {
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SalesQuery } from './interface/sales-query.interface';
 import { SalesHeaderQueryResponse } from './interface/sales-header-response';
-import { applyDateRangeFilter, applyPagination } from '../../utils/query-builder';
+import {
+  applyDateRangeFilter,
+  applyPagination,
+} from '../../utils/query-builder';
 import { SalesItemApiResponse } from './interface/sales-items.interface';
 
 @Injectable()
@@ -18,17 +21,26 @@ export class SalesService {
   ) {}
 
   async findByQuery(query: SalesQuery): Promise<SalesHeaderQueryResponse> {
-    const { page, limit, from, to, toggleColumnKey, toggleColumnValue } = query;
-    let client = this.supabase
-      .from('sales')
-      .select('*', { count: 'exact' })
-      .order('transaction_at', { ascending: false });
+    const {
+      page,
+      limit,
+      from,
+      to,
+      toggleColumnKey,
+      toggleColumnValue,
+      sortedKey,
+      sortedValue,
+    } = query;
+    let client = this.supabase.from('sales').select('*', { count: 'exact' }).is("deleted_at", null);
 
     if (page && limit) applyPagination(client, page, limit);
 
     if (from) applyDateRangeFilter(client, 'transaction_at', from, to);
     if (toggleColumnKey && toggleColumnValue)
       client.ilike(toggleColumnKey, `%${toggleColumnValue}%`);
+
+    if (sortedKey && sortedValue)
+      client.order(sortedKey, { ascending: sortedValue === 'asc' });
 
     const { data, error, count } = await client;
 
@@ -54,7 +66,8 @@ export class SalesService {
       .select('*, product_id(*), sales_id(*)')
       .eq('sales_id', sales_id);
 
-    if (!data || data.length === 0) throw new NotFoundException('Data tidak ditemukan');
+    if (!data || data.length === 0)
+      throw new NotFoundException('Data tidak ditemukan');
     if (error) {
       console.error(error);
       throw error;

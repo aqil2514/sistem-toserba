@@ -4,12 +4,12 @@ import { salesColumns } from "./components/columns.sales";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { MainContainer } from "@/components/layout/container/main-container";
 import { SectionContainer } from "@/components/layout/container/section-container";
-import { DataTable } from "@/components/organisms/data-table/core-table";
 import { PaginationSales } from "./components/pagination.sales";
 import { SalesHeader } from "./components/header.sales";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { SalesToolbar } from "./components/toolbar.sales";
 import { SalesDetailDialog } from "./components/detail.sales";
+import { DataTable } from "@/components/organisms/ori-data-table/data-table";
 
 interface Props {
   mode: "private" | "demo";
@@ -33,7 +33,7 @@ export default function SalesTemplate({ mode }: Props) {
 }
 
 const InnerTemplate = () => {
-  const { data, isLoading, query } = useSales();
+  const { data, isLoading } = useSales();
 
   return (
     <>
@@ -46,12 +46,9 @@ const InnerTemplate = () => {
             <LoadingSpinner label="Mengambil Data..." />
           ) : (
             <ScrollArea className="h-[60vh] w-full rounded-md border">
-              <DataTable
-                withPagination={false}
-                pageSize={query.limit}
-                data={data.data}
-                columns={salesColumns}
-              />
+              <DataTable data={data.data} columns={salesColumns} />
+              <ScrollBar orientation="horizontal" />
+              <ScrollBar orientation="vertical" />
             </ScrollArea>
           )}
 

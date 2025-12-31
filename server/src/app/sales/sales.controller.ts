@@ -7,7 +7,6 @@ export class SalesController {
   constructor(private readonly salesService: SalesService) {}
   @Get()
   async getTransaction(@Query() query: SalesQuery) {
-    // TODO : Sorting dari DB
     return await this.salesService.findByQuery(query);
   }
 
