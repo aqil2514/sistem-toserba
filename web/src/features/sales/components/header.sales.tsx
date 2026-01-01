@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { defaultQuery } from "../constants/default-query";
 import { FormSales } from "./form.sales";
-import { useState } from "react";
 import { toast } from "sonner";
 import { SalesSchemaType } from "../schemas/sales-schema";
 import { api } from "@/lib/api";
@@ -46,8 +45,7 @@ export function SalesHeader() {
 }
 
 const HeaderDialog = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const { mutate } = useSales();
+  const { mutate, openAddDialog, setOpenAddDialog } = useSales();
 
   const submitHandler = async (values: SalesSchemaType) => {
     console.log(values);
@@ -67,7 +65,7 @@ const HeaderDialog = () => {
     }
   };
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={openAddDialog} onOpenChange={setOpenAddDialog}>
       <DialogTrigger asChild>
         <Button variant={"outline"} className="w-full md:w-auto">
           <Plus /> Tambah Data
@@ -81,7 +79,7 @@ const HeaderDialog = () => {
           </DialogDescription>
         </DialogHeader>
 
-        <FormSales setOpen={setOpen} submitHandler={submitHandler} />
+        <FormSales setOpen={setOpenAddDialog} submitHandler={submitHandler} />
       </DialogContent>
     </Dialog>
   );

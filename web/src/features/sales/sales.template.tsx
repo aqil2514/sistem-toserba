@@ -12,6 +12,7 @@ import { SalesDetailDialog } from "./components/detail.sales";
 import { DataTable } from "@/components/organisms/ori-data-table/data-table";
 import { SalesEditDialog } from "./components/edit-item.sales";
 import { SalesDeleteDialog } from "./components/delete-item.sales";
+import { useShortcut } from "@/hooks/use-shortcut";
 
 interface Props {
   mode: "private" | "demo";
@@ -35,7 +36,9 @@ export default function SalesTemplate({ mode }: Props) {
 }
 
 const InnerTemplate = () => {
-  const { data, isLoading } = useSales();
+  const { data, isLoading, setOpenAddDialog } = useSales();
+
+  useShortcut(() => setOpenAddDialog(true), { ctrl: true, key: "x" });
 
   return (
     <>

@@ -86,102 +86,81 @@ export function SalesItemForm({ form, data, isLoading, stocks }: Props) {
 
   return (
     <div className="space-y-4 px-1">
-      {isLoading && <LoadingSpinner label="Mengambil data produk..." />}
-      <Tabs defaultValue={fields[0].id}>
-        <ScrollArea className="w-full whitespace-nowrap rounded-md">
-          <TabsList>
-            {fields.map((field, index) => (
-              <TabsTrigger key={field.id} value={field.id} className="px-3">
-                {index + 1}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-        {fields.map((field, index) => {
-          return (
-            <TabsContent key={field.id} value={field.id}>
-              <div key={field.id} className="space-y-4">
-                <p className="font-semibold text-gray-500 text-lg">
-                  Produk {index + 1}
-                </p>
-                <FormField
-                  control={form.control}
-                  name={`items.${index}.product_id`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Nama Produk</FormLabel>
-                      <FormControl>
-                        <Combobox
-                          data={products}
-                          getLabel={(p) => {
-                            const price = productPriceMap[p.value] ?? 0;
-                            const stock = productStockMap[p.value] ?? 0;
-
-                            return (
-                              <div className="space-y-1">
-                                <p className="text-gray-500 font-bold">
-                                  {p.label}
-                                </p>
-                                <p className="text-muted-foreground">
-                                  {formatRupiah(price)} | ({stock} pcs)
-                                </p>
-                              </div>
-                            );
-                          }}
-                          value={field.value}
-                          onValueChange={(productId) => {
-                            field.onChange(productId);
-
-                            const price = productPriceMap[productId];
-                            if (price) {
-                              form.setValue(`items.${index}.price`, price, {
-                                shouldDirty: true,
-                              });
-                            }
-                          }}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name={`items.${index}.price`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Harga</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          disabled
-                          readOnly
-                          value={formatRupiah(field.value)}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Kuantitas + Diskon + Tip  */}
-                <div className="grid md:grid-cols-3 gap-4">
+      {isLoading ? (
+        <LoadingSpinner label="Mengambil data produk..." />
+      ) : (
+        <Tabs defaultValue={fields[0].id}>
+          <ScrollArea className="w-full whitespace-nowrap rounded-md">
+            <TabsList>
+              {fields.map((field, index) => (
+                <TabsTrigger key={field.id} value={field.id} className="px-3">
+                  {index + 1}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+          {fields.map((field, index) => {
+            return (
+              <TabsContent key={field.id} value={field.id}>
+                <div key={field.id} className="space-y-4">
+                  <p className="font-semibold text-gray-500 text-lg">
+                    Produk {index + 1}
+                  </p>
                   <FormField
                     control={form.control}
-                    name={`items.${index}.quantity`}
+                    name={`items.${index}.product_id`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Kuantitas</FormLabel>
+                        <FormLabel>Nama Produk</FormLabel>
+                        <FormControl>
+                          <Combobox
+                            data={products}
+                            getLabel={(p) => {
+                              const price = productPriceMap[p.value] ?? 0;
+                              const stock = productStockMap[p.value] ?? 0;
+
+                              return (
+                                <div className="space-y-1">
+                                  <p className="text-gray-500 font-bold">
+                                    {p.label}
+                                  </p>
+                                  <p className="text-muted-foreground">
+                                    {formatRupiah(price)} | ({stock} pcs)
+                                  </p>
+                                </div>
+                              );
+                            }}
+                            value={field.value}
+                            onValueChange={(productId) => {
+                              field.onChange(productId);
+
+                              const price = productPriceMap[productId];
+                              if (price) {
+                                form.setValue(`items.${index}.price`, price, {
+                                  shouldDirty: true,
+                                });
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name={`items.${index}.price`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Harga</FormLabel>
                         <FormControl>
                           <Input
-                            type="number"
-                            disabled={form.formState.isSubmitting}
-                            {...field}
-                            onChange={(e) =>
-                              field.onChange(e.target.valueAsNumber || 0)
-                            }
+                            type="text"
+                            disabled
+                            readOnly
+                            value={formatRupiah(field.value)}
                           />
                         </FormControl>
                         <FormMessage />
@@ -189,71 +168,95 @@ export function SalesItemForm({ form, data, isLoading, stocks }: Props) {
                     )}
                   />
 
-                  <FormField
-                    control={form.control}
-                    name={`items.${index}.discount`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Diskon</FormLabel>
-                        <FormControl>
-                          <CurrencyInputID
-                            disabled={form.formState.isSubmitting}
-                            value={field.value}
-                            onValueChange={field.onChange}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  {/* Kuantitas + Diskon + Tip  */}
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <FormField
+                      control={form.control}
+                      name={`items.${index}.quantity`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Kuantitas</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              disabled={form.formState.isSubmitting}
+                              {...field}
+                              onChange={(e) =>
+                                field.onChange(e.target.valueAsNumber || 0)
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <FormField
-                    control={form.control}
-                    name={`items.${index}.tip`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Tip</FormLabel>
-                        <FormControl>
-                          <CurrencyInputID
-                            disabled={form.formState.isSubmitting}
-                            value={field.value}
-                            onValueChange={field.onChange}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className="flex gap-4">
-                  <Button
-                    onClick={() => append({ ...defaultSalesItemSchema })}
-                    type="button"
-                    disabled={form.formState.isSubmitting}
-                    variant={"outline"}
-                    size={"icon-sm"}
-                  >
-                    <Plus />
-                  </Button>
-                  {fields.length > 1 && (
+                    <FormField
+                      control={form.control}
+                      name={`items.${index}.discount`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Diskon</FormLabel>
+                          <FormControl>
+                            <CurrencyInputID
+                              disabled={form.formState.isSubmitting}
+                              value={field.value}
+                              onValueChange={field.onChange}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name={`items.${index}.tip`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Tip</FormLabel>
+                          <FormControl>
+                            <CurrencyInputID
+                              disabled={form.formState.isSubmitting}
+                              value={field.value}
+                              onValueChange={field.onChange}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="flex gap-4">
                     <Button
-                      onClick={() => remove(index)}
+                      onClick={() => append({ ...defaultSalesItemSchema })}
                       type="button"
                       disabled={form.formState.isSubmitting}
-                      variant={"destructive"}
+                      variant={"outline"}
                       size={"icon-sm"}
                     >
-                      <Trash />
+                      <Plus />
                     </Button>
-                  )}
+                    {fields.length > 1 && (
+                      <Button
+                        onClick={() => remove(index)}
+                        type="button"
+                        disabled={form.formState.isSubmitting}
+                        variant={"destructive"}
+                        size={"icon-sm"}
+                      >
+                        <Trash />
+                      </Button>
+                    )}
+                  </div>
+                  <Separator />
+                  <div></div>
                 </div>
-                <Separator />
-                <div></div>
-              </div>
-            </TabsContent>
-          );
-        })}
-      </Tabs>
+              </TabsContent>
+            );
+          })}
+        </Tabs>
+      )}
     </div>
   );
 }

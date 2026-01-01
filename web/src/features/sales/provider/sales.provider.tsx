@@ -17,6 +17,9 @@ interface SalesContextType {
   ) => void;
   resetQuery: () => void;
 
+  openAddDialog: boolean;
+  setOpenAddDialog: React.Dispatch<React.SetStateAction<boolean>>;
+
   detailSalesId: string;
   setDetailSalesId: React.Dispatch<React.SetStateAction<string>>;
 
@@ -44,6 +47,8 @@ export function SalesProvider({
   mode: "private" | "demo";
 }) {
   const [query, setQuery] = useState<SalesQuery>(defaultQuery);
+  const [openAddDialog, setOpenAddDialog] = useState<boolean>(false);
+
   const [detailSalesId, setDetailSalesId] = useState<string>("");
   const [editSalesId, setEditSalesId] = useState<string>("");
   const [deleteSalesId, setDeleteSalesId] = useState<string>("");
@@ -77,6 +82,9 @@ export function SalesProvider({
     query,
     updateQuery,
     resetQuery,
+
+    openAddDialog,
+    setOpenAddDialog,
 
     detailSalesId,
     setDetailSalesId,

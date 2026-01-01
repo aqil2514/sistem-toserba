@@ -26,6 +26,7 @@ import { SERVER_URL } from "@/constants/url";
 import { Textarea } from "@/components/ui/textarea";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { InfoItem } from "@/components/ui/info-item";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Props {
   setOpen: (state: boolean) => void;
@@ -75,7 +76,9 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
           toast.error("Data belum lengkap")
         )}
       >
-        <div className="grid grid-cols-2 gap-4">
+        <ScrollArea className="h-96">
+
+        <div className="grid lg:grid-cols-2 gap-4">
           {/* Sales Header */}
           <div>
             <div className="grid md:grid-cols-2 gap-4 my-5">
@@ -147,6 +150,7 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
             stocks={fetcherPurchase.data?.data}
           />
         </div>
+        </ScrollArea>
 
         <Separator className="my-4" />
         <div className="flex justify-between">
