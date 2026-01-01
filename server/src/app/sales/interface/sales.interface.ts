@@ -6,7 +6,7 @@ export interface SalesDb {
   customer_name: string;
   notes: string;
   created_at: string;
-  transaction_at: string;
+  transaction_at: Date;
   deleted_at: string;
 }
 

@@ -42,7 +42,7 @@ const formatStrMap: Record<FormatStringKey, string> = {
 };
 
 export function formatDate(date: Date | string, formatString: FormatStringKey) {
-  return formatInTimeZone(new Date(date), "UTC", formatStrMap[formatString], {
+  return formatInTimeZone(new Date(date), "Asia/Jakarta", formatStrMap[formatString], {
     locale: id,
   });
 }

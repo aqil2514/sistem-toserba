@@ -6,6 +6,9 @@ import { SalesToolbarSorting } from "./toolbar-sorting";
 export function SalesToolbar() {
   const { query, updateQuery } = useSales();
 
+  console.log(query.from)
+  console.log(query.to)
+
   return (
     <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
       <SalesToolbarSorting />

@@ -22,6 +22,7 @@ import { SalesItemDto } from './dto/sales-item.dto';
 import { SalesDbInsert } from './interface/sales.interface';
 import { formatDateYYYYMMDD } from '../../utils/format-date';
 import { SalesStockService } from './helper/sales-stock.service';
+import { DateTime } from 'luxon';
 
 @Injectable()
 export class SalesService {
@@ -101,16 +102,29 @@ export class SalesService {
     };
   }
 
-  private async mapToDbSales(raw: CreateSalesDto): Promise<SalesDbInsert> {
-    const sales_code = await this.generateSalesCode(
-      new Date(raw.transaction_at),
-    );
+  private async mapToDbSales(
+    raw: CreateSalesDto,
+    exist_sales_code?: string,
+  ): Promise<SalesDbInsert> {
+    const dt = DateTime.fromISO(raw.transaction_at, {
+      zone: 'Asia/Jakarta',
+    });
+
+    if (!dt.isValid) {
+      throw new Error('Invalid transaction_at format');
+    }
+
+    const utcDate = dt.toUTC().toJSDate();
+
+    const sales_code =
+      exist_sales_code ?? (await this.generateSalesCode(utcDate));
+
     return {
       customer_name: raw.customer_name,
       notes: raw.notes,
       payment_method: raw.payment_method,
       total_amount: raw.total_amount,
-      transaction_at: raw.transaction_at,
+      transaction_at: utcDate, // ✅ Date
       sales_code,
     };
   }
@@ -132,7 +146,15 @@ export class SalesService {
   }
 
   private async updateSales(transaction_id: string, raw: CreateSalesDto) {
-    const salesPayload = await this.mapToDbSales(raw);
+    const { data: old } = await this.supabase
+      .from('sales')
+      .select('sales_code')
+      .eq('id', transaction_id)
+      .maybeSingle();
+
+    if (!old) throw new NotFoundException('Data penjualan tidak ditemukan');
+    const salesPayload = await this.mapToDbSales(raw, old.sales_code);
+
     const { data, error } = await this.supabase
       .from('sales')
       .update(salesPayload)
@@ -229,7 +251,7 @@ export class SalesService {
   }
 
   async updateTransaction(transaction_id: string, raw: CreateSalesDto) {
-    const newSalesData = await this.updateSales(transaction_id, raw);
+    await this.updateSales(transaction_id, raw);
     // 1️⃣ Ambil sales_items lama
     const { data: oldItems } = await this.supabase
       .from('sales_items')

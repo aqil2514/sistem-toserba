@@ -1,10 +1,6 @@
-import { endOfDayUTC, startOfDayUTC } from "./format-date";
+import { DateTime } from 'luxon';
 
-export function applyPagination(
-  client: any,
-  page?: number,
-  limit?: number,
-) {
+export function applyPagination(client: any, page?: number, limit?: number) {
   if (!page || !limit) return client;
 
   const pageNum = Math.max(1, Number(page));
@@ -19,26 +15,35 @@ export function applyPagination(
 export function applyDateRangeFilter(
   client: any,
   column: string,
-  from?: Date | string,
-  to?: Date | string,
+  from?: string,
+  to?: string,
 ) {
   if (from) {
-    client = client.gte(column, startOfDayUTC(from));
+    const startUtc = DateTime.fromISO(from, {
+      zone: "Asia/Jakarta",
+    })
+      .startOf("day")
+      .toUTC()
+      .toISO();
+
+    client = client.gte(column, startUtc);
   }
 
   if (to) {
-    client = client.lte(column, endOfDayUTC(to));
+    const endUtc = DateTime.fromISO(to, {
+      zone: "Asia/Jakarta",
+    })
+      .endOf("day")
+      .toUTC()
+      .toISO();
+
+    client = client.lte(column, endUtc);
   }
 
   return client;
 }
 
-
-export function buildPaginationMeta(
-  page?: number,
-  limit?: number,
-  total = 0,
-) {
+export function buildPaginationMeta(page?: number, limit?: number, total = 0) {
   const pageNum = Number(page ?? 1);
   const limitNum = Number(limit ?? 20);
 
