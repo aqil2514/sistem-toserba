@@ -21,7 +21,7 @@ export function SalesDetailDialog() {
   const open = Boolean(detailSalesId);
 
   const salesItemFetcher = useFetch<SalesItemApiResponse[]>(
-    `${SERVER_URL}/sales/${detailSalesId}`
+    open ? `${SERVER_URL}/sales/${detailSalesId}` : null
   );
 
   if (!open) return null;
@@ -63,17 +63,17 @@ const ContentReady: React.FC<{ data?: SalesItemApiResponse[] }> = ({
   return (
     <DialogContent className="sm:max-w-5xl">
       <ScrollArea className="h-96 lg:h-auto">
-
-      <DialogHeader>
-        <DialogTitle>Data {salesHeader.sales_code}</DialogTitle>
-        <DialogDescription>
-          Informasi tentang data penjualan dengan kode {salesHeader.sales_code}.
-        </DialogDescription>
-      </DialogHeader>
-      <div className="grid md:grid-cols-2 gap-4">
-        <SalesDetailHeader salesHeader={salesHeader} />
-        <DetailItem items={data} />
-      </div>
+        <DialogHeader>
+          <DialogTitle>Data {salesHeader.sales_code}</DialogTitle>
+          <DialogDescription>
+            Informasi tentang data penjualan dengan kode{" "}
+            {salesHeader.sales_code}.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid md:grid-cols-2 gap-4">
+          <SalesDetailHeader salesHeader={salesHeader} />
+          <DetailItem items={data} />
+        </div>
       </ScrollArea>
     </DialogContent>
   );

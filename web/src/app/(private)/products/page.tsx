@@ -1,4 +1,4 @@
-import { ProductsContainer } from "@/features/products/containers/products.container";
+import ProductTemplate from "@/features/products/products.template";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,5 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default async function ProductPage() {
-  return <ProductsContainer />;
+  return <ProductTemplate mode="private" />;
 }

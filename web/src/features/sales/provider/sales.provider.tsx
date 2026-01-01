@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { SERVER_URL } from "@/constants/url";
 import { useFetch } from "@/hooks/use-fetch";
@@ -33,7 +32,7 @@ interface SalesContextType {
 
   isLoading: boolean;
   data: SalesHeaderQueryResponse | undefined;
-  error?: any;
+  error?: Error;
   mutate?: KeyedMutator<SalesHeaderQueryResponse>;
 }
 

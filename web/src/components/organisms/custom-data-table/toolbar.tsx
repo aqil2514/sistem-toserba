@@ -12,6 +12,7 @@ import React from "react";
 interface Props<TData> {
   searchKey: keyof TData | undefined;
   categoryKey: keyof TData | undefined;
+  subCategoryKey: keyof TData | undefined;
 
   data: TData[];
 
@@ -28,6 +29,7 @@ export function ToolbarTable<TData>({
   categoryKey,
   data,
   table,
+  subCategoryKey
 }: Props<TData>) {
   const categories = React.useMemo(() => {
     if (!categoryKey) return [];
@@ -35,6 +37,13 @@ export function ToolbarTable<TData>({
       new Set(data.map((item) => item[categoryKey]).filter(Boolean))
     );
   }, [data, categoryKey]);
+
+  const subCategories = React.useMemo(() => {
+    if (!subCategoryKey) return [];
+    return Array.from(
+      new Set(data.map((item) => item[subCategoryKey]).filter(Boolean))
+    );
+  }, [data, subCategoryKey]);
 
   return (
     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -47,6 +56,8 @@ export function ToolbarTable<TData>({
           className="md:max-w-xs"
         />
       )}
+
+      {/* TODO : Refactoring di bawah ini */}
 
       {/* Category Filter */}
       {categoryKey && (
@@ -68,6 +79,34 @@ export function ToolbarTable<TData>({
           <SelectContent>
             <SelectItem value="all">Semua Kategori</SelectItem>
             {categories.map((cat) => (
+              <SelectItem key={String(cat)} value={String(cat)}>
+                {String(cat)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
+
+      {/* SubCategory Filter */}
+      {subCategories && (
+        <Select
+          value={
+            (table
+              .getColumn(subCategoryKey as string)
+              ?.getFilterValue() as string) ?? "all"
+          }
+          onValueChange={(value) =>
+            table
+              .getColumn(subCategoryKey as string)
+              ?.setFilterValue(value === "all" ? undefined : value)
+          }
+        >
+          <SelectTrigger className="md:max-w-xs">
+            <SelectValue placeholder="Filter kategori" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Semua Sub Kategori</SelectItem>
+            {subCategories.map((cat) => (
               <SelectItem key={String(cat)} value={String(cat)}>
                 {String(cat)}
               </SelectItem>

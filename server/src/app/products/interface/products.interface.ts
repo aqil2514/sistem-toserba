@@ -7,6 +7,8 @@ export interface Product {
 
   category: string;
 
+  stock?: number;
+
   unit: string;
 
   created_at: string | null; // timestamp with time zone

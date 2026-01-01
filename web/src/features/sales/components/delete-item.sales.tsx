@@ -25,7 +25,7 @@ export function SalesDeleteDialog() {
   const open = Boolean(deleteSalesId);
 
   const deleteSalesFetcher = useFetch<SalesItemApiResponse[]>(
-    `${SERVER_URL}/sales/${deleteSalesId}`
+    open ? `${SERVER_URL}/sales/${deleteSalesId}` : null
   );
 
   if (!open) return null;

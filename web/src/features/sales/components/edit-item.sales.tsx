@@ -24,7 +24,7 @@ export function SalesEditDialog() {
   const open = Boolean(editSalesId);
 
   const oldDataFetcher = useFetch<SalesItemApiResponse[]>(
-    `${SERVER_URL}/sales/${editSalesId}`
+    open ? `${SERVER_URL}/sales/${editSalesId}` : null
   );
 
   if (!open) return null;

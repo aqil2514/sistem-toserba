@@ -30,6 +30,7 @@ interface DataTableProps<TData, TValue> {
   pageSize?: number;
   searchKey?: keyof TData;
   categoryKey?: keyof TData;
+  subCategoryKey?: keyof TData;
   withPagination?: boolean;
 }
 
@@ -40,7 +41,8 @@ export function DataTable<TData extends Record<string, any>, TValue>({
   pageSize = 10,
   searchKey,
   categoryKey,
-  withPagination = true
+  subCategoryKey,
+  withPagination = true,
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -75,6 +77,7 @@ export function DataTable<TData extends Record<string, any>, TValue>({
     <div className="space-y-4">
       <ToolbarTable
         categoryKey={categoryKey}
+        subCategoryKey={subCategoryKey}
         data={data}
         globalFilter={globalFilter}
         searchKey={searchKey}

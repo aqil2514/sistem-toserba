@@ -12,7 +12,12 @@ export class ProductsService {
     private readonly supabase: SupabaseClient,
   ) {}
 
-  async findAll() {
+  async findAll(): Promise<Product[]> {
+    const stocks = await this.getProductStock();
+    const mappedStock = Object.fromEntries(
+      stocks.data.map((p) => [p.product_id, p.remaining_quantity]),
+    );
+
     const { data, error } = await this.supabase
       .from('products')
       .select('*')
@@ -20,7 +25,15 @@ export class ProductsService {
       .order('name');
 
     if (error) throw error;
-    return data;
+
+    const withStocks: Product[] = data.map((d) => {
+      const stock = mappedStock[d.id] ?? 0;
+      return {
+        ...d,
+        stock
+      };
+    });
+    return withStocks;
   }
 
   async findById(productId: string): Promise<Product[]> {

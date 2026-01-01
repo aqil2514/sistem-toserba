@@ -3,6 +3,7 @@ export interface Product {
   name: string;
   price: number;
   category: string;
+  stock: number;
   subcategory?: string | null;
   unit: string;
   created_at: string; // ISO string

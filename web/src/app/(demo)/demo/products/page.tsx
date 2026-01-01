@@ -1,10 +1,10 @@
-import { DemoProductsContainer } from "@/features/products/containers/demo-products.container";
+import ProductTemplate from "@/features/products/products.template";
 import { Metadata } from "next";
 
-export const metadata:Metadata = {
-    title:"Produk"
-}
+export const metadata: Metadata = {
+  title: "Produk",
+};
 
-export default function ProductDemo(){
-    return <DemoProductsContainer />
+export default function ProductDemo() {
+  return <ProductTemplate mode="demo" />;
 }
