@@ -177,6 +177,7 @@ export function SalesItemForm({ form, data, isLoading, stocks }: Props) {
                         <FormControl>
                           <Input
                             type="number"
+                            disabled={form.formState.isSubmitting}
                             {...field}
                             onChange={(e) =>
                               field.onChange(e.target.valueAsNumber || 0)
@@ -196,6 +197,7 @@ export function SalesItemForm({ form, data, isLoading, stocks }: Props) {
                         <FormLabel>Diskon</FormLabel>
                         <FormControl>
                           <CurrencyInputID
+                            disabled={form.formState.isSubmitting}
                             value={field.value}
                             onValueChange={field.onChange}
                           />
@@ -213,6 +215,7 @@ export function SalesItemForm({ form, data, isLoading, stocks }: Props) {
                         <FormLabel>Tip</FormLabel>
                         <FormControl>
                           <CurrencyInputID
+                            disabled={form.formState.isSubmitting}
                             value={field.value}
                             onValueChange={field.onChange}
                           />
@@ -223,24 +226,26 @@ export function SalesItemForm({ form, data, isLoading, stocks }: Props) {
                   />
                 </div>
                 <div className="flex gap-4">
+                  <Button
+                    onClick={() => append({ ...defaultSalesItemSchema })}
+                    type="button"
+                    disabled={form.formState.isSubmitting}
+                    variant={"outline"}
+                    size={"icon-sm"}
+                  >
+                    <Plus />
+                  </Button>
                   {fields.length > 1 && (
                     <Button
                       onClick={() => remove(index)}
                       type="button"
+                      disabled={form.formState.isSubmitting}
                       variant={"destructive"}
                       size={"icon-sm"}
                     >
                       <Trash />
                     </Button>
                   )}
-                  <Button
-                    onClick={() => append({ ...defaultSalesItemSchema })}
-                    type="button"
-                    variant={"outline"}
-                    size={"icon-sm"}
-                  >
-                    <Plus />
-                  </Button>
                 </div>
                 <Separator />
                 <div></div>

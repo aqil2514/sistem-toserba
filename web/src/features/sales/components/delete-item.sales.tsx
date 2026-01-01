@@ -16,9 +16,12 @@ import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
 import { isAxiosError } from "axios";
+import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 export function SalesDeleteDialog() {
   const { deleteSalesId, setDeleteSalesId, mutate } = useSales();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const open = Boolean(deleteSalesId);
 
   const deleteSalesFetcher = useFetch<SalesItemApiResponse[]>(
@@ -31,6 +34,7 @@ export function SalesDeleteDialog() {
 
   const handleDelete = async () => {
     try {
+      setIsLoading(true);
       await api.delete(`/sales/${deleteSalesId}`);
       toast.success("Data penjualan berhasil dihapus");
       mutate?.();
@@ -44,6 +48,8 @@ export function SalesDeleteDialog() {
       }
       toast.error("Terjadi kesalahan");
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -66,8 +72,18 @@ export function SalesDeleteDialog() {
               {sales.sales_id.sales_code} dan tidak dapat dipulihkan. Lanjut?
             </DialogDescription>
             <DialogFooter className="flex gap-4">
-              <Button variant={"destructive"} onClick={handleDelete}>
-                Hapus
+              <Button
+                variant={"destructive"}
+                onClick={handleDelete}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="flex gap-4">
+                    <Spinner /> Menghapus...
+                  </span>
+                ) : (
+                  "Hapus"
+                )}
               </Button>
               <DialogClose asChild>
                 <Button variant={"outline"}>Batal</Button>

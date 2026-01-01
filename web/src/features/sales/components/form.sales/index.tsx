@@ -51,7 +51,9 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
   const isDirty = form.formState.isDirty;
 
   const fetcherProducts = useFetch<Product[]>(`${SERVER_URL}/products`);
-  const fetcherPurchase = useFetch<ProductStockRpcResponse>(`${SERVER_URL}/products/stocks`);
+  const fetcherPurchase = useFetch<ProductStockRpcResponse>(
+    `${SERVER_URL}/products/stocks`
+  );
 
   async function onSubmit(values: SalesSchemaType) {
     try {
@@ -64,10 +66,9 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
     }
   }
 
-  const isLoading = fetcherProducts.isLoading || fetcherPurchase.isLoading
+  const isLoading = fetcherProducts.isLoading || fetcherPurchase.isLoading;
 
   return (
-    // TODO : Ini nanti dibuat grid ajah. Scrollarea bentrok dengna Combobox soalnya. Tambahin juga jumlah pcsnya
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit, () =>
@@ -85,7 +86,11 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
                   <FormItem>
                     <FormLabel>Nama Pembeli</FormLabel>
                     <FormControl>
-                      <Input placeholder="Contoh: Pembeli 1..." {...field} />
+                      <Input
+                        disabled={form.formState.isSubmitting}
+                        placeholder="Contoh: Pembeli 1..."
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -97,9 +102,10 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
                 name="transaction_at"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Transaksi Penjualan</FormLabel>
+                    <FormLabel>Tanggal Transaksi</FormLabel>
                     <FormControl>
                       <Input
+                        disabled={form.formState.isSubmitting}
                         type="datetime-local"
                         placeholder="Contoh: Pembeli 1..."
                         value={isoToDatetimeLocal(field.value)}
@@ -123,6 +129,7 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
                   <FormLabel>Catatan</FormLabel>
                   <FormControl>
                     <Textarea
+                      disabled={form.formState.isSubmitting}
                       placeholder="Catatan bila diperlukan..."
                       {...field}
                     />

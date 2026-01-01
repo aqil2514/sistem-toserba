@@ -19,6 +19,7 @@ interface Props {
   form: UseFormReturn<SalesSchemaType>;
 }
 export function PaymentSalesForm({ form }: Props) {
+  const isSubmitting = form.formState.isSubmitting;
   return (
     <FormField
       control={form.control}
@@ -28,6 +29,7 @@ export function PaymentSalesForm({ form }: Props) {
           <FormLabel>Metode Pembayaran</FormLabel>
           <FormControl>
             <Select
+              disabled={isSubmitting}
               value={field.value}
               onValueChange={(e) => field.onChange(e)}
             >
