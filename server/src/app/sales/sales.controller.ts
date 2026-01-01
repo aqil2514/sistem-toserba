@@ -37,6 +37,7 @@ export class SalesController {
   @Roles('admin')
   @Post()
   async createNewTransaction(@Body() body: CreateSalesDto) {
+    console.log(body)
     return await this.salesService.createNewTransaction(body);
   }
 

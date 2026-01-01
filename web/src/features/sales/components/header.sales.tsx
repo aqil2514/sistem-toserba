@@ -50,6 +50,7 @@ const HeaderDialog = () => {
   const { mutate } = useSales();
 
   const submitHandler = async (values: SalesSchemaType) => {
+    console.log(values);
     try {
       await api.post("/sales", values);
       toast.success("Data penjualan berhasil ditambah");
