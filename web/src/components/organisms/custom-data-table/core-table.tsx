@@ -73,7 +73,6 @@ export function DataTable<TData extends Record<string, any>, TValue>({
 
   return (
     <div className="space-y-4">
-      {/* TODO : Buat versi DB */}
       <ToolbarTable
         categoryKey={categoryKey}
         data={data}

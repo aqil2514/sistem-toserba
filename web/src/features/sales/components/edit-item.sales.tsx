@@ -85,7 +85,7 @@ const ContentReady: React.FC<{
   };
 
   return (
-    <DialogContent className="sm:max-w-3xl">
+    <DialogContent className="sm:max-w-5xl">
       <DialogHeader>
         <DialogTitle>Edit data {oldData[0].sales_id.sales_code}</DialogTitle>
         <DialogDescription>

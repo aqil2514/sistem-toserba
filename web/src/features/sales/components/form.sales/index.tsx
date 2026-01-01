@@ -18,11 +18,10 @@ import { Button } from "@/components/ui/button";
 import { PaymentSalesForm } from "./payment-form.sales";
 import { isoToDatetimeLocal } from "@/utils/iso-to-date-time-local";
 import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
 import { SalesItemForm } from "./items-form.sales";
 import { useFetch } from "@/hooks/use-fetch";
-import { Product } from "@/features/products/type";
+import { Product, ProductStockRpcResponse } from "@/features/products/type";
 import { SERVER_URL } from "@/constants/url";
 import { Textarea } from "@/components/ui/textarea";
 import { formatRupiah } from "@/utils/format-to-rupiah";
@@ -52,6 +51,7 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
   const isDirty = form.formState.isDirty;
 
   const fetcherProducts = useFetch<Product[]>(`${SERVER_URL}/products`);
+  const fetcherPurchase = useFetch<ProductStockRpcResponse>(`${SERVER_URL}/products/stocks`);
 
   async function onSubmit(values: SalesSchemaType) {
     try {
@@ -64,6 +64,8 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
     }
   }
 
+  const isLoading = fetcherProducts.isLoading || fetcherPurchase.isLoading
+
   return (
     // TODO : Ini nanti dibuat grid ajah. Scrollarea bentrok dengna Combobox soalnya. Tambahin juga jumlah pcsnya
     <Form {...form}>
@@ -72,34 +74,57 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
           toast.error("Data belum lengkap")
         )}
       >
-        <ScrollArea className="h-96 px-4">
-          <div className="grid md:grid-cols-2 gap-4 my-5">
-            <FormField
-              control={form.control}
-              name="customer_name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nama Pembeli</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Contoh: Pembeli 1..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <div className="grid grid-cols-2 gap-4">
+          {/* Sales Header */}
+          <div>
+            <div className="grid md:grid-cols-2 gap-4 my-5">
+              <FormField
+                control={form.control}
+                name="customer_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nama Pembeli</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Contoh: Pembeli 1..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="transaction_at"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Transaksi Penjualan</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="datetime-local"
+                        placeholder="Contoh: Pembeli 1..."
+                        value={isoToDatetimeLocal(field.value)}
+                        onChange={(e) => field.onChange(e.target.value)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <PaymentSalesForm form={form} />
+
+            <Separator className="my-5" />
 
             <FormField
               control={form.control}
-              name="transaction_at"
+              name="notes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Transaksi Penjualan</FormLabel>
+                  <FormLabel>Catatan</FormLabel>
                   <FormControl>
-                    <Input
-                      type="datetime-local"
-                      placeholder="Contoh: Pembeli 1..."
-                      value={isoToDatetimeLocal(field.value)}
-                      onChange={(e) => field.onChange(e.target.value)}
+                    <Textarea
+                      placeholder="Catatan bila diperlukan..."
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -108,33 +133,14 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
             />
           </div>
 
-          <PaymentSalesForm form={form} />
-          <Separator className="my-5" />
-
           <SalesItemForm
             form={form}
             data={fetcherProducts.data}
-            isLoading={fetcherProducts.isLoading}
+            isLoading={isLoading}
+            stocks={fetcherPurchase.data?.data}
           />
-          <Separator className="my-5" />
+        </div>
 
-          <FormField
-            control={form.control}
-            name="notes"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Catatan</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Catatan bila diperlukan..."
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </ScrollArea>
         <Separator className="my-4" />
         <div className="flex justify-between">
           <div className="flex gap-4">

@@ -3,6 +3,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './interface/products.interface';
+import { ProductStockRpcResponse } from './interface/products-stock.interface';
 
 @Injectable()
 export class ProductsService {
@@ -98,6 +99,26 @@ export class ProductsService {
     return {
       message: 'Product deleted',
       data,
+    };
+  }
+
+  async getProductStock(): Promise<ProductStockRpcResponse> {
+    const { data, error, count } = await this.supabase.rpc(
+      'get_total_remaining_products',
+      undefined,
+      {
+        count: 'exact',
+      },
+    );
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    return {
+      data,
+      count,
     };
   }
 }

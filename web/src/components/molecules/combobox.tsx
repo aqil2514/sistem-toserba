@@ -63,7 +63,14 @@ export function Combobox({
       <PopoverContent className="w-full p-0">
         <Command>
           <CommandInput placeholder={searchPlaceholder} />
-          <CommandList>
+          <CommandList
+            className="pointer-events-auto"
+            onWheel={(e) => {
+              e.currentTarget.scrollBy({
+                top: e.deltaY,
+              });
+            }}
+          >
             <CommandEmpty>{emptyText}</CommandEmpty>
 
             <CommandGroup>

@@ -25,7 +25,6 @@ export const salesColumns: ColumnDef<SalesHeader>[] = [
   {
     accessorKey: "transaction_at",
     header: "Tanggal Pembelian",
-    // TODO Ini jam ga konsisten. Sebelumnya begini berdasarkan WIB. Setelah diupdate, malah berdasarkan UTC
     cell: ({ row }) => formatDate(row.original.transaction_at, "29 Desember 2025, 09:21 WIB"),
   },
   {

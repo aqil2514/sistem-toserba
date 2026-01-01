@@ -36,6 +36,13 @@ export class ProductsController {
 
   @UseGuards(PasetoGuard, RoleGuard)
   @Roles('admin')
+  @Get('stocks')
+  async getProductStocks() {
+    return await this.productService.getProductStock();
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
   @Post()
   async addProduct(@Body() dto: CreateProductDto) {
     return await this.productService.create(dto);
@@ -56,40 +63,40 @@ export class ProductsController {
   }
 
   // ⚠️ ENDPOINT SEMENTARA – HAPUS SETELAH MIGRASI
-  @Get('migrate')
-  async migrateProducts() {
-    try {
-      const filePath = path.join(process.cwd(), 'migrate-product.json');
-      const raw = fs.readFileSync(filePath, 'utf-8');
-      const oldProducts = JSON.parse(raw);
+  // @Get('migrate')
+  // async migrateProducts() {
+  //   try {
+  //     const filePath = path.join(process.cwd(), 'migrate-product.json');
+  //     const raw = fs.readFileSync(filePath, 'utf-8');
+  //     const oldProducts = JSON.parse(raw);
 
-      const payload = oldProducts.map((p: any) => ({
-        id: p.id,
-        name: p.name,
-        price: p.price,
-        category: p.category,
-        unit: 'pcs', // default unit warung
-        created_at: p.created_at,
-        updated_at: p.updated_at,
-        deleted_at: p.deleted_at || null,
-      }));
+  //     const payload = oldProducts.map((p: any) => ({
+  //       id: p.id,
+  //       name: p.name,
+  //       price: p.price,
+  //       category: p.category,
+  //       unit: 'pcs', // default unit warung
+  //       created_at: p.created_at,
+  //       updated_at: p.updated_at,
+  //       deleted_at: p.deleted_at || null,
+  //     }));
 
-      const { error, count } = await this.supabase
-        .from('products')
-        .upsert(payload, { onConflict: 'id', count: 'exact' });
+  //     const { error, count } = await this.supabase
+  //       .from('products')
+  //       .upsert(payload, { onConflict: 'id', count: 'exact' });
 
-      if (error) {
-        throw error;
-      }
+  //     if (error) {
+  //       throw error;
+  //     }
 
-      return {
-        message: 'Migration success',
-        total: payload.length,
-        inserted_or_updated: count,
-      };
-    } catch (err: any) {
-      console.error(err);
-      throw new InternalServerErrorException('Product migration failed');
-    }
-  }
+  //     return {
+  //       message: 'Migration success',
+  //       total: payload.length,
+  //       inserted_or_updated: count,
+  //     };
+  //   } catch (err: any) {
+  //     console.error(err);
+  //     throw new InternalServerErrorException('Product migration failed');
+  //   }
+  // }
 }

@@ -73,7 +73,7 @@ const HeaderDialog = () => {
           <Plus /> Tambah Data
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-3xl">
+      <DialogContent className="sm:max-w-5xl">
         <DialogHeader>
           <DialogTitle>Tambah Data Penjualan</DialogTitle>
           <DialogDescription>
