@@ -7,7 +7,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Product, ProductStockRpcResponse } from "@/features/products/type";
+import { Product, ProductStockRpcResponse } from "@/features/products/types/type";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { useEffect, useMemo } from "react";
 import { Combobox } from "@/components/molecules/combobox";

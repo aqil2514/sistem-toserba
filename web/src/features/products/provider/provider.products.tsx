@@ -1,6 +1,6 @@
 import { KeyedMutator } from "swr";
-import { Product } from "../type";
-import React, { createContext, useContext } from "react";
+import { Product } from "../types/type";
+import React, { createContext, useContext, useState } from "react";
 import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";
 
@@ -9,6 +9,9 @@ interface ProductsContextType {
   data: Product[] | undefined;
   error?: Error;
   mutate?: KeyedMutator<Product[]>;
+
+  detailProduct: Product | null;
+  setDetailProduct: React.Dispatch<React.SetStateAction<Product | null>>;
 }
 
 const ProductsContext = createContext<ProductsContextType>(
@@ -16,10 +19,15 @@ const ProductsContext = createContext<ProductsContextType>(
 );
 
 export function ProductsProvider({ children }: { children: React.ReactNode }) {
+  const [detailProduct, setDetailProduct] = useState<Product | null>(null);
+
   const fetcher = useFetch<Product[]>(`${SERVER_URL}/products`);
 
   const values: ProductsContextType = {
     ...fetcher,
+
+    detailProduct,
+    setDetailProduct,
   };
   return (
     <ProductsContext.Provider value={values}>
@@ -28,4 +36,4 @@ export function ProductsProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const useProducts = () => useContext(ProductsContext)
+export const useProducts = () => useContext(ProductsContext);

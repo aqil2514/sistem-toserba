@@ -1,5 +1,5 @@
 import { useFetch } from "@/hooks/use-fetch";
-import { Product } from "../type";
+import { Product } from "../types/type";
 import { SERVER_URL } from "@/constants/url";
 import { api } from "@/lib/api";
 import { ProductFormValues } from "../schema/product.schema";

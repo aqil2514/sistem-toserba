@@ -1,4 +1,4 @@
-import { Product } from "@/features/products/type";
+import { Product } from "@/features/products/types/type";
 import { SalesHeader } from "./sales-header";
 
 export interface SalesItemApiResponse {

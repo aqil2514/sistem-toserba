@@ -5,8 +5,9 @@ import { SectionContainer } from "@/components/layout/container/section-containe
 import { ProductsProvider, useProducts } from "./provider/provider.products";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { DataTable } from "@/components/organisms/custom-data-table/core-table";
-import { productColumns } from "./components/columns.product";
+import { productColumns } from "./components/columns/columns.product";
 import { ProductHeader } from "./components/header.product";
+import { ProductDetailDialog } from "./components/detail.product";
 
 interface Props {
   mode: "private" | "demo";
@@ -32,23 +33,27 @@ export default function ProductTemplate({ mode }: Props) {
 const InnerTemplate = () => {
   const { isLoading, data } = useProducts();
   return (
-    <MainContainer>
-      <SectionContainer>
-      <ProductHeader  />
-        {isLoading || !data ? (
-          <LoadingSpinner label="Mengambil Data..." />
-        ) : (
-          <DataTable
-            columns={productColumns}
-            data={data}
-            categoryKey="category"
-            subCategoryKey="subcategory"
-            searchKey="name"
-            pageSize={10}
-            withPagination
-          />
-        )}
-      </SectionContainer>
-    </MainContainer>
+    <>
+      <MainContainer>
+        <SectionContainer>
+          <ProductHeader />
+          {isLoading || !data ? (
+            <LoadingSpinner label="Mengambil Data..." />
+          ) : (
+            <DataTable
+              columns={productColumns}
+              data={data}
+              categoryKey="category"
+              subCategoryKey="subcategory"
+              searchKey="name"
+              pageSize={10}
+              withPagination
+            />
+          )}
+        </SectionContainer>
+      </MainContainer>
+
+      <ProductDetailDialog />
+    </>
   );
 };

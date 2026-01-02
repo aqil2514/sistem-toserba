@@ -21,7 +21,7 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { SalesItemForm } from "./items-form.sales";
 import { useFetch } from "@/hooks/use-fetch";
-import { Product, ProductStockRpcResponse } from "@/features/products/type";
+import { Product, ProductStockRpcResponse } from "@/features/products/types/type";
 import { SERVER_URL } from "@/constants/url";
 import { Textarea } from "@/components/ui/textarea";
 import { formatRupiah } from "@/utils/format-to-rupiah";

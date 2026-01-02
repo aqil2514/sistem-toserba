@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PurchaseFormValues } from "../schema/purchase.schema";
 import { Purchase } from "../types/purchase";
 import { DUMMY_PURCHASES } from "../data/dummy-purchases";
-import { Product } from "../../products/type";
+import { Product } from "../../products/types/type";
 import { toast } from "sonner";
 import { MappedResponse } from "../components/detail-dialog.purchase";
 import { generateDemoId } from "@/utils/generate-demo-id";

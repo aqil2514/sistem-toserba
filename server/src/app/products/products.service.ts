@@ -30,7 +30,7 @@ export class ProductsService {
       const stock = mappedStock[d.id] ?? 0;
       return {
         ...d,
-        stock
+        stock,
       };
     });
     return withStocks;
@@ -133,5 +133,21 @@ export class ProductsService {
       data,
       count,
     };
+  }
+
+  async getInProductHistory(id: string) {
+    const { data, error } = await this.supabase
+      .from('purchase_items')
+      .select(
+        'id, price, quantity, remaining_quantity, hpp, purchase:purchase_id(id, purchase_date, purchase_code, supplier_name)',
+      )
+      .eq('product_id', id);
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    return data;
   }
 }

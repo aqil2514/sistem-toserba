@@ -29,7 +29,7 @@ export function ToolbarTable<TData>({
   categoryKey,
   data,
   table,
-  subCategoryKey
+  subCategoryKey,
 }: Props<TData>) {
   const categories = React.useMemo(() => {
     if (!categoryKey) return [];
@@ -57,63 +57,65 @@ export function ToolbarTable<TData>({
         />
       )}
 
-      {/* TODO : Refactoring di bawah ini */}
+      <div className="flex gap-4">
+        {categoryKey && (
+          <FilterSelect
+            allValueLabel="Semua kategori"
+            filterKey={categoryKey}
+            filterValues={categories}
+            table={table}
+          />
+        )}
 
-      {/* Category Filter */}
-      {categoryKey && (
-        <Select
-          value={
-            (table
-              .getColumn(categoryKey as string)
-              ?.getFilterValue() as string) ?? "all"
-          }
-          onValueChange={(value) =>
-            table
-              .getColumn(categoryKey as string)
-              ?.setFilterValue(value === "all" ? undefined : value)
-          }
-        >
-          <SelectTrigger className="md:max-w-xs">
-            <SelectValue placeholder="Filter kategori" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Semua Kategori</SelectItem>
-            {categories.map((cat) => (
-              <SelectItem key={String(cat)} value={String(cat)}>
-                {String(cat)}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      )}
-
-      {/* SubCategory Filter */}
-      {subCategories && (
-        <Select
-          value={
-            (table
-              .getColumn(subCategoryKey as string)
-              ?.getFilterValue() as string) ?? "all"
-          }
-          onValueChange={(value) =>
-            table
-              .getColumn(subCategoryKey as string)
-              ?.setFilterValue(value === "all" ? undefined : value)
-          }
-        >
-          <SelectTrigger className="md:max-w-xs">
-            <SelectValue placeholder="Filter kategori" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Semua Sub Kategori</SelectItem>
-            {subCategories.map((cat) => (
-              <SelectItem key={String(cat)} value={String(cat)}>
-                {String(cat)}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      )}
+        {subCategories && subCategoryKey && (
+          <FilterSelect
+            allValueLabel="Semua subkategori"
+            filterKey={subCategoryKey}
+            filterValues={subCategories}
+            table={table}
+          />
+        )}
+      </div>
     </div>
+  );
+}
+
+interface FilterSelectProps<TData> {
+  table: Table<TData>;
+  filterKey: string | number | symbol | undefined;
+  filterValues: TData[keyof TData][];
+  allValueLabel: string;
+}
+
+function FilterSelect<TData>({
+  table,
+  filterKey,
+  filterValues,
+  allValueLabel,
+}: FilterSelectProps<TData>) {
+  return (
+    <Select
+      value={
+        (table.getColumn(filterKey as string)?.getFilterValue() as string) ??
+        "all"
+      }
+      onValueChange={(value) =>
+        table
+          .getColumn(filterKey as string)
+          ?.setFilterValue(value === "all" ? undefined : value)
+      }
+    >
+      <SelectTrigger className="md:max-w-xs">
+        <SelectValue placeholder="Filter kategori" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="all">{allValueLabel}</SelectItem>
+        {filterValues.map((cat) => (
+          <SelectItem key={String(cat)} value={String(cat)}>
+            {String(cat)}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }

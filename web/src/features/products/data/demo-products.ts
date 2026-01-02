@@ -1,10 +1,11 @@
-import { Product } from "../type";
+import { Product } from "../types/type";
 
 export const DEMO_PRODUCTS: Product[] = [
   {
     id: "demo-1",
     name: "Indomie Goreng",
     price: 3500,
+    stock: 50,
     category: "Makanan",
     subcategory: "Mie Instan",
     unit: "pcs",
@@ -15,6 +16,7 @@ export const DEMO_PRODUCTS: Product[] = [
     id: "demo-2",
     name: "Aqua 600ml",
     price: 4000,
+    stock: 60,
     category: "Minuman",
     subcategory: "Air Mineral",
     unit: "botol",

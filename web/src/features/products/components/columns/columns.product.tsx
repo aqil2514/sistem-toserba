@@ -1,5 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Product } from "../type";
+import { Product } from "../../types/type";
+import { SelectRow } from "../select-row.product";
 
 export const productColumns: ColumnDef<Product>[] = [
   {
@@ -28,4 +29,9 @@ export const productColumns: ColumnDef<Product>[] = [
     accessorKey: "unit",
     header: "Satuan",
   },
+  {
+    accessorKey:"action",
+    header:"Aksi",
+    cell:({row}) => <SelectRow row={row} />
+  }
 ];

@@ -1,4 +1,4 @@
-import { Product } from "../type";
+import { Product } from "../types/type";
 import { ProductFormValues } from "../schema/product.schema";
 
 export function productToFormValues(

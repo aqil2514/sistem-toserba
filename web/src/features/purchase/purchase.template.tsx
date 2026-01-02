@@ -14,7 +14,7 @@ import { PurchaseError } from "./components/error.purchase";
 import { purchaseColumns } from "./components/columns.purchase";
 import { PurchaseFormDialog } from "./components/form.purchase";
 import { PurchaseFormValues } from "./schema/purchase.schema";
-import { Product } from "../products/type";
+import { Product } from "../products/types/type";
 import { PurchaseDetailDialog } from "./components/detail-dialog.purchase";
 import { usePurchaseItems } from "./hooks/use-purchase-items";
 import { mapPurchaseToFormValues } from "./utils/map-purchase-to-form-values";
