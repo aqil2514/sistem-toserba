@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import { useProducts } from "@/features/products/provider/provider.products";
 import { ProductInHistory } from "@/features/products/types/product-in-history";
 import { api } from "@/lib/api";
 import { Row } from "@tanstack/react-table";
@@ -16,6 +17,7 @@ interface Props {
 
 export function RemainingQuantityCell({ row, mutate }: Props) {
   const init = row.original.remaining_quantity;
+  const {mutate:mutateAll} = useProducts()
   const [value, setValue] = useState<number>(init);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -25,7 +27,7 @@ export function RemainingQuantityCell({ row, mutate }: Props) {
   const submitHandler = async () => {
     if (value > maxValue)
       return toast.error("Value tidak boleh melebihi batch pembelian");
-    
+
     try {
       setIsLoading(true);
       await api.patch(`/purchase/${row.original.id}/remaining_quantity`, {
@@ -33,6 +35,7 @@ export function RemainingQuantityCell({ row, mutate }: Props) {
       });
 
       mutate();
+      mutateAll?.();
       toast.success("Sisa stok berhasil diperbarui!");
       setIsEditing(false);
     } catch (error) {
