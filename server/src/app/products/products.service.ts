@@ -141,7 +141,8 @@ export class ProductsService {
       .select(
         'id, price, quantity, remaining_quantity, hpp, purchase:purchase_id(id, purchase_date, purchase_code, supplier_name)',
       )
-      .eq('product_id', id);
+      .eq('product_id', id)
+      .is("deleted_at", null);
 
     if (error) {
       console.error(error);
@@ -157,7 +158,8 @@ export class ProductsService {
       .select(
         'discount, hpp, margin, quantity, subtotal, tip, sales:sales_id(sales_code,customer_name,transaction_at)',
       )
-      .eq('product_id', id);
+      .eq('product_id', id)
+      .is("deleted_at", null);
 
     if (error) {
       console.error(error);
