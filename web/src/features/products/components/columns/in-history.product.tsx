@@ -1,10 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ProductHistory } from "../../types/product-history";
+import {  ProductInHistory } from "../../types/product-in-history";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { formatDate } from "@/utils/format-date.fns";
 import { DataTableColumnHeader } from "@/components/organisms/ori-data-table/data-table-column-header";
 
-export const inHistoryColumns: ColumnDef<ProductHistory>[] = [
+export const inHistoryColumns: ColumnDef<ProductInHistory>[] = [
   {
     accessorKey: "purchase.purchase_date",
     header: ({ column }) => (

@@ -50,6 +50,13 @@ export class ProductsController {
 
   @UseGuards(PasetoGuard, RoleGuard)
   @Roles('admin')
+  @Get(':id/out')
+  async getOutProductHistory(@Param('id') id: string) {
+    return await this.productService.getOutProductHistory(id);
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
   @Post()
   async addProduct(@Body() dto: CreateProductDto) {
     return await this.productService.create(dto);

@@ -2,29 +2,30 @@ import { DataTable } from "@/components/organisms/ori-data-table/data-table";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { SERVER_URL } from "@/constants/url";
 import { useFetch } from "@/hooks/use-fetch";
-import { inHistoryColumns } from "../columns/in-history.product";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { ProductInHistory } from "../../types/product-in-history";
+import { ProductOutHistory } from "../../types/product-out-history";
+import { outHistoryColumns } from "../columns/out-history-product";
 
 interface Props {
   product_id: string;
 }
 
-export function HistoryInProduct({ product_id }: Props) {
-  const historyInFetcher = useFetch<ProductInHistory[]>(
-    `${SERVER_URL}/products/${product_id}/in`
+export function HistoryOutProduct({ product_id }: Props) {
+  const historyOutFetcher = useFetch<ProductOutHistory[]>(
+    `${SERVER_URL}/products/${product_id}/out`
   );
 
-  if (historyInFetcher.isLoading || !historyInFetcher.data)
+  
+  if (historyOutFetcher.isLoading || !historyOutFetcher.data)
     return <LoadingSpinner label="Mengambil histori barang masuk..." />;
-
+  
   return (
     <div className="space-y-2">
-      <p className="text-center text-sm font-semibold">Data Barang Masuk</p>
+      <p className="text-center text-sm font-semibold">Data Barang Keluar</p>
       <Separator />
       <ScrollArea className="h-96 w-full rounded-md border">
-        <DataTable data={historyInFetcher.data} columns={inHistoryColumns} />
+        <DataTable data={historyOutFetcher.data} columns={outHistoryColumns} />
         <ScrollBar orientation="horizontal" />
         <ScrollBar orientation="vertical" />
       </ScrollArea>

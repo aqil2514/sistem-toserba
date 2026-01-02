@@ -1,4 +1,4 @@
-export interface ProductHistory {
+export interface ProductInHistory {
   id: string; // uuid
 
   purchase: {

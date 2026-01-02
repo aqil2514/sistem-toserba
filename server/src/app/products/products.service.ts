@@ -150,4 +150,20 @@ export class ProductsService {
 
     return data;
   }
+
+  async getOutProductHistory(id: string) {
+    const { data, error } = await this.supabase
+      .from('sales_items')
+      .select(
+        'discount, hpp, margin, quantity, subtotal, tip, sales:sales_id(sales_code,customer_name,transaction_at)',
+      )
+      .eq('product_id', id);
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    return data;
+  }
 }
