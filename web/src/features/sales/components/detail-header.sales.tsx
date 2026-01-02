@@ -13,6 +13,7 @@ interface Props {
 
 export function SalesDetailHeader({ salesHeader }: Props) {
   const { copy } = useClipboard();
+  // TODO : Buat hpp, margin, & markdown keselurhan
   return (
     <div className="space-y-2">
       <h3 className="font-semibold text-lg text-center text-gray-500">
