@@ -1,5 +1,4 @@
 import { Row } from "@tanstack/react-table";
-import { Product } from "../types/type";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +9,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useProducts } from "../provider/provider.products";
+import { useProducts } from "../../../provider/provider.products";
+import { Product } from "../../../types/type";
 
 interface Props {
   row: Row<Product>;

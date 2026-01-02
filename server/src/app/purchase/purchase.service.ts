@@ -260,6 +260,21 @@ export class PurchaseService {
     };
   }
 
+  async updateQuantityRemaining(
+    purchase_item_id: string,
+    remaining_quantity: number,
+  ) {
+    const { error } = await this.supabase
+      .from('purchase_items')
+      .update({ remaining_quantity })
+      .eq('id', purchase_item_id);
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   async softDeletePurchase(purchaseId: string) {
     const deletedAt = new Date().toISOString();
 

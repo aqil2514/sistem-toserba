@@ -19,12 +19,14 @@ export function HistoryInProduct({ product_id }: Props) {
   if (historyInFetcher.isLoading || !historyInFetcher.data)
     return <LoadingSpinner label="Mengambil histori barang masuk..." />;
 
+  const columns = inHistoryColumns(historyInFetcher.mutate);
+
   return (
     <div className="space-y-2">
       <p className="text-center text-sm font-semibold">Data Barang Masuk</p>
       <Separator />
       <ScrollArea className="h-96 w-full rounded-md border">
-        <DataTable data={historyInFetcher.data} columns={inHistoryColumns} />
+        <DataTable data={historyInFetcher.data} columns={columns} />
         <ScrollBar orientation="horizontal" />
         <ScrollBar orientation="vertical" />
       </ScrollArea>

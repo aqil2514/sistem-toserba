@@ -52,6 +52,19 @@ export class PurchaseController {
 
   @UseGuards(PasetoGuard, RoleGuard)
   @Roles('admin')
+  @Patch(':item_id/remaining_quantity')
+  async updateRemainingQuantityPurchase(
+    @Param('item_id') item_id: string,
+    @Body() body: { remaining_quantity: number },
+  ) {
+    return await this.purchaseService.updateQuantityRemaining(
+      item_id,
+      body.remaining_quantity,
+    );
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
   @Post()
   async addPurchase(@Body() body: CreatePurchaseDto) {
     return await this.purchaseService.createPurchase(body);

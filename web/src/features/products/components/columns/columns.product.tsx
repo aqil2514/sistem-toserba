@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Product } from "../../types/type";
-import { SelectRow } from "../select-row.product";
+import { SelectRow } from "./row/select-row.product";
 
 export const productColumns: ColumnDef<Product>[] = [
   {
