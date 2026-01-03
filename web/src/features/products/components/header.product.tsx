@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { useProducts } from "../store/provider.products";
+import { MutateButton } from "@/components/ui/mutate-button";
 
 export function ProductHeader() {
-  const { setDialogAdd } = useProducts();
+  const { setDialogAdd, mutate } = useProducts();
   return (
     <div className="flex items-start justify-between">
       <div className="flex flex-col gap-1">
@@ -12,9 +13,15 @@ export function ProductHeader() {
         </p>
       </div>
 
-      <Button size="sm" onClick={() => setDialogAdd(true)}>
-        Tambah Produk
-      </Button>
+      <div className="flex gap-4">
+        <MutateButton
+          mutate={mutate}
+          successToastMessage="Data produk telah dimuat ulang"
+        />
+        <Button size="sm" onClick={() => setDialogAdd(true)}>
+          Tambah Produk
+        </Button>
+      </div>
     </div>
   );
 }
