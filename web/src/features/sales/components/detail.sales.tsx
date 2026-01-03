@@ -59,6 +59,7 @@ const ContentReady: React.FC<{ data?: SalesItemApiResponse[] }> = ({
 }) => {
   if (!data) return null;
   const salesHeader = data[0].sales_id;
+  const totalHpp = data.reduce((acc, curr) => acc + curr.hpp , 0);
 
   return (
     <DialogContent className="sm:max-w-5xl">
@@ -71,7 +72,7 @@ const ContentReady: React.FC<{ data?: SalesItemApiResponse[] }> = ({
           </DialogDescription>
         </DialogHeader>
         <div className="grid md:grid-cols-2 gap-4">
-          <SalesDetailHeader salesHeader={salesHeader} />
+          <SalesDetailHeader salesHeader={salesHeader} totalHpp={totalHpp} />
           <DetailItem items={data} />
         </div>
       </ScrollArea>
