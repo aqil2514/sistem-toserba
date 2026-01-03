@@ -9,6 +9,7 @@ import { productColumns } from "./components/columns.product/columns.product";
 import { ProductHeader } from "./components/header.product";
 import { ProductDetailDialog } from "./components/detail.product";
 import { ProductAddDialog } from "./components/dialog.product/add-dialog.product";
+import { ProductEditDialog } from "./components/dialog.product/edit-dialog.product";
 
 interface Props {
   mode: "private" | "demo";
@@ -56,6 +57,7 @@ const InnerTemplate = () => {
 
       <ProductDetailDialog />
       <ProductAddDialog />
+      <ProductEditDialog />
     </>
   );
 };
