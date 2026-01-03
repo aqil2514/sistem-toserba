@@ -10,6 +10,7 @@ import { ProductHeader } from "./components/header.product";
 import { ProductDetailDialog } from "./components/detail.product";
 import { ProductAddDialog } from "./components/dialog.product/add-dialog.product";
 import { ProductEditDialog } from "./components/dialog.product/edit-dialog.product";
+import { DeleteDialog } from "@/components/molecules/delete-dialog";
 
 interface Props {
   mode: "private" | "demo";
@@ -33,7 +34,8 @@ export default function ProductTemplate({ mode }: Props) {
 }
 
 const InnerTemplate = () => {
-  const { isLoading, data } = useProducts();
+  const { isLoading, data, deleteProduct, setDeleteProduct, deleteContent } =
+    useProducts();
   return (
     <>
       <MainContainer>
@@ -58,6 +60,14 @@ const InnerTemplate = () => {
       <ProductDetailDialog />
       <ProductAddDialog />
       <ProductEditDialog />
+      <DeleteDialog
+        open={!!deleteProduct}
+        onOpenChange={(open) => {
+          if (!open) setDeleteProduct(null);
+        }}
+        contents={deleteContent}
+        onDeleteHandle={() => console.log("OK")}
+      />
     </>
   );
 };

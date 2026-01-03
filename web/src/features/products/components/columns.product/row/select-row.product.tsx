@@ -16,7 +16,7 @@ interface Props {
   row: Row<Product>;
 }
 export function SelectRow({ row }: Props) {
-  const { setDetailProduct, setEditProduct } = useProducts();
+  const { setDetailProduct, setEditProduct, setDeleteProduct } = useProducts();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -32,6 +32,9 @@ export function SelectRow({ row }: Props) {
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setEditProduct(row.original)}>
           Edit
+        </DropdownMenuItem>
+        <DropdownMenuItem className="text-red-500" onClick={() => setDeleteProduct(row.original)}>
+          Delete
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
