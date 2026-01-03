@@ -2,12 +2,13 @@
 
 import { MainContainer } from "@/components/layout/container/main-container";
 import { SectionContainer } from "@/components/layout/container/section-container";
-import { ProductsProvider, useProducts } from "./provider/provider.products";
+import { ProductsProvider, useProducts } from "./store/provider.products";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { DataTable } from "@/components/organisms/custom-data-table/core-table";
-import { productColumns } from "./components/columns/columns.product";
+import { productColumns } from "./components/columns.product/columns.product";
 import { ProductHeader } from "./components/header.product";
 import { ProductDetailDialog } from "./components/detail.product";
+import { ProductAddDialog } from "./components/dialog.product/add-dialog.product";
 
 interface Props {
   mode: "private" | "demo";
@@ -54,6 +55,7 @@ const InnerTemplate = () => {
       </MainContainer>
 
       <ProductDetailDialog />
+      <ProductAddDialog />
     </>
   );
 };

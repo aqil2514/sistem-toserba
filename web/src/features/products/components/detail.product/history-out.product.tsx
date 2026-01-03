@@ -5,7 +5,7 @@ import { useFetch } from "@/hooks/use-fetch";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { ProductOutHistory } from "../../types/product-out-history";
-import { outHistoryColumns } from "../columns/out-history-product";
+import { outHistoryColumns } from "../columns.product/out-history-product";
 
 interface Props {
   product_id: string;

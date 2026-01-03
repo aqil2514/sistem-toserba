@@ -2,7 +2,7 @@ import { DataTable } from "@/components/organisms/ori-data-table/data-table";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { SERVER_URL } from "@/constants/url";
 import { useFetch } from "@/hooks/use-fetch";
-import { inHistoryColumns } from "../columns/in-history.product";
+import { inHistoryColumns } from "../columns.product/in-history.product";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { ProductInHistory } from "../../types/product-in-history";

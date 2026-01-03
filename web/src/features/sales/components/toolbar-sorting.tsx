@@ -16,7 +16,7 @@ import {
   User,
 } from "lucide-react";
 import { ToggleSortKey } from "../types/query";
-import { useSales } from "../provider/sales.provider";
+import { useSales } from "../store/sales.provider";
 import { JSX, useState } from "react";
 
 const queryKeys: ToggleSortKey[] = [

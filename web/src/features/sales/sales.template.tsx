@@ -1,5 +1,5 @@
 "use client";
-import { SalesProvider, useSales } from "./provider/sales.provider";
+import { SalesProvider, useSales } from "./store/sales.provider";
 import { salesColumns } from "./components/columns.sales";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { MainContainer } from "@/components/layout/container/main-container";

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useProducts } from "../../../provider/provider.products";
+import { useProducts } from "../../../store/provider.products";
 import { Product } from "../../../types/type";
 
 interface Props {

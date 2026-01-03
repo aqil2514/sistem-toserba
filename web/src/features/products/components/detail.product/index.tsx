@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useProducts } from "../../provider/provider.products";
+import { useProducts } from "../../store/provider.products";
 import React from "react";
 import { Separator } from "@/components/ui/separator";
 import { ContentDetail } from "./content-detail.product";

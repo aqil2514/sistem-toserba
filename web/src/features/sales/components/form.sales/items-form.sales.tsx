@@ -10,7 +10,7 @@ import {
 import { Product, ProductStockRpcResponse } from "@/features/products/types/type";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { useEffect, useMemo } from "react";
-import { Combobox } from "@/components/molecules/combobox";
+import { Combobox } from "@/components/molecules/combobox/basic-combobox";
 import { Input } from "@/components/ui/input";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { CurrencyInputID } from "@/components/ui/currency-input-id";

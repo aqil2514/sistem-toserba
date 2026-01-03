@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useSales } from "../provider/sales.provider";
+import { useSales } from "../store/sales.provider";
 import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";

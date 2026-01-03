@@ -61,7 +61,7 @@ export function Combobox({
       </PopoverTrigger>
 
       <PopoverContent className="w-full p-0">
-        <Command>
+        <Command loop={true}>
           <CommandInput placeholder={searchPlaceholder} />
           <CommandList
             className="pointer-events-auto"

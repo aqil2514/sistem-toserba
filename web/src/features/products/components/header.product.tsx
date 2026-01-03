@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { useProducts } from "../store/provider.products";
 
 export function ProductHeader() {
+  const { setDialogAdd } = useProducts();
   return (
     <div className="flex items-start justify-between">
       <div className="flex flex-col gap-1">
@@ -10,7 +12,7 @@ export function ProductHeader() {
         </p>
       </div>
 
-      <Button size="sm">
+      <Button size="sm" onClick={() => setDialogAdd(true)}>
         Tambah Produk
       </Button>
     </div>

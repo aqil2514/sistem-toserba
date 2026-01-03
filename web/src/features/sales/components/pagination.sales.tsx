@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useSales } from "../provider/sales.provider";
+import { useSales } from "../store/sales.provider";
 import {
   Select,
   SelectContent,

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Ellipsis } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useSales } from "../provider/sales.provider";
+import { useSales } from "../store/sales.provider";
 
 interface Props {
   row: Row<SalesHeader>;

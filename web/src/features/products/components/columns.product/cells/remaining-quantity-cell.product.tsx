@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { useProducts } from "@/features/products/provider/provider.products";
+import { useProducts } from "@/features/products/store/provider.products";
 import { ProductInHistory } from "@/features/products/types/product-in-history";
 import { api } from "@/lib/api";
 import { Row } from "@tanstack/react-table";

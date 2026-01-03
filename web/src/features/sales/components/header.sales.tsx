@@ -6,7 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useSales } from "../provider/sales.provider";
+import { useSales } from "../store/sales.provider";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { defaultQuery } from "../constants/default-query";
