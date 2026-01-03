@@ -11,6 +11,8 @@ import { ProductDetailDialog } from "./components/detail.product";
 import { ProductAddDialog } from "./components/dialog.product/add-dialog.product";
 import { ProductEditDialog } from "./components/dialog.product/edit-dialog.product";
 import { DeleteDialog } from "@/components/molecules/delete-dialog";
+import { api } from "@/lib/api";
+import { SERVER_URL } from "@/constants/url";
 
 interface Props {
   mode: "private" | "demo";
@@ -34,8 +36,19 @@ export default function ProductTemplate({ mode }: Props) {
 }
 
 const InnerTemplate = () => {
-  const { isLoading, data, deleteProduct, setDeleteProduct, deleteContent } =
+  const { isLoading, data, deleteProduct, setDeleteProduct, deleteContent, mutate } =
     useProducts();
+
+  const deleteHandler = async () => {
+    if (!deleteProduct) return;
+    try {
+      api.delete(`${SERVER_URL}/products/${deleteProduct.id}`);
+      mutate?.()
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
   return (
     <>
       <MainContainer>
@@ -66,7 +79,7 @@ const InnerTemplate = () => {
           if (!open) setDeleteProduct(null);
         }}
         contents={deleteContent}
-        onDeleteHandle={() => console.log("OK")}
+        onDeleteHandle={deleteHandler}
       />
     </>
   );
