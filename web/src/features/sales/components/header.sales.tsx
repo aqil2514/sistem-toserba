@@ -15,9 +15,10 @@ import { toast } from "sonner";
 import { SalesSchemaType } from "../schemas/sales-schema";
 import { api } from "@/lib/api";
 import { isAxiosError } from "axios";
+import { MutateButton } from "@/components/ui/mutate-button";
 
 export function SalesHeader() {
-  const { mode, data, resetQuery, query } = useSales();
+  const { mode, data, resetQuery, query, mutate } = useSales();
 
   const isFiltered = JSON.stringify(query) !== JSON.stringify(defaultQuery);
   return (
@@ -33,6 +34,7 @@ export function SalesHeader() {
         )}
       </div>
       <div className="md:flex gap-4 grid grid-cols-2">
+        <MutateButton mutate={mutate} successToastMessage="Data penjualan telah dimuat ulang" />
         <HeaderDialog />
         {isFiltered && (
           <Button onClick={resetQuery} variant={"destructive"}>
