@@ -41,7 +41,7 @@ export function ProductEditDialog() {
         if (!open) setEditProduct(null);
       }}
     >
-      <DialogContent>
+      <DialogContent className="sm:max-w-3xl">
         <DialogHeader>
           <DialogTitle>Edit produk {mappedProduct.name}</DialogTitle>
           <DialogDescription>

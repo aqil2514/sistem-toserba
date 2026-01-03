@@ -6,7 +6,7 @@ import { ProductInHistory } from "@/features/products/types/product-in-history";
 import { api } from "@/lib/api";
 import { Row } from "@tanstack/react-table";
 import { Check, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { KeyedMutator } from "swr";
 
@@ -17,10 +17,12 @@ interface Props {
 
 export function RemainingQuantityCell({ row, mutate }: Props) {
   const init = row.original.remaining_quantity;
-  const {mutate:mutateAll} = useProducts()
+  const { mutate: mutateAll } = useProducts();
   const [value, setValue] = useState<number>(init);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const maxValue = row.original.quantity;
 
@@ -45,10 +47,17 @@ export function RemainingQuantityCell({ row, mutate }: Props) {
     }
   };
 
+  useEffect(() => {
+    if (isEditing) {
+      inputRef.current?.focus();
+    }
+  }, [isEditing]);
+
   if (isEditing)
     return (
       <div className="space-y-2">
         <Input
+          ref={inputRef}
           type="number"
           value={value}
           min={0}
