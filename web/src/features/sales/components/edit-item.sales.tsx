@@ -12,7 +12,7 @@ import { SalesItemApiResponse } from "../types/sales-item-api";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import React from "react";
 import { mapDbDataToForm } from "../utils/map-db-to-form";
-import { FormSales } from "./form.sales";
+import { FormSales } from "./form";
 import { SalesSchemaType } from "../schemas/sales-schema";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
@@ -33,7 +33,10 @@ export function SalesEditDialog() {
     <Dialog
       open={open}
       onOpenChange={(open) => {
-        if (!open) setEditSalesId("");
+        if (!open) {
+          setEditSalesId("");
+          oldDataFetcher.mutate();
+        }
       }}
     >
       {oldDataFetcher.isLoading || !oldDataFetcher.data ? (

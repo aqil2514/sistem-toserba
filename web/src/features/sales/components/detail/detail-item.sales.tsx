@@ -1,11 +1,11 @@
 import { Separator } from "@/components/ui/separator";
-import { SalesItemApiResponse } from "../types/sales-item-api";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { InfoItem } from "@/components/ui/info-item";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { formatPercent } from "@/utils/format-percent";
-import { calculateProfit } from "../utils/calculate-profit";
+import { SalesItemApiResponse } from "../../types/sales-item-api";
+import { calculateProfit } from "../../utils/calculate-profit";
 
 interface Props {
   items: SalesItemApiResponse[];

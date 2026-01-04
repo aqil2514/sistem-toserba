@@ -10,7 +10,7 @@ import { ProductHeader } from "./components/header.product";
 import { ProductDetailDialog } from "./components/detail.product";
 import { ProductAddDialog } from "./components/dialog.product/add-dialog.product";
 import { ProductEditDialog } from "./components/dialog.product/edit-dialog.product";
-import { DeleteDialog } from "@/components/molecules/delete-dialog";
+import { DeleteDialog } from "@/components/molecules/dialog/delete-dialog";
 import { api } from "@/lib/api";
 import { SERVER_URL } from "@/constants/url";
 

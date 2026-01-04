@@ -5,15 +5,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useSales } from "../store/sales.provider";
+import { useSales } from "../../store/sales.provider";
 import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { SalesItemApiResponse } from "../types/sales-item-api";
+import { SalesItemApiResponse } from "../../types/sales-item-api";
 import React from "react";
 import { SalesDetailHeader } from "./detail-header.sales";
-import { DetailItem } from "./detail-item.sales";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { DetailItem } from "./detail-item.sales";
 
 export function SalesDetailDialog() {
   const { detailSalesId, setDetailSalesId } = useSales();

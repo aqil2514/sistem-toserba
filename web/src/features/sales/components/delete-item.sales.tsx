@@ -1,42 +1,40 @@
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { DeleteDialog } from "@/components/molecules/dialog/delete-dialog";
 import { useSales } from "../store/sales.provider";
-import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { SERVER_URL } from "@/constants/url";
-import { useFetch } from "@/hooks/use-fetch";
 import { SalesItemApiResponse } from "../types/sales-item-api";
-import { Button } from "@/components/ui/button";
+import { useFetch } from "@/hooks/use-fetch";
+import { SERVER_URL } from "@/constants/url";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
 import { isAxiosError } from "axios";
-import { useState } from "react";
-import { Spinner } from "@/components/ui/spinner";
+import { LabelValue } from "@/@types/general";
+import { formatRupiah } from "@/utils/format-to-rupiah";
+import { formatDate } from "@/utils/format-date.fns";
+import { LoadingDialog } from "@/components/molecules/dialog/loading-dialog";
 
 export function SalesDeleteDialog() {
   const { deleteSalesId, setDeleteSalesId, mutate } = useSales();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const open = Boolean(deleteSalesId);
 
   const deleteSalesFetcher = useFetch<SalesItemApiResponse[]>(
     open ? `${SERVER_URL}/sales/${deleteSalesId}` : null
   );
-
-  if (!open) return null;
-
   const sales = deleteSalesFetcher.data?.[0];
+
+  if (!open || !sales) return null;
+
+  if (deleteSalesFetcher.isLoading)
+    return (
+      <LoadingDialog
+        onOpenChange={(open) => {
+          if (!open) setDeleteSalesId("");
+        }}
+        open={open}
+      />
+    );
 
   const handleDelete = async () => {
     try {
-      setIsLoading(true);
       await api.delete(`/sales/${deleteSalesId}`);
-      toast.success("Data penjualan berhasil dihapus");
       mutate?.();
       setDeleteSalesId("");
     } catch (error) {
@@ -48,62 +46,40 @@ export function SalesDeleteDialog() {
       }
       toast.error("Terjadi kesalahan");
       console.error(error);
-    } finally {
-      setIsLoading(false);
     }
   };
+
+  const content: LabelValue[] = [
+    {
+      label: "Kode Penjualan",
+      value: sales?.sales_id.sales_code ?? "",
+    },
+    {
+      label: "Nama Pembeli",
+      value: sales?.sales_id.customer_name ?? "",
+    },
+    {
+      label: "Total Belanja",
+      value: formatRupiah(sales?.sales_id.total_amount ?? 0) ?? "",
+    },
+    {
+      label: "Tanggal Pembelian",
+      value:
+        formatDate(
+          sales?.sales_id.transaction_at ?? "",
+          "Senin, 29 Desember 2025, 09:21"
+        ) ?? "",
+    },
+  ];
   return (
-    <Dialog
-      open={open}
+    <DeleteDialog
+      onDeleteHandle={handleDelete}
       onOpenChange={(open) => {
         if (!open) setDeleteSalesId("");
       }}
-    >
-      {deleteSalesFetcher.isLoading || !sales ? (
-        <ContentLoading />
-      ) : (
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>
-              Hapus data penjualan {sales.sales_id.sales_code}.
-            </DialogTitle>
-            <DialogDescription>
-              Tindakan ini akan menghapus data penjualan{" "}
-              {sales.sales_id.sales_code} dan tidak dapat dipulihkan. Lanjut?
-            </DialogDescription>
-            <DialogFooter className="flex gap-4">
-              <Button
-                variant={"destructive"}
-                onClick={handleDelete}
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <span className="flex gap-4">
-                    <Spinner /> Menghapus...
-                  </span>
-                ) : (
-                  "Hapus"
-                )}
-              </Button>
-              <DialogClose asChild>
-                <Button variant={"outline"}>Batal</Button>
-              </DialogClose>
-            </DialogFooter>
-          </DialogHeader>
-        </DialogContent>
-      )}
-    </Dialog>
+      open={open}
+      title="Yakin hapus data penjualan"
+      contents={content}
+    />
   );
 }
-
-const ContentLoading = () => {
-  return (
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Mengambil Data...</DialogTitle>
-        <DialogDescription>Data sedang diambil. Mohon tunggu</DialogDescription>
-      </DialogHeader>
-      <LoadingSpinner label="Loading..." />
-    </DialogContent>
-  );
-};

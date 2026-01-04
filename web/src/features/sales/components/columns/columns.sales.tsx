@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { SalesHeader } from "../types/sales-header";
+import { SalesHeader } from "../../types/sales-header";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { SalesColumnAction } from "./dropdown-cells.sales";
 import { formatDate } from "@/utils/format-date.fns";

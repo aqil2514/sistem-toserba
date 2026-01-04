@@ -10,7 +10,7 @@ import { useSales } from "../store/sales.provider";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { defaultQuery } from "../constants/default-query";
-import { FormSales } from "./form.sales";
+import { FormSales } from "./form";
 import { toast } from "sonner";
 import { SalesSchemaType } from "../schemas/sales-schema";
 import { api } from "@/lib/api";

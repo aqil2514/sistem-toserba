@@ -4,12 +4,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ToggleColumnKey } from "../types/query";
+import { ToggleColumnKey } from "../../types/query";
 import { CreditCard, HandCoins, Search, User } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { useRef, useState } from "react";
-import { useSales } from "../store/sales.provider";
+import { useSales } from "../../store/sales.provider";
 
 const queryKeys: ToggleColumnKey[] = [
   "customer_name",

@@ -2,9 +2,9 @@ import { InfoItem } from "@/components/ui/info-item";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
-import { SalesHeader } from "../types/sales-header";
-import { calculateProfit } from "../utils/calculate-profit";
 import { formatPercent } from "@/utils/format-percent";
+import { SalesHeader } from "../../types/sales-header";
+import { calculateProfit } from "../../utils/calculate-profit";
 
 interface Props {
   salesHeader: SalesHeader;

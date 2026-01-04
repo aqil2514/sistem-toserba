@@ -21,7 +21,10 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { SalesItemForm } from "./items-form.sales";
 import { useFetch } from "@/hooks/use-fetch";
-import { Product, ProductStockRpcResponse } from "@/features/products/types/type";
+import {
+  Product,
+  ProductStockRpcResponse,
+} from "@/features/products/types/type";
 import { SERVER_URL } from "@/constants/url";
 import { Textarea } from "@/components/ui/textarea";
 import { formatRupiah } from "@/utils/format-to-rupiah";
@@ -61,6 +64,7 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
       await submitHandler(values);
       setOpen(false);
       fetcherProducts.mutate();
+      fetcherPurchase.mutate();
     } catch (error) {
       console.error(error);
       toast.error("Gagal menyimpan data");
@@ -77,21 +81,62 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
         )}
       >
         <ScrollArea className="h-96">
+          <div className="grid lg:grid-cols-2 gap-4">
+            {/* Sales Header */}
+            <div>
+              <div className="grid md:grid-cols-2 gap-4 my-5">
+                <FormField
+                  control={form.control}
+                  name="customer_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nama Pembeli</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={form.formState.isSubmitting}
+                          placeholder="Contoh: Pembeli 1..."
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-        <div className="grid lg:grid-cols-2 gap-4">
-          {/* Sales Header */}
-          <div>
-            <div className="grid md:grid-cols-2 gap-4 my-5">
+                <FormField
+                  control={form.control}
+                  name="transaction_at"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Tanggal Transaksi</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={form.formState.isSubmitting}
+                          type="datetime-local"
+                          placeholder="Contoh: Pembeli 1..."
+                          value={isoToDatetimeLocal(field.value)}
+                          onChange={(e) => field.onChange(e.target.value)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <PaymentSalesForm form={form} />
+
+              <Separator className="my-5" />
+
               <FormField
                 control={form.control}
-                name="customer_name"
+                name="notes"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nama Pembeli</FormLabel>
+                    <FormLabel>Catatan</FormLabel>
                     <FormControl>
-                      <Input
+                      <Textarea
                         disabled={form.formState.isSubmitting}
-                        placeholder="Contoh: Pembeli 1..."
+                        placeholder="Catatan bila diperlukan..."
                         {...field}
                       />
                     </FormControl>
@@ -99,57 +144,15 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
                   </FormItem>
                 )}
               />
-
-              <FormField
-                control={form.control}
-                name="transaction_at"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Tanggal Transaksi</FormLabel>
-                    <FormControl>
-                      <Input
-                        disabled={form.formState.isSubmitting}
-                        type="datetime-local"
-                        placeholder="Contoh: Pembeli 1..."
-                        value={isoToDatetimeLocal(field.value)}
-                        onChange={(e) => field.onChange(e.target.value)}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
             </div>
-            <PaymentSalesForm form={form} />
 
-            <Separator className="my-5" />
-
-            <FormField
-              control={form.control}
-              name="notes"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Catatan</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      disabled={form.formState.isSubmitting}
-                      placeholder="Catatan bila diperlukan..."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+            <SalesItemForm
+              form={form}
+              data={fetcherProducts.data}
+              isLoading={isLoading}
+              stocks={fetcherPurchase.data?.data}
             />
           </div>
-
-          <SalesItemForm
-            form={form}
-            data={fetcherProducts.data}
-            isLoading={isLoading}
-            stocks={fetcherPurchase.data?.data}
-          />
-        </div>
         </ScrollArea>
 
         <Separator className="my-4" />
