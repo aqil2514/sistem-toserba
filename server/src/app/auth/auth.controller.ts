@@ -35,7 +35,7 @@ export class AuthController {
           sameSite: this.isProd ? 'none' : 'lax',
           secure: this.isProd,
           domain: this.isProd ? '.sistem-toserba.shop' : undefined,
-          maxAge: 60 * 60 * 1000,
+          maxAge: 24 * 60 * 60 * 1000,
           path: '/',
         });
 
