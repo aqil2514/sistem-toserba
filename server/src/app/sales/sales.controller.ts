@@ -15,15 +15,33 @@ import { PasetoGuard } from '../../guards/paseto.guard';
 import { RoleGuard } from '../../guards/role.guard';
 import { Roles } from '../../decorator/roles.decorator';
 import { CreateSalesDto } from './dto/create-sales.dto';
+import { GetSummaryQuery } from './interface/sales-rpc.interface';
+import { SalesRpcService } from './helper/sales-rpc.service';
 
 @Controller('sales')
 export class SalesController {
-  constructor(private readonly salesService: SalesService) {}
+  constructor(
+    private readonly salesService: SalesService,
+    private readonly salesRpcService: SalesRpcService,
+  ) {}
   @UseGuards(PasetoGuard, RoleGuard)
   @Roles('admin')
   @Get()
   async getTransaction(@Query() query: SalesQuery) {
     return await this.salesService.findByQuery(query);
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Get('summary')
+  async getSummarySales(@Query() query: GetSummaryQuery) {
+    const { endDate, startDate, timezone } = query;
+    console.log(query)
+    return await this.salesRpcService.getSalesSummaryByRange(
+      startDate,
+      endDate,
+      timezone,
+    );
   }
 
   @UseGuards(PasetoGuard, RoleGuard)

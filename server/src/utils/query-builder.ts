@@ -20,9 +20,9 @@ export function applyDateRangeFilter(
 ) {
   if (from) {
     const startUtc = DateTime.fromISO(from, {
-      zone: "Asia/Jakarta",
+      zone: 'Asia/Jakarta',
     })
-      .startOf("day")
+      .startOf('day')
       .toUTC()
       .toISO();
 
@@ -31,9 +31,9 @@ export function applyDateRangeFilter(
 
   if (to) {
     const endUtc = DateTime.fromISO(to, {
-      zone: "Asia/Jakarta",
+      zone: 'Asia/Jakarta',
     })
-      .endOf("day")
+      .endOf('day')
       .toUTC()
       .toISO();
 
