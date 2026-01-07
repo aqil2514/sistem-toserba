@@ -10,11 +10,15 @@ type FormatStringKey =
   | "Desember 2025"
   | "09:21"
   | "29 Des 2025, 09:21 WIB"
-  | "29 Desember 2025, 09:21 WIB";
+  | "29 Desember 2025, 09:21 WIB"
+  | "Senin, 29 Desember 2025";
 
 const formatStrMap: Record<FormatStringKey, string> = {
   // Senin, 29 Desember 2025, 09:21
   "Senin, 29 Desember 2025, 09:21": "EEEE, dd MMMM yyyy, HH:mm",
+
+  // Senin, 29 Desember 2025
+  "Senin, 29 Desember 2025": "EEEE, dd MMMM yyyy",
 
   // 29 Desember 2025
   "29 Desember 2025": "dd MMMM yyyy",
@@ -42,7 +46,12 @@ const formatStrMap: Record<FormatStringKey, string> = {
 };
 
 export function formatDate(date: Date | string, formatString: FormatStringKey) {
-  return formatInTimeZone(new Date(date), "Asia/Jakarta", formatStrMap[formatString], {
-    locale: id,
-  });
+  return formatInTimeZone(
+    new Date(date),
+    "Asia/Jakarta",
+    formatStrMap[formatString],
+    {
+      locale: id,
+    }
+  );
 }

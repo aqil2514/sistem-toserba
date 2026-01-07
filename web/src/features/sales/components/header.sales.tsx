@@ -9,7 +9,7 @@ import {
 import { useSales } from "../store/sales.provider";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { defaultQuery } from "../constants/default-query";
+import { defaultQuery } from "../constants/default-query.sales";
 import { FormSales } from "./form";
 import { toast } from "sonner";
 import { SalesSchemaType } from "../schemas/sales-schema";
@@ -34,7 +34,10 @@ export function SalesHeader() {
         )}
       </div>
       <div className="md:flex gap-4 grid grid-cols-2">
-        <MutateButton mutate={mutate} successToastMessage="Data penjualan telah dimuat ulang" />
+        <MutateButton
+          mutate={mutate}
+          successToastMessage="Data penjualan telah dimuat ulang"
+        />
         <HeaderDialog />
         {isFiltered && (
           <Button onClick={resetQuery} variant={"destructive"}>
@@ -50,7 +53,6 @@ const HeaderDialog = () => {
   const { mutate, openAddDialog, setOpenAddDialog } = useSales();
 
   const submitHandler = async (values: SalesSchemaType) => {
-    console.log(values);
     try {
       await api.post("/sales", values);
       toast.success("Data penjualan berhasil ditambah");

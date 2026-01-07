@@ -1,5 +1,5 @@
 import { endOfDay, startOfDay } from "date-fns";
-import { SalesQuery } from "../types/query";
+import { SalesQuery } from "../types/sales-query";
 
 export const defaultQuery: SalesQuery = {
   page: 1,

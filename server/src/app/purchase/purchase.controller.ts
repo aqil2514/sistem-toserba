@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { PasetoGuard } from '../../guards/paseto.guard';
@@ -14,16 +15,28 @@ import { Roles } from '../../decorator/roles.decorator';
 import { PurchaseService } from './purchase.service';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { UpdatePurchaseDto } from './dto/update-purchase.dto';
+import { PurchaseQuery } from './interface/purchase-query.interface';
+import { PurchaseFormService } from './helpers/purchase-form.service';
 
 @Controller('purchase')
 export class PurchaseController {
-  constructor(private readonly purchaseService: PurchaseService) {}
+  constructor(
+    private readonly purchaseService: PurchaseService,
+    private readonly purchaseFormService: PurchaseFormService,
+  ) {}
 
   @UseGuards(PasetoGuard, RoleGuard)
   @Roles('admin')
   @Get()
-  async getPurchase() {
-    return await this.purchaseService.findAll();
+  async getPurchase(@Query() query: PurchaseQuery) {
+    return await this.purchaseService.findByQuery(query);
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Get('form-rss')
+  async getFormResources() {
+    return await this.purchaseFormService.getPurchaseFormResources();
   }
 
   @UseGuards(PasetoGuard, RoleGuard)

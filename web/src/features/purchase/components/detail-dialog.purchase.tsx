@@ -11,21 +11,12 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
-import { Purchase } from "../types/purchase";
 import { formatDate } from "@/utils/format-date";
 import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";
-import { getDemoPurchaseItems } from "../utils/get-demo-purchase-item";
-
-interface PurchaseDetailDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  purchase: Purchase | null;
-  mode: "private" | "demo";
-}
 
 export interface MappedResponse {
-  purchase_id?:string;
+  purchase_id?: string;
   product_id: string;
   id: string;
   name: string;
@@ -36,28 +27,16 @@ export interface MappedResponse {
   hpp: number;
 }
 
-export function PurchaseDetailDialog({
-  open,
-  onOpenChange,
-  purchase,
-  mode,
-}: PurchaseDetailDialogProps) {
+export function PurchaseDetailDialog() {
   const shouldFetch = Boolean(open && purchase?.id);
-
-  const isPrivate = mode === "private";
 
   const {
     data: apiData,
     isLoading,
     error,
   } = useFetch<MappedResponse[]>(
-    isPrivate && shouldFetch ? `${SERVER_URL}/purchase/${purchase?.id}` : null
+    shouldFetch ? `${SERVER_URL}/purchase/${purchase?.id}` : null
   );
-
-  const demoData =
-    !isPrivate && purchase ? getDemoPurchaseItems(purchase.id) : [];
-
-  const data = isPrivate ? apiData : demoData;
 
   if (!purchase) return null;
 

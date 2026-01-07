@@ -1,4 +1,4 @@
-import { InfoItem } from "@/components/ui/info-item";
+import { InfoItem } from "@/components/molecules/items/info-item";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";

@@ -1,4 +1,4 @@
-import { InfoItem } from "@/components/ui/info-item";
+import { InfoItem } from "@/components/molecules/items/info-item";
 import { Product } from "../../types/type";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 

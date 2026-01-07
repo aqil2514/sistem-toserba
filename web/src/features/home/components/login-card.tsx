@@ -17,8 +17,6 @@ export function LoginCard() {
   useToastHome();
   const loginGoogleUrl = `${SERVER_URL}/auth/google`;
 
-  console.log(loginGoogleUrl);
-
   return (
     <Card className="w-full max-w-sm shadow-lg">
       <CardHeader className="space-y-2 text-center">

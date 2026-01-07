@@ -28,7 +28,7 @@ import {
 import { SERVER_URL } from "@/constants/url";
 import { Textarea } from "@/components/ui/textarea";
 import { formatRupiah } from "@/utils/format-to-rupiah";
-import { InfoItem } from "@/components/ui/info-item";
+import { InfoItem } from "@/components/molecules/items/info-item";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Props {

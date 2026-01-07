@@ -1,4 +1,4 @@
-import { InfoItem } from "@/components/ui/info-item";
+import { InfoItem } from "@/components/molecules/items/info-item";
 import {
   GetSummaryQuery,
   GetSummaryResponse,

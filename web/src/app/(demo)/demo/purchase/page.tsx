@@ -1,4 +1,4 @@
-import { DemoPurchasesContainer } from "@/features/purchase/containers/purchases-demo.container";
+import { PurchaseTemplate } from "@/features/purchase/purchase.template";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,5 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function Purchase() {
-  return <DemoPurchasesContainer />;
+  return <PurchaseTemplate mode="demo" />
 }

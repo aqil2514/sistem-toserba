@@ -1,12 +1,10 @@
+import { BasicQuery } from "@/@types/general";
+
 export type ToggleColumnKey = "sales_code" | "customer_name" | "payment_method";
 
-export type ToggleSortKey = ToggleColumnKey | "total_amount" | "transaction_at"
+export type ToggleSortKey = ToggleColumnKey | "total_amount" | "transaction_at";
 
-export interface SalesQuery {
-  page: number;
-  limit: number;
-  from?: Date;
-  to?: Date;
+export interface SalesQuery extends BasicQuery {
   toggleColumnKey?: ToggleColumnKey;
   toggleColumnValue?: string;
   sortedKey?: string;

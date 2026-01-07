@@ -48,6 +48,8 @@ interface Props {
   isLoading?: boolean;
 }
 
+// TODO : Lanjut ke form
+
 const EMPTY_VALUES: PurchaseFormValues = {
   purchase_date: new Date(),
   purchase_code: "",

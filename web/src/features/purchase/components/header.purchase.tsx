@@ -1,19 +1,15 @@
 import { Button } from "@/components/ui/button";
+import { usePurchase } from "../store/provider.purchase";
 
-export function PurchaseHeader({
-  mode,
-  onAdd,
-}: {
-  mode: "private" | "demo";
-  onAdd: () => void;
-}) {
+export function PurchaseHeader() {
+  const { setAddOpen } = usePurchase();
   return (
     <div className="flex items-center justify-between">
-      <h1 className="text-lg font-semibold">
-        Barang Masuk {mode === "demo" && "(DEMO)"}
-      </h1>
+      <h1 className="text-lg font-semibold">Barang Masuk</h1>
 
-      <Button onClick={onAdd}>Tambah Pembelian</Button>
+      <Button variant={"outline"} onClick={() => setAddOpen(true)}>
+        Tambah Pembelian
+      </Button>
     </div>
   );
 }

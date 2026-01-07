@@ -2,8 +2,8 @@
 import { SERVER_URL } from "@/constants/url";
 import { useFetch } from "@/hooks/use-fetch";
 import React, { createContext, useContext, useState } from "react";
-import { SalesQuery } from "../types/query";
-import { defaultQuery } from "../constants/default-query";
+import { SalesQuery } from "../types/sales-query";
+import { defaultQuery } from "../constants/default-query.sales";
 import { KeyedMutator } from "swr";
 import { SalesHeaderQueryResponse } from "../types/sales-header-api";
 import { buildUrl } from "@/utils/build-url";

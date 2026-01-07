@@ -7,13 +7,20 @@ import {
 } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { MappedResponse } from './dto/purchase-response';
-import { PurchaseInsert } from './interface/purchase.interface';
+import { Purchase, PurchaseInsert } from './interface/purchase.interface';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { formatDateYYYYMMDD } from '../../utils/format-date';
 import { CreatePurchaseItemDto } from './dto/create-purchase-item.dto';
 import { PurchaseItemInsert } from './interface/purchase-items.interface';
 import { ProductsService } from '../products/products.service';
 import { UpdatePurchaseDto } from './dto/update-purchase.dto';
+import { PurchaseQuery } from './interface/purchase-query.interface';
+import { DataQueryResponse } from '../../@types/general';
+import {
+  applyDateRangeFilter,
+  applyPagination,
+  buildPaginationMeta,
+} from '../../utils/query-builder';
 
 @Injectable()
 export class PurchaseService {
@@ -108,6 +115,33 @@ export class PurchaseService {
 
     if (error) throw error;
     return data;
+  }
+
+  async findByQuery(
+    query: PurchaseQuery,
+  ): Promise<DataQueryResponse<Purchase[]>> {
+    const { limit, page, from, to } = query;
+
+    let client = this.supabase
+      .from('purchases')
+      .select('*', { count: 'exact' })
+      .is('deleted_at', null);
+
+    if (page && limit) applyPagination(client, page, limit);
+    if (from) applyDateRangeFilter(client, 'purchase_date', from, to);
+
+    const { data, error, count } = await client;
+    if (error) {
+      console.error(error);
+      throw new InternalServerErrorException('Terjadi error saat mencari data');
+    }
+
+    const meta = buildPaginationMeta(page, limit, count ?? 0);
+
+    return {
+      data,
+      meta,
+    };
   }
 
   async findByIdWithItems(purchaseId: string) {

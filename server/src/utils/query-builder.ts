@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+import { DataQueryResponse } from '../@types/general';
 
 export function applyPagination(client: any, page?: number, limit?: number) {
   if (!page || !limit) return client;
@@ -43,7 +44,11 @@ export function applyDateRangeFilter(
   return client;
 }
 
-export function buildPaginationMeta(page?: number, limit?: number, total = 0) {
+export function buildPaginationMeta(
+  page?: number,
+  limit?: number,
+  total = 0,
+): DataQueryResponse['meta'] {
   const pageNum = Number(page ?? 1);
   const limitNum = Number(limit ?? 20);
 

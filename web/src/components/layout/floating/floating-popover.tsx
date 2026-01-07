@@ -9,8 +9,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Info } from "lucide-react";
 import { FloatingPopoverProvider, useFloatingPopover } from "./store/provider";
 import { SalesSummaryContent } from "./contents/sales-summary";
+import { usePathname } from "next/navigation";
+
+const HIDE_FLOATING = ["/"];
 
 export function FloatingPopover() {
+  const pathname = usePathname();
+  const isDemo = pathname.startsWith("/demo");
+
+  if (HIDE_FLOATING.includes(pathname) || isDemo) return null;
   return (
     <FloatingPopoverProvider>
       <InnerTemplate />

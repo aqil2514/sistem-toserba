@@ -1,20 +1,8 @@
-export interface LabelValue {
-  label: string;
-  value: string;
-}
-
 export interface BasicQuery {
   page: number;
   limit: number;
-  from?: Date;
-  to?: Date;
-}
-
-export interface MetaResponseQuery {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
+  from?: string;
+  to?: string;
 }
 
 export interface DataQueryResponse<T = unknown> {

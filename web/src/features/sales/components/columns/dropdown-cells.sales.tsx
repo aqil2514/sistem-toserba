@@ -1,16 +1,10 @@
 import { Row } from "@tanstack/react-table";
 import { SalesHeader } from "../../types/sales-header";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Ellipsis } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useSales } from "../../store/sales.provider";
+import {
+  DropdownActionColumn,
+  DropdownActionItems,
+} from "@/components/organisms/data-table-columns/dropdown-action-columns";
 
 interface Props {
   row: Row<SalesHeader>;
@@ -18,28 +12,25 @@ interface Props {
 export function SalesColumnAction({ row }: Props) {
   const { setDetailSalesId, setEditSalesId, setDeleteSalesId } = useSales();
 
+  const items: DropdownActionItems[] = [
+    {
+      itemLabel: "Detail",
+      onClick: () => setDetailSalesId(row.original.id),
+    },
+    {
+      itemLabel: "Edit",
+      onClick: () => setEditSalesId(row.original.id),
+    },
+    {
+      itemLabel: "Hapus",
+      onClick: () => setDeleteSalesId(row.original.id),
+    },
+  ];
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant={"ghost"} size={"icon-lg"}>
-          <Ellipsis />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>
-          {row.original.sales_code} ({row.original.customer_name})
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setDetailSalesId(row.original.id)}>
-          Detail
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setEditSalesId(row.original.id)}>
-          Edit
-        </DropdownMenuItem>
-        <DropdownMenuItem className="text-red-500" onClick={() => setDeleteSalesId(row.original.id)}>
-          Hapus
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <DropdownActionColumn
+      menuLabel={`${row.original.sales_code} (${row.original.customer_name})`}
+      items={items}
+    />
   );
 }

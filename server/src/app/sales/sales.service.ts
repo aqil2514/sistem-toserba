@@ -7,7 +7,6 @@ import {
 } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SalesQuery } from './interface/sales-query.interface';
-import { SalesHeaderQueryResponse } from './interface/sales-header-response';
 import {
   applyDateRangeFilter,
   applyPagination,
@@ -19,10 +18,11 @@ import {
 } from './interface/sales-items.interface';
 import { CreateSalesDto } from './dto/create-sales.dto';
 import { SalesItemDto } from './dto/sales-item.dto';
-import { SalesDbInsert } from './interface/sales.interface';
+import { SalesDb, SalesDbInsert } from './interface/sales.interface';
 import { formatDateYYYYMMDD } from '../../utils/format-date';
 import { SalesStockService } from './helper/sales-stock.service';
 import { DateTime } from 'luxon';
+import { DataQueryResponse } from '../../@types/general';
 
 @Injectable()
 export class SalesService {
@@ -290,7 +290,7 @@ export class SalesService {
     return newSalesItems;
   }
 
-  async findByQuery(query: SalesQuery): Promise<SalesHeaderQueryResponse> {
+  async findByQuery(query: SalesQuery): Promise<DataQueryResponse<SalesDb[]>> {
     const {
       page,
       limit,

@@ -1,157 +1,59 @@
 "use client";
-
-import { useState } from "react";
 import { MainContainer } from "@/components/layout/container/main-container";
-import { DataTable } from "@/components/organisms/custom-data-table/core-table";
-import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { Separator } from "@/components/ui/separator";
-import { ConfirmDeleteDialog } from "@/components/ui/confirm-delete-dialog";
-
+import { SectionContainer } from "@/components/layout/container/section-container";
+import { PurchaseProvider, usePurchase } from "./store/provider.purchase";
 import { PurchaseHeader } from "./components/header.purchase";
-import { PurchaseEmpty } from "./components/empty.purchase";
-import { Purchase } from "./types/purchase";
-import { PurchaseError } from "./components/error.purchase";
-import { purchaseColumns } from "./components/columns.purchase";
-import { PurchaseFormDialog } from "./components/form.purchase";
-import { PurchaseFormValues } from "./schema/purchase.schema";
-import { Product } from "../products/types/type";
-import { PurchaseDetailDialog } from "./components/detail-dialog.purchase";
-import { usePurchaseItems } from "./hooks/use-purchase-items";
-import { mapPurchaseToFormValues } from "./utils/map-purchase-to-form-values";
-import { getDemoPurchaseItems } from "./utils/get-demo-purchase-item";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { DataTable } from "@/components/organisms/ori-data-table/data-table";
+import { purchaseColumns } from "./components/columns/columns.purchase";
+import { PurchaseToolbar } from "./components/toolbar/toolbar.purchase";
+import { PurchaseDetailDialog } from "./components/dialog/detail/dialog-detail.purchase";
+import { PurchaseAddDialog } from "./components/dialog/add/dialog-add.purchase";
+import { PurchaseEditDialog } from "./components/dialog/edit/dialog-edit.purchase";
+import { PurchaseDeleteDialog } from "./components/dialog/delete/dialog-delete.purchase";
 
-type PurchaseTemplateProps = {
+interface Props {
   mode: "private" | "demo";
-
-  data?: Purchase[];
-  products?: Product[];
-
-  isLoading?: boolean;
-  error?: Error;
-
-  onCreate: (values: PurchaseFormValues) => void;
-  onDelete: (id: string) => void;
-  onUpdate: (id: string, values: PurchaseFormValues) => void;
-};
-
-export function PurchaseTemplate({
-  mode,
-  data = [],
-  isLoading = false,
-  error,
-  onCreate,
-  onDelete,
-  onUpdate,
-  products,
-}: PurchaseTemplateProps) {
-  const [open, setOpen] = useState(false);
-  const [deleting, setDeleting] = useState<Purchase | null>(null);
-  const [detailing, setDetailing] = useState<Purchase | null>(null);
-  const [editing, setEditing] = useState<Purchase | null>(null);
-
-  function handleAdd() {
-    setEditing(null);
-    setOpen(true);
-  }
-
-  function handleEdit(purchase: Purchase) {
-    setEditing(purchase);
-    setOpen(true);
-  }
-
-  function handleSubmit(values: PurchaseFormValues) {
-    if (editing) {
-      onUpdate(editing.id, values); // ⬅️ BARU
-      setEditing(null);
-    } else {
-      onCreate(values);
-    }
-    setOpen(false);
-  }
-
-  const isEditing = Boolean(open && editing);
-
-  const { data: editItems, isLoading: loadingItems } = usePurchaseItems(
-    editing?.id,
-    isEditing
-  );
-
-  const initialValues =
-    mode === "private"
-      ? editing && editItems
-        ? mapPurchaseToFormValues(editing, editItems)
-        : undefined
-      : editing
-      ? mapPurchaseToFormValues(editing, getDemoPurchaseItems(editing.id))
-      : undefined;
-
-  const isFormLoading = mode === "private" ? isEditing && loadingItems : false;
+}
+export function PurchaseTemplate({ mode }: Props) {
+  if (mode === "demo")
+    return (
+      <MainContainer>
+        <SectionContainer>
+          <h1>Versi Demo Belum Tersedia</h1>
+        </SectionContainer>
+      </MainContainer>
+    );
 
   return (
-    <MainContainer>
-      <div className="w-full max-w-6xl bg-background rounded-lg border shadow-sm p-6 flex flex-col gap-6">
-        {/* HEADER */}
-        <PurchaseHeader mode={mode} onAdd={handleAdd} />
-
-        <Separator />
-
-        {/* CONTENT */}
-        <div className="flex flex-col gap-4">
-          {isLoading && <LoadingSpinner label="Memuat data pembelian..." />}
-
-          {error && <PurchaseError />}
-
-          {!isLoading && !error && data.length === 0 && (
-            <PurchaseEmpty onAdd={handleAdd} />
-          )}
-
-          {!isLoading && !error && data.length > 0 && (
-            <DataTable
-              columns={purchaseColumns({
-                onDelete: setDeleting,
-                onDetail: setDetailing,
-                onEdit: handleEdit,
-              })}
-              data={data}
-              pageSize={10}
-              searchKey="purchase_code"
-            />
-          )}
-        </div>
-      </div>
-
-      {/* ADD */}
-      <PurchaseFormDialog
-        open={open}
-        onOpenChange={setOpen}
-        onSubmit={handleSubmit}
-        mode={mode}
-        products={products}
-        title={editing ? "Edit Barang Masuk" : "Tambah Barang Masuk"}
-        initialValues={initialValues}
-        isLoading={isFormLoading}
-      />
-
-      {/* DELETE */}
-      <ConfirmDeleteDialog
-        open={!!deleting}
-        onOpenChange={(open) => !open && setDeleting(null)}
-        title="Hapus Pembelian"
-        description={`Pembelian "${deleting?.purchase_code}" akan dihapus.`}
-        confirmText="Hapus Pembelian"
-        onConfirm={() => {
-          if (!deleting) return;
-          onDelete(deleting.id);
-          setDeleting(null);
-        }}
-      />
-
-      <PurchaseDetailDialog
-        mode={mode}
-        open={!!detailing}
-        onOpenChange={(open) => !open && setDetailing(null)}
-        purchase={detailing}
-      />
-    </MainContainer>
+    <PurchaseProvider>
+      <InnerTemplate />
+    </PurchaseProvider>
   );
 }
+
+const InnerTemplate = () => {
+  const { data, isLoading } = usePurchase();
+
+  return (
+    <>
+      <MainContainer>
+        <SectionContainer>
+          <PurchaseHeader />
+          <PurchaseToolbar />
+
+          {isLoading || !data ? (
+            <LoadingSpinner label="Memuat Data..." />
+          ) : (
+            <DataTable columns={purchaseColumns} data={data.data} />
+          )}
+        </SectionContainer>
+      </MainContainer>
+
+      <PurchaseDetailDialog />
+      <PurchaseAddDialog />
+      <PurchaseEditDialog />
+      <PurchaseDeleteDialog />
+    </>
+  );
+};
