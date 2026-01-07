@@ -1,5 +1,5 @@
-import { MappedResponse } from "../components/detail-dialog.purchase";
 import { PurchaseFormValues } from "../schema/purchase.schema";
+import { MappedResponse } from "../types/mapped-response";
 import { Purchase } from "../types/purchase";
 
 export function mapPurchaseToFormValues(

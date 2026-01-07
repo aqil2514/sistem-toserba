@@ -15,9 +15,9 @@ import { toast } from "sonner";
 import { isAxiosError } from "axios";
 import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";
-import { MappedResponse } from "../../detail-dialog.purchase";
 import { useMemo } from "react";
 import { mapPurchaseToFormValues } from "@/features/purchase/utils/map-purchase-to-form-values";
+import { MappedResponse } from "@/features/purchase/types/mapped-response";
 
 export function PurchaseEditDialog() {
   const { editPurchaseId, setEditPurchaseId, mutate, data } = usePurchase();
