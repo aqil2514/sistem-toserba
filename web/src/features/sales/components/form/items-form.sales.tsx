@@ -7,7 +7,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Product, ProductStockRpcResponse } from "@/features/products/types/type";
+import {
+  Product,
+  ProductStockRpcResponse,
+} from "@/features/products/types/type";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { useEffect, useMemo } from "react";
 import { Combobox } from "@/components/molecules/combobox/basic-combobox";
@@ -181,6 +184,7 @@ export function SalesItemForm({ form, data, isLoading, stocks }: Props) {
                               type="number"
                               disabled={form.formState.isSubmitting}
                               {...field}
+                              onFocus={(e) => e.target.select()}
                               onChange={(e) =>
                                 field.onChange(e.target.valueAsNumber || 0)
                               }

@@ -12,7 +12,7 @@ import { SalesItemApiResponse } from "../types/sales-item-api";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import React from "react";
 import { mapDbDataToForm } from "../utils/map-db-to-form";
-import { FormSales } from "./form";
+import { FormSales } from "./form/form.sales";
 import { SalesSchemaType } from "../schemas/sales-schema";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
