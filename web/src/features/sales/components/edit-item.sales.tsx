@@ -17,6 +17,7 @@ import { SalesSchemaType } from "../schemas/sales-schema";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
 import { isAxiosError } from "axios";
+import { isSalesHeader } from "../utils/type-guard.sales";
 
 export function SalesEditDialog() {
   const { editSalesId, setEditSalesId } = useSales();
@@ -69,10 +70,12 @@ const ContentReady: React.FC<{
 }> = ({ oldData, setEditSalesId }) => {
   const { mutate } = useSales();
   const formMappedData = mapDbDataToForm(oldData);
+  const salesHeader = oldData[0].sales_id;
 
   const submitHandler = async (values: SalesSchemaType) => {
+    if(!isSalesHeader(salesHeader)) return;
     try {
-      await api.put(`/sales/${oldData[0].sales_id.id}`, values);
+      await api.put(`/sales/${salesHeader.id}`, values);
       toast.success("Data penjualan berhasil diedit");
       mutate?.();
     } catch (error) {
@@ -87,10 +90,12 @@ const ContentReady: React.FC<{
     }
   };
 
+  if(!isSalesHeader(salesHeader)) return null
+
   return (
     <DialogContent className="sm:max-w-5xl">
       <DialogHeader>
-        <DialogTitle>Edit data {oldData[0].sales_id.sales_code}</DialogTitle>
+        <DialogTitle>Edit data {salesHeader.sales_code}</DialogTitle>
         <DialogDescription>
           Isi form di bawah ini untuk melakukan edit data
         </DialogDescription>

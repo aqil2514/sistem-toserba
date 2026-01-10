@@ -14,6 +14,7 @@ import React from "react";
 import { SalesDetailHeader } from "./detail-header.sales";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { DetailItem } from "./detail-item.sales";
+import { isSalesHeader } from "../../utils/type-guard.sales";
 
 export function SalesDetailDialog() {
   const { detailSalesId, setDetailSalesId } = useSales();
@@ -60,6 +61,8 @@ const ContentReady: React.FC<{ data?: SalesItemApiResponse[] }> = ({
   if (!data) return null;
   const salesHeader = data[0].sales_id;
   const totalHpp = data.reduce((acc, curr) => acc + curr.hpp , 0);
+
+  if(!isSalesHeader(salesHeader)) return null;
 
   return (
     <DialogContent className="sm:max-w-5xl">

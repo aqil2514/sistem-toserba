@@ -6,6 +6,7 @@ import { formatRupiah } from "@/utils/format-to-rupiah";
 import { formatPercent } from "@/utils/format-percent";
 import { SalesItemApiResponse } from "../../types/sales-item-api";
 import { calculateProfit } from "../../utils/calculate-profit";
+import { isProduct } from "../../utils/type-guard.sales";
 
 interface Props {
   items: SalesItemApiResponse[];
@@ -38,6 +39,7 @@ export function DetailItem({ items }: Props) {
         {items.map((item) => {
           const { margin, marginPercent, markup, markupPercent } =
             calculateProfit(item.subtotal, item.hpp, item.discount, item.tip);
+          if (!isProduct(item.product_id)) return null;
 
           return (
             <TabsContent value={item.id} key={item.id} className="space-y-4">

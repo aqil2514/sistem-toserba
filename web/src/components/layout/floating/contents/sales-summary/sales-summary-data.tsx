@@ -49,11 +49,20 @@ export function SalesSummaryData({
         />
       </div>
       <Separator />
+      <div className="grid grid-cols-2 gap-4">
+
       <Link href={"/sales"}>
         <Button variant={"outline"} className="w-full">
           Penjualan
         </Button>
       </Link>
+
+      <Link href={"/sales/report"}>
+        <Button variant={"outline"} className="w-full">
+          Laporan
+        </Button>
+      </Link>
+      </div>
     </div>
   );
 }

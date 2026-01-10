@@ -10,6 +10,7 @@ import { LabelValue } from "@/@types/general";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { formatDate } from "@/utils/format-date.fns";
 import { LoadingDialog } from "@/components/molecules/dialog/loading-dialog";
+import { isSalesHeader } from "../utils/type-guard.sales";
 
 export function SalesDeleteDialog() {
   const { deleteSalesId, setDeleteSalesId, mutate } = useSales();
@@ -21,6 +22,8 @@ export function SalesDeleteDialog() {
   const sales = deleteSalesFetcher.data?.[0];
 
   if (!open || !sales) return null;
+
+  if (!isSalesHeader(sales.sales_id)) return null;
 
   if (deleteSalesFetcher.isLoading)
     return (
