@@ -9,8 +9,8 @@ import {
   applyDateRangeFilter,
   applyPagination,
   buildPaginationMeta,
-} from 'src/utils/query-builder';
-import { DataQueryResponse } from 'src/@types/general';
+} from '../../../utils/query-builder';
+import { DataQueryResponse } from '../../../@types/general';
 import { SalesItemApiResponse } from '../interface/sales-items.interface';
 
 @Injectable()
