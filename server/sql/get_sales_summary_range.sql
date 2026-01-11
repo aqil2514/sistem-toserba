@@ -8,7 +8,7 @@ RETURNS TABLE (
   total_hpp numeric,
   margin numeric,
   margin_percent numeric,
-  markdown_percent numeric
+  markdown_percent numeric -- TODO : Ini harusnya markup
 )
 LANGUAGE sql
 STABLE

@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon';
-import { DataQueryResponse } from '../@types/general';
+import { DataQueryResponse, FilterState } from '../@types/general';
+import { PostgrestFilterBuilder } from '@supabase/postgrest-js';
 
-export function applyPagination(client: any, page?: number, limit?: number) {
+export function applyPagination(client: PostgrestFilterBuilder<any, any, any, any>, page?: number, limit?: number) {
   if (!page || !limit) return client;
 
   const pageNum = Math.max(1, Number(page));
@@ -14,7 +15,7 @@ export function applyPagination(client: any, page?: number, limit?: number) {
 }
 
 export function applyDateRangeFilter(
-  client: any,
+  client: PostgrestFilterBuilder<any, any, any, any>,
   column: string,
   from?: string,
   to?: string,
@@ -42,6 +43,26 @@ export function applyDateRangeFilter(
   }
 
   return client;
+}
+
+export function applyFilterState(
+  client: PostgrestFilterBuilder<any, any, any, any>,
+  filter: FilterState,
+) {
+  const { key, value, operator = 'ilike' } = filter;
+
+  if (!key || !value) return client;
+
+  switch (operator) {
+    case 'ilike':
+      return client.ilike(key, `%${value}%`);
+    case 'gte':
+      return client.gte(key, value);
+    case 'lte':
+      return client.lte(key, value);
+    default:
+      return client.eq(key, value);
+  }
 }
 
 export function buildPaginationMeta(

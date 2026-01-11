@@ -10,6 +10,14 @@ export interface BasicQuery {
   to?: Date;
 }
 
+type FilterOperator = "eq" | "ilike" | "gte" | "lte";
+
+export interface FilterState {
+  key: string;
+  value: string;
+  operator?: FilterOperator;
+}
+
 export interface MetaResponseQuery {
   page: number;
   limit: number;

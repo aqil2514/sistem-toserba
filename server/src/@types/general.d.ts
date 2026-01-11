@@ -5,6 +5,14 @@ export interface BasicQuery {
   to?: string;
 }
 
+type FilterOperator = 'eq' | 'ilike' | 'gte' | 'lte';
+
+export interface FilterState {
+  key: string;
+  value: string;
+  operator?: FilterOperator;
+}
+
 export interface DataQueryResponse<T = unknown> {
   data: T;
   meta: {

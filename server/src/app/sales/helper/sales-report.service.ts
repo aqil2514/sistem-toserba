@@ -7,6 +7,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { SalesReportQuery } from '../interface/sales-report.interface';
 import {
   applyDateRangeFilter,
+  applyFilterState,
   applyPagination,
   buildPaginationMeta,
 } from '../../../utils/query-builder';
@@ -23,14 +24,19 @@ export class SalesReportService {
   async getSalesReport(
     query: SalesReportQuery,
   ): Promise<DataQueryResponse<SalesItemApiResponse[]>> {
-    const { limit, page, from, to } = query;
+    const { limit, page, from, to, filters } = query;
     let client = this.supabase
       .from('sales_items')
-      .select('*, product_id(*), sales_id(*)', { count: 'exact' })
+      .select('*, product_id!inner(*), sales_id!inner(*)', { count: 'exact' })
       .is('deleted_at', null);
 
     if (page && limit) applyPagination(client, page, limit);
     if (from) applyDateRangeFilter(client, 'transaction_date', from, to);
+    if (filters) {
+      for (const filter of filters) {
+        applyFilterState(client, filter);
+      }
+    }
 
     const { data, error, count } = await client;
 

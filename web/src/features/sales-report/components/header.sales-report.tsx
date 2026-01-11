@@ -4,7 +4,8 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
 export function SalesReportHeader() {
-  const { data, isSummarizedData, setIsSummarizedData } = useSalesReport();
+  const { data, isSummarizedData, setIsSummarizedData, resetQuery } =
+    useSalesReport();
   return (
     <div className="space-y-4">
       <div className="flex justify-between">
@@ -17,7 +18,10 @@ export function SalesReportHeader() {
           <Switch
             id="data-mode"
             checked={isSummarizedData}
-            onCheckedChange={(e) => setIsSummarizedData(e)}
+            onCheckedChange={(e) => {
+              setIsSummarizedData(e);
+              resetQuery();
+            }}
           />
         </div>
       </div>
