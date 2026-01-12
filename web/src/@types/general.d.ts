@@ -8,6 +8,7 @@ export interface BasicQuery {
   limit: number;
   from?: Date;
   to?: Date;
+  filters?: FilterState[]
 }
 
 type FilterOperator = "eq" | "ilike" | "gte" | "lte";

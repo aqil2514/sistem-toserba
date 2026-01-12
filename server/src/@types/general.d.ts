@@ -3,6 +3,8 @@ export interface BasicQuery {
   limit: number;
   from?: string;
   to?: string;
+  filters?: FilterState[];
+  sort?: SortState[];
 }
 
 type FilterOperator = 'eq' | 'ilike' | 'gte' | 'lte';
@@ -11,6 +13,11 @@ export interface FilterState {
   key: string;
   value: string;
   operator?: FilterOperator;
+}
+
+export interface SortState {
+  key: string;
+  value: "asc" | "desc";
 }
 
 export interface DataQueryResponse<T = unknown> {

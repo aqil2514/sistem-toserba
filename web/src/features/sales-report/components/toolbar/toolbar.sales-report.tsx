@@ -4,9 +4,10 @@ import {
   FilterKeyType,
   MultiFilter,
 } from "@/components/molecules/filters/multi-filter";
+import { SalesReportQuery } from "../../types/query.report-sales";
 
-const getFilterKey = (isSummarizedData: boolean): FilterKeyType[] => {
-  if (isSummarizedData)
+const getFilterKey = (query: SalesReportQuery): FilterKeyType[] => {
+  if (query.mode === 'summary-product')
     return [
       {
         filterKey: "product_id.name",
@@ -30,9 +31,9 @@ const getFilterKey = (isSummarizedData: boolean): FilterKeyType[] => {
 };
 
 export function SalesReportToolbar() {
-  const { query, updateQuery, isSummarizedData } = useSalesReport();
+  const { query, updateQuery } = useSalesReport();
 
-  const filterKeys = getFilterKey(isSummarizedData);
+  const filterKeys = getFilterKey(query);
   return (
     <div className="flex gap-4 items-center">
       <MultiFilter

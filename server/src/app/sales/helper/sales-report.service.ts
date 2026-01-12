@@ -4,7 +4,11 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { SalesReportQuery } from '../interface/sales-report.interface';
+import {
+  SalesReportProductRpcParams,
+  SalesReportProductRpcReturn,
+  SalesReportQuery,
+} from '../interface/sales-report.interface';
 import {
   applyDateRangeFilter,
   applyFilterState,
@@ -13,6 +17,7 @@ import {
 } from '../../../utils/query-builder';
 import { DataQueryResponse } from '../../../@types/general';
 import { SalesItemApiResponse } from '../interface/sales-items.interface';
+import { DateTime } from 'luxon';
 
 @Injectable()
 export class SalesReportService {
@@ -20,6 +25,31 @@ export class SalesReportService {
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
   ) {}
+
+  private mapToReportSummaryByProduct(
+    raw: SalesReportQuery,
+  ): SalesReportProductRpcParams {
+    const start = DateTime.fromJSDate(new Date(raw.from), {
+      zone: 'Asia/Jakarta',
+    }).startOf('day');
+
+    const end = DateTime.fromJSDate(new Date(raw.to ?? raw.from), {
+      zone: 'Asia/Jakarta',
+    }).endOf('day');
+
+    const startUtc = start.toUTC().toISO();
+    const endUtc = end.toUTC().toISO();
+
+    return {
+      p_start_utc: startUtc,
+      p_end_utc: endUtc,
+      p_limit: raw.limit,
+      p_page: raw.page,
+      p_product_name: raw?.filters?.[0].value ?? undefined,
+      p_sort_by: raw?.sort?.[0].key ?? undefined,
+      p_sort_dir: raw?.sort?.[0].value ?? undefined,
+    };
+  }
 
   async getSalesReport(
     query: SalesReportQuery,
@@ -51,5 +81,32 @@ export class SalesReportService {
       data,
       meta,
     };
+  }
+
+  async getSalesReportProductSummary(
+    query: SalesReportQuery,
+  ): Promise<DataQueryResponse<SalesReportProductRpcReturn[]>> {
+    const rpcQuery = this.mapToReportSummaryByProduct(query);
+
+    const { data, error, count } = await this.supabase.rpc(
+      'get_sales_report_by_products_summary',
+      rpcQuery,
+      {
+        count: 'exact',
+      },
+    );
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    const meta = buildPaginationMeta(
+      rpcQuery.p_page,
+      rpcQuery.p_limit,
+      count ?? 0,
+    );
+
+    return { meta, data };
   }
 }

@@ -10,3 +10,15 @@ export interface SalesReportProductSummaryColumn {
   markup_percent: number;
   total_amount: number;
 }
+
+export interface ProductSummaryApiResponse {
+  product_name: string;
+  quantity: number;
+  hpp: number;
+  margin: number;
+  subtotal: number;
+  discount: number;
+  tip: number;
+  markup_percent: number;
+  margin_percent: number;
+}

@@ -39,6 +39,9 @@ export class SalesController {
   @Roles('admin')
   @Get('report')
   async getSalesReport(@Query() query: SalesReportQuery) {
+    if (query.mode === 'summary-product')
+      return await this.salesReportService.getSalesReportProductSummary(query);
+    
     return await this.salesReportService.getSalesReport(query);
   }
 

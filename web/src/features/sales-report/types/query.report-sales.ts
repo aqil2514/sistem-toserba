@@ -1,5 +1,7 @@
-import { BasicQuery, FilterState } from "@/@types/general";
+import { BasicQuery } from "@/@types/general";
+
+export type DataMode = "summary-product" | "full"
 
 export interface SalesReportQuery extends BasicQuery {
-  filters?: FilterState[];
+  mode: DataMode;
 }

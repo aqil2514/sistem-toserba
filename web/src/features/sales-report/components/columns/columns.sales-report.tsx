@@ -3,7 +3,7 @@ import { formatDate } from "@/utils/format-date.fns";
 import { formatPercent } from "@/utils/format-percent";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ColumnDef } from "@tanstack/react-table";
-import { SalesReportProductSummaryColumn } from "../../types/summary-columns.report-sales";
+import { ProductSummaryApiResponse } from "../../types/summary-columns.report-sales";
 
 export const SalesReportColumns: ColumnDef<SalesItemApiResponse>[] = [
   {
@@ -76,7 +76,7 @@ export const SalesReportColumns: ColumnDef<SalesItemApiResponse>[] = [
   },
 ];
 
-export const SummarizedReportColumns: ColumnDef<SalesReportProductSummaryColumn>[] =
+export const SummarizedReportColumns: ColumnDef<ProductSummaryApiResponse>[] =
   [
     {
       accessorKey: "product_name",
@@ -87,29 +87,29 @@ export const SummarizedReportColumns: ColumnDef<SalesReportProductSummaryColumn>
       header: "Kuantitas",
     },
     {
-      accessorKey: "total_hpp",
+      accessorKey: "hpp",
       header: "Total HPP",
-      cell: ({ row }) => formatRupiah(row.original.total_hpp),
+      cell: ({ row }) => formatRupiah(row.original.hpp),
     },
     {
-      accessorKey: "total_margin",
+      accessorKey: "margin",
       header: "Total Margin",
-      cell: ({ row }) => formatRupiah(row.original.total_margin),
+      cell: ({ row }) => formatRupiah(row.original.margin),
     },
     {
-      accessorKey: "total_amount",
+      accessorKey: "subtotal",
       header: "Total Belanja",
-      cell: ({ row }) => formatRupiah(row.original.total_amount),
+      cell: ({ row }) => formatRupiah(row.original.subtotal),
     },
     {
-      accessorKey: "total_discount",
+      accessorKey: "discount",
       header: "Total Diskon",
-      cell: ({ row }) => formatRupiah(row.original.total_discount),
+      cell: ({ row }) => formatRupiah(row.original.discount),
     },
     {
-      accessorKey: "total_tip",
+      accessorKey: "tip",
       header: "Total Tip",
-      cell:({row}) => formatRupiah(row.original.total_tip)
+      cell:({row}) => formatRupiah(row.original.tip)
     },
     {
       accessorKey: "markup_percent",

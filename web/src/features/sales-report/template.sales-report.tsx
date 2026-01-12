@@ -5,7 +5,7 @@ import {
   SalesReportProvider,
   useSalesReport,
 } from "./store/provider.sales-report";
-import { SalesReportHeader } from "./components/header.sales-report";
+import { SalesReportHeader } from "./components/header/header.sales-report";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { SalesReportToolbar } from "./components/toolbar/toolbar.sales-report";
 import { DataSalesReport } from "./components/data/data.sales-report";

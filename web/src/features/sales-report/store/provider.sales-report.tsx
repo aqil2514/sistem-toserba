@@ -1,14 +1,13 @@
 import { DataQueryResponse } from "@/@types/general";
 import { SERVER_URL } from "@/constants/url";
-import { SalesItemApiResponse } from "@/features/sales/types/sales-item-api";
-import { useFetch } from "@/hooks/use-fetch";
 import { buildUrl } from "@/utils/build-url";
 import { endOfDay, startOfDay } from "date-fns";
 import React, { createContext, useContext, useState } from "react";
 import { KeyedMutator } from "swr";
 import { SalesReportQuery } from "../types/query.report-sales";
+import { ReportMode, ReportResponseMap, useFetchDb } from "../hooks/useFetchDb";
 
-interface SalesReportContextTypes {
+interface SalesReportContextTypes<M extends ReportMode> {
   query: SalesReportQuery;
   updateQuery: <T extends keyof SalesReportQuery>(
     key: T,
@@ -16,17 +15,14 @@ interface SalesReportContextTypes {
   ) => void;
   resetQuery: () => void;
 
-  data: DataQueryResponse<SalesItemApiResponse[]> | undefined;
+  data: DataQueryResponse<ReportResponseMap[M]> | undefined;
   error: Error;
   isLoading: boolean;
-  mutate: KeyedMutator<DataQueryResponse<SalesItemApiResponse[]>>;
-
-  isSummarizedData: boolean;
-  setIsSummarizedData: React.Dispatch<React.SetStateAction<boolean>>;
+  mutate: KeyedMutator<DataQueryResponse<ReportResponseMap[M]>>;
 }
 
-const SalesReportContext = createContext<SalesReportContextTypes>(
-  {} as SalesReportContextTypes
+const SalesReportContext = createContext<SalesReportContextTypes<ReportMode>>(
+  {} as SalesReportContextTypes<ReportMode>
 );
 
 const defaultQuery: SalesReportQuery = {
@@ -35,6 +31,7 @@ const defaultQuery: SalesReportQuery = {
   from: startOfDay(new Date()),
   to: endOfDay(new Date()),
   filters: [],
+  mode: "full",
 };
 
 export function SalesReportProvider({
@@ -43,10 +40,9 @@ export function SalesReportProvider({
   children: React.ReactNode;
 }) {
   const [query, setQuery] = useState<SalesReportQuery>(defaultQuery);
-  const [isSummarizedData, setIsSummarizedData] = useState<boolean>(false);
 
   const url = buildUrl<SalesReportQuery>(SERVER_URL, "/sales/report", query);
-  const fetcher = useFetch<DataQueryResponse<SalesItemApiResponse[]>>(url);
+  const fetcher = useFetchDb(query.mode, url);
 
   const resetQuery = () => {
     setQuery(defaultQuery);
@@ -59,13 +55,10 @@ export function SalesReportProvider({
     setQuery((prev) => ({ ...prev, [key]: value }));
   };
 
-  const values: SalesReportContextTypes = {
+  const values: SalesReportContextTypes<ReportMode> = {
     query,
     resetQuery,
     updateQuery,
-
-    isSummarizedData,
-    setIsSummarizedData,
 
     ...fetcher,
   };
