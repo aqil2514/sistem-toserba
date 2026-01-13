@@ -32,7 +32,7 @@ export class AuthController {
 
         res.cookie('auth_token', user, {
           httpOnly: true,
-          sameSite: this.isProd ? 'none' : 'lax',
+          sameSite: 'lax',
           secure: this.isProd,
           domain: this.isProd ? '.sistem-toserba.shop' : undefined,
           maxAge: 24 * 60 * 60 * 1000,
@@ -49,7 +49,7 @@ export class AuthController {
     res.clearCookie('auth_token', {
       httpOnly: true,
       secure: this.isProd,
-      sameSite: this.isProd ? 'none' : 'lax',
+      sameSite: 'lax',
       domain: this.isProd ? '.sistem-toserba.shop' : undefined,
       path: '/',
     });

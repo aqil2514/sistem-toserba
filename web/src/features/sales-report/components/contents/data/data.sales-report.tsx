@@ -1,12 +1,13 @@
-import { useSalesReport } from "../../store/provider.sales-report";
-import { isFullReport, isSummaryProduct } from "../../utils/type-guard";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { useSalesReport } from "../../../store/provider.sales-report";
+import { isFullReport, isSummaryProduct } from "../../../utils/type-guard";
 import { FullData } from "./full.sales-report";
 import { SalesReportSummarizedProduct } from "./summarized-product.sales-report";
 
 export function DataSalesReport() {
   const { data, query } = useSalesReport();
 
-  if (!data) return null;
+  if (!data) return <LoadingSpinner label="Memuat Data..." /> ;
 
   if (isSummaryProduct(query.mode, data))
     return <SalesReportSummarizedProduct data={data} />;

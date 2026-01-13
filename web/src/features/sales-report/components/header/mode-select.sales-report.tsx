@@ -9,7 +9,7 @@ import {
 import { useSalesReport } from "../../store/provider.sales-report";
 import { DataMode } from "../../types/query.report-sales";
 
-const items: LabelValue[] = [
+export const modeMapper: LabelValue[] = [
   {
     label: "Full",
     value: "full",
@@ -35,7 +35,7 @@ export function SalesReportModeSelect() {
         <SelectValue placeholder="Mode" />
       </SelectTrigger>
       <SelectContent>
-        {items.map((item) => (
+        {modeMapper.map((item) => (
           <SelectItem key={item.value} value={item.value}>
             {item.label}
           </SelectItem>
