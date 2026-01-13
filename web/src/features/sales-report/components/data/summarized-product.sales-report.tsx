@@ -1,6 +1,6 @@
 import { DataTable } from "@/components/organisms/custom-data-table/core-table";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { SummarizedReportColumns } from "../columns/columns.sales-report";
+import { SummarizedReportColumns } from "../columns/product-summary-columns.sales-report";
 import { ProductSummaryApiResponse } from "../../types/summary-columns.report-sales";
 
 interface Props {

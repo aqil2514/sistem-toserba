@@ -76,7 +76,7 @@ export class SalesReportService {
     }
 
     const meta = buildPaginationMeta(page, limit, count ?? 0);
-
+    
     return {
       data,
       meta,

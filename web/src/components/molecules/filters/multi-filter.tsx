@@ -120,12 +120,7 @@ const FilterFooter: React.FC<{
       >
         Tambah Filter
       </Button>
-      <Button
-        variant={"outline"}
-        onClick={filterHandler}
-        disabled={snapshot.length === 0}
-        size={"sm"}
-      >
+      <Button variant={"outline"} onClick={filterHandler} size={"sm"}>
         Terapkan Filter
       </Button>
     </div>
@@ -153,15 +148,7 @@ const FilterContent: React.FC<{
   };
 
   const deleteFilter = (index: number) => {
-    setSnapshot((prev) => {
-      const next = prev.filter((_, i) => i !== index);
-
-      if (next.length === 0) {
-        onApplyFilter([]);
-      }
-
-      return next;
-    });
+    setSnapshot((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -195,6 +182,10 @@ const FilterContent: React.FC<{
               <Input
                 value={snap.value}
                 onChange={(e) => updateValue(i, e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") onApplyFilter(snapshot);
+                  if (e.ctrlKey && e.key === "X" || e.key === "x") deleteFilter(i);
+                }}
               />
               <Button
                 variant={"outline"}

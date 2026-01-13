@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/organisms/ori-data-table/data-table";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { SalesReportColumns } from "../columns/columns.sales-report";
 import { SalesItemApiResponse } from "@/features/sales/types/sales-item-api";
+import { SalesReportColumns } from "../columns/full-columns.sales-report";
 
 interface Props {
   data: SalesItemApiResponse[];

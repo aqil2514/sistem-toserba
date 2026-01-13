@@ -7,11 +7,19 @@ import {
 import { SalesReportQuery } from "../../types/query.report-sales";
 
 const getFilterKey = (query: SalesReportQuery): FilterKeyType[] => {
-  if (query.mode === 'summary-product')
+  if (query.mode === "summary-product")
     return [
       {
         filterKey: "product_id.name",
         label: "Nama Produk",
+      },
+      {
+        filterKey: "product_id.category",
+        label: "Kategori Produk",
+      },
+      {
+        filterKey: "product_id.subcategory",
+        label: "Subkategori Produk",
       },
     ];
   return [
@@ -26,6 +34,14 @@ const getFilterKey = (query: SalesReportQuery): FilterKeyType[] => {
     {
       filterKey: "product_id.name",
       label: "Produk",
+    },
+    {
+      filterKey: "product_id.category",
+      label: "Kategori Produk",
+    },
+    {
+      filterKey: "product_id.subcategory",
+      label: "Subkategori Produk",
     },
   ];
 };

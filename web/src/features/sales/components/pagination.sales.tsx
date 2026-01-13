@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 
+// TODO : Ini nanti buat agar general komponen
 export function PaginationSales() {
   const { data, updateQuery, query } = useSales();
   const [innerPage, setInnerPage] = useState<number>(data?.meta.page ?? 1);

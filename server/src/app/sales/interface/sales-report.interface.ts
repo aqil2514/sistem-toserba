@@ -18,6 +18,8 @@ export interface SalesReportProductRpcParams {
 
 export interface SalesReportProductRpcReturn {
   product_name: string;
+  category: string;
+  subcategory: string;
   quantity: number;
   hpp: number;
   margin: number;

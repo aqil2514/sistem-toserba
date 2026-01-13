@@ -12,6 +12,8 @@ DROP FUNCTION get_sales_report_by_products_summary(
     p_start_utc TIMESTAMPTZ,
     p_end_utc TIMESTAMPTZ,
     p_product_name TEXT ,
+    p_product_category TEXT,
+    p_product_subcategory TEXT,
     p_sort_by TEXT ,
     p_sort_dir TEXT 
 )
@@ -22,11 +24,15 @@ CREATE OR REPLACE FUNCTION get_sales_report_by_products_summary(
     p_start_utc TIMESTAMPTZ,
     p_end_utc TIMESTAMPTZ,
     p_product_name TEXT DEFAULT NULL,
+    p_product_category TEXT DEFAULT NULL,
+    p_product_subcategory TEXT DEFAULT NULL,
     p_sort_by TEXT DEFAULT 'product_name',
     p_sort_dir TEXT DEFAULT 'asc'
 )
 RETURNS TABLE(
     product_name TEXT,
+    category TEXT,
+    subcategory TEXT,
     quantity INT,
     hpp NUMERIC,
     margin NUMERIC, 
@@ -40,6 +46,8 @@ LANGUAGE sql
 AS $$
 SELECT
   p.name,
+  p.category,
+  p.subcategory,
   SUM(si.quantity) as quantity,
   SUM(si.hpp) as hpp,
   SUM(si.margin) as margin,
@@ -56,12 +64,30 @@ SELECT
         p_product_name IS NULL
         OR p.name ILIKE '%' || p_product_name || '%'
     )
+    AND (
+        p_product_category IS NULL
+        OR p.category ILIKE '%' || p_product_category || '%'
+    )
+    AND (
+        p_product_subcategory IS NULL
+        OR p.subcategory ILIKE '%' || p_product_subcategory || '%'
+    )
 GROUP BY p.id, p.name
 ORDER BY 
     CASE WHEN p_sort_by = 'product_name' AND p_sort_dir = 'asc'
         THEN p.name END ASC,
     CASE WHEN p_sort_by = 'product_name' AND p_sort_dir = 'desc'
         THEN p.name END DESC,
+
+    CASE WHEN p_sort_by = 'product_category' AND p_sort_dir = 'asc'
+        THEN p.category END ASC,
+    CASE WHEN p_sort_by = 'product_category' AND p_sort_dir = 'desc'
+        THEN p.category END DESC,
+
+    CASE WHEN p_sort_by = 'product_subcategory' AND p_sort_dir = 'asc'
+        THEN p.subcategory END ASC,
+    CASE WHEN p_sort_by = 'product_subcategory' AND p_sort_dir = 'desc'
+        THEN p.subcategory END DESC,
 
     CASE WHEN p_sort_by = 'quantity' AND p_sort_dir = 'asc'
         THEN SUM(si.quantity) END ASC,

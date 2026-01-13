@@ -14,8 +14,6 @@ interface Props {
   mode: "demo" | "private";
 }
 
-// TODO : fitur filter dan sortingnya untuk mode summary dan full. Nanti manfaatin full backend ajah
-
 export function SalesReportTemplate({ mode }: Props) {
   if (mode === "demo")
     return (

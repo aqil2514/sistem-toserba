@@ -13,6 +13,8 @@ export interface SalesReportProductSummaryColumn {
 
 export interface ProductSummaryApiResponse {
   product_name: string;
+  category: string;
+  subcategory: string;
   quantity: number;
   hpp: number;
   margin: number;
