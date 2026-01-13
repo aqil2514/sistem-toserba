@@ -1,8 +1,19 @@
 import { DateTime } from 'luxon';
-import { DataQueryResponse, FilterState } from '../@types/general';
+import { DataQueryResponse, FilterState, SortState } from '../@types/general';
 import { PostgrestFilterBuilder } from '@supabase/postgrest-js';
 
-export function applyPagination(client: PostgrestFilterBuilder<any, any, any, any>, page?: number, limit?: number) {
+function normalizeSortKey(key: string) {
+  if (!key.includes('.')) return key;
+
+  const [relation, column] = key.split('.');
+  return `${relation}(${column})`;
+}
+
+export function applyPagination(
+  client: PostgrestFilterBuilder<any, any, any, any>,
+  page?: number,
+  limit?: number,
+) {
   if (!page || !limit) return client;
 
   const pageNum = Math.max(1, Number(page));
@@ -63,6 +74,17 @@ export function applyFilterState(
     default:
       return client.eq(key, value);
   }
+}
+
+export function applySortingState(
+  client: PostgrestFilterBuilder<any, any, any, any>,
+  sortState: { key: string; value: 'asc' | 'desc' },
+) {
+  const key = normalizeSortKey(sortState.key);
+
+  return client.order(key, {
+    ascending: sortState.value === 'asc',
+  });
 }
 
 export function buildPaginationMeta(

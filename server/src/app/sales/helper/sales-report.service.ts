@@ -13,6 +13,7 @@ import {
   applyDateRangeFilter,
   applyFilterState,
   applyPagination,
+  applySortingState,
   buildPaginationMeta,
 } from '../../../utils/query-builder';
 import { DataQueryResponse } from '../../../@types/general';
@@ -54,7 +55,8 @@ export class SalesReportService {
   async getSalesReport(
     query: SalesReportQuery,
   ): Promise<DataQueryResponse<SalesItemApiResponse[]>> {
-    const { limit, page, from, to, filters } = query;
+    const { limit, page, from, to, filters, sort } = query;
+
     let client = this.supabase
       .from('sales_items')
       .select('*, product_id!inner(*), sales_id!inner(*)', { count: 'exact' })
@@ -67,6 +69,11 @@ export class SalesReportService {
         applyFilterState(client, filter);
       }
     }
+    if (sort) {
+      for (const state of sort) {
+        applySortingState(client, state);
+      }
+    }
 
     const { data, error, count } = await client;
 
@@ -76,7 +83,7 @@ export class SalesReportService {
     }
 
     const meta = buildPaginationMeta(page, limit, count ?? 0);
-    
+
     return {
       data,
       meta,
