@@ -9,9 +9,9 @@ export function DataSalesReport() {
   if (!data) return null;
 
   if (isSummaryProduct(query.mode, data))
-    return <SalesReportSummarizedProduct data={data.data} />;
+    return <SalesReportSummarizedProduct data={data} />;
 
-  if (isFullReport(query.mode, data)) return <FullData data={data.data} />;
+  if (isFullReport(query.mode, data)) return <FullData data={data} />;
 
   return null;
 }

@@ -1,5 +1,7 @@
 "use client";
 
+import { type Table as TanstackTable } from "@tanstack/react-table";
+
 import {
   ColumnDef,
   flexRender,
@@ -22,11 +24,14 @@ import React from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+
+  footer?: (table: TanstackTable<TData>) => React.ReactNode;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  footer,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
@@ -86,6 +91,7 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
+      {footer && footer(table)}
     </div>
   );
 }

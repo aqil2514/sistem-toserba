@@ -1,18 +1,28 @@
 import { DataTable } from "@/components/organisms/ori-data-table/data-table";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { SalesItemApiResponse } from "@/features/sales/types/sales-item-api";
 import { SalesReportColumns } from "../columns/full-columns.sales-report";
+import { DataTableFooterServer } from "@/components/organisms/ori-data-table/data-table-footer-server";
+import { useSalesReport } from "../../store/provider.sales-report";
+import { DataQueryResponse } from "@/@types/general";
 
 interface Props {
-  data: SalesItemApiResponse[];
+  data: DataQueryResponse<SalesItemApiResponse[]>;
 }
 
 export function FullData({ data }: Props) {
+  const { query, updateQuery } = useSalesReport();
+
   return (
-    <ScrollArea className="h-[60vh] w-full rounded-md border">
-      <DataTable data={data} columns={SalesReportColumns} />
-      <ScrollBar orientation="horizontal" />
-      <ScrollBar orientation="vertical" />
-    </ScrollArea>
+    <DataTable
+      data={data.data}
+      columns={SalesReportColumns}
+      footer={() => (
+        <DataTableFooterServer
+          query={query}
+          onQueryChange={(key, value) => updateQuery(key, value)}
+          meta={data.meta}
+        />
+      )}
+    />
   );
 }

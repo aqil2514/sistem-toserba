@@ -8,7 +8,7 @@ export interface BasicQuery {
   limit: number;
   from?: Date;
   to?: Date;
-  filters?: FilterState[]
+  filters?: FilterState[];
 }
 
 type FilterOperator = "eq" | "ilike" | "gte" | "lte";
@@ -28,10 +28,5 @@ export interface MetaResponseQuery {
 
 export interface DataQueryResponse<T = unknown> {
   data: T;
-  meta: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
+  meta: MetaResponseQuery;
 }
