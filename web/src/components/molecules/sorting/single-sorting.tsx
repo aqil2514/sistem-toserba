@@ -55,7 +55,8 @@ export function SingleSorting({
   onSortStateChange,
 }: Props) {
   const [snapshotKey, setSnapshotKey] = useState<string>("unknown");
-  const [snapshotValue, setSnapshotValue] = useState<"asc"| "desc">("asc");
+  const [snapshotValue, setSnapshotValue] = useState<"asc" | "desc">("asc");
+  const [open, setOpen] = useState<boolean>(false);
 
   const clickHandler = () => {
     const newState: SortState[] = [
@@ -66,9 +67,10 @@ export function SingleSorting({
     ];
 
     onSortStateChange(newState);
+    setOpen(false);
   };
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant={"outline"}>Sorting</Button>
       </PopoverTrigger>
@@ -98,7 +100,7 @@ export function SingleSorting({
               id="sort-mode"
               checked={snapshotValue === "asc"}
               onCheckedChange={(checked) => {
-                setSnapshotValue(checked ? "asc" : "desc" )
+                setSnapshotValue(checked ? "asc" : "desc");
               }}
             />
             <Label htmlFor="sort-mode">{snapshotValue.toUpperCase()}</Label>

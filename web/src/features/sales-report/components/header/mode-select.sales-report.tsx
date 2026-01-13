@@ -25,7 +25,11 @@ export function SalesReportModeSelect() {
   return (
     <Select
       value={query.mode}
-      onValueChange={(e: DataMode) => updateQuery("mode", e)}
+      onValueChange={(e: DataMode) => {
+        updateQuery("mode", e);
+        updateQuery("sort", undefined);
+        updateQuery("filters", undefined);
+      }}
     >
       <SelectTrigger className="w-45">
         <SelectValue placeholder="Mode" />

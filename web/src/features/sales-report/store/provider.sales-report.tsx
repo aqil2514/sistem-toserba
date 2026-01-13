@@ -26,7 +26,7 @@ const SalesReportContext = createContext<SalesReportContextTypes<ReportMode>>(
 );
 
 const defaultQuery: SalesReportQuery = {
-  limit: 200,
+  limit: 10,
   page: 1,
   from: startOfDay(new Date()),
   to: endOfDay(new Date()),

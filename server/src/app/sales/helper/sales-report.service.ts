@@ -95,13 +95,15 @@ export class SalesReportService {
   ): Promise<DataQueryResponse<SalesReportProductRpcReturn[]>> {
     const rpcQuery = this.mapToReportSummaryByProduct(query);
 
-    const { data, error, count } = await this.supabase.rpc(
+    const { data, error } = await this.supabase.rpc(
       'get_sales_report_by_products_summary',
       rpcQuery,
       {
         count: 'exact',
       },
     );
+
+    console.log(data)
 
     if (error) {
       console.error(error);
@@ -111,7 +113,7 @@ export class SalesReportService {
     const meta = buildPaginationMeta(
       rpcQuery.p_page,
       rpcQuery.p_limit,
-      count ?? 0,
+      data?.[0]?.total_count ?? 0,
     );
 
     return { meta, data };
