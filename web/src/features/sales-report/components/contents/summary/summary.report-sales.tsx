@@ -1,6 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { SalesReportSummaryHeader } from "./summary-header.report-sales";
 import { SalesReportSummaryContent } from "./summary-content.report-sales";
+import { SalesReportSummaryFooter } from "./summary-footer.report-sales";
 
 export function ReportSalesSummary() {
   return (
@@ -11,6 +12,8 @@ export function ReportSalesSummary() {
       <SalesReportSummaryHeader />
       <Separator />
       <SalesReportSummaryContent />
+      <Separator />
+      <SalesReportSummaryFooter />
     </div>
   );
 }
