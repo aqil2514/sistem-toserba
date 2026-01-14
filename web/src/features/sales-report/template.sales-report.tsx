@@ -1,12 +1,16 @@
 "use client";
 import { MainContainer } from "@/components/layout/container/main-container";
 import { SectionContainer } from "@/components/layout/container/section-container";
-import { SalesReportProvider } from "./store/provider.sales-report";
+import {
+  SalesReportProvider,
+  useSalesReport,
+} from "./store/provider.sales-report";
 import { SalesReportHeader } from "./components/header/header.sales-report";
 import { SalesReportToolbar } from "./components/toolbar/toolbar.sales-report";
 import { DataSalesReport } from "./components/contents/data/data.sales-report";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ReportSalesSummary } from "./components/contents/summary/summary.report-sales";
+import { ReportContent } from "./types/query.report-sales";
 
 interface Props {
   mode: "demo" | "private";
@@ -30,13 +34,19 @@ export function SalesReportTemplate({ mode }: Props) {
 }
 
 const InnerTemplate = () => {
+  const { query, updateQuery } = useSalesReport();
+
   return (
     <MainContainer>
       <SectionContainer>
         <SalesReportHeader />
         <SalesReportToolbar />
 
-        <Tabs defaultValue="summary" className="w-full">
+        <Tabs
+          value={query.content}
+          onValueChange={(e) => updateQuery("content", e as ReportContent)}
+          className="w-full"
+        >
           <TabsList>
             <TabsTrigger value="summary">Ringkasan</TabsTrigger>
             <TabsTrigger value="detail">Detail</TabsTrigger>

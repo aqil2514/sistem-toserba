@@ -1,7 +1,7 @@
 import { useFetch } from "@/hooks/use-fetch";
 import { DataQueryResponse } from "@/@types/general";
 import { SalesItemApiResponse } from "@/features/sales/types/sales-item-api";
-import { ProductSummaryApiResponse } from "../types/summary-columns.report-sales";
+import { ProductSummaryApiResponse } from "../types/api-return.report-sales";
 
 export interface ReportResponseMap {
   full: SalesItemApiResponse[];

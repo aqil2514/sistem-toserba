@@ -1,13 +1,13 @@
-import { DataQueryResponse } from "@/@types/general";
 import { SERVER_URL } from "@/constants/url";
 import { buildUrl } from "@/utils/build-url";
 import { endOfDay, startOfDay } from "date-fns";
 import React, { createContext, useContext, useState } from "react";
 import { KeyedMutator } from "swr";
 import { SalesReportQuery } from "../types/query.report-sales";
-import { ReportMode, ReportResponseMap, useFetchDb } from "../hooks/useFetchDb";
+import { ReportSalesApiReturn } from "../types/api.report-sales";
+import { useFetch } from "@/hooks/use-fetch";
 
-interface SalesReportContextTypes<M extends ReportMode> {
+interface SalesReportContextTypes {
   query: SalesReportQuery;
   updateQuery: <T extends keyof SalesReportQuery>(
     key: T,
@@ -15,14 +15,14 @@ interface SalesReportContextTypes<M extends ReportMode> {
   ) => void;
   resetQuery: () => void;
 
-  data: DataQueryResponse<ReportResponseMap[M]> | undefined;
+  data: ReportSalesApiReturn | undefined;
   error: Error;
   isLoading: boolean;
-  mutate: KeyedMutator<DataQueryResponse<ReportResponseMap[M]>>;
+  mutate: KeyedMutator<ReportSalesApiReturn>;
 }
 
-const SalesReportContext = createContext<SalesReportContextTypes<ReportMode>>(
-  {} as SalesReportContextTypes<ReportMode>
+const SalesReportContext = createContext<SalesReportContextTypes>(
+  {} as SalesReportContextTypes
 );
 
 const defaultQuery: SalesReportQuery = {
@@ -32,6 +32,7 @@ const defaultQuery: SalesReportQuery = {
   to: endOfDay(new Date()),
   filters: [],
   mode: "full",
+  content: "summary",
 };
 
 export function SalesReportProvider({
@@ -42,7 +43,7 @@ export function SalesReportProvider({
   const [query, setQuery] = useState<SalesReportQuery>(defaultQuery);
 
   const url = buildUrl<SalesReportQuery>(SERVER_URL, "/sales/report", query);
-  const fetcher = useFetchDb(query.mode, url);
+  const fetcher = useFetch<ReportSalesApiReturn>(url);
 
   const resetQuery = () => {
     setQuery(defaultQuery);
@@ -55,7 +56,7 @@ export function SalesReportProvider({
     setQuery((prev) => ({ ...prev, [key]: value }));
   };
 
-  const values: SalesReportContextTypes<ReportMode> = {
+  const values: SalesReportContextTypes = {
     query,
     resetQuery,
     updateQuery,

@@ -1,17 +1,28 @@
-import { DataQueryResponse } from "@/@types/general";
-import { SalesItemApiResponse } from "@/features/sales/types/sales-item-api";
-import { ProductSummaryApiResponse } from "../types/summary-columns.report-sales";
+import {
+  DetailContentFullMode,
+  DetailContentProductSummaryMode,
+  ReportSalesApiReturn,
+  SummaryContent,
+} from "../types/api.report-sales";
+import { ReportContent } from "../types/query.report-sales";
 
 export function isSummaryProduct(
   mode: string,
-  data: DataQueryResponse<SalesItemApiResponse[] | ProductSummaryApiResponse[]>
-): data is DataQueryResponse<ProductSummaryApiResponse[]> {
+  data: ReportSalesApiReturn
+): data is DetailContentProductSummaryMode {
   return mode === "summary-product";
 }
 
 export function isFullReport(
   mode: string,
-  data: DataQueryResponse<SalesItemApiResponse[] | ProductSummaryApiResponse[]>
-): data is DataQueryResponse<SalesItemApiResponse[]> {
+  data: ReportSalesApiReturn
+): data is DetailContentFullMode {
   return mode === "full";
+}
+
+export function isSummaryContent(
+  data: ReportSalesApiReturn,
+  content: ReportContent
+): data is SummaryContent {
+  return content === "summary";
 }

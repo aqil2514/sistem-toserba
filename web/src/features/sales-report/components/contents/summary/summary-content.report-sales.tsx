@@ -1,0 +1,37 @@
+import { InfoItem } from "@/components/molecules/items/info-item";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { useSalesReport } from "@/features/sales-report/store/provider.sales-report";
+import { isSummaryContent } from "@/features/sales-report/utils/type-guard";
+import { formatNumber } from "@/utils/format-number";
+import { formatPercent } from "@/utils/format-percent";
+import { formatRupiah } from "@/utils/format-to-rupiah";
+
+export function SalesReportSummaryContent() {
+  const { data, query } = useSalesReport();
+  if (query.content !== "summary") return null;
+
+  if (!data) return <LoadingSpinner label="Mengambil data..." />;
+
+  if (isSummaryContent(data, "summary"))
+    return (
+      <div className="grid grid-cols-3 gap-4">
+        <InfoItem label="Omzet" value={formatRupiah(data.omzet, 0)} />
+        <InfoItem label="HPP" value={formatRupiah(data.hpp, 0)} />
+        <InfoItem label="Margin" value={formatRupiah(data.margin, 0)} />
+        <InfoItem
+          label="Margin %"
+          value={formatPercent(data.margin_percent, { maximumFractionDigits: 2 })}
+        />
+        <InfoItem
+          label="Markup %"
+          value={formatPercent(data.markup_percent, { maximumFractionDigits: 2 })}
+        />
+        <InfoItem
+          label="Total Transaksi"
+          value={`${formatNumber(data.total_transaction)} Transaksi`}
+        />
+      </div>
+    );
+
+  return null;
+}

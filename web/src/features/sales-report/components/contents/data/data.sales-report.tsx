@@ -5,9 +5,11 @@ import { FullData } from "./full.sales-report";
 import { SalesReportSummarizedProduct } from "./summarized-product.sales-report";
 
 export function DataSalesReport() {
-  const { data, query } = useSalesReport();
+  const { data, query, isLoading } = useSalesReport();
 
-  if (!data) return <LoadingSpinner label="Memuat Data..." /> ;
+  if (query.content !== "detail") return null;
+
+  if (!data || isLoading) return <LoadingSpinner label="Memuat Data..." />;
 
   if (isSummaryProduct(query.mode, data))
     return <SalesReportSummarizedProduct data={data} />;
