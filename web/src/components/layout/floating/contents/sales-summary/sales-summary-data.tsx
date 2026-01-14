@@ -7,8 +7,6 @@ import { formatRupiah } from "@/utils/format-to-rupiah";
 import { formatPercent } from "@/utils/format-percent";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/utils/format-date.fns";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 export function SalesSummaryData({
   data,
@@ -49,20 +47,6 @@ export function SalesSummaryData({
         />
       </div>
       <Separator />
-      <div className="grid grid-cols-2 gap-4">
-
-      <Link href={"/sales"}>
-        <Button variant={"outline"} className="w-full">
-          Penjualan
-        </Button>
-      </Link>
-
-      <Link href={"/sales/report"}>
-        <Button variant={"outline"} className="w-full">
-          Laporan
-        </Button>
-      </Link>
-      </div>
     </div>
   );
 }

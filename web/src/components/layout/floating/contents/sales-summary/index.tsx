@@ -10,6 +10,7 @@ import { useState } from "react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Calendar } from "@/components/ui/calendar";
 import { SalesSummaryData } from "./sales-summary-data";
+import { SalesSummaryFooter } from "./sales-summary-footer";
 
 export function SalesSummaryContent() {
   const { isOpen, tabsContent } = useFloatingPopover();
@@ -58,9 +59,14 @@ export function SalesSummaryContent() {
           className="rounded-lg border shadow-sm w-full md:w-fit"
         />
       </div>
+      <div className="space-y-4">
       {fetcher.isLoading || !fetcher.data ? (
         <LoadingSpinner label="Mengambil ringkasan..." />
-      ) : <SalesSummaryData data={fetcher.data} query={summaryQuery} /> }
+      ) : (
+        <SalesSummaryData data={fetcher.data} query={summaryQuery} />
+      )}
+        <SalesSummaryFooter />
+      </div>
     </div>
   );
 }
