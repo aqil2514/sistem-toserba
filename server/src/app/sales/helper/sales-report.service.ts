@@ -50,12 +50,18 @@ export class SalesReportService {
   ): SalesReportProductRpcParams {
     const { endUtc, startUtc } = this.formatDate(raw);
 
+    const p_product_name = raw?.filters?.find((fil) => fil.key === "p_product_name" )?.value ?? "";
+    const p_product_category = raw?.filters?.find((fil) => fil.key === "p_product_category" )?.value ?? "";
+    const p_product_subcategory = raw?.filters?.find((fil) => fil.key === "p_product_subcategory" )?.value ?? "";
+
     return {
       p_start_utc: startUtc,
       p_end_utc: endUtc,
       p_limit: raw.limit,
       p_page: raw.page,
-      p_product_name: raw?.filters?.[0].value ?? undefined,
+      p_product_name,
+      p_product_category,
+      p_product_subcategory,
       p_sort_by: raw?.sort?.[0].key ?? undefined,
       p_sort_dir: raw?.sort?.[0].value ?? undefined,
     };
@@ -109,7 +115,27 @@ export class SalesReportService {
       throw error;
     }
 
-    if (!data) return []
+    if (!data) return [];
+
+    return data;
+  }
+
+  async getSalesReportPerCategory(query: SalesReportQuery) {
+    const { endUtc: p_end_utc, startUtc: p_start_utc } = this.formatDate(query);
+    const { data, error } = await this.supabase.rpc(
+      'get_sales_report_per_category',
+      {
+        p_end_utc,
+        p_start_utc,
+      },
+    );
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    if (!data) return [];
 
     return data;
   }
@@ -156,6 +182,8 @@ export class SalesReportService {
     query: SalesReportQuery,
   ): Promise<DataQueryResponse<SalesReportProductRpcReturn[]>> {
     const rpcQuery = this.mapToReportSummaryByProduct(query);
+
+    console.log(rpcQuery)
 
     const { data, error } = await this.supabase.rpc(
       'get_sales_report_by_products_summary',

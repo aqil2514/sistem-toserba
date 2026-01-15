@@ -41,12 +41,21 @@ export class SalesController {
   async getSalesReport(@Query() query: SalesReportQuery) {
     if (query.content === 'summary')
       return await this.salesReportService.getSalesSummaryContent(query);
-    if (query.content === 'chart')
-      return await this.salesReportService.getSalesBreakdown(query);
-    if (query.mode === 'summary-product')
-      return await this.salesReportService.getSalesReportProductSummary(query);
+    if (query.content === 'chart') {
+      if (query.mode === 'breakdown-omzet')
+        return await this.salesReportService.getSalesBreakdown(query);
+      if (query.mode === 'report-per-category')
+        return await this.salesReportService.getSalesReportPerCategory(query);
+    }
 
-    return await this.salesReportService.getSalesReport(query);
+    if (query.content === 'detail') {
+      if (query.mode === 'summary-product')
+        return await this.salesReportService.getSalesReportProductSummary(
+          query,
+        );
+
+      return await this.salesReportService.getSalesReport(query);
+    }
   }
 
   @UseGuards(PasetoGuard, RoleGuard)

@@ -2,6 +2,7 @@ import {
   ChartContent,
   DetailContentFullMode,
   DetailContentProductSummaryMode,
+  PieChartContent,
   ReportSalesApiReturn,
   SummaryContent,
 } from "../types/api.report-sales";
@@ -28,9 +29,16 @@ export function isSummaryContent(
   return content === "summary";
 }
 
-export function isChartContent(
+export function isBreakdownOmzetChartContent(
   data: ReportSalesApiReturn,
   content: ReportContent
 ): data is ChartContent {
+  return content === "chart";
+}
+
+export function isPerCategoryChartContent(
+  data: ReportSalesApiReturn,
+  content: ReportContent
+): data is PieChartContent {
   return content === "chart";
 }

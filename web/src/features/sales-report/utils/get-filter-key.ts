@@ -42,11 +42,11 @@ const getDetailContentSummaryProductModeFilterKey = (): FilterKeyType[] => {
       label: "Nama Produk",
     },
     {
-      filterKey: "product_id.category",
+      filterKey: "p_product_category",
       label: "Kategori Produk",
     },
     {
-      filterKey: "product_id.subcategory",
+      filterKey: "p_product_subcategory",
       label: "Subkategori Produk",
     },
   ];

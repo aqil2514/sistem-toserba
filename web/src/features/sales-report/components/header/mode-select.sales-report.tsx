@@ -7,26 +7,48 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useSalesReport } from "../../store/provider.sales-report";
-import { DataMode } from "../../types/query.report-sales";
+import { ReportContent, ReportMode } from "../../types/query.report-sales";
 
-export const modeMapper: LabelValue[] = [
-  {
-    label: "Full",
-    value: "full",
-  },
-  {
-    label: "Ringkasan Produk",
-    value: "summary-product",
-  },
-];
+const getModeItems = (content: ReportContent): LabelValue[] => {
+  if (content === "summary") return [];
+  if (content === "detail")
+    return [
+      {
+        label: "Full",
+        value: "full",
+      },
+      {
+        label: "Ringkasan Produk",
+        value: "summary-product",
+      },
+    ];
+
+  if (content === "chart")
+    return [
+      {
+        label: "Omzet",
+        value: "breakdown-omzet",
+      },
+      {
+        label: "Per Kategori",
+        value: "report-per-category",
+      },
+    ];
+  return [];
+};
+
+const VISIBLE_IN: ReportContent[] = ["chart", "detail"];
 
 export function SalesReportModeSelect() {
   const { query, updateQuery } = useSalesReport();
-  if(query.content !== "detail") return null;
+  if (!VISIBLE_IN.includes(query.content)) return null;
+
+  const modeItems = getModeItems(query.content);
+
   return (
     <Select
       value={query.mode}
-      onValueChange={(e: DataMode) => {
+      onValueChange={(e: ReportMode) => {
         updateQuery("mode", e);
         updateQuery("sort", undefined);
         updateQuery("filters", undefined);
@@ -36,7 +58,7 @@ export function SalesReportModeSelect() {
         <SelectValue placeholder="Mode" />
       </SelectTrigger>
       <SelectContent>
-        {modeMapper.map((item) => (
+        {modeItems.map((item) => (
           <SelectItem key={item.value} value={item.value}>
             {item.label}
           </SelectItem>
