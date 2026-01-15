@@ -76,7 +76,7 @@ export function MyLineChartComp({
       <XAxis dataKey={"label"} />
       <YAxis
         width={"auto"}
-        label={{ value: "UV", position: "insideLeft", angle: -90 }}
+        label={{ value: "Nominal", position: "insideLeft", angle: -90 }}
       />
       <Legend align="right" />
       <Tooltip
