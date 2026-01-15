@@ -5,9 +5,12 @@ import { SingleSorting } from "@/components/molecules/sorting/single-sorting";
 import { getSortKey } from "../../utils/get-sort-key";
 import { getFilterKey } from "../../utils/get-filter-key";
 import { ReportContent } from "../../types/query.report-sales";
+import { useMemo } from "react";
 
 export function SalesReportToolbar() {
   const { query, updateQuery } = useSalesReport();
+
+  const memoQueryFilter = useMemo(() => query.filters, [query.filters])
 
   const filterKeys = getFilterKey(query);
   const sortKeys = getSortKey(query);
@@ -19,7 +22,7 @@ export function SalesReportToolbar() {
       {visibleIn.includes(query.content) && (
         <MultiFilter
           filterKeys={filterKeys}
-          initialValue={query.filters ?? []}
+          initialValue={memoQueryFilter ?? []}
           onApplyFilter={(state) => updateQuery("filters", state)}
         />
       )}

@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import React, { useState } from "react";
+import React, { useEffect, useEffectEvent, useState } from "react";
 
 export interface FilterKeyType {
   filterKey: string;
@@ -57,6 +57,16 @@ export function MultiFilter({
 }: Props) {
   const [snapshot, setSnapshot] = useState<FilterState[]>(initialValue);
   const [open, setOpen] = useState<boolean>(false);
+
+  const syncInit = useEffectEvent(() => {
+    setSnapshot(initialValue);
+  });
+
+  useEffect(() => {
+    if (open) {
+      syncInit();
+    }
+  }, [open]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -184,7 +194,8 @@ const FilterContent: React.FC<{
                 onChange={(e) => updateValue(i, e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") onApplyFilter(snapshot);
-                  if (e.ctrlKey && e.key === "X" || e.key === "x") deleteFilter(i);
+                  if ((e.ctrlKey && e.key === "X") || e.key === "x")
+                    deleteFilter(i);
                 }}
               />
               <Button

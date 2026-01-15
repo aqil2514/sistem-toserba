@@ -82,7 +82,7 @@ export class SalesController {
   @Post()
   async createNewTransaction(@Body() body: CreateSalesDto) {
     return await this.salesService.createNewTransaction(body);
-  }
+  } 
 
   @UseGuards(PasetoGuard, RoleGuard)
   @Roles('admin')

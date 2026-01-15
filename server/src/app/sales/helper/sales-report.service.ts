@@ -50,9 +50,14 @@ export class SalesReportService {
   ): SalesReportProductRpcParams {
     const { endUtc, startUtc } = this.formatDate(raw);
 
-    const p_product_name = raw?.filters?.find((fil) => fil.key === "p_product_name" )?.value ?? "";
-    const p_product_category = raw?.filters?.find((fil) => fil.key === "p_product_category" )?.value ?? "";
-    const p_product_subcategory = raw?.filters?.find((fil) => fil.key === "p_product_subcategory" )?.value ?? "";
+    const p_product_name =
+      raw?.filters?.find((fil) => fil.key === 'p_product_name')?.value ?? '';
+    const p_product_category =
+      raw?.filters?.find((fil) => fil.key === 'p_product_category')?.value ??
+      '';
+    const p_product_subcategory =
+      raw?.filters?.find((fil) => fil.key === 'p_product_subcategory')?.value ??
+      '';
 
     return {
       p_start_utc: startUtc,
@@ -182,8 +187,6 @@ export class SalesReportService {
     query: SalesReportQuery,
   ): Promise<DataQueryResponse<SalesReportProductRpcReturn[]>> {
     const rpcQuery = this.mapToReportSummaryByProduct(query);
-
-    console.log(rpcQuery)
 
     const { data, error } = await this.supabase.rpc(
       'get_sales_report_by_products_summary',
