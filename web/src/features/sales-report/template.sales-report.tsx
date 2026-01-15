@@ -11,6 +11,7 @@ import { DataSalesReport } from "./components/contents/data/data.sales-report";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ReportSalesSummary } from "./components/contents/summary/summary.report-sales";
 import { ReportContent } from "./types/query.report-sales";
+import { SalesReportChart } from "./components/contents/chart/chart.sales-report";
 
 interface Props {
   mode: "demo" | "private";
@@ -44,18 +45,25 @@ const InnerTemplate = () => {
 
         <Tabs
           value={query.content}
-          onValueChange={(e) => updateQuery("content", e as ReportContent)}
+          onValueChange={(e) => {
+            updateQuery("filters", []);
+            updateQuery("content", e as ReportContent);
+          }}
           className="w-full"
         >
           <TabsList>
             <TabsTrigger value="summary">Ringkasan</TabsTrigger>
             <TabsTrigger value="detail">Detail</TabsTrigger>
+            <TabsTrigger value="chart">Diagram</TabsTrigger>
           </TabsList>
           <TabsContent value="summary">
             <ReportSalesSummary />
           </TabsContent>
           <TabsContent value="detail">
             <DataSalesReport />
+          </TabsContent>
+          <TabsContent value="chart">
+            <SalesReportChart />
           </TabsContent>
         </Tabs>
       </SectionContainer>

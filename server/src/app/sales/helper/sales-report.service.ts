@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import {
+  SalesLineChartRpcReturn,
   SalesReportProductRpcParams,
   SalesReportProductRpcReturn,
   SalesReportQuery,
@@ -30,9 +31,7 @@ export class SalesReportService {
     private readonly supabase: SupabaseClient,
   ) {}
 
-  private mapToReportSummaryByProduct(
-    raw: SalesReportQuery,
-  ): SalesReportProductRpcParams {
+  private formatDate(raw: SalesReportQuery) {
     const start = DateTime.fromJSDate(new Date(raw.from), {
       zone: 'Asia/Jakarta',
     }).startOf('day');
@@ -43,6 +42,13 @@ export class SalesReportService {
 
     const startUtc = start.toUTC().toISO();
     const endUtc = end.toUTC().toISO();
+    return { startUtc, endUtc };
+  }
+
+  private mapToReportSummaryByProduct(
+    raw: SalesReportQuery,
+  ): SalesReportProductRpcParams {
+    const { endUtc, startUtc } = this.formatDate(raw);
 
     return {
       p_start_utc: startUtc,
@@ -58,16 +64,7 @@ export class SalesReportService {
   private mapToSalesReportSummary(
     raw: SalesReportQuery,
   ): SalesReportSummaryRpcParams {
-    const start = DateTime.fromJSDate(new Date(raw.from), {
-      zone: 'Asia/Jakarta',
-    }).startOf('day');
-
-    const end = DateTime.fromJSDate(new Date(raw.to ?? raw.from), {
-      zone: 'Asia/Jakarta',
-    }).endOf('day');
-
-    const p_start_utc = start.toUTC().toISO();
-    const p_end_utc = end.toUTC().toISO();
+    const { endUtc, startUtc } = this.formatDate(raw);
 
     const p_buyer = raw.filters?.find(
       (filter) => filter.key === 'p_buyer',
@@ -90,14 +87,31 @@ export class SalesReportService {
     )?.value;
 
     return {
-      p_start_utc,
-      p_end_utc,
+      p_start_utc: startUtc,
+      p_end_utc: endUtc,
       p_buyer,
       p_payment_method,
       p_product_category,
       p_product_name,
       p_product_subcategory,
     };
+  }
+
+  async getSalesBreakdown(raw: SalesReportQuery) {
+    const { endUtc: p_end_utc, startUtc: p_start_utc } = this.formatDate(raw);
+    const { data, error } = await this.supabase.rpc('get_breakdown_sales', {
+      p_end_utc,
+      p_start_utc,
+    });
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    if (!data) return []
+
+    return data;
   }
 
   async getSalesReport(
@@ -167,7 +181,7 @@ export class SalesReportService {
 
   async getSalesSummaryContent(
     query: SalesReportQuery,
-  ): Promise<SalesReportSummaryRpcReturn> {
+  ): Promise<SalesLineChartRpcReturn> {
     const rpcQuery = this.mapToSalesReportSummary(query);
     const { data, error } = await this.supabase
       .rpc('get_sales_report_summary', rpcQuery)
@@ -180,14 +194,10 @@ export class SalesReportService {
 
     if (!data)
       return {
-        hpp: 0,
-        margin: 0,
-        margin_percent: 0,
-        markup_percent: 0,
-        omzet: 0,
-        total_transaction: 0,
+        date: '',
+        value: 0,
       };
 
-    return data as SalesReportSummaryRpcReturn;
+    return data as SalesLineChartRpcReturn;
   }
 }

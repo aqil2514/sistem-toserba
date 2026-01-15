@@ -1,7 +1,7 @@
 import { BasicQuery } from '../../../@types/general';
 
 export type DataMode = 'summary-product' | 'full';
-export type ReportContent = 'summary' | 'detail';
+export type ReportContent = 'summary' | 'detail' | "chart";
 
 export interface SalesReportQuery extends BasicQuery {
   mode: DataMode;
@@ -49,4 +49,9 @@ export interface SalesReportSummaryRpcReturn {
   margin_percent: number;
   markup_percent: number;
   total_transaction: number;
+}
+
+export interface SalesLineChartRpcReturn {
+  date: string;
+  value: number;
 }

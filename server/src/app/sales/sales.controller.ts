@@ -41,6 +41,8 @@ export class SalesController {
   async getSalesReport(@Query() query: SalesReportQuery) {
     if (query.content === 'summary')
       return await this.salesReportService.getSalesSummaryContent(query);
+    if (query.content === 'chart')
+      return await this.salesReportService.getSalesBreakdown(query);
     if (query.mode === 'summary-product')
       return await this.salesReportService.getSalesReportProductSummary(query);
 

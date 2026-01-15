@@ -1,4 +1,5 @@
 import {
+  ChartContent,
   DetailContentFullMode,
   DetailContentProductSummaryMode,
   ReportSalesApiReturn,
@@ -25,4 +26,11 @@ export function isSummaryContent(
   content: ReportContent
 ): data is SummaryContent {
   return content === "summary";
+}
+
+export function isChartContent(
+  data: ReportSalesApiReturn,
+  content: ReportContent
+): data is ChartContent {
+  return content === "chart";
 }

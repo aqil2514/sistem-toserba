@@ -4,13 +4,22 @@ import {
   ProductSummaryApiResponse,
   SalesReportSummaryRpcReturn,
 } from "./api-return.report-sales";
+import { SalesReportLineChartType } from "./chart.report-sales-type";
 
 export type ReportSalesApiReturn =
   | DetailContentFullMode
   | DetailContentProductSummaryMode
-  | SummaryContent;
+  | SummaryContent
+  | ChartContent;
 
+// >>>>> DATA CONTENT <<<<<
 export type DetailContentFullMode = DataQueryResponse<SalesItemApiResponse[]>;
-export type DetailContentProductSummaryMode =
-  DataQueryResponse<ProductSummaryApiResponse[]>;
+export type DetailContentProductSummaryMode = DataQueryResponse<
+  ProductSummaryApiResponse[]
+>;
+
+// >>>>> SUMMARY CONTENT <<<<<
 export type SummaryContent = SalesReportSummaryRpcReturn;
+
+// >>>>> CHART CONTENT <<<<<
+export type ChartContent = SalesReportLineChartType;

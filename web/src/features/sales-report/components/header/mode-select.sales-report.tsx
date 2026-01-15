@@ -22,6 +22,7 @@ export const modeMapper: LabelValue[] = [
 
 export function SalesReportModeSelect() {
   const { query, updateQuery } = useSalesReport();
+  if(query.content !== "detail") return null;
   return (
     <Select
       value={query.mode}
