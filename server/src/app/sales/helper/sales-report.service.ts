@@ -125,7 +125,9 @@ export class SalesReportService {
     return data;
   }
 
-  async getSalesReportPerCategory(query: SalesReportQuery) {
+  async getSalesReportPerCategory(
+    query: SalesReportQuery,
+  ): Promise<{ category: string; omzet: number }[]> {
     const { endUtc: p_end_utc, startUtc: p_start_utc } = this.formatDate(query);
     const { data, error } = await this.supabase.rpc(
       'get_sales_report_per_category',
@@ -212,7 +214,7 @@ export class SalesReportService {
 
   async getSalesSummaryContent(
     query: SalesReportQuery,
-  ): Promise<SalesLineChartRpcReturn> {
+  ): Promise<SalesReportSummaryRpcReturn> {
     const rpcQuery = this.mapToSalesReportSummary(query);
     const { data, error } = await this.supabase
       .rpc('get_sales_report_summary', rpcQuery)
@@ -225,10 +227,14 @@ export class SalesReportService {
 
     if (!data)
       return {
-        date: '',
-        value: 0,
+        omzet: 0,
+        hpp: 0,
+        margin: 0,
+        margin_percent: 0,
+        markup_percent: 0,
+        total_transaction: 0,
       };
 
-    return data as SalesLineChartRpcReturn;
+    return data as SalesReportSummaryRpcReturn;
   }
 }

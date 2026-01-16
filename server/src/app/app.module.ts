@@ -7,6 +7,7 @@ import { SupabaseModule } from '../services/supabase/supabase.module';
 import { ProductsModule } from './products/products.module';
 import { PurchaseModule } from './purchase/purchase.module';
 import { SalesModule } from './sales/sales.module';
+import { PdfModule } from './export/pdf/pdf.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { SalesModule } from './sales/sales.module';
     ProductsModule,
     PurchaseModule,
     SalesModule,
+    PdfModule,
   ],
   controllers: [AppController],
   providers: [AppService],

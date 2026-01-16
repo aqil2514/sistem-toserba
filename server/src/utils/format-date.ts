@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 export function formatDateYYYYMMDD(date: Date) {
   const yyyy = date.getFullYear();
   const mm = String(date.getMonth() + 1).padStart(2, '0');
@@ -23,4 +24,23 @@ export function endOfDayUTC(date: Date | string) {
     d.getUTCDate(),
     23, 59, 59, 999
   )).toISOString();
+}
+
+
+export function startOfTodayUtcJakarta() {
+  return DateTime
+    .now()
+    .setZone('Asia/Jakarta')
+    .startOf('day')
+    .toUTC()
+    .toISO();
+}
+
+export function endOfTodayUtcJakarta() {
+  return DateTime
+    .now()
+    .setZone('Asia/Jakarta')
+    .endOf('day')
+    .toUTC()
+    .toISO();
 }
