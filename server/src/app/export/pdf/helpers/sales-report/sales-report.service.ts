@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
-import puppeteer from 'puppeteer';
 import { buildHtml } from './utils.sales-report';
 import { SalesReportService as SalesReport } from '../../../../sales/helper/sales-report.service';
 import { SalesReportQuery } from '../../../../sales/interface/sales-report.interface';
@@ -8,6 +7,7 @@ import {
   endOfTodayUtcJakarta,
   startOfTodayUtcJakarta,
 } from '../../../../../utils/format-date';
+import puppeteer from 'puppeteer-core';
 
 @Injectable()
 export class SalesReportService {
@@ -56,6 +56,45 @@ export class SalesReportService {
 
       return await page.pdf({
         format: 'A4',
+        displayHeaderFooter: true,
+
+        margin: {
+          top: '100px',
+          bottom: '80px',
+          left: '24px',
+          right: '24px',
+        },
+
+        headerTemplate: `
+    <div style="
+      width: 100%;
+      font-size: 10px;
+      padding: 0 12px;
+      color: #374151;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #e5e7eb;
+    ">
+      <span><b>Laporan Penjualan</b></span>
+      <span>Toserba Aqil</span>
+    </div>
+  `,
+
+        footerTemplate: `
+    <div style="
+      width: 100%;
+      font-size: 10px;
+      padding: 0 12px;
+      color: #6b7280;
+      display: flex;
+      justify-content: space-between;
+    ">
+      <span>© ${new Date().getFullYear()} Toserba Aqil</span>
+      <span>
+        Halaman <span class="pageNumber"></span> / <span class="totalPages"></span>
+      </span>
+    </div>
+  `,
       });
     } finally {
       await browser.close();

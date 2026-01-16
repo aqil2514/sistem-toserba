@@ -44,3 +44,9 @@ export function endOfTodayUtcJakarta() {
     .toUTC()
     .toISO();
 }
+
+export function formatDateIndo(date = DateTime.now()) {
+  return date
+    .setLocale('id')
+    .toFormat('d LLLL yyyy');
+}
