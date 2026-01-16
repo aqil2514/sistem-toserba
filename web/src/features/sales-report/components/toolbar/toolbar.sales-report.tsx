@@ -26,7 +26,7 @@ export function SalesReportToolbar() {
           onApplyFilter={(state) => updateQuery("filters", state)}
         />
       )}
-      {visibleIn.includes(query.content) && <SingleSorting
+      {visibleIn.includes(query.content) && query.content !=='summary' && <SingleSorting
         sortingkeys={sortKeys}
         onSortStateChange={(query) => updateQuery("sort", query)}
       />}

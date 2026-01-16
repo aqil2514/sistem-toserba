@@ -6,7 +6,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { formatDate } from "@/utils/format-date";
+import { formatDate } from "@/utils/format-date.fns";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import React, { useState } from "react";
@@ -171,11 +171,11 @@ export function ToolbarDatepicker({ onApply, setDate, date }: Props) {
               <div className="rounded-lg border p-3 text-sm space-y-1">
                 <p>
                   <strong>Dari:</strong>{" "}
-                  {date.from ? formatDate(date.from.toISOString()) : "-"}
+                  {date.from ? formatDate(date.from, "29 Desember 2025") : "-"}
                 </p>
                 <p>
                   <strong>Sampai:</strong>{" "}
-                  {date.to ? formatDate(date.to.toISOString()) : "-"}
+                  {date.to ? formatDate(date.to, "29 Des 2025") : "-"}
                 </p>
               </div>
             </div>

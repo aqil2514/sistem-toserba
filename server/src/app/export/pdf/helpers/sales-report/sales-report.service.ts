@@ -27,16 +27,23 @@ export class SalesReportService {
     content: 'summary',
   };
 
-  async export() {
+  async export(query?: SalesReportQuery) {
+    const defaultQuery =
+      Object.keys(query).length === 0 ? this.defaultQuery : query;
     const browser = await puppeteer.launch({ headless: true });
     const [summary, fullDetail, productSummary, categoryChart] =
       await Promise.all([
-        this.salesReportService.getSalesSummaryContent(this.defaultQuery),
-        this.salesReportService.getSalesReport(this.defaultQuery),
-        this.salesReportService.getSalesReportProductSummary(this.defaultQuery),
-        this.salesReportService.getSalesReportPerCategory(this.defaultQuery),
+        this.salesReportService.getSalesSummaryContent(defaultQuery),
+        this.salesReportService.getSalesReport(defaultQuery),
+        this.salesReportService.getSalesReportProductSummary(defaultQuery),
+        this.salesReportService.getSalesReportPerCategory(defaultQuery),
       ]);
-    const html = buildHtml({ summary, fullDetail, productSummary, categoryChart });
+    const html = buildHtml({
+      summary,
+      fullDetail,
+      productSummary,
+      categoryChart,
+    });
 
     try {
       const page = await browser.newPage();
