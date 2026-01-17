@@ -10,8 +10,8 @@ import { Roles } from '../../../decorator/roles.decorator';
 export class PdfController {
   constructor(private readonly salesReportService: SalesReportService) {}
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
+  // @UseGuards(PasetoGuard, RoleGuard)
+  // @Roles('admin')
   @Get('sales-report')
   async exportSalesReport(
     @Res() res: Response,
@@ -22,9 +22,10 @@ export class PdfController {
     res.set({
       'Content-Type': 'application/pdf',
       'Content-Disposition': 'attachment; filename="Laporan Penjualan.pdf"',
+      // 'Content-Disposition': 'inline',
       'Content-Length': pdf.length,
     });
 
-    res.end(pdf);
+    res.end(Buffer.from(pdf));
   }
 }
