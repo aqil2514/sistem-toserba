@@ -1,6 +1,6 @@
 import { PDFPage, RGB, rgb } from 'pdf-lib';
 import { PDFFontSet, TextRecordValues } from '../../../interfaces/pdf.interface';
-import { SalesReportSummaryRpcReturn } from 'src/app/sales/interface/sales-report.interface';
+import { SalesReportSummaryRpcReturn } from '../../../../../sales/interface/sales-report.interface';
 
 export function buildInsightTextRecord(
   page: PDFPage,

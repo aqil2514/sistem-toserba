@@ -3,8 +3,8 @@ import {
   PDFFontSet,
   TextRecordValues,
 } from '../../../interfaces/pdf.interface';
-import { SalesReportSummaryRpcReturn } from 'src/app/sales/interface/sales-report.interface';
-import { formatRupiah } from 'src/utils/format-to-rupiah';
+import { SalesReportSummaryRpcReturn } from '../../../../../../app/sales/interface/sales-report.interface';
+import { formatRupiah } from '../../../../../../utils/format-to-rupiah';
 
 export function buildSalesReportTextRecord(
   page: PDFPage,

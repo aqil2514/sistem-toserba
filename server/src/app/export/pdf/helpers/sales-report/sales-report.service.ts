@@ -24,7 +24,7 @@ import {
 import { drawTextRecord } from '../general/draw-text-record';
 import { buildSalesReportTextRecord } from './text-record/build-sales-report-text-record';
 import { buildInsightTextRecord } from './text-record/buil-sales-report-insight';
-import { formatDateLuxon } from 'src/utils/format-date.luxon';
+import { formatDateLuxon } from '../../../../../utils/format-date.luxon';
 
 @Injectable()
 export class SalesReportService {
