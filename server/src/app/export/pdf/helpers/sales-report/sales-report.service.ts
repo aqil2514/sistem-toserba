@@ -289,15 +289,13 @@ export class SalesReportService {
     currentY -= tableData.length * 22 + 30; // beri jarak ekstra sebelum insight
   }
 
-  async export(query?: SalesReportQuery) {
-    const defaultQuery =
-      Object.keys(query).length === 0 ? this.defaultQuery : query;
+  async export(query: SalesReportQuery = this.defaultQuery) {
     const [summary, fullDetail, productSummary, categoryChart] =
       await Promise.all([
-        this.salesReportService.getSalesSummaryContent(defaultQuery),
-        this.salesReportService.getSalesReport(defaultQuery),
-        this.salesReportService.getSalesReportProductSummary(defaultQuery),
-        this.salesReportService.getSalesReportPerCategory(defaultQuery),
+        this.salesReportService.getSalesSummaryContent(query),
+        this.salesReportService.getSalesReport(query),
+        this.salesReportService.getSalesReportProductSummary(query),
+        this.salesReportService.getSalesReportPerCategory(query),
       ]);
 
     const pdfDoc = await PDFDocument.create();
@@ -305,7 +303,7 @@ export class SalesReportService {
 
     const header: DrawHeaderConfiguration = {
       leftText: 'Laporan Penjualan',
-      rightText: `Per ${formatDateLuxon(defaultQuery.from, '29 Desember 2025')}`,
+      rightText: `Per ${formatDateLuxon(query.from, '29 Desember 2025')}`,
     };
     const footer: DrawFooterConfiguration = {
       leftText: `Dibuat pada ${formatDateLuxon(new Date(), 'Senin, 29 Desember 2025')}`,

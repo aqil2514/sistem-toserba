@@ -7,5 +7,6 @@ import { SalesReportService as SalesReport } from '../../sales/helper/sales-repo
 @Module({
   controllers: [PdfController],
   providers: [PdfService, SalesReportService, SalesReport],
+  exports:[SalesReportService]
 })
 export class PdfModule {}
