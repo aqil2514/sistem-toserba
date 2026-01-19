@@ -3,6 +3,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { buildHtml } from './utils.sales-report';
 import { SalesReportService as SalesReport } from '../../../../sales/helper/sales-report.service';
 import {
+  SalesReportProductRpcReturn,
   SalesReportQuery,
   SalesReportSummaryRpcReturn,
 } from '../../../../sales/interface/sales-report.interface';
@@ -25,6 +26,13 @@ import { drawTextRecord } from '../general/draw-text-record';
 import { buildSalesReportTextRecord } from './text-record/build-sales-report-text-record';
 import { buildInsightTextRecord } from './text-record/buil-sales-report-insight';
 import { formatDateLuxon } from '../../../../../utils/format-date.luxon';
+import { DataQueryResponse } from 'src/@types/general';
+import { SalesItemApiResponse } from 'src/app/sales/interface/sales-items.interface';
+import { drawTable } from '../general/draw-table';
+import {
+  buildFullDetailTableData,
+  buildProductSummaryTableData,
+} from './text-record/build-table-record';
 
 @Injectable()
 export class SalesReportService {
@@ -75,27 +83,132 @@ export class SalesReportService {
     });
   }
 
+  private async drawTableSalesPage(
+    fullDetail: DataQueryResponse<SalesItemApiResponse[]>,
+    productSummary: DataQueryResponse<SalesReportProductRpcReturn[]>,
+    doc: PDFDocument,
+    font: PDFFontSet,
+    header: DrawHeaderConfiguration,
+    footer: DrawFooterConfiguration,
+  ) {
+    const page = await this.pdfService.addPageWithLayout(
+      doc,
+      font,
+      header,
+      footer,
+    );
+
+    const { height } = page.getSize();
+
+    const START_X = 60;
+    let currentY = height - 80;
+
+    // =========================
+    // TABLE 1 — FULL DETAIL
+    // =========================
+    page.drawText('Detail Penjualan (Top Transaksi)', {
+      x: START_X,
+      y: currentY,
+      font: font.timesRomanBold,
+      size: 15,
+    });
+
+    currentY -= 24;
+
+    page.drawText(
+      'Menampilkan transaksi dengan kontribusi penjualan tertinggi.',
+      {
+        x: START_X,
+        y: currentY,
+        font: font.timesRoman,
+        size: 11,
+        color: rgb(0.4, 0.4, 0.4),
+      },
+    );
+
+    currentY -= 20;
+
+    const fullDetailResult = drawTable({
+      pdfDoc: doc,
+      page,
+      headers: ['Pembeli', 'Produk', 'Qty', 'Subtotal'],
+      data: buildFullDetailTableData(fullDetail.data),
+      startX: START_X,
+      startY: currentY,
+      colWidths: [160, 200, 60, 100],
+      font: font.timesRoman,
+      fontSize: 11,
+      columnAlignments: ['center', 'center', 'center', 'center'],
+    });
+
+    currentY = fullDetailResult.y - 40;
+
+    // =========================
+    // TABLE 2 — PRODUCT SUMMARY
+    // =========================
+    page.drawText('Ringkasan Produk Terlaris', {
+      x: START_X,
+      y: currentY,
+      font: font.timesRomanBold,
+      size: 15,
+    });
+
+    currentY -= 24;
+
+    page.drawText('Produk dengan volume penjualan dan kontribusi tertinggi.', {
+      x: START_X,
+      y: currentY,
+      font: font.timesRoman,
+      size: 11,
+      color: rgb(0.4, 0.4, 0.4),
+    });
+
+    currentY -= 20;
+
+    drawTable({
+      pdfDoc: doc,
+      page: fullDetailResult.page,
+      headers: ['Produk', 'Kategori', 'Qty', 'Subtotal'],
+      data: buildProductSummaryTableData(productSummary.data),
+      startX: START_X,
+      startY: currentY,
+      colWidths: [200, 160, 60, 100],
+      font: font.timesRoman,
+      fontSize: 11,
+      columnAlignments: ['center', 'center', 'center', 'center'],
+    });
+  }
+
   async export(query?: SalesReportQuery) {
     const defaultQuery =
       Object.keys(query).length === 0 ? this.defaultQuery : query;
-    const [summary] = await Promise.all([
+    const [summary, fullDetail, productSummary] = await Promise.all([
       this.salesReportService.getSalesSummaryContent(defaultQuery),
+      this.salesReportService.getSalesReport(defaultQuery),
+      this.salesReportService.getSalesReportProductSummary(defaultQuery),
     ]);
 
     const pdfDoc = await PDFDocument.create();
     const fontSet = await this.pdfService.getPDFFont(pdfDoc);
 
-
     const header: DrawHeaderConfiguration = {
       leftText: 'Laporan Penjualan',
-      rightText: `Per ${formatDateLuxon(defaultQuery.from, "29 Desember 2025")}`,
+      rightText: `Per ${formatDateLuxon(defaultQuery.from, '29 Desember 2025')}`,
     };
     const footer: DrawFooterConfiguration = {
-      leftText: `Dibuat pada ${formatDateLuxon(new Date(), "Senin, 29 Desember 2025")}`,
+      leftText: `Dibuat pada ${formatDateLuxon(new Date(), 'Senin, 29 Desember 2025')}`,
       rightText: '',
     };
 
     await this.drawSummarySalesPage(summary, pdfDoc, fontSet, header, footer);
+    await this.drawTableSalesPage(
+      fullDetail,
+      productSummary,
+      pdfDoc,
+      fontSet,
+      header,
+      footer,
+    );
 
     const pdfBytes = await pdfDoc.save();
 
