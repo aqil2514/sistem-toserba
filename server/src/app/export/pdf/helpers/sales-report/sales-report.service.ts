@@ -31,7 +31,7 @@ import {
   buildProductSummaryTableData,
 } from './text-record/build-table-record';
 import { formatRupiah } from '../../../../../utils/format-to-rupiah';
-import { generatePieChartImage, generatePieChartImageQuickChart } from '../general/generate-pie-chart-image';
+import { generatePieChartImageQuickChart } from '../general/generate-pie-chart-image';
 
 @Injectable()
 export class SalesReportService {
