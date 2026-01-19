@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { buildHtml } from './utils.sales-report';
 import { SalesReportService as SalesReport } from '../../../../sales/helper/sales-report.service';
 import {
   SalesReportProductRpcReturn,
@@ -9,12 +8,10 @@ import {
 } from '../../../../sales/interface/sales-report.interface';
 import {
   endOfTodayUtcJakarta,
-  formatDateYYYYMMDD,
   startOfTodayUtcJakarta,
 } from '../../../../../utils/format-date';
-import puppeteer from 'puppeteer-core';
 
-import { PDFDocument, PDFFont, rgb, StandardFonts } from 'pdf-lib';
+import { PDFDocument, RGB, rgb } from 'pdf-lib';
 import { PdfService } from '../../pdf.service';
 import {
   DrawFooterConfiguration,
@@ -26,13 +23,15 @@ import { drawTextRecord } from '../general/draw-text-record';
 import { buildSalesReportTextRecord } from './text-record/build-sales-report-text-record';
 import { buildInsightTextRecord } from './text-record/buil-sales-report-insight';
 import { formatDateLuxon } from '../../../../../utils/format-date.luxon';
-import { DataQueryResponse } from 'src/@types/general';
-import { SalesItemApiResponse } from 'src/app/sales/interface/sales-items.interface';
+import { DataQueryResponse } from '../../../../../@types/general';
+import { SalesItemApiResponse } from '../../../../../app/sales/interface/sales-items.interface';
 import { drawTable } from '../general/draw-table';
 import {
   buildFullDetailTableData,
   buildProductSummaryTableData,
 } from './text-record/build-table-record';
+import { formatRupiah } from '../../../../../utils/format-to-rupiah';
+import { generatePieChartImage } from '../general/generate-pie-chart-image';
 
 @Injectable()
 export class SalesReportService {
@@ -179,14 +178,127 @@ export class SalesReportService {
     });
   }
 
+  private async drawPieChartPage(
+    doc: PDFDocument,
+    data: { category: string; omzet: number }[],
+    font: PDFFontSet,
+    header: DrawHeaderConfiguration,
+    footer: DrawFooterConfiguration,
+    title: string,
+  ) {
+    const page = await this.pdfService.addPageWithLayout(
+      doc,
+      font,
+      header,
+      footer,
+    );
+    const { width, height } = page.getSize();
+    const START_X = 60;
+    let currentY = height - 80;
+
+    // =====================
+    // Judul di tengah + underline
+    // =====================
+    const titleWidth = font.timesRomanBold.widthOfTextAtSize(title, 16);
+    const titleX = width / 2 - titleWidth / 2;
+
+    page.drawText(title, {
+      x: titleX,
+      y: currentY,
+      font: font.timesRomanBold,
+      size: 16,
+      color: rgb(0, 0, 0),
+    });
+
+    // Underline
+    page.drawLine({
+      start: { x: titleX, y: currentY - 4 },
+      end: { x: titleX + titleWidth, y: currentY - 4 },
+      thickness: 1,
+      color: rgb(0.6, 0.6, 0.6),
+    });
+
+    currentY -= 40;
+
+    // =====================
+    // Palette warna tetap
+    // =====================
+    const palette = [
+      rgb(0.12, 0.55, 0.25),
+      rgb(0.85, 0.55, 0.05),
+      rgb(0.75, 0.15, 0.15),
+      rgb(0.2, 0.6, 0.85),
+      rgb(0.7, 0.3, 0.85),
+      rgb(0.85, 0.25, 0.55),
+    ];
+
+    function rgbToCss(rgb: RGB) {
+      const r = Math.round(rgb.red * 255);
+      const g = Math.round(rgb.green * 255);
+      const b = Math.round(rgb.blue * 255);
+      return `rgb(${r},${g},${b})`;
+    }
+
+    const chartPalette = palette.map(rgbToCss);
+
+    const chartBuffer = await generatePieChartImage(
+      data,
+      600,
+      400,
+      chartPalette,
+    );
+
+    const pngImage = await doc.embedPng(chartBuffer);
+    const pngDims = pngImage.scale(1);
+
+    const chartX = width / 2 - pngDims.width / 2;
+    const chartY = currentY - pngDims.height;
+
+    page.drawImage(pngImage, {
+      x: chartX,
+      y: chartY,
+      width: pngDims.width,
+      height: pngDims.height,
+    });
+
+    currentY = chartY - 30; // beri jarak ekstra sebelum tabel
+
+    // =====================
+    // Detail per chart (tabel kecil)
+    // =====================
+    const totalOmzet = data.reduce((sum, d) => sum + d.omzet, 0);
+    const tableData: string[][] = data.map((d) => [
+      d.category,
+      formatRupiah(d.omzet),
+      `${((d.omzet / totalOmzet) * 100).toFixed(1)}%`,
+    ]);
+
+    drawTable({
+      pdfDoc: doc,
+      page,
+      headers: ['Kategori', 'Omzet', '%'],
+      data: tableData,
+      startX: START_X + 30,
+      startY: currentY,
+      colWidths: [200, 120, 80],
+      font: font.timesRoman,
+      fontSize: 11,
+      columnAlignments: ['left', 'right', 'right'],
+    });
+
+    currentY -= tableData.length * 22 + 30; // beri jarak ekstra sebelum insight
+  }
+
   async export(query?: SalesReportQuery) {
     const defaultQuery =
       Object.keys(query).length === 0 ? this.defaultQuery : query;
-    const [summary, fullDetail, productSummary] = await Promise.all([
-      this.salesReportService.getSalesSummaryContent(defaultQuery),
-      this.salesReportService.getSalesReport(defaultQuery),
-      this.salesReportService.getSalesReportProductSummary(defaultQuery),
-    ]);
+    const [summary, fullDetail, productSummary, categoryChart] =
+      await Promise.all([
+        this.salesReportService.getSalesSummaryContent(defaultQuery),
+        this.salesReportService.getSalesReport(defaultQuery),
+        this.salesReportService.getSalesReportProductSummary(defaultQuery),
+        this.salesReportService.getSalesReportPerCategory(defaultQuery),
+      ]);
 
     const pdfDoc = await PDFDocument.create();
     const fontSet = await this.pdfService.getPDFFont(pdfDoc);
@@ -209,84 +321,17 @@ export class SalesReportService {
       header,
       footer,
     );
+    await this.drawPieChartPage(
+      pdfDoc,
+      categoryChart,
+      fontSet,
+      header,
+      footer,
+      'Alokasi Kategori dari Produk yang Terjual',
+    );
 
     const pdfBytes = await pdfDoc.save();
 
     return pdfBytes;
   }
-
-  // TODO : FIX INI npm install puppeteer-core @sparticuz/chromium Coba pakek ini
-  // async export(query?: SalesReportQuery) {
-  //   const defaultQuery =
-  //     Object.keys(query).length === 0 ? this.defaultQuery : query;
-  //   const browser = await puppeteer.launch({ headless: true });
-  //   const [summary, fullDetail, productSummary, categoryChart] =
-  //     await Promise.all([
-  //       this.salesReportService.getSalesSummaryContent(defaultQuery),
-  //       this.salesReportService.getSalesReport(defaultQuery),
-  //       this.salesReportService.getSalesReportProductSummary(defaultQuery),
-  //       this.salesReportService.getSalesReportPerCategory(defaultQuery),
-  //     ]);
-  //   const html = buildHtml({
-  //     summary,
-  //     fullDetail,
-  //     productSummary,
-  //     categoryChart,
-  //   });
-
-  //   try {
-  //     const page = await browser.newPage();
-
-  //     await page.setViewport({ width: 1200, height: 800 });
-
-  //     await page.setContent(html, {
-  //       waitUntil: 'networkidle0',
-  //     });
-
-  //     return await page.pdf({
-  //       format: 'A4',
-  //       displayHeaderFooter: true,
-
-  //       margin: {
-  //         top: '100px',
-  //         bottom: '80px',
-  //         left: '24px',
-  //         right: '24px',
-  //       },
-
-  //       headerTemplate: `
-  //   <div style="
-  //     width: 100%;
-  //     font-size: 10px;
-  //     padding: 0 12px;
-  //     color: #374151;
-  //     display: flex;
-  //     justify-content: space-between;
-  //     border-bottom: 1px solid #e5e7eb;
-  //   ">
-  //     <span><b>Laporan Penjualan</b></span>
-  //     <span>Toserba Aqil</span>
-  //   </div>
-  // `,
-
-  //       footerTemplate: `
-  //   <div style="
-  //     width: 100%;
-  //     font-size: 10px;
-  //     padding: 0 12px;
-  //     color: #6b7280;
-  //     display: flex;
-  //     justify-content: space-between;
-  //   ">
-  //     <span>© ${new Date().getFullYear()} Toserba Aqil</span>
-  //     <span>
-  //       Halaman <span class="pageNumber"></span> / <span class="totalPages"></span>
-  //     </span>
-  //   </div>
-  // `,
-  //     });
-  //   } finally {
-  //     await browser.close();
-  //   }
-  // }
 }

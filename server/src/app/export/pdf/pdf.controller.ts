@@ -21,9 +21,9 @@ export class PdfController {
 
     res.set({
       'Content-Type': 'application/pdf',
-      // 'Content-Disposition': 'attachment; filename="Laporan Penjualan.pdf"',
-      'Content-Disposition': 'inline',
-      // 'Content-Length': pdf.length,
+      'Content-Disposition': 'attachment; filename="Laporan Penjualan.pdf"',
+      // 'Content-Disposition': 'inline',
+      'Content-Length': pdf.length,
     });
 
     res.end(Buffer.from(pdf));
