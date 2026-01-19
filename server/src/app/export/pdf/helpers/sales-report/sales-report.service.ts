@@ -31,7 +31,7 @@ import {
   buildProductSummaryTableData,
 } from './text-record/build-table-record';
 import { formatRupiah } from '../../../../../utils/format-to-rupiah';
-import { generatePieChartImage } from '../general/generate-pie-chart-image';
+import { generatePieChartImage, generatePieChartImageQuickChart } from '../general/generate-pie-chart-image';
 
 @Injectable()
 export class SalesReportService {
@@ -241,7 +241,7 @@ export class SalesReportService {
 
     const chartPalette = palette.map(rgbToCss);
 
-    const chartBuffer = await generatePieChartImage(
+    const chartBuffer = await generatePieChartImageQuickChart(
       data,
       600,
       400,
