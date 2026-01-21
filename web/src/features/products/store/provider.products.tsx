@@ -12,6 +12,9 @@ interface ProductsContextType {
   error?: Error;
   mutate?: KeyedMutator<Product[]>;
 
+  displayMode: string;
+  setDisplayMode: React.Dispatch<React.SetStateAction<string>>;
+
   dialogAdd: boolean;
   setDialogAdd: React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -27,7 +30,7 @@ interface ProductsContextType {
 }
 
 const ProductsContext = createContext<ProductsContextType>(
-  {} as ProductsContextType
+  {} as ProductsContextType,
 );
 
 export function ProductsProvider({ children }: { children: React.ReactNode }) {
@@ -35,8 +38,9 @@ export function ProductsProvider({ children }: { children: React.ReactNode }) {
   const [dialogAdd, setDialogAdd] = useState<boolean>(false);
   const [editProduct, setEditProduct] = useState<Product | null>(null);
   const [deleteProduct, setDeleteProduct] = useState<Product | null>(null);
+  const [displayMode, setDisplayMode] = useState<string>("non_deleted_item");
 
-  const fetcher = useFetch<Product[]>(`${SERVER_URL}/products`);
+  const fetcher = useFetch<Product[]>(`${SERVER_URL}/products?display-mode=${displayMode}`);
 
   const deleteContent = useMemo(() => {
     if (!deleteProduct) return [];
@@ -82,6 +86,9 @@ export function ProductsProvider({ children }: { children: React.ReactNode }) {
 
     detailProduct,
     setDetailProduct,
+
+    displayMode,
+    setDisplayMode,
   };
   return (
     <ProductsContext.Provider value={values}>

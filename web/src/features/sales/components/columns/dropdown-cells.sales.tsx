@@ -24,6 +24,7 @@ export function SalesColumnAction({ row }: Props) {
     {
       itemLabel: "Hapus",
       onClick: () => setDeleteSalesId(row.original.id),
+      className:"text-red-500"
     },
   ];
 

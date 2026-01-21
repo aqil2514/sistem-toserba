@@ -7,12 +7,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 import { Ellipsis } from "lucide-react";
 import React from "react";
 
 export interface DropdownActionItems {
   onClick: () => void;
   itemLabel: string;
+  className?: string;
 }
 
 interface Props {
@@ -35,6 +37,7 @@ export function DropdownActionColumn({ menuLabel, items }: Props) {
           <DropdownMenuItem
             key={`dropdown-action-${i + 1}`}
             onClick={item.onClick}
+            className={cn(item.className)}
           >
             {item.itemLabel}
           </DropdownMenuItem>

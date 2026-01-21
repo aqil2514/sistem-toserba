@@ -1,42 +1,53 @@
 import { Row } from "@tanstack/react-table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useProducts } from "../../../store/provider.products";
 import { Product } from "../../../types/type";
+import {
+  DropdownActionColumn,
+  DropdownActionItems,
+} from "@/components/organisms/data-table-columns/dropdown-action-columns";
+import { toast } from "sonner";
+import { api } from "@/lib/api";
 
 interface Props {
   row: Row<Product>;
 }
 export function SelectRow({ row }: Props) {
-  const { setDetailProduct, setEditProduct, setDeleteProduct } = useProducts();
+  const { setDetailProduct, setEditProduct, setDeleteProduct, mutate } = useProducts();
+
+  const recoveryHandler = async () => {
+    try {
+      await api.patch(`/products/${row.original.id}/restore`);
+      toast.success(
+        `Produk dengan nama "${row.original.name} telah dipulihkan"`,
+      );
+      mutate?.()
+    } catch (error) {
+      console.error(error);
+      toast.error("Terjadi kesalahan");
+    }
+  };
+
+  const isDeleted = row.original.deleted_at;
+
+  const items: DropdownActionItems[] = [
+    {
+      itemLabel: "Detail",
+      onClick: () => setDetailProduct(row.original),
+    },
+    {
+      itemLabel: "Edit",
+      onClick: () => setEditProduct(row.original),
+    },
+    {
+      itemLabel: isDeleted ? "Pulihkan" : "Hapus",
+      onClick: isDeleted
+        ? recoveryHandler
+        : () => setDeleteProduct(row.original),
+      className: isDeleted ? "text-green-500" : "text-red-500",
+    },
+  ];
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant={"ghost"}>
-          <Menu />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>{row.original.name}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setDetailProduct(row.original)}>
-          Detail
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setEditProduct(row.original)}>
-          Edit
-        </DropdownMenuItem>
-        <DropdownMenuItem className="text-red-500" onClick={() => setDeleteProduct(row.original)}>
-          Delete
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <DropdownActionColumn menuLabel={`${row.original.name}`} items={items} />
   );
 }

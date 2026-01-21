@@ -36,14 +36,21 @@ export default function ProductTemplate({ mode }: Props) {
 }
 
 const InnerTemplate = () => {
-  const { isLoading, data, deleteProduct, setDeleteProduct, deleteContent, mutate } =
-    useProducts();
+  const {
+    isLoading,
+    data,
+    deleteProduct,
+    setDeleteProduct,
+    deleteContent,
+    mutate,
+  } = useProducts();
 
   const deleteHandler = async () => {
     if (!deleteProduct) return;
+    const url = `${SERVER_URL}/products/${deleteProduct.id}`;
     try {
-      api.delete(`${SERVER_URL}/products/${deleteProduct.id}`);
-      mutate?.()
+      api.delete(url);
+      mutate?.();
     } catch (error) {
       console.error(error);
       throw error;

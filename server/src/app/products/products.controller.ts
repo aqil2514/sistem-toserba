@@ -3,56 +3,61 @@ import {
   Controller,
   Delete,
   Get,
-  InternalServerErrorException,
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { RoleGuard } from '../../guards/role.guard';
 import { Roles } from '../../decorator/roles.decorator';
 import { PasetoGuard } from '../../guards/paseto.guard';
-import path from 'node:path';
-import fs from 'fs';
-import { createClient } from '@supabase/supabase-js';
 import { CreateProductDto } from './dto/create-product.dto';
+import { ProductFetchService } from './helpers/products-fetch.service';
+import { ProductStockService } from './helpers/products-stock.service';
 
 @Controller('products')
 export class ProductsController {
-  private supabase = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  );
-
-  constructor(private readonly productService: ProductsService) {}
+  constructor(
+    private readonly productService: ProductsService,
+    private readonly productFetchService: ProductFetchService,
+    private readonly productStockService: ProductStockService,
+  ) {}
 
   @UseGuards(PasetoGuard, RoleGuard)
   @Roles('admin')
   @Get()
-  async getProducts() {
-    return await this.productService.findAll();
+  async getProducts(@Query('display-mode') displayMode: string) {
+    switch (displayMode) {
+      case 'non_deleted_item':
+        return await this.productFetchService.findAllNonDeletedItem();
+      case 'deleted_item':
+        return await this.productFetchService.findAllDeletedItem();
+      default:
+        return await this.productFetchService.findAll();
+    }
   }
 
   @UseGuards(PasetoGuard, RoleGuard)
   @Roles('admin')
   @Get('stocks')
   async getProductStocks() {
-    return await this.productService.getProductStock();
+    return await this.productStockService.getProductStock();
   }
 
   @UseGuards(PasetoGuard, RoleGuard)
   @Roles('admin')
   @Get(':id/in')
   async getInProductsHistory(@Param('id') id: string) {
-    return await this.productService.getInProductHistory(id);
+    return await this.productStockService.getInProductHistory(id);
   }
 
   @UseGuards(PasetoGuard, RoleGuard)
   @Roles('admin')
   @Get(':id/out')
   async getOutProductHistory(@Param('id') id: string) {
-    return await this.productService.getOutProductHistory(id);
+    return await this.productStockService.getOutProductHistory(id);
   }
 
   @UseGuards(PasetoGuard, RoleGuard)
@@ -71,46 +76,15 @@ export class ProductsController {
 
   @UseGuards(PasetoGuard, RoleGuard)
   @Roles('admin')
-  @Delete(':id')
-  async softDeleteProduct(@Param('id') id: string) {
-    return await this.productService.remove(id);
+  @Patch(':id/restore')
+  async restoreProduct(@Param('id') id: string) {
+    return await this.productService.restore(id);
   }
 
-  // ⚠️ ENDPOINT SEMENTARA – HAPUS SETELAH MIGRASI
-  // @Get('migrate')
-  // async migrateProducts() {
-  //   try {
-  //     const filePath = path.join(process.cwd(), 'migrate-product.json');
-  //     const raw = fs.readFileSync(filePath, 'utf-8');
-  //     const oldProducts = JSON.parse(raw);
-
-  //     const payload = oldProducts.map((p: any) => ({
-  //       id: p.id,
-  //       name: p.name,
-  //       price: p.price,
-  //       category: p.category,
-  //       unit: 'pcs', // default unit warung
-  //       created_at: p.created_at,
-  //       updated_at: p.updated_at,
-  //       deleted_at: p.deleted_at || null,
-  //     }));
-
-  //     const { error, count } = await this.supabase
-  //       .from('products')
-  //       .upsert(payload, { onConflict: 'id', count: 'exact' });
-
-  //     if (error) {
-  //       throw error;
-  //     }
-
-  //     return {
-  //       message: 'Migration success',
-  //       total: payload.length,
-  //       inserted_or_updated: count,
-  //     };
-  //   } catch (err: any) {
-  //     console.error(err);
-  //     throw new InternalServerErrorException('Product migration failed');
-  //   }
-  // }
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Delete(':id')
+  async deleteProduct(@Param('id') id: string) {
+    return await this.productService.remove(id);
+  }
 }

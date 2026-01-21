@@ -22,13 +22,14 @@ import {
   buildPaginationMeta,
   executeSupabaseBasicQuery,
 } from '../../utils/query-builder';
+import { ProductFetchService } from '../products/helpers/products-fetch.service';
 
 @Injectable()
 export class PurchaseService {
   constructor(
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
-    private readonly productService: ProductsService,
+    private readonly productFetchService: ProductFetchService,
   ) {}
 
   private async generatePurchaseCode(date: Date): Promise<string> {
@@ -95,7 +96,7 @@ export class PurchaseService {
     purchaseId: string,
   ): Promise<PurchaseItemInsert> {
     const hpp = raw.price / raw.quantity;
-    const product = await this.productService.findById(raw.product_id);
+    const product = await this.productFetchService.findById(raw.product_id);
     return {
       purchase_id: purchaseId,
       price: raw.price,
