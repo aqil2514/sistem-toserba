@@ -57,7 +57,7 @@ export function ToolbarTable<TData>({
         />
       )}
 
-      <div className="flex gap-4">
+      <div className="flex flex-wrap gap-4">
         {categoryKey && (
           <FilterSelect
             allValueLabel="Semua kategori"

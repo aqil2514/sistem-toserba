@@ -19,7 +19,7 @@ export function PaginationDataTable<TData>({ table }: Props<TData>) {
   const pageSize = table.getState().pagination.pageSize;
 
   return (
-    <div className="flex items-center justify-between gap-4">
+    <div className="flex sm:flex-row flex-col items-center justify-between gap-4">
       <p className="text-sm text-muted-foreground whitespace-nowrap">
         Halaman {pageIndex + 1} dari {maxPage}
       </p>

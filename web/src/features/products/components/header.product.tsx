@@ -5,7 +5,7 @@ import { MutateButton } from "@/components/ui/mutate-button";
 export function ProductHeader() {
   const { setDialogAdd, mutate } = useProducts();
   return (
-    <div className="flex items-start justify-between">
+    <div className="flex sm:flex-row flex-col gap-4 items-start justify-between">
       <div className="flex flex-col gap-1">
         <h1 className="text-xl font-semibold tracking-tight">Produk</h1>
         <p className="text-sm text-muted-foreground">
