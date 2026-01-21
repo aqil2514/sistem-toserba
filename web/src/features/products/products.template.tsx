@@ -49,8 +49,8 @@ const InnerTemplate = () => {
     if (!deleteProduct) return;
     const url = `${SERVER_URL}/products/${deleteProduct.id}`;
     try {
-      api.delete(url);
-      mutate?.();
+      await api.delete(url);
+      await mutate?.();
     } catch (error) {
       console.error(error);
       throw error;
