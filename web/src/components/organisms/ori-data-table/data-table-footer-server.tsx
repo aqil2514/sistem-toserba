@@ -24,7 +24,7 @@ export function DataTableFooterServer<T extends BasicQuery>({
   meta,
 }: Props<T>) {
   return (
-    <div className="flex gap-4 p-4">
+    <div className="flex flex-col sm:flex-row gap-4 p-4">
       <Pagination
         totalPages={meta.totalPages}
         page={query.page}
@@ -54,7 +54,7 @@ const Pagination: React.FC<PaginationProps> = ({
   const [snapshot, setSnapshot] = useState<number>(memoPage);
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 justify-center">
       <Button
         variant={"outline"}
         size={"icon-sm"}
@@ -113,7 +113,7 @@ interface LimitProps {
 }
 const Limit: React.FC<LimitProps> = ({ totalData, limit, onLimitChange }) => {
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex gap-2 justify-center items-center">
       <Select
         value={String(limit)}
         onValueChange={(e) => onLimitChange(Number(e))}

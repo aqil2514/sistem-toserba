@@ -8,7 +8,7 @@ export function useToserbaHeader() {
     { title: "Penjualan", href: "/sales" },
   ];
 
-  // Route yang tidak menampilkan header
+  // Route where header is hidden
   const HIDE_HEADER = ["/"];
 
   const pathname = usePathname();
@@ -17,8 +17,6 @@ export function useToserbaHeader() {
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
-
-  // Sembunyikan header di route tertentu atau saat belum login
 
   const displayName = user?.name ?? "User";
   const initial = displayName.charAt(0).toUpperCase();

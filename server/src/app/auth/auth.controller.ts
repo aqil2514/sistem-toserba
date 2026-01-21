@@ -8,6 +8,7 @@ import passport from 'passport';
 export class AuthController {
   private webUrl = process.env.FRONTEND_URL;
   private isProd = process.env.NODE_ENV === 'production';
+  
   @Get('me')
   @UseGuards(PasetoGuard)
   me(@Req() req) {

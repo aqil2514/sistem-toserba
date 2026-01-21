@@ -40,7 +40,7 @@ export function ToserbaBrand() {
   );
 }
 
-function normalizePath(pathname: string) {
+const normalizePath = (pathname: string) => {
   return pathname.startsWith("/demo")
     ? pathname.replace("/demo", "")
     : pathname;

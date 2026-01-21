@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TelegramBotController } from './telegram-bot.controller';
 import { TelegramBotService } from './telegram-bot.service';
-import { SalesReportService } from '../export/pdf/helpers/sales-report/sales-report.service';
 import { PdfModule } from '../export/pdf/pdf.module';
 
 @Module({

@@ -11,11 +11,21 @@ export class TelegramBotController {
 
   @Get('send-sales-report')
   async sendSalesReport(@Query('token') token: string) {
-    if (token !== process.env.TELEGRAM_CRON_TOKEN) {
-      return new UnauthorizedException('Akses tidak diizinkan');
+    if (!token || token !== process.env.TELEGRAM_CRON_TOKEN) {
+      throw new UnauthorizedException('Akses tidak diizinkan');
     }
+
     const pdf = await this.salesReportService.export();
     const pdfBuffer = Buffer.from(pdf);
-    return await this.telegramBotService.sendPdf(pdfBuffer, "Laporan Penjualan Harian");
+
+    await this.telegramBotService.sendPdf(
+      pdfBuffer,
+      'Laporan Penjualan Harian.pdf',
+    );
+
+    return {
+      status: 'ok',
+      message: 'Laporan berhasil dikirim ke Telegram',
+    };
   }
 }
