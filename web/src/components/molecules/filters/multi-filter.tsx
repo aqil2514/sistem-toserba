@@ -86,7 +86,10 @@ export function MultiFilter({
           filterKeys={filterKeys}
           setSnapshot={setSnapshot}
           snapshot={snapshot}
-          onApplyFilter={onApplyFilter}
+          onApplyFilter={(state) => {
+            onApplyFilter(state);
+            setOpen(false)
+          }}
         />
 
         <FilterFooter
@@ -147,13 +150,13 @@ const FilterContent: React.FC<{
 
   const updateKey = (index: number, value: string) => {
     setSnapshot((prev) =>
-      prev.map((item, i) => (i === index ? { ...item, key: value } : item))
+      prev.map((item, i) => (i === index ? { ...item, key: value } : item)),
     );
   };
 
   const updateValue = (index: number, value: string) => {
     setSnapshot((prev) =>
-      prev.map((item, i) => (i === index ? { ...item, value } : item))
+      prev.map((item, i) => (i === index ? { ...item, value } : item)),
     );
   };
 

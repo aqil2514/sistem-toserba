@@ -1,5 +1,10 @@
 import { DateTime } from 'luxon';
-import { DataQueryResponse, FilterState, SortState } from '../@types/general';
+import {
+  BasicQuery,
+  DataQueryResponse,
+  FilterState,
+  SortState,
+} from '../@types/general';
 import { PostgrestFilterBuilder } from '@supabase/postgrest-js';
 
 function normalizeSortKey(key: string) {
@@ -7,6 +12,29 @@ function normalizeSortKey(key: string) {
 
   const [relation, column] = key.split('.');
   return `${relation}(${column})`;
+}
+
+export function executeSupabaseBasicQuery(
+  client: PostgrestFilterBuilder<any, any, any, any>,
+  query: BasicQuery,
+  filterDateColumName: string,
+) {
+  const { limit, page, from, to, filters, sort } = query;
+
+  if (page && limit) applyPagination(client, page, limit);
+  if (from) applyDateRangeFilter(client, filterDateColumName, from, to);
+  if (filters) {
+    for (const filter of filters) {
+      applyFilterState(client, filter);
+    }
+  }
+  if (sort) {
+    for (const state of sort) {
+      applySortingState(client, state);
+    }
+  }
+
+  return client;
 }
 
 export function applyPagination(

@@ -19,6 +19,7 @@ import {
   applyPagination,
   applySortingState,
   buildPaginationMeta,
+  executeSupabaseBasicQuery,
 } from '../../../utils/query-builder';
 import { DataQueryResponse } from '../../../@types/general';
 import { SalesItemApiResponse } from '../interface/sales-items.interface';
@@ -150,25 +151,14 @@ export class SalesReportService {
   async getSalesReport(
     query: SalesReportQuery,
   ): Promise<DataQueryResponse<SalesItemApiResponse[]>> {
-    const { limit, page, from, to, filters, sort } = query;
+    const { limit, page } = query;
 
-    let client = this.supabase
+    let supabase = this.supabase
       .from('sales_items')
       .select('*, product_id!inner(*), sales_id!inner(*)', { count: 'exact' })
       .is('deleted_at', null);
 
-    if (page && limit) applyPagination(client, page, limit);
-    if (from) applyDateRangeFilter(client, 'transaction_date', from, to);
-    if (filters) {
-      for (const filter of filters) {
-        applyFilterState(client, filter);
-      }
-    }
-    if (sort) {
-      for (const state of sort) {
-        applySortingState(client, state);
-      }
-    }
+    const client = executeSupabaseBasicQuery(supabase, query, "transaction_date");
 
     const { data, error, count } = await client;
 

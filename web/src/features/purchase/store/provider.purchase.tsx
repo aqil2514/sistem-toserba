@@ -17,7 +17,7 @@ interface PurchaseContextType {
   query: PurchaseQuery;
   updateQuery: <T extends keyof PurchaseQuery>(
     key: T,
-    value: PurchaseQuery[T]
+    value: PurchaseQuery[T],
   ) => void;
   resetQuery: () => void;
 
@@ -35,7 +35,7 @@ interface PurchaseContextType {
 }
 
 const PurchaseContext = createContext<PurchaseContextType>(
-  {} as PurchaseContextType
+  {} as PurchaseContextType,
 );
 
 export function PurchaseProvider({ children }: { children: React.ReactNode }) {
@@ -50,6 +50,8 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
     limit: query.limit,
     from: query?.from,
     to: query?.to,
+    filters: query?.filters,
+    sort: query?.sort,
   });
 
   const fetcher = useFetch<DataQueryResponse<Purchase[]>>(url);
@@ -58,7 +60,7 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
 
   const updateQuery = <T extends keyof PurchaseQuery>(
     key: T,
-    value: PurchaseQuery[T]
+    value: PurchaseQuery[T],
   ) => {
     setQuery((prev) => ({ ...prev, [key]: value }));
   };

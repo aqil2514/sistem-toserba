@@ -11,6 +11,7 @@ import { PurchaseDetailDialog } from "./components/dialog/detail/dialog-detail.p
 import { PurchaseAddDialog } from "./components/dialog/add/dialog-add.purchase";
 import { PurchaseEditDialog } from "./components/dialog/edit/dialog-edit.purchase";
 import { PurchaseDeleteDialog } from "./components/dialog/delete/dialog-delete.purchase";
+import { DataTableFooterServer } from "@/components/organisms/ori-data-table/data-table-footer-server";
 
 interface Props {
   mode: "private" | "demo";
@@ -33,7 +34,7 @@ export function PurchaseTemplate({ mode }: Props) {
 }
 
 const InnerTemplate = () => {
-  const { data, isLoading } = usePurchase();
+  const { data, isLoading, query, updateQuery } = usePurchase();
 
   return (
     <>
@@ -45,7 +46,14 @@ const InnerTemplate = () => {
           {isLoading || !data ? (
             <LoadingSpinner label="Memuat Data..." />
           ) : (
-            <DataTable columns={purchaseColumns} data={data.data} />
+            <>
+              <DataTable columns={purchaseColumns} data={data.data} />
+              <DataTableFooterServer
+                meta={data.meta}
+                query={query}
+                onQueryChange={updateQuery}
+              />
+            </>
           )}
         </SectionContainer>
       </MainContainer>

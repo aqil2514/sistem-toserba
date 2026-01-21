@@ -44,10 +44,9 @@ export function PurchaseAddDialog() {
             Isi form di bawah ini untuk menambah data pembelian
           </AlertDialogDescription>
         </AlertDialogHeader>
-<ScrollArea className="h-96">
-
-        <PurchaseForm onSubmit={submitHandler} />
-</ScrollArea>
+        <ScrollArea className="h-96">
+          <PurchaseForm onSubmit={submitHandler} />
+        </ScrollArea>
 
         <AlertDialogFooter>
           <AlertDialogCancel>Kembali</AlertDialogCancel>

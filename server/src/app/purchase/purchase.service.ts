@@ -20,6 +20,7 @@ import {
   applyDateRangeFilter,
   applyPagination,
   buildPaginationMeta,
+  executeSupabaseBasicQuery,
 } from '../../utils/query-builder';
 
 @Injectable()
@@ -120,15 +121,14 @@ export class PurchaseService {
   async findByQuery(
     query: PurchaseQuery,
   ): Promise<DataQueryResponse<Purchase[]>> {
-    const { limit, page, from, to } = query;
+    const { limit, page } = query;
 
-    let client = this.supabase
+    let supabase = this.supabase
       .from('purchases')
       .select('*', { count: 'exact' })
       .is('deleted_at', null);
 
-    if (page && limit) applyPagination(client, page, limit);
-    if (from) applyDateRangeFilter(client, 'purchase_date', from, to);
+    const client = executeSupabaseBasicQuery(supabase, query, "purchase_date"); 
 
     const { data, error, count } = await client;
     if (error) {

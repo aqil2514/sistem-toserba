@@ -58,7 +58,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <Button
         variant={"outline"}
         size={"icon-sm"}
-        disabled={memoPage === 1}
+        disabled={memoPage === 1 || totalPages < 1}
         onClick={() => {
           const newValue = memoPage - 1;
           setSnapshot(newValue);
@@ -72,6 +72,7 @@ const Pagination: React.FC<PaginationProps> = ({
           type="number"
           value={snapshot}
           max={totalPages}
+          disabled={totalPages < 1}
           min={1}
           onChange={(e) => {
             const value = e.target.valueAsNumber;
@@ -87,13 +88,13 @@ const Pagination: React.FC<PaginationProps> = ({
           }}
         />
         <p className="text-xs font-semibold whitespace-nowrap">
-          dari {totalPages} halaman
+          { totalPages > 0 ? `dari ${totalPages} halaman` : "Tidak ada data"}
         </p>
       </div>
       <Button
         variant={"outline"}
         size={"icon-sm"}
-        disabled={memoPage === totalPages}
+        disabled={memoPage === totalPages || totalPages < 1}
         onClick={() => {
           const newValue = memoPage + 1;
           setSnapshot(newValue);
