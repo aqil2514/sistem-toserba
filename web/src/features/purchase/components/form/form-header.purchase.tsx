@@ -51,7 +51,7 @@ export function FormHeader({ form, supplierName, supplierType }: Props) {
           </FormItem>
         )}
       />
-      <div className="gap-4 grid grid-cols-2">
+      <div className="gap-4 grid md:grid-cols-2">
         <FormField
           control={form.control}
           name="supplier_name"

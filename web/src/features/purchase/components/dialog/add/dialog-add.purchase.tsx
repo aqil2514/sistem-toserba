@@ -13,6 +13,7 @@ import { PurchaseFormValues } from "@/features/purchase/schema/purchase.schema";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
 import { isAxiosError } from "axios";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export function PurchaseAddDialog() {
   const { addOpen, setAddOpen, mutate } = usePurchase();
@@ -43,8 +44,10 @@ export function PurchaseAddDialog() {
             Isi form di bawah ini untuk menambah data pembelian
           </AlertDialogDescription>
         </AlertDialogHeader>
+<ScrollArea className="h-96">
 
         <PurchaseForm onSubmit={submitHandler} />
+</ScrollArea>
 
         <AlertDialogFooter>
           <AlertDialogCancel>Kembali</AlertDialogCancel>
