@@ -9,13 +9,13 @@ import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/utils/format-date.fns";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { DateRange } from "react-day-picker";
 
 /**
- * Return DateRange berdasarkan preset
+ * Daterange Helper
  */
-export function getPresetDateRange(
+function getPresetDateRange(
   preset: "today" | "yesterday" | "this-week" | "this-month" | "this-year"
 ): DateRange {
   const today = startOfDay(new Date());
@@ -51,10 +51,6 @@ export function getPresetDateRange(
       };
   }
 }
-
-/* =========================
-   Helpers (no date-fns)
-   ========================= */
 
 function startOfDay(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());

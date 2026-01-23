@@ -63,7 +63,6 @@ const InnerTemplate = () => {
               />
             </>
           )}
-
         </SectionContainer>
       </MainContainer>
 

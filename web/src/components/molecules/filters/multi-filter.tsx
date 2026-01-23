@@ -16,16 +16,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import React, { useEffect, useEffectEvent, useState } from "react";
 
-export interface FilterKeyType {
-  filterKey: string;
-  label: string;
-}
 
-interface Props {
-  filterKeys?: FilterKeyType[];
-  initialValue: FilterState[];
-  onApplyFilter: (state: FilterState[]) => void;
-}
 
 const dummyKey = [
   {
@@ -49,6 +40,17 @@ const dummyKey = [
     label: "Filter 5",
   },
 ];
+
+export interface FilterKeyType {
+  filterKey: string;
+  label: string;
+}
+
+interface Props {
+  filterKeys?: FilterKeyType[];
+  initialValue: FilterState[];
+  onApplyFilter: (state: FilterState[]) => void;
+}
 
 export function MultiFilter({
   filterKeys = dummyKey,
@@ -88,7 +90,7 @@ export function MultiFilter({
           snapshot={snapshot}
           onApplyFilter={(state) => {
             onApplyFilter(state);
-            setOpen(false)
+            setOpen(false);
           }}
         />
 
@@ -104,13 +106,21 @@ export function MultiFilter({
   );
 }
 
-const FilterFooter: React.FC<{
+interface FilterFooterProps {
   setSnapshot: React.Dispatch<React.SetStateAction<FilterState[]>>;
   filterKeys: FilterKeyType[];
   snapshot: FilterState[];
   onApplyFilter: (state: FilterState[]) => void;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ setSnapshot, filterKeys, snapshot, onApplyFilter, setOpen }) => {
+}
+
+const FilterFooter: React.FC<FilterFooterProps> = ({
+  setSnapshot,
+  filterKeys,
+  snapshot,
+  onApplyFilter,
+  setOpen,
+}) => {
   const addHandler = () => {
     setSnapshot((prev) => [
       ...prev,
@@ -140,12 +150,13 @@ const FilterFooter: React.FC<{
   );
 };
 
-const FilterContent: React.FC<{
-  filterKeys: FilterKeyType[];
-  snapshot: FilterState[];
-  setSnapshot: React.Dispatch<React.SetStateAction<FilterState[]>>;
-  onApplyFilter: (state: FilterState[]) => void;
-}> = ({ filterKeys, setSnapshot, snapshot, onApplyFilter }) => {
+type FilterContentProps = Omit<FilterFooterProps, "setOpen">;
+const FilterContent: React.FC<FilterContentProps> = ({
+  filterKeys,
+  setSnapshot,
+  snapshot,
+  onApplyFilter,
+}) => {
   if (snapshot.length < 1) return null;
 
   const updateKey = (index: number, value: string) => {

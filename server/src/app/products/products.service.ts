@@ -57,24 +57,18 @@ export class ProductsService {
   }
 
   async remove(id: string) {
-    const { data, error } = await this.supabase
+    const { error } = await this.supabase
       .from('products')
       .update({
         deleted_at: new Date().toISOString(),
       })
       .eq('id', id)
-      .is('deleted_at', null)
-      .select()
-      .single();
+      .is('deleted_at', null);
 
-    if (error || !data) {
-      throw error ?? new Error('Product not found');
+    if (error) {
+      console.error(error)
+      throw error;
     }
-
-    return {
-      message: 'Product deleted',
-      data,
-    };
   }
 
   async restore(id: string) {

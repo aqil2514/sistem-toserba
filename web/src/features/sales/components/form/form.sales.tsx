@@ -54,7 +54,7 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
   const isSubmitting = form.formState.isSubmitting;
   const isDirty = form.formState.isDirty;
 
-  const fetcherProducts = useFetch<Product[]>(`${SERVER_URL}/products`);
+  const fetcherProducts = useFetch<Product[]>(`${SERVER_URL}/products?display-mode=non_deleted_item`);
   const fetcherPurchase = useFetch<ProductStockRpcResponse>(
     `${SERVER_URL}/products/stocks`
   );
