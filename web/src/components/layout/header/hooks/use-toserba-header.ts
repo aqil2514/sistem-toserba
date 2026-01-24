@@ -15,8 +15,7 @@ export function useToserbaHeader() {
   const { user, isAuthenticated } = useAuth();
   const isDemo = pathname.startsWith("/demo");
 
-  const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(`${href}/`);
+  const isActive = (href: string) => pathname === href;
 
   const displayName = user?.name ?? "User";
   const initial = displayName.charAt(0).toUpperCase();
@@ -24,7 +23,6 @@ export function useToserbaHeader() {
   const withPrefix = (href: string) => {
     return isDemo ? `/demo${href}` : href;
   };
-
 
   return {
     withPrefix,
