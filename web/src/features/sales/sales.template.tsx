@@ -13,9 +13,10 @@ import { SalesEditDialog } from "./components/edit-item.sales";
 import { SalesDeleteDialog } from "./components/delete-item.sales";
 import { useShortcut } from "@/hooks/use-shortcut";
 import { DataTableFooterServer } from "@/components/organisms/ori-data-table/data-table-footer-server";
+import { TemplateMode } from "@/@types/general";
 
 interface Props {
-  mode: "private" | "demo";
+  mode: TemplateMode;
 }
 
 export default function SalesTemplate({ mode }: Props) {

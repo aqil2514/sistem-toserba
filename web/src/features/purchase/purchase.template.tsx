@@ -12,9 +12,10 @@ import { PurchaseAddDialog } from "./components/dialog/add/dialog-add.purchase";
 import { PurchaseEditDialog } from "./components/dialog/edit/dialog-edit.purchase";
 import { PurchaseDeleteDialog } from "./components/dialog/delete/dialog-delete.purchase";
 import { DataTableFooterServer } from "@/components/organisms/ori-data-table/data-table-footer-server";
+import { TemplateMode } from "@/@types/general";
 
 interface Props {
-  mode: "private" | "demo";
+  mode: TemplateMode;
 }
 export function PurchaseTemplate({ mode }: Props) {
   if (mode === "demo")

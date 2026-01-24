@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { TemplateMode } from "@/@types/general";
 
 const STORAGE_KEY = "toserba-demo-products";
 
@@ -14,7 +15,7 @@ export interface ProductOption {
 }
 
 interface Props {
-  mode: "demo" | "private";
+  mode: TemplateMode;
   value: string;
   onChange: (value: string) => void;
   products?: ProductOption[]; // private

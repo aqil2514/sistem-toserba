@@ -1,3 +1,5 @@
+export type TemplateMode = "private" | "demo";
+
 export interface LabelValue {
   label: string;
   value: string;

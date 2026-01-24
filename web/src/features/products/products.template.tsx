@@ -13,9 +13,10 @@ import { ProductEditDialog } from "./components/dialog.product/edit-dialog.produ
 import { DeleteDialog } from "@/components/molecules/dialog/delete-dialog";
 import { api } from "@/lib/api";
 import { SERVER_URL } from "@/constants/url";
+import { TemplateMode } from "@/@types/general";
 
 interface Props {
-  mode: "private" | "demo";
+  mode: TemplateMode;
 }
 
 export default function ProductTemplate({ mode }: Props) {

@@ -1,4 +1,4 @@
-import { BadgeCent, Barcode, ShoppingBasket } from "lucide-react";
+import { BadgeCent, Barcode, ShoppingBasket, SquarePercent } from "lucide-react";
 import { NavItemsTypes, RouteItems } from "../types/nav-items.interface";
 
 const NAV_ITEMS: RouteItems[] = [
@@ -12,7 +12,7 @@ const NAV_ITEMS: RouteItems[] = [
     title: "Laporan Penjualan",
     href: "/sales/report",
     description: "Laporan Transaksi Penjualan",
-    icon: BadgeCent,
+    icon: SquarePercent,
   },
   {
     title: "Pembelian Stok",

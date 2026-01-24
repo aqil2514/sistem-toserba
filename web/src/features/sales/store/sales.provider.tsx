@@ -7,12 +7,13 @@ import { defaultQuery } from "../constants/default-query.sales";
 import { KeyedMutator } from "swr";
 import { SalesHeaderQueryResponse } from "../types/sales-header-api";
 import { buildUrl } from "@/utils/build-url";
+import { TemplateMode } from "@/@types/general";
 
 interface SalesContextType {
   query: SalesQuery;
   updateQuery: <T extends keyof SalesQuery>(
     key: T,
-    value: SalesQuery[T]
+    value: SalesQuery[T],
   ) => void;
   resetQuery: () => void;
 
@@ -28,7 +29,7 @@ interface SalesContextType {
   deleteSalesId: string;
   setDeleteSalesId: React.Dispatch<React.SetStateAction<string>>;
 
-  mode: "private" | "demo";
+  mode: TemplateMode;
 
   isLoading: boolean;
   data: SalesHeaderQueryResponse | undefined;
@@ -43,7 +44,7 @@ export function SalesProvider({
   mode,
 }: {
   children: React.ReactNode;
-  mode: "private" | "demo";
+  mode: TemplateMode;
 }) {
   const [query, setQuery] = useState<SalesQuery>(defaultQuery);
   const [openAddDialog, setOpenAddDialog] = useState<boolean>(false);
@@ -54,7 +55,7 @@ export function SalesProvider({
 
   const updateQuery = <T extends keyof SalesQuery>(
     key: T,
-    value: SalesQuery[T]
+    value: SalesQuery[T],
   ) => {
     setQuery((prev) => ({ ...prev, [key]: value }));
   };

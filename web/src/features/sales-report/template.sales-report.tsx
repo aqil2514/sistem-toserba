@@ -12,9 +12,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ReportSalesSummary } from "./components/contents/summary/summary.report-sales";
 import { ReportContent } from "./types/query.report-sales";
 import { SalesReportChart } from "./components/contents/chart/chart.sales-report";
+import { TemplateMode } from "@/@types/general";
 
 interface Props {
-  mode: "demo" | "private";
+  mode: TemplateMode;
 }
 
 export function SalesReportTemplate({ mode }: Props) {
