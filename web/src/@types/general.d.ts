@@ -1,8 +1,8 @@
 export type TemplateMode = "private" | "demo";
 
-export interface LabelValue {
+export interface LabelValue<T = string> {
   label: string;
-  value: string;
+  value: T;
 }
 
 export interface BasicQuery {

@@ -13,20 +13,14 @@ import { ReportSalesSummary } from "./components/contents/summary/summary.report
 import { ReportContent } from "./types/query.report-sales";
 import { SalesReportChart } from "./components/contents/chart/chart.sales-report";
 import { TemplateMode } from "@/@types/general";
+import { UnavailableDemo } from "@/components/templates/unavailable-demo";
 
 interface Props {
   mode: TemplateMode;
 }
 
 export function SalesReportTemplate({ mode }: Props) {
-  if (mode === "demo")
-    return (
-      <MainContainer>
-        <SectionContainer>
-          <h1>Versi Demo Belum Tersedia</h1>
-        </SectionContainer>
-      </MainContainer>
-    );
+  if (mode === "demo") return <UnavailableDemo />
 
   return (
     <SalesReportProvider>
