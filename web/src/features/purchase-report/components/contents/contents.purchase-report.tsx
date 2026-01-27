@@ -3,6 +3,7 @@ import { PurchaseReportContent } from "../../types/query.purchase-report";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePurchaseReport } from "../../store/provider.purchase-report";
 import React from "react";
+import { PurchaseReportSummaryContent } from "./summary/summary-content.purchase-report";
 
 type TabsContentType = LabelValue<PurchaseReportContent> & {
   content: React.ReactNode;
@@ -12,7 +13,7 @@ const contentTrigger: TabsContentType[] = [
   {
     label: "Ringkasan",
     value: "summary",
-    content: <>Summary</>,
+    content: <PurchaseReportSummaryContent />,
   },
   {
     label: "Detail",
@@ -28,6 +29,7 @@ const contentTrigger: TabsContentType[] = [
 
 export function PurchaseReportContents() {
   const { query, updateQuery } = usePurchaseReport();
+
   return (
     <Tabs
       value={query.content}

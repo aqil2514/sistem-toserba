@@ -2,11 +2,9 @@ import {
   Inject,
   Injectable,
   InternalServerErrorException,
-  NotFoundException,
 } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import {
-  SalesLineChartRpcReturn,
   SalesReportProductRpcParams,
   SalesReportProductRpcReturn,
   SalesReportQuery,
@@ -14,16 +12,12 @@ import {
   SalesReportSummaryRpcReturn,
 } from '../interface/sales-report.interface';
 import {
-  applyDateRangeFilter,
-  applyFilterState,
-  applyPagination,
-  applySortingState,
   buildPaginationMeta,
   executeSupabaseBasicQuery,
 } from '../../../utils/query-builder';
 import { DataQueryResponse } from '../../../@types/general';
 import { SalesItemApiResponse } from '../interface/sales-items.interface';
-import { DateTime } from 'luxon';
+import { formatQueryDate } from '../../../utils/format-date';
 
 @Injectable()
 export class SalesReportService {
@@ -32,24 +26,11 @@ export class SalesReportService {
     private readonly supabase: SupabaseClient,
   ) {}
 
-  private formatDate(raw: SalesReportQuery) {
-    const start = DateTime.fromJSDate(new Date(raw.from), {
-      zone: 'Asia/Jakarta',
-    }).startOf('day');
-
-    const end = DateTime.fromJSDate(new Date(raw.to ?? raw.from), {
-      zone: 'Asia/Jakarta',
-    }).endOf('day');
-
-    const startUtc = start.toUTC().toISO();
-    const endUtc = end.toUTC().toISO();
-    return { startUtc, endUtc };
-  }
 
   private mapToReportSummaryByProduct(
     raw: SalesReportQuery,
   ): SalesReportProductRpcParams {
-    const { endUtc, startUtc } = this.formatDate(raw);
+    const { endUtc, startUtc } = formatQueryDate(raw);
 
     const p_product_name =
       raw?.filters?.find((fil) => fil.key === 'p_product_name')?.value ?? '';
@@ -76,7 +57,7 @@ export class SalesReportService {
   private mapToSalesReportSummary(
     raw: SalesReportQuery,
   ): SalesReportSummaryRpcParams {
-    const { endUtc, startUtc } = this.formatDate(raw);
+    const { endUtc, startUtc } = formatQueryDate(raw);
 
     const p_buyer = raw.filters?.find(
       (filter) => filter.key === 'p_buyer',
@@ -110,7 +91,7 @@ export class SalesReportService {
   }
 
   async getSalesBreakdown(raw: SalesReportQuery) {
-    const { endUtc: p_end_utc, startUtc: p_start_utc } = this.formatDate(raw);
+    const { endUtc: p_end_utc, startUtc: p_start_utc } = formatQueryDate(raw);
     const { data, error } = await this.supabase.rpc('get_breakdown_sales', {
       p_end_utc,
       p_start_utc,
@@ -129,7 +110,7 @@ export class SalesReportService {
   async getSalesReportPerCategory(
     query: SalesReportQuery,
   ): Promise<{ category: string; omzet: number }[]> {
-    const { endUtc: p_end_utc, startUtc: p_start_utc } = this.formatDate(query);
+    const { endUtc: p_end_utc, startUtc: p_start_utc } = formatQueryDate(query);
     const { data, error } = await this.supabase.rpc(
       'get_sales_report_per_category',
       {

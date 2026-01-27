@@ -1,6 +1,11 @@
 import React, { createContext, useContext, useState } from "react";
 import { PurchaseReportQuery } from "../types/query.purchase-report";
 import { endOfDay, startOfDay } from "date-fns";
+import { buildUrl } from "@/utils/build-url";
+import { SERVER_URL } from "@/constants/url";
+import { useFetch } from "@/hooks/use-fetch";
+import { PurchaseReportApiResponse } from "../types/api-response.purchase-report";
+import { KeyedMutator } from "swr";
 
 interface PurchaseReportContextType {
   query: PurchaseReportQuery;
@@ -9,6 +14,11 @@ interface PurchaseReportContextType {
     value: PurchaseReportQuery[T],
   ) => void;
   resetQuery: () => void;
+
+  data: PurchaseReportApiResponse | undefined;
+  error: Error;
+  isLoading: boolean;
+  mutate: KeyedMutator<PurchaseReportApiResponse>;
 }
 
 const PurchaseReportContext = createContext<PurchaseReportContextType>(
@@ -32,6 +42,16 @@ export function PurchaseReportProvider({
 }) {
   const [query, setQuery] = useState<PurchaseReportQuery>(defaultQuery);
 
+  // >>>>>> FETCHER AREA <<<<<<
+  const url = buildUrl<PurchaseReportQuery>(
+    SERVER_URL,
+    "/purchase/report",
+    query,
+  );
+  const fetcher = useFetch<PurchaseReportApiResponse>(url);
+
+  console.log(fetcher);
+
   //   >>>>>> QUERY AREA <<<<<<
 
   const updateQuery = <T extends keyof PurchaseReportQuery>(
@@ -45,6 +65,8 @@ export function PurchaseReportProvider({
     query,
     updateQuery,
     resetQuery,
+
+    ...fetcher
   };
   return (
     <PurchaseReportContext.Provider value={values}>

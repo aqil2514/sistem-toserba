@@ -17,12 +17,14 @@ import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { UpdatePurchaseDto } from './dto/update-purchase.dto';
 import { PurchaseQuery } from './interface/purchase-query.interface';
 import { PurchaseFormService } from './helpers/purchase-form.service';
+import { PurchaseReportService } from './helpers/purchase-report.service';
 
 @Controller('purchase')
 export class PurchaseController {
   constructor(
     private readonly purchaseService: PurchaseService,
     private readonly purchaseFormService: PurchaseFormService,
+    private readonly purchaseReportService: PurchaseReportService,
   ) {}
 
   @UseGuards(PasetoGuard, RoleGuard)
@@ -30,6 +32,13 @@ export class PurchaseController {
   @Get()
   async getPurchase(@Query() query: PurchaseQuery) {
     return await this.purchaseService.findByQuery(query);
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Get("report")
+  async getPurchaseReport(@Query() query: PurchaseQuery) {
+    return await this.purchaseReportService.getPurchaseByQuery(query);
   }
 
   @UseGuards(PasetoGuard, RoleGuard)

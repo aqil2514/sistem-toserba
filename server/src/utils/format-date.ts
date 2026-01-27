@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+import { BasicQuery } from '../@types/general';
 export function formatDateYYYYMMDD(raw: Date | string) {
   const date = new Date(raw);
   const yyyy = date.getFullYear();
@@ -40,3 +41,17 @@ export function endOfTodayUtcJakarta() {
 export function formatDateIndo(date = DateTime.now()) {
   return date.setLocale('id').toFormat('d LLLL yyyy');
 }
+
+ export function formatQueryDate(raw: BasicQuery) {
+    const start = DateTime.fromJSDate(new Date(raw.from), {
+      zone: 'Asia/Jakarta',
+    }).startOf('day');
+
+    const end = DateTime.fromJSDate(new Date(raw.to ?? raw.from), {
+      zone: 'Asia/Jakarta',
+    }).endOf('day');
+
+    const startUtc = start.toUTC().toISO();
+    const endUtc = end.toUTC().toISO();
+    return { startUtc, endUtc };
+  }
