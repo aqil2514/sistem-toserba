@@ -6,7 +6,7 @@ import {
   PurchaseReportDetailMode,
   PurchaseReportSummaryMode,
 } from '../interface/purchase-report-return.interface';
-import { buildPaginationMeta } from 'src/utils/query-builder';
+import { buildPaginationMeta } from '../../../utils/query-builder';
 
 @Injectable()
 export class PurchaseReportService {
