@@ -36,8 +36,10 @@ export class PurchaseController {
 
   @UseGuards(PasetoGuard, RoleGuard)
   @Roles('admin')
-  @Get("report")
+  @Get('report')
   async getPurchaseReport(@Query() query: PurchaseQuery) {
+    if (query.content === 'detail')
+      return await this.purchaseReportService.getPurchaseDetailMode(query);
     return await this.purchaseReportService.getPurchaseByQuery(query);
   }
 

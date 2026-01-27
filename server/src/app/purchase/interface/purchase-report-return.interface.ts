@@ -1,10 +1,26 @@
+import { DataQueryResponse } from '../../../@types/general';
+
 export interface PurchaseReportSummaryMode {
-  mode: "summary";
+  mode: 'summary';
   buy_average: number;
   total_price: number;
   total_transaction: number;
 }
 
-export interface PurchaseReportDetailMode {
-  mode: "detail";
+interface PurchaseReportDetailData {
+  purchase_date: string;
+  purchase_code: string;
+  supplier_name: string;
+  supplier_type: string;
+  product_name: string;
+  product_category: string;
+  product_subcategory: string;
+  quantity: number;
+  remaining_quantity: number;
+  price: number;
+  hpp: number;
+}
+
+export interface PurchaseReportDetailMode extends DataQueryResponse<PurchaseReportDetailData> {
+  mode: 'detail';
 }

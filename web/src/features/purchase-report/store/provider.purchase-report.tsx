@@ -50,8 +50,6 @@ export function PurchaseReportProvider({
   );
   const fetcher = useFetch<PurchaseReportApiResponse>(url);
 
-  console.log(fetcher);
-
   //   >>>>>> QUERY AREA <<<<<<
 
   const updateQuery = <T extends keyof PurchaseReportQuery>(

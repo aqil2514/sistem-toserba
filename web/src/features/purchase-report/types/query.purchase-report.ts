@@ -1,6 +1,6 @@
 import { BasicQuery } from "@/@types/general";
 
-export type PurchaseReportContent = "summary" | "data" | "chart";
+export type PurchaseReportContent = "summary" | "detail" | "chart";
 
 export interface PurchaseReportQuery extends BasicQuery {
   content: PurchaseReportContent;
