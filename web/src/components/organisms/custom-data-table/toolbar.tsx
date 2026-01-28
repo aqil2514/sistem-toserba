@@ -22,6 +22,8 @@ interface Props<TData> {
   table: Table<TData>;
 }
 
+// TODO : Revisi ini agar lebih elegan. Harusnya, pas kategori dipilih, subkategori otomatis di filter. Buat agar ini general.
+
 export function ToolbarTable<TData>({
   searchKey,
   globalFilter,
@@ -34,14 +36,14 @@ export function ToolbarTable<TData>({
   const categories = React.useMemo(() => {
     if (!categoryKey) return [];
     return Array.from(
-      new Set(data.map((item) => item[categoryKey]).filter(Boolean))
+      new Set(data.map((item) => item[categoryKey]).filter(Boolean)),
     );
   }, [data, categoryKey]);
 
   const subCategories = React.useMemo(() => {
     if (!subCategoryKey) return [];
     return Array.from(
-      new Set(data.map((item) => item[subCategoryKey]).filter(Boolean))
+      new Set(data.map((item) => item[subCategoryKey]).filter(Boolean)),
     );
   }, [data, subCategoryKey]);
 

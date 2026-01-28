@@ -53,20 +53,24 @@ export class PurchaseReportService {
     query: PurchaseQuery,
   ): Promise<PurchaseReportDetailMode> {
     const { endUtc, startUtc } = formatQueryDate(query);
+    const { limit, page } = query;
 
-    const { data, error, count } = await this.supabase.rpc(
+    const { data, error } = await this.supabase.rpc(
       'get_purchase_report_detail',
       {
         p_start_utc: startUtc,
         p_end_utc: endUtc,
+        p_limit: limit,
+        p_page: page,
       },
-      { count: 'exact' },
     );
 
     if (error) {
       console.error(error);
       throw error;
     }
+
+    const count = data?.[0]?.total_count ?? 0;
 
     const meta = buildPaginationMeta(query.page, query.limit, count);
 

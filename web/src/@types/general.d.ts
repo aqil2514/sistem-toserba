@@ -27,6 +27,8 @@ export interface SortState {
   value: "asc" | "desc";
 }
 
+// Standardized metadata structure for paginated responses
+// Keeps pagination logic consistent across different endpoints
 export interface MetaResponseQuery {
   page: number;
   limit: number;
@@ -34,6 +36,8 @@ export interface MetaResponseQuery {
   totalPages: number;
 }
 
+// Generic wrapper for query-based API responses
+// Allows reusing the same response shape while keeping strong typing
 export interface DataQueryResponse<T = unknown> {
   data: T;
   meta: MetaResponseQuery;

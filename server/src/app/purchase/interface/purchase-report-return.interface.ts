@@ -19,6 +19,7 @@ interface PurchaseReportDetailData {
   remaining_quantity: number;
   price: number;
   hpp: number;
+  total_count: number;
 }
 
 export interface PurchaseReportDetailMode extends DataQueryResponse<PurchaseReportDetailData> {
