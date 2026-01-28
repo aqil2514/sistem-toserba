@@ -53,15 +53,16 @@ export class PurchaseReportService {
     query: PurchaseQuery,
   ): Promise<PurchaseReportDetailMode> {
     const { endUtc, startUtc } = formatQueryDate(query);
-    const { limit, page } = query;
+    const { limit, page, filters } = query;
 
     const { data, error } = await this.supabase.rpc(
       'get_purchase_report_detail',
       {
-        p_start_utc: startUtc,
-        p_end_utc: endUtc,
         p_limit: limit,
         p_page: page,
+        p_start_utc: startUtc,
+        p_end_utc: endUtc,
+        p_filters_text: JSON.stringify(filters)
       },
     );
 

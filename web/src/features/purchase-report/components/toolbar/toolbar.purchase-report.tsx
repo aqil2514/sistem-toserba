@@ -1,8 +1,81 @@
 import { useMemo } from "react";
 import { usePurchaseReport } from "../../store/provider.purchase-report";
-import { MultiFilter } from "@/components/molecules/filters/multi-filter";
-import { SingleSorting } from "@/components/molecules/sorting/single-sorting";
+import {
+  FilterKeyType,
+  MultiFilter,
+} from "@/components/molecules/filters/multi-filter";
+import { SingleSorting, SortingKeyType } from "@/components/molecules/sorting/single-sorting";
 import { ToolbarDatepicker } from "@/components/molecules/filters/toolbar-datepicker";
+
+const filterKey: FilterKeyType[] = [
+  {
+    filterKey: "purchase_code",
+    label: "Kode Pembelian",
+  },
+  {
+    filterKey: "supplier_name",
+    label: "Nama Supplier",
+  },
+  {
+    filterKey: "supplier_type",
+    label: "Tipe Supplier",
+  },
+  {
+    filterKey: "product_name",
+    label: "Nama Produk",
+  },
+  {
+    filterKey: "product_category",
+    label: "Kategori Produk",
+  },
+  {
+    filterKey: "product_subcategory",
+    label: "Sub Kategori Produk",
+  },
+];
+
+const sortingkeys:SortingKeyType[] =[
+  {
+    sortingKey: "purchase_code",
+    label: "Kode Pembelian",
+  },
+  {
+    sortingKey: "supplier_name",
+    label: "Nama Supplier",
+  },
+  {
+    sortingKey: "supplier_type",
+    label: "Tipe Supplier",
+  },
+  {
+    sortingKey: "product_name",
+    label: "Nama Produk",
+  },
+  {
+    sortingKey: "product_category",
+    label: "Kategori Produk",
+  },
+  {
+    sortingKey: "product_subcategory",
+    label: "Sub Kategori Produk",
+  },
+  {
+    sortingKey: "quantity",
+    label: "Kuantiti",
+  },
+  {
+    sortingKey: "remaining_quantity",
+    label: "Kuantiti Tersisa",
+  },
+  {
+    sortingKey: "price",
+    label: "Harga",
+  },
+  {
+    sortingKey: "hpp",
+    label: "HPP",
+  },
+];
 
 export function PurchaseReportToolbar() {
   const { query, updateQuery } = usePurchaseReport();
@@ -12,12 +85,12 @@ export function PurchaseReportToolbar() {
   return (
     <div className="flex gap-4 items-center">
       <MultiFilter
-        filterKeys={[]}
+        filterKeys={filterKey}
         initialValue={memoQueryFilter ?? []}
         onApplyFilter={(state) => updateQuery("filters", state)}
       />
       <SingleSorting
-        sortingkeys={[]}
+        sortingkeys={sortingkeys}
         onSortStateChange={(query) => updateQuery("sort", query)}
       />
       <ToolbarDatepicker
