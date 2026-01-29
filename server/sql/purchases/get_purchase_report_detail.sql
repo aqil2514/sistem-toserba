@@ -17,7 +17,8 @@ CREATE OR REPLACE FUNCTION get_purchase_report_detail(
   p_end_utc TIMESTAMPTZ,
 
   -- FILTERS
-  p_filters_text TEXT DEFAULT '[]'
+  p_filters JSONB DEFAULT '[]'::jsonb,
+  p_sortings JSONB DEFAULT '[]'::jsonb
 )
 RETURNS TABLE(
   purchase_date TIMESTAMP,
@@ -37,8 +38,6 @@ LANGUAGE plpgsql
 STABLE AS
 $$
 DECLARE
-  p_filters jsonb := p_filters_text::jsonb;
-  f jsonb;
   sql TEXT := '
 select 
   pur.purchase_date,
@@ -64,22 +63,13 @@ where
 BEGIN
 
 -- FILTERS
-IF jsonb_array_length(p_filters) > 0 THEN
-  FOR f IN SELECT * FROM jsonb_array_elements(p_filters) LOOP
-    sql := sql || ' AND ' ||
-      CASE COALESCE(f->>'operator', 'ilike')
-        WHEN 'eq' THEN f->>'key' || ' = ' || quote_literal(f->>'value')
-        WHEN 'ilike' THEN f->>'key' || ' ILIKE ' || quote_literal(concat('%', f->>'value', '%'))
-        WHEN 'gte' THEN f->>'key' || ' >= ' || quote_literal(f->>'value')
-        WHEN 'lte' THEN f->>'key' || ' <= ' || quote_literal(f->>'value')
-        ELSE f->>'key' || ' ILIKE ' || quote_literal(concat('%', f->>'value', '%'))
-      END;
-  END LOOP;
-END IF;
+  sql := sql || generate_jsonb_filters(p_filters);
+
+-- SORTING
+  sql := sql || generate_jsonb_sorting(p_sortings);
 
 -- PAGINATION
-  sql := sql || ' limit ' || GREATEST(p_limit, 1);
-  sql := sql || ' offset ' || GREATEST((p_page - 1) * p_limit, 0);
+  sql := sql || generate_pagination(p_limit, p_page);
 
 -- EKSEKUSI
   RETURN QUERY EXECUTE sql USING p_start_utc, p_end_utc;

@@ -13,8 +13,6 @@ export function PurchaseReportDetailContent() {
     return (
       <div>
         <DataTable columns={PurchaseReportDetailColumns} data={data.data} />
-        {/* Pagination is driven entirely by server metadata,
-          keeping UI state simple and predictable */}
         <DataTableFooterServer
           meta={data.meta}
           query={query}
