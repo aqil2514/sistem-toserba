@@ -33,6 +33,7 @@ const defaultQuery: PurchaseReportQuery = {
   to: endOfDay(new Date()),
   filters: [],
   sort: [],
+  chart_data: "category",
 };
 
 export function PurchaseReportProvider({
@@ -64,7 +65,7 @@ export function PurchaseReportProvider({
     updateQuery,
     resetQuery,
 
-    ...fetcher
+    ...fetcher,
   };
   return (
     <PurchaseReportContext.Provider value={values}>

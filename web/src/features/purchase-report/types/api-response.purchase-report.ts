@@ -1,21 +1,17 @@
 import { DataQueryResponse } from "@/@types/general";
 
-// Discriminated union to represent different response shapes
-// while keeping the API type-safe and easy to extend
 export type PurchaseReportApiResponse =
   | PurchaseReportSummaryMode
-  | PurchaseReportDetailMode;
+  | PurchaseReportDetailMode
+  | PurchaseReportChartMode;
 
 export interface PurchaseReportSummaryMode {
-  // Used by the frontend to explicitly identify summary responses
   mode: "summary";
   buy_average: number;
   total_price: number;
   total_transaction: number;
 }
 
-// Detailed row-level data is separated to keep the report scalable
-// and avoid bloating the summary response
 export interface PurchaseReportDetailData {
   purchase_date: string;
   purchase_code: string;
@@ -30,10 +26,27 @@ export interface PurchaseReportDetailData {
   hpp: number;
 }
 
-// Extends a generic paginated response to ensure consistency
-// across list-based API endpoints
-export interface PurchaseReportDetailMode
-  extends DataQueryResponse<PurchaseReportDetailData[]> {
-  // Acts as a discriminator for frontend branching logic
+export interface PurchaseReportDetailMode extends DataQueryResponse<
+  PurchaseReportDetailData[]
+> {
   mode: "detail";
+}
+
+export type PurchaseReportChartMode = PurchaseReportChartBreakdownMode | PurchaseReportChartCategoryMode ;
+export interface PurchaseReportChartBreakdownMode {
+  data: {
+    date: string;
+    price: number;
+  }[];
+  mode: "chart";
+  chart_data: "breakdown";
+}
+
+export interface PurchaseReportChartCategoryMode {
+  data: {
+    category: string;
+    price: number;
+  }[];
+  mode: 'chart';
+  chart_data: 'category'
 }

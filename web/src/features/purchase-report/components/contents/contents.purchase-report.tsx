@@ -4,7 +4,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePurchaseReport } from "../../store/provider.purchase-report";
 import React from "react";
 import { PurchaseReportSummaryContent } from "./summary/summary-content.purchase-report";
-import { PurchaseReportDetailContent } from "./detail/summary-detail.purchase-report";
+import { PurchaseReportDetailContent } from "./detail/detail-content.purchase-report";
+import { PurchaseReportChartContent } from "./chart/chart-content.purchase-report";
 
 type TabsContentType = LabelValue<PurchaseReportContent> & {
   content: React.ReactNode;
@@ -24,7 +25,7 @@ const contentTrigger: TabsContentType[] = [
   {
     label: "Diagram",
     value: "chart",
-    content: <>Diagram</>,
+    content: <PurchaseReportChartContent />
   },
 ];
 

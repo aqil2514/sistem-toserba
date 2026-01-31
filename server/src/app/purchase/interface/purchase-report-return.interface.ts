@@ -7,6 +7,24 @@ export interface PurchaseReportSummaryMode {
   total_transaction: number;
 }
 
+export interface PurchaseReportChartBreakdownMode {
+  data: {
+    date: string;
+    price: number;
+  }[];
+  mode: 'chart';
+  chart_data: 'breakdown'
+}
+
+export interface PurchaseReportChartCategoryMode {
+  data: {
+    category: string;
+    price: number;
+  }[] | null;
+  mode: 'chart';
+  chart_data: 'category'
+}
+
 interface PurchaseReportDetailData {
   purchase_date: string;
   purchase_code: string;

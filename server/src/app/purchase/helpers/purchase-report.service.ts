@@ -3,6 +3,8 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { PurchaseQuery } from '../interface/purchase-query.interface';
 import { formatQueryDate } from '../../../utils/format-date';
 import {
+  PurchaseReportChartBreakdownMode,
+  PurchaseReportChartCategoryMode,
   PurchaseReportDetailMode,
   PurchaseReportSummaryMode,
 } from '../interface/purchase-report-return.interface';
@@ -15,7 +17,43 @@ export class PurchaseReportService {
     private readonly supabase: SupabaseClient,
   ) {}
 
-  async getPurchaseByQuery(
+  async getPurchaseDetailReport(
+    query: PurchaseQuery,
+  ): Promise<PurchaseReportDetailMode> {
+    const { endUtc, startUtc } = formatQueryDate(query);
+    const { limit, page, filters, sort } = query;
+
+    const { data, error } = await this.supabase.rpc(
+      'get_purchase_report_detail',
+      {
+        p_limit: limit,
+        p_page: page,
+        p_start_utc: startUtc,
+        p_end_utc: endUtc,
+        p_filters: filters,
+        p_sortings: sort,
+      },
+    );
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    const count = data?.[0]?.total_count ?? 0;
+
+    const meta = buildPaginationMeta(query.page, query.limit, count);
+
+    const response: PurchaseReportDetailMode = {
+      data,
+      meta,
+      mode: 'detail',
+    };
+
+    return response;
+  }
+
+  async getPurchaseSummaryReport(
     query: PurchaseQuery,
   ): Promise<PurchaseReportSummaryMode> {
     const { endUtc, startUtc } = formatQueryDate(query);
@@ -49,21 +87,36 @@ export class PurchaseReportService {
     return result;
   }
 
-  async getPurchaseDetailMode(
-    query: PurchaseQuery,
-  ): Promise<PurchaseReportDetailMode> {
+  async getPurchaseBreakdownReport(query: PurchaseQuery) {
     const { endUtc, startUtc } = formatQueryDate(query);
-    const { limit, page, filters, sort } = query;
+
+    const { data, error } = await this.supabase.rpc('get_breakdown_purchase', {
+      p_start_utc: startUtc,
+      p_end_utc: endUtc,
+    });
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    const response: PurchaseReportChartBreakdownMode = {
+      data,
+      chart_data: 'breakdown',
+      mode: 'chart',
+    };
+
+    return response;
+  }
+
+  async getPurchaseCategoryReport(query: PurchaseQuery) {
+    const { endUtc, startUtc } = formatQueryDate(query);
 
     const { data, error } = await this.supabase.rpc(
-      'get_purchase_report_detail',
+      'get_purchase_report_per_category',
       {
-        p_limit: limit,
-        p_page: page,
         p_start_utc: startUtc,
         p_end_utc: endUtc,
-        p_filters: filters,
-        p_sortings: sort,
       },
     );
 
@@ -72,14 +125,10 @@ export class PurchaseReportService {
       throw error;
     }
 
-    const count = data?.[0]?.total_count ?? 0;
-
-    const meta = buildPaginationMeta(query.page, query.limit, count);
-
-    const response: PurchaseReportDetailMode = {
+    const response: PurchaseReportChartCategoryMode = {
       data,
-      meta,
-      mode: 'detail',
+      chart_data: 'category',
+      mode: 'chart',
     };
 
     return response;

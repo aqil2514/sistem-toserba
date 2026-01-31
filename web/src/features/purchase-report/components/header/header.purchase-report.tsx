@@ -1,3 +1,4 @@
+
 export function PurchaseReportHeader() {
   return (
     <div className="space-y-4">
@@ -7,3 +8,5 @@ export function PurchaseReportHeader() {
     </div>
   );
 }
+
+

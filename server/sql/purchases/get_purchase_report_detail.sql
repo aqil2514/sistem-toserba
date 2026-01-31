@@ -52,10 +52,10 @@ select
   pi.price,
   pi.hpp,
   count(*) over() as total_count
-from purchase_items pi
-join purchases pur on pur.id = pi.purchase_id 
-join products prod on prod.id = pi.product_id
-where 
+  from purchase_items pi
+  join purchases pur on pur.id = pi.purchase_id 
+  join products prod on prod.id = pi.product_id
+  where 
   pi.deleted_at is null
   and pur.purchase_date >= $1
   and pur.purchase_date < $2
