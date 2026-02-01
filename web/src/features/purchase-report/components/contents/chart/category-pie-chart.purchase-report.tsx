@@ -52,3 +52,4 @@ const Insight = ({ data }: Props) => {
     </div>
   );
 };
+
