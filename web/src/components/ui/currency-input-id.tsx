@@ -9,6 +9,7 @@ interface CurrencyInputIDProps {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
+  id?: string;
 }
 
 export function CurrencyInputID({
@@ -17,14 +18,14 @@ export function CurrencyInputID({
   placeholder = "Rp 0",
   disabled,
   className,
+  id,
 }: CurrencyInputIDProps) {
   return (
     <CurrencyInput
+      id={id}
       value={value}
       onValueChange={(value) =>
-        onValueChange?.(
-          value ? Number(value) : undefined
-        )
+        onValueChange?.(value ? Number(value) : undefined)
       }
       placeholder={placeholder}
       disabled={disabled}
@@ -38,7 +39,7 @@ export function CurrencyInputID({
         "ring-offset-background placeholder:text-muted-foreground",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         "disabled:cursor-not-allowed disabled:opacity-50",
-        className
+        className,
       )}
     />
   );
