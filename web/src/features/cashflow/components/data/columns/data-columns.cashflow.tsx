@@ -1,4 +1,8 @@
-import { CashflowCategoryStatus, CashflowDb } from "@/features/cashflow/types/cashflow.types";
+import {
+  CashflowCategoryStatus,
+  CashflowDb,
+} from "@/features/cashflow/types/cashflow.types";
+import { cn } from "@/lib/utils";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ColumnDef } from "@tanstack/react-table";
@@ -50,6 +54,26 @@ export const cashflowDataColumns: ColumnDef<CashflowDb>[] = [
   {
     accessorKey: "price",
     header: "Nominal",
-    cell: ({ row }) => formatRupiah(row.original.price),
+    cell: ({ row }) => {
+      const value = formatRupiah(row.original.price);
+
+      const isTransfer = Boolean(row.original.transfer_group_id);
+      const isExpense =
+        row.original.status_cashflow === "expense" && !isTransfer;
+      const isIncome = row.original.status_cashflow === "income" && !isTransfer;
+
+      return (
+        <p
+          className={cn(
+            "font-semibold text-sm",
+            isTransfer && "text-blue-500",
+            isExpense && "text-red-500",
+            isIncome && "text-green-500",
+          )}
+        >
+          {value}
+        </p>
+      );
+    },
   },
 ];

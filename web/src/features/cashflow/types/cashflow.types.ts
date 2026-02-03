@@ -12,4 +12,5 @@ export interface CashflowDb {
   status_cashflow: CashflowCategoryStatus;
   transaction_at: string;
   via: string;
+  transfer_group_id?: string;
 }
