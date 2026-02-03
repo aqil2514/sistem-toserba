@@ -1,6 +1,12 @@
 import { LabelValue } from "@/@types/general";
 import { ComboboxWithCreateAction } from "@/components/molecules/combobox/create-new-combobox";
-import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import {
   Select,
   SelectContent,
@@ -9,22 +15,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SERVER_URL } from "@/constants/url";
 import { CashflowSchemaType } from "@/features/cashflow/schema/cashflow.schema";
-import { CashflowCategoryStatus } from "@/features/cashflow/types/cashflow-category.types";
+import {
+  CashflowCategoryDb,
+  CashflowCategoryStatus,
+} from "@/features/cashflow/types/cashflow-category.types";
+import { useFetch } from "@/hooks/use-fetch";
 import React, { useState } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 
 interface Props {
   form: UseFormReturn<CashflowSchemaType>;
 }
-
-const dummycategory: string[] = [
-  "Kategori 1",
-  "Kategori 2",
-  "Kategori 3",
-  "Kategori 4",
-  "Kategori 5",
-];
 
 const cashflowStatus: LabelValue<CashflowCategoryStatus>[] = [
   {
@@ -42,16 +45,33 @@ const cashflowStatus: LabelValue<CashflowCategoryStatus>[] = [
 ];
 
 export function CasfhlowCategoryField({ form }: Props) {
+  const { data, isLoading } = useFetch<CashflowCategoryDb[]>(
+    `${SERVER_URL}/cashflow/categories`,
+  );
+
+  if (isLoading) return <LoadingSpinner label="Mengambil Data Category...." />;
+
+  const existCategories = data?.map((d) => d.name) ?? [];
+
   return (
     <div className="grid grid-cols-2 gap-4">
-      <CategoryName form={form} />
+      <CategoryName form={form} existCategories={existCategories} />
       <StatusCashflow form={form} />
     </div>
   );
 }
 
-const CategoryName: React.FC<Props> = ({ form }) => {
-  const [categories, setCategories] = useState<string[]>(dummycategory);
+type CategoryNameProps = Props & {
+  existCategories: string[];
+};
+
+const CategoryName: React.FC<CategoryNameProps> = ({
+  form,
+  existCategories,
+}) => {
+  const [categories, setCategories] = useState<string[]>(existCategories);
+
+  const isSubmitting = form.formState.isSubmitting;
   return (
     <FieldGroup>
       <Controller
@@ -64,6 +84,7 @@ const CategoryName: React.FC<Props> = ({ form }) => {
               items={categories}
               onValueChange={field.onChange}
               onItemsChange={setCategories}
+              disabled={isSubmitting}
               value={field.value}
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -75,6 +96,7 @@ const CategoryName: React.FC<Props> = ({ form }) => {
 };
 
 const StatusCashflow: React.FC<Props> = ({ form }) => {
+  const isSubmitting = form.formState.isSubmitting;
   return (
     <FieldGroup>
       <Controller
@@ -88,6 +110,7 @@ const StatusCashflow: React.FC<Props> = ({ form }) => {
               onValueChange={(value: CashflowCategoryStatus) =>
                 field.onChange(value)
               }
+              disabled={isSubmitting}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Status Cashflow" />

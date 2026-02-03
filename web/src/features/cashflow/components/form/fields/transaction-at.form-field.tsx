@@ -19,6 +19,7 @@ interface Props {
 
 export function CashflowTransactionAtField({ form }: Props) {
   const [open, setOpen] = useState<boolean>(false);
+  const isSubmitting = form.formState.isSubmitting;
 
   return (
     <FieldGroup>
@@ -36,11 +37,12 @@ export function CashflowTransactionAtField({ form }: Props) {
                   <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>
                       <Button
+                      disabled={isSubmitting}
                         variant="outline"
                         id="date-picker-optional"
                         className="w-32 justify-between font-normal"
                       >
-                        {date ? format(date, "PPP") : "Select date"}
+                        {date ? format(date, "PPP") : "Pilih tanggal"}
                         <ChevronDownIcon />
                       </Button>
                     </PopoverTrigger>
@@ -76,6 +78,7 @@ export function CashflowTransactionAtField({ form }: Props) {
                     id="time-picker-optional"
                     step="1"
                     value={date ? format(date, "HH:mm:ss") : ""}
+                    disabled={isSubmitting}
                     onChange={(e) => {
                       const [h, m, s] = e.target.value.split(":").map(Number);
                       const next = date ? new Date(date) : new Date();

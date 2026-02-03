@@ -13,6 +13,7 @@ interface Props {
 }
 
 export function CashflowProductServiceField({ form }: Props) {
+  const isSubmitting = form.formState.isSubmitting;
   return (
     <FieldGroup>
       <Controller
@@ -23,6 +24,7 @@ export function CashflowProductServiceField({ form }: Props) {
             <FieldLabel htmlFor={field.name}>Nama Produk / Jasa</FieldLabel>
             <Input
               {...field}
+              disabled={isSubmitting}
               id={field.name}
               aria-invalid={fieldState.invalid}
               placeholder="Contoh : Omzet"

@@ -13,6 +13,7 @@ interface Props {
 }
 
 export function CashflowNoteServiceField({ form }: Props) {
+  const isSubmitting = form.formState.isSubmitting;
   return (
     <FieldGroup>
       <Controller
@@ -26,6 +27,7 @@ export function CashflowNoteServiceField({ form }: Props) {
               id={field.name}
               aria-invalid={fieldState.invalid}
               placeholder="Contoh : Dapat harga diskon"
+              disabled={isSubmitting}
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>

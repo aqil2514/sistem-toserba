@@ -20,6 +20,7 @@ interface Props {
 }
 
 export function CashflowViaField({ form }: Props) {
+  const isSubmitting = form.formState.isSubmitting;
   return (
     <FieldGroup>
       <Controller
@@ -34,6 +35,7 @@ export function CashflowViaField({ form }: Props) {
               name={field.name}
               value={field.value}
               onValueChange={field.onChange}
+              disabled={isSubmitting}
             >
               <SelectTrigger
                 id="aset"

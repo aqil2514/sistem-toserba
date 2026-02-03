@@ -13,7 +13,6 @@ import { CashflowViaField } from "./fields/via.form-field";
 import { CasfhlowCategoryField } from "./fields/category.form-field";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useCashflow } from "../../store/provider.cashflow";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
@@ -23,22 +22,17 @@ interface Props {
 }
 
 export function CashflowForm({ submitHandler, defaultValues }: Props) {
-  const { setAddDialog } = useCashflow();
   const form = useForm<CashflowSchemaType>({
     defaultValues: defaultValues ?? defaultCashflow,
     resolver: zodResolver(cashflowSchema),
     mode: "onChange",
   });
 
-  const handleSubmit = (values: CashflowSchemaType) => {
-    submitHandler(values);
-    toast.success("Data berhasil Disimpan");
-    setAddDialog(false);
-  };
+  const isSubmitting = form.formState.isSubmitting;
 
   return (
     <form
-      onSubmit={form.handleSubmit(handleSubmit, () =>
+      onSubmit={form.handleSubmit(submitHandler, () =>
         toast.error("Ada data yang tidak lengkap"),
       )}
       className="space-y-4"
@@ -55,7 +49,9 @@ export function CashflowForm({ submitHandler, defaultValues }: Props) {
         <CashflowNoteServiceField form={form} />
       </ScrollArea>
       <Separator />
-      <Button>Simpan</Button>
+      <Button disabled={isSubmitting}>
+        {isSubmitting ? "Menyimpan..." : "Simpan"}
+      </Button>
     </form>
   );
 }

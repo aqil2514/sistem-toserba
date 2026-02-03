@@ -5,5 +5,7 @@ export interface CashflowCategoryDb {
   created_at: string;
   name: string;
   status: CashflowCategoryStatus;
-  description: string;
+  description?: string;
 }
+
+export type CashflowCategoryInsert = Omit<CashflowCategoryDb, "id" | "created_at">

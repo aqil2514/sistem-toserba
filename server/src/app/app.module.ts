@@ -9,6 +9,7 @@ import { PurchaseModule } from './purchase/purchase.module';
 import { SalesModule } from './sales/sales.module';
 import { PdfModule } from './export/pdf/pdf.module';
 import { TelegramBotModule } from './telegram-bot/telegram-bot.module';
+import { CashflowModule } from './cashflow/cashflow.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { TelegramBotModule } from './telegram-bot/telegram-bot.module';
     SalesModule,
     PdfModule,
     TelegramBotModule,
+    CashflowModule,
   ],
   controllers: [AppController],
   providers: [AppService],

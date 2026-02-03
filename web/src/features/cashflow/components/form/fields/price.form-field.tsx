@@ -7,6 +7,7 @@ interface Props {
   form: UseFormReturn<CashflowSchemaType>;
 }
 export function CashflowPriceField({ form }: Props) {
+  const isSubmitting = form.formState.isSubmitting;
   return (
     <FieldGroup>
       <Controller name="price" control={form.control} render={({field, fieldState}) => {
@@ -23,6 +24,7 @@ export function CashflowPriceField({ form }: Props) {
               } }
               aria-invalid={fieldState.invalid}
               placeholder="Contoh : Rp. 10.000"
+              disabled={isSubmitting}
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
