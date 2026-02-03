@@ -6,6 +6,8 @@ import { UnavailableDemo } from "@/components/templates/unavailable-demo";
 import { CashflowHeader } from "./components/header/header.cashflow";
 import { CashflowProvider } from "./store/provider.cashflow";
 import { CashflowAddDialog } from "./components/dialog/add-dialog.cashflow";
+import { CashflowData } from "./components/data/data.cashflow";
+import { CashflowToolbar } from "./components/toolbar/toolbar.cashflow";
 
 interface Props {
   mode: TemplateMode;
@@ -27,6 +29,8 @@ const InnerTemplate = () => {
       <MainContainer>
         <SectionContainer>
           <CashflowHeader />
+          <CashflowToolbar />
+          <CashflowData />
         </SectionContainer>
       </MainContainer>
 

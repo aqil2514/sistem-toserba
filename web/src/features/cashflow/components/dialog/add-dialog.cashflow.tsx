@@ -13,13 +13,15 @@ import { isAxiosError } from "axios";
 import { toast } from "sonner";
 
 export function CashflowAddDialog() {
-  const { addDialog, setAddDialog } = useCashflow();
+  const { addDialog, setAddDialog, mutate } = useCashflow();
 
   const addHandler = async (values: CashflowSchemaType) => {
     try {
       await api.post("/cashflow", values);
       setAddDialog(false);
       toast.success("Data transaksi berhasil ditambah")
+
+      mutate?.()
     } catch (error) {
       if(isAxiosError(error)){
         const message = error.response?.data.message?.[0] ?? "Terjadi kesalahan";

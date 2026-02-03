@@ -1,10 +1,13 @@
+import { CashflowCategoryDb } from "./cashflow-category.types";
+
 export interface CashflowDb {
-  id: string;
+  category: CashflowCategoryDb;
   created_at: string;
-  transaction_at: string;
-  product_service: string;
-  category: string;
-  via: string;
-  price: number;
+  deleted_at:string;
+  id: string;
   note: string;
+  price: number;
+  product_service: string;
+  transaction_at: string;
+  via: string;
 }

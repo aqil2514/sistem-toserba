@@ -17,12 +17,13 @@ import {
 } from "@/components/ui/select";
 import { SERVER_URL } from "@/constants/url";
 import { CashflowSchemaType } from "@/features/cashflow/schema/cashflow.schema";
+import { useCashflow } from "@/features/cashflow/store/provider.cashflow";
 import {
   CashflowCategoryDb,
   CashflowCategoryStatus,
 } from "@/features/cashflow/types/cashflow-category.types";
 import { useFetch } from "@/hooks/use-fetch";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 
 interface Props {
@@ -45,9 +46,14 @@ const cashflowStatus: LabelValue<CashflowCategoryStatus>[] = [
 ];
 
 export function CasfhlowCategoryField({ form }: Props) {
-  const { data, isLoading } = useFetch<CashflowCategoryDb[]>(
+  const { addDialog } = useCashflow();
+  const { data, isLoading, mutate } = useFetch<CashflowCategoryDb[]>(
     `${SERVER_URL}/cashflow/categories`,
   );
+
+  useEffect(() => {
+    if (addDialog) mutate?.();
+  }, [addDialog, mutate]);
 
   if (isLoading) return <LoadingSpinner label="Mengambil Data Category...." />;
 

@@ -7,6 +7,7 @@ export interface CashflowDb {
   via: string;
   price: number;
   note: string;
+  deleted_at?:string;
 }
 
 export type CashflowDbInsert = Omit<CashflowDb, 'id' | 'created_at'>;
