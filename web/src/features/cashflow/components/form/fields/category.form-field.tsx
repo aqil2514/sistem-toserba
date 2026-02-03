@@ -20,8 +20,8 @@ import { CashflowSchemaType } from "@/features/cashflow/schema/cashflow.schema";
 import { useCashflow } from "@/features/cashflow/store/provider.cashflow";
 import {
   CashflowCategoryDb,
-  CashflowCategoryStatus,
 } from "@/features/cashflow/types/cashflow-category.types";
+import { CashflowCategoryStatus } from "@/features/cashflow/types/cashflow.types";
 import { useFetch } from "@/hooks/use-fetch";
 import React, { useEffect, useState } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
@@ -52,7 +52,7 @@ export function CasfhlowCategoryField({ form }: Props) {
   );
 
   useEffect(() => {
-    if (addDialog) mutate?.();
+    mutate?.();
   }, [addDialog, mutate]);
 
   if (isLoading) return <LoadingSpinner label="Mengambil Data Category...." />;

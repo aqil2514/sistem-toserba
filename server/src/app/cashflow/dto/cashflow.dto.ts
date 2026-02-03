@@ -10,6 +10,7 @@ import {
   MinLength,
   Validate,
   ValidateNested,
+  ValidationArguments,
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
@@ -26,7 +27,42 @@ class IsNotFutureDate implements ValidatorConstraintInterface {
   }
 }
 
+@ValidatorConstraint({ name: 'CashflowTransferRule', async: false })
+class CashflowTransferRule implements ValidatorConstraintInterface {
+  validate(_: any, args: ValidationArguments) {
+    const obj = args.object as any;
+
+    if (obj.category?.status === 'transfer') {
+      if (!obj.from_asset || !obj.to_asset) return false;
+      if (obj.from_asset === obj.to_asset) return false;
+    } else {
+      if (!obj.via) return false;
+    }
+
+    return true;
+  }
+
+  defaultMessage(args: ValidationArguments) {
+    const obj = args.object as any;
+
+    if (obj.category?.status === 'transfer') {
+      if (!obj.from_asset || !obj.to_asset) {
+        return 'Transfer wajib memiliki aset asal dan tujuan';
+      }
+
+      if (obj.from_asset === obj.to_asset) {
+        return 'Aset asal dan tujuan tidak boleh sama';
+      }
+    }
+
+    return 'Aset wajib diisi';
+  }
+}
+
 export class CashflowDto {
+  @Validate(CashflowTransferRule)
+  _validateTransferRule: boolean;
+
   @IsDateString()
   @MinLength(1, { message: 'Tanggal Transaksi wajib diisi' })
   @Validate(IsNotFutureDate)
@@ -41,8 +77,21 @@ export class CashflowDto {
   category: CashflowCategoryDto;
 
   @IsString()
-  @MinLength(1, { message: 'Aset wajib diisi' })
-  via: string;
+  @IsOptional()
+  via?: string;
+
+  @IsOptional()
+  @IsString()
+  from_asset?: string;
+
+  @IsOptional()
+  @IsString()
+  to_asset?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @IsPositive()
+  transfer_fee?: number;
 
   @IsNumber()
   @IsPositive({ message: 'Harga tidak valid' })

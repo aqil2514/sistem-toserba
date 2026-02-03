@@ -41,6 +41,8 @@ export function CashflowForm({ submitHandler, defaultValues }: Props) {
     >
       <Separator />
       <ScrollArea className="h-96 px-4 pb-4">
+        <div className="space-y-4">
+
         <CashflowTransactionAtField form={form} />
         <div className="grid grid-cols-2 gap-4">
           <CashflowProductServiceField form={form} />
@@ -49,6 +51,7 @@ export function CashflowForm({ submitHandler, defaultValues }: Props) {
         <CasfhlowCategoryField form={form} />
         <CashflowViaField form={form} />
         <CashflowNoteServiceField form={form} />
+        </div>
       </ScrollArea>
       <Separator />
       <Button disabled={isSubmitting}>

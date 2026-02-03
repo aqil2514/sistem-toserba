@@ -18,7 +18,6 @@ export class CashflowController {
   @Roles('admin')
   @Post()
   async createNewCashflow(@Body() body: CashflowDto) {
-    // HANDLE YANG PINDAH ASET
     return await this.cashflowFormService.createNewCashflowData(body);
   }
 
@@ -26,7 +25,7 @@ export class CashflowController {
   @Roles('admin')
   @Get()
   async getCashflowsData(@Query() query: BasicQuery) {
-    return await this.cashflowFetchService.getCashflowsData(query)
+    return await this.cashflowFetchService.getCashflowsData(query);
   }
 
   @UseGuards(PasetoGuard, RoleGuard)

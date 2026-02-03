@@ -1,9 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { CashflowCategoryInsert } from '../types/cashflow-category.types';
-import { CashflowDbInsert } from '../types/cashflow.types';
+import {
+  CashflowCategoryStatus,
+  CashflowDbInsert,
+} from '../types/cashflow.types';
 import { CashflowDto } from '../dto/cashflow.dto';
 import { CashflowCategoryDto } from '../dto/cashflow-category.dto';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class CashflowFormService {
@@ -12,12 +16,11 @@ export class CashflowFormService {
     private readonly supabase: SupabaseClient,
   ) {}
 
-  private mapCasflowCategoryDtoToDb(
+  private mapCashflowCategoryDtoToDb(
     raw: CashflowCategoryDto,
   ): CashflowCategoryInsert {
     return {
       name: raw.name,
-      status: raw.status as CashflowCategoryInsert['status'],
       description: raw.description,
     };
   }
@@ -29,6 +32,7 @@ export class CashflowFormService {
     return {
       category: categoryId,
       note: raw.note,
+      status_cashflow: raw.category.status as CashflowCategoryStatus,
       price: raw.price,
       product_service: raw.product_service,
       transaction_at: raw.transaction_at,
@@ -36,20 +40,57 @@ export class CashflowFormService {
     };
   }
 
-  async createNewCashflowData(payload: CashflowDto) {
-    const { category } = payload;
+  private mapTransferCasfhlotDtoToDb(
+    raw: CashflowDto,
+    categoryId: string,
+  ): CashflowDbInsert[] {
+    const transfer_group_id = randomUUID();
+    const fromAssetTransfer: CashflowDbInsert = {
+      category: categoryId,
+      status_cashflow: 'expense',
+      note: raw.note,
+      price: raw.price,
+      product_service: raw.product_service,
+      transaction_at: raw.transaction_at,
+      via: raw.from_asset,
+      transfer_group_id,
+    };
 
-    const mappedCategory = this.mapCasflowCategoryDtoToDb(category);
+    const toAssetTransfer: CashflowDbInsert = {
+      category: categoryId,
+      status_cashflow: 'income',
+      note: raw.note,
+      price: raw.price,
+      product_service: raw.product_service,
+      transaction_at: raw.transaction_at,
+      via: raw.to_asset,
+      transfer_group_id,
+    };
 
-    const categoryId =
-      await this.createNewCashflowCategoryIfNoExist(mappedCategory);
+    const transferFee: CashflowDbInsert | null =
+      raw.transfer_fee && raw.transfer_fee > 0
+        ? {
+            category: categoryId,
+            status_cashflow: 'expense',
+            note: raw.note,
+            price: raw.transfer_fee,
+            product_service: 'Biaya Transfer',
+            transaction_at: raw.transaction_at,
+            via: raw.from_asset,
+            transfer_group_id,
+          }
+        : null;
 
-    const mappedCashflow = this.mapCashflowDtoToDb(payload, categoryId);
-
-    await this.createNewCashflow(mappedCashflow);
+    return [
+      fromAssetTransfer,
+      toAssetTransfer,
+      ...(transferFee ? [transferFee] : []),
+    ];
   }
 
-  async createNewCashflow(payload: CashflowDbInsert) {
+  private async createNewCashflow(
+    payload: CashflowDbInsert | CashflowDbInsert[],
+  ) {
     const { error } = await this.supabase.from('cashflow').insert(payload);
 
     if (error) {
@@ -58,7 +99,7 @@ export class CashflowFormService {
     }
   }
 
-  async createNewCashflowCategoryIfNoExist(
+  private async createNewCashflowCategoryIfNoExist(
     payload: CashflowCategoryInsert,
   ): Promise<string> {
     const { data: fetch_data, error: error_fetch } = await this.supabase
@@ -86,5 +127,21 @@ export class CashflowFormService {
     }
 
     return data.id;
+  }
+
+  async createNewCashflowData(payload: CashflowDto) {
+    const { category } = payload;
+
+    const mappedCategory = this.mapCashflowCategoryDtoToDb(category);
+
+    const categoryId =
+      await this.createNewCashflowCategoryIfNoExist(mappedCategory);
+
+    const mappedCashflow =
+      category.status === 'transfer'
+        ? this.mapTransferCasfhlotDtoToDb(payload, categoryId)
+        : this.mapCashflowDtoToDb(payload, categoryId);
+
+    await this.createNewCashflow(mappedCashflow);
   }
 }

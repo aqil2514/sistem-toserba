@@ -1,5 +1,4 @@
-import { CashflowCategoryStatus } from "@/features/cashflow/types/cashflow-category.types";
-import { CashflowDb } from "@/features/cashflow/types/cashflow.types";
+import { CashflowCategoryStatus, CashflowDb } from "@/features/cashflow/types/cashflow.types";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ColumnDef } from "@tanstack/react-table";
@@ -23,7 +22,7 @@ export const cashflowDataColumns: ColumnDef<CashflowDb>[] = [
     accessorKey: "category.status",
     header: "Status Cashflow",
     cell: ({ row }) => {
-      const statusCashflow = row.original.category.status;
+      const statusCashflow = row.original.status_cashflow;
 
       const mappingStatus: Record<CashflowCategoryStatus, string> = {
         expense: "Pengeluaran",
