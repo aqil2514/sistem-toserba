@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function SelectRow({ row }: Props) {
-  const { setEditDialog } = useCashflow();
+  const { setEditDialog, setDeleteDialog } = useCashflow();
   const items: DropdownActionItems[] = [
     {
       itemLabel: "Detail",
@@ -20,6 +20,11 @@ export function SelectRow({ row }: Props) {
     {
       itemLabel: "Edit",
       onClick: () => setEditDialog(row.original.id),
+    },
+    {
+      itemLabel: "Hapus",
+      onClick: () => setDeleteDialog(row.original.id),
+      className: "text-red-500",
     },
   ];
 

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -68,6 +69,19 @@ export class CashflowController {
   ) {
     return await this.cashflowFormService.editCashflowData(
       body,
+      cashflowId,
+      transferGroupId,
+    );
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Delete(':id')
+  async deleteCashflowData(
+    @Param('id') cashflowId: string,
+    @Query('transfer_group_id') transferGroupId: string,
+  ) {
+    return await this.cashflowFormService.hardDeleteCashflowData(
       cashflowId,
       transferGroupId,
     );

@@ -5,10 +5,7 @@ const transfer_fee_category_id = "d8d34dd6-4010-4e96-a081-288821917620";
 
 // CashflowDb => expense & income || CashflowDb[] => Handle Transfer
 export function mapDbToCashflowSchema(raw: CashflowDb[]): CashflowSchemaType {
-  console.log(raw)
   const isTransfer = Boolean(raw[0].transfer_group_id);
-
-  console.log(isTransfer)
 
   return isTransfer ? transferCashflow(raw) : nonTransferCashflow(raw[0]);
 }

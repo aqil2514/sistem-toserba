@@ -18,9 +18,7 @@ import {
 import { SERVER_URL } from "@/constants/url";
 import { CashflowSchemaType } from "@/features/cashflow/schema/cashflow.schema";
 import { useCashflow } from "@/features/cashflow/store/provider.cashflow";
-import {
-  CashflowCategoryDb,
-} from "@/features/cashflow/types/cashflow-category.types";
+import { CashflowCategoryDb } from "@/features/cashflow/types/cashflow-category.types";
 import { CashflowCategoryStatus } from "@/features/cashflow/types/cashflow.types";
 import { useFetch } from "@/hooks/use-fetch";
 import React, { useEffect, useState } from "react";
@@ -60,9 +58,11 @@ export function CasfhlowCategoryField({ form }: Props) {
   const existCategories = data?.map((d) => d.name) ?? [];
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <CategoryName form={form} existCategories={existCategories} />
-      <StatusCashflow form={form} />
+    <div>
+      <div className="grid grid-cols-2 gap-4">
+        <CategoryName form={form} existCategories={existCategories} />
+        <StatusCashflow form={form} />
+      </div>
     </div>
   );
 }

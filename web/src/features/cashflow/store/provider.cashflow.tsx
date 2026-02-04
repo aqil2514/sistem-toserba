@@ -24,8 +24,12 @@ interface CashflowContextType {
 
   addDialog: boolean;
   setAddDialog: Dispatch<SetStateAction<boolean>>;
+
   editDialog: string | null;
   setEditDialog: React.Dispatch<React.SetStateAction<string | null>>;
+
+  deleteDialog: string | null;
+  setDeleteDialog: React.Dispatch<React.SetStateAction<string | null>>;
 
   data: DataQueryResponse<CashflowDb[]> | undefined;
   error: Error;
@@ -49,6 +53,7 @@ const defaultQuery: BasicQuery = {
 export function CashflowProvider({ children }: { children: React.ReactNode }) {
   const [addDialog, setAddDialog] = useState<boolean>(false);
   const [editDialog, setEditDialog] = useState<string | null>(null);
+  const [deleteDialog, setDeleteDialog] = useState<string | null>(null);
   const [query, setQuery] = useState<BasicQuery>(defaultQuery);
 
   // >>>>>> FETCHER AREA <<<<<<
@@ -71,6 +76,8 @@ export function CashflowProvider({ children }: { children: React.ReactNode }) {
     setAddDialog,
     editDialog,
     setEditDialog,
+    deleteDialog,
+    setDeleteDialog,
 
     query,
     resetQuery,

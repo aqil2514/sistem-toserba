@@ -4,5 +4,4 @@ export interface CashflowCategoryDb {
   description: string;
   id: string;
   name: string;
-  transfer_group_id?: string;
 }

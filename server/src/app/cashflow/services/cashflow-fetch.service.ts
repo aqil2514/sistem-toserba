@@ -22,7 +22,9 @@ export class CashflowFetchService {
   async getAllCashflowCategory(): Promise<CashflowCategoryDb[]> {
     const { data, error } = await this.supabase
       .from('cashflow_category')
-      .select('*');
+      .select('*')
+      .neq('id', 'd8d34dd6-4010-4e96-a081-288821917620')
+      .order('name', { ascending: true });
 
     if (error) {
       console.error(error);
@@ -84,17 +86,17 @@ export class CashflowFetchService {
       throw error;
     }
 
-    console.log(data)
-    
+    console.log(data);
+
     const transferGroupId = data.transfer_group_id;
-    
+
     if (transferGroupId) {
-      console.log(transferGroupId)
+      console.log(transferGroupId);
       const { data: transferData, error: transferError } = await this.supabase
-      .from('cashflow')
-      .select('*, category!inner(*)')
-      .eq('transfer_group_id', transferGroupId);
-      console.log(transferData)
+        .from('cashflow')
+        .select('*, category!inner(*)')
+        .eq('transfer_group_id', transferGroupId);
+      console.log(transferData);
 
       if (transferError) {
         console.error('Error Transfer', transferError);

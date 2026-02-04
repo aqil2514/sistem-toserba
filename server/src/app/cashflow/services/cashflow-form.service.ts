@@ -186,16 +186,20 @@ export class CashflowFormService {
     await this.createNewCashflow(mappedCashflow);
   }
 
-  async editCashflowData(
-    payload: CashflowDto,
-    cashflowId: string,
-    transferGroupId: string,
-  ) {
+  async hardDeleteCashflowData(cashflowId: string, transferGroupId?: string) {
     if (transferGroupId) {
       await this.hardDeleteCashflowByTransferGroupId(transferGroupId);
     } else {
       await this.hardDeleteCashflowByCashflowId(cashflowId);
     }
+  }
+
+  async editCashflowData(
+    payload: CashflowDto,
+    cashflowId: string,
+    transferGroupId?: string,
+  ) {
+    await this.hardDeleteCashflowData(cashflowId, transferGroupId);
 
     await this.createNewCashflowData(payload);
   }
