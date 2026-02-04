@@ -11,13 +11,16 @@ import { api } from "@/lib/api";
 import { CashflowSchemaType } from "../../schema/cashflow.schema";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
+import { mapDbToCashflowSchema } from "../../utils/map-db-to-cashflow-schema";
 
 export function CashflowEditDialog() {
-  const { mutate, editDialog, setEditDialog } = useCashflow();
+  const { mutate, editDialog, setEditDialog, data } = useCashflow();
 
   const open = !!editDialog;
 
-  if (!editDialog) return null;
+  if (!editDialog || !data) return null;
+
+  const isTransfer = Boolean(editDialog.transfer_group_id);
 
   const editHandler = async (values: CashflowSchemaType) => {
     try {
@@ -37,19 +40,13 @@ export function CashflowEditDialog() {
     }
   };
 
-  const defaultValues: CashflowSchemaType = {
-    category: {
-      description: editDialog.category.description,
-      name: editDialog.category.name,
-      status: editDialog.status_cashflow,
-    },
-    note: editDialog.note,
-    price: editDialog.price,
-    product_service: editDialog.product_service,
-   transaction_at: new Date(editDialog.transaction_at).toISOString(),
+  const transferData = data.data.filter(
+    (data) => data.transfer_group_id === editDialog.transfer_group_id,
+  );
 
-    via: editDialog.via,
-  };
+  const defaultValues: CashflowSchemaType = mapDbToCashflowSchema(
+    isTransfer ? transferData : editDialog,
+  );
 
   return (
     <Dialog

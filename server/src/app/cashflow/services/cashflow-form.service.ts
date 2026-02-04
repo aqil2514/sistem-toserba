@@ -11,6 +11,7 @@ import { randomUUID } from 'crypto';
 
 @Injectable()
 export class CashflowFormService {
+  private readonly transfer_category_id = "d8d34dd6-4010-4e96-a081-288821917620";
   constructor(
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
@@ -40,7 +41,7 @@ export class CashflowFormService {
     };
   }
 
-  private mapTransferCasfhlotDtoToDb(
+  private mapTransferCashflowDtoToDb(
     raw: CashflowDto,
     categoryId: string,
   ): CashflowDbInsert[] {
@@ -70,13 +71,13 @@ export class CashflowFormService {
     const transferFee: CashflowDbInsert | null =
       raw.transfer_fee && raw.transfer_fee > 0
         ? {
-            category: categoryId,
+            category: this.transfer_category_id,
             status_cashflow: 'expense',
             note: raw.note,
             price: raw.transfer_fee,
             product_service: 'Biaya Transfer',
             transaction_at: raw.transaction_at,
-            via: raw.from_asset,
+            via: raw.transfer_fee_asset,
             transfer_group_id,
           }
         : null;
@@ -151,7 +152,7 @@ export class CashflowFormService {
 
     const mappedCashflow =
       category.status === 'transfer'
-        ? this.mapTransferCasfhlotDtoToDb(payload, categoryId)
+        ? this.mapTransferCashflowDtoToDb(payload, categoryId)
         : this.mapCashflowDtoToDb(payload, categoryId);
 
     await this.createNewCashflow(mappedCashflow);
@@ -167,7 +168,7 @@ export class CashflowFormService {
 
     const mappedCashflow =
       category.status === 'transfer'
-        ? this.mapTransferCasfhlotDtoToDb(payload, categoryId)
+        ? this.mapTransferCashflowDtoToDb(payload, categoryId)
         : this.mapCashflowDtoToDb(payload, categoryId);
 
     await this.editCashflow(mappedCashflow, cashflowId);

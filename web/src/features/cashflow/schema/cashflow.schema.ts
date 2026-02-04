@@ -19,6 +19,7 @@ export const cashflowSchema = z
     from_asset: z.string().optional(),
     to_asset: z.string().optional(),
     transfer_fee: z.number().optional(),
+    transfer_fee_asset: z.string().optional(),
 
     price: z.number().min(1, "Harga tidak valid"),
     note: z.string(),
@@ -36,7 +37,7 @@ export const cashflowSchema = z
       if (!data.to_asset) {
         ctx.addIssue({
           path: ["to_asset"],
-          message: "Aset asal wajib diisi",
+          message: "Aset tujuan wajib diisi",
           code: "custom",
         });
       }
@@ -50,6 +51,18 @@ export const cashflowSchema = z
           path: ["to_asset"],
           message: "Aset asal dan tujuan tidak boleh sama",
           code: "custom",
+        });
+      }
+
+      if (
+        data.transfer_fee &&
+        data.transfer_fee > 0 &&
+        !data.transfer_fee_asset
+      ) {
+        ctx.addIssue({
+          path: ["transfer_fee_asset"],
+          code: "custom",
+          message: "Aset biaya trasfer wajib diisi",
         });
       }
     }

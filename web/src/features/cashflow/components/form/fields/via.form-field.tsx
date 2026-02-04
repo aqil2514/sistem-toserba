@@ -58,31 +58,14 @@ const NonTransferField: React.FC<TransferFieldProps> = ({
   items,
   onItemsChange,
 }) => {
-  const isSubmitting = form.formState.isSubmitting;
-
   return (
-    <FieldGroup>
-      <Controller
-        name="via"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldContent>
-              <FieldLabel htmlFor="aset">Aset</FieldLabel>
-            </FieldContent>
-            <ComboboxWithCreateAction
-              items={items}
-              onItemsChange={onItemsChange}
-              onValueChange={field.onChange}
-              value={field.value ?? ""}
-              disabled={isSubmitting}
-              valuePlaceholder="Cari atau Buat Aset Baru"
-            />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-    </FieldGroup>
+    <FieldComboboxComp
+      form={form}
+      items={items}
+      onItemsChange={onItemsChange}
+      label="Via"
+      name="via"
+    />
   );
 };
 
@@ -91,8 +74,14 @@ const TransferField: React.FC<TransferFieldProps> = ({
   items,
   onItemsChange,
 }) => {
+  const transfer_fee = useWatch({
+    control: form.control,
+    name: "transfer_fee",
+  });
   const isSubmitting = form.formState.isSubmitting;
-  const [isHaveFee, setIsHaveFee] = useState<boolean>(false);
+  const [isHaveFee, setIsHaveFee] = useState<boolean>(
+    transfer_fee ? true : false,
+  );
 
   return (
     <div className="p-4 rounded-2xl border border-gray-500 space-y-4">
@@ -114,85 +103,102 @@ const TransferField: React.FC<TransferFieldProps> = ({
         </div>
       </div>
       {isHaveFee && (
-        <FieldGroup>
-          <Controller
-            name="transfer_fee"
-            control={form.control}
-            render={({ field, fieldState }) => {
-              return (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={field.name}>Biaya Transfer</FieldLabel>
-                  <CurrencyInputID
-                    {...field}
-                    id={field.name}
-                    value={field.value}
-                    onValueChange={(val) => {
-                      if (!val) return;
-                      field.onChange(val);
-                    }}
-                    aria-invalid={fieldState.invalid}
-                    placeholder="Contoh : Rp. 10.000"
-                    disabled={isSubmitting}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              );
-            }}
+        <div className="grid grid-cols-2 gap-4">
+          <FieldGroup>
+            <Controller
+              name="transfer_fee"
+              control={form.control}
+              render={({ field, fieldState }) => {
+                return (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name}>Biaya Transfer</FieldLabel>
+                    <CurrencyInputID
+                      {...field}
+                      id={field.name}
+                      value={field.value}
+                      onValueChange={(val) => {
+                        if (!val) return;
+                        field.onChange(val);
+                      }}
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Contoh : Rp. 10.000"
+                      disabled={isSubmitting}
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                );
+              }}
+            />
+          </FieldGroup>
+          <FieldComboboxComp
+            form={form}
+            items={items}
+            label="Biaya Dari Aset"
+            name="transfer_fee_asset"
+            onItemsChange={onItemsChange}
           />
-        </FieldGroup>
+        </div>
       )}
       <div className="grid grid-cols-2 gap-4 ">
-        <FieldGroup>
-          <Controller
-            name="from_asset"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldContent>
-                  <FieldLabel htmlFor="aset">Dari Aset</FieldLabel>
-                </FieldContent>
-                <ComboboxWithCreateAction
-                  items={items}
-                  onItemsChange={onItemsChange}
-                  onValueChange={field.onChange}
-                  value={field.value ?? ""}
-                  disabled={isSubmitting}
-                  valuePlaceholder="Cari atau Buat Aset Baru"
-                />
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-        </FieldGroup>
-        <FieldGroup>
-          <Controller
-            name="to_asset"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldContent>
-                  <FieldLabel htmlFor="aset">Ke Aset</FieldLabel>
-                </FieldContent>
-                <ComboboxWithCreateAction
-                  items={items}
-                  onItemsChange={onItemsChange}
-                  onValueChange={field.onChange}
-                  value={field.value ?? ""}
-                  disabled={isSubmitting}
-                  valuePlaceholder="Cari atau Buat Aset Baru"
-                />
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-        </FieldGroup>
+        <FieldComboboxComp
+          form={form}
+          items={items}
+          label="Dari Aset"
+          name="from_asset"
+          onItemsChange={onItemsChange}
+        />
+        <FieldComboboxComp
+          form={form}
+          items={items}
+          label="Ke Aset Aset"
+          name="to_asset"
+          onItemsChange={onItemsChange}
+        />
       </div>
     </div>
+  );
+};
+
+// HELPER COMPONENTS
+interface FieldComboboxCompProps extends Props {
+  name: "via" | "from_asset" | "to_asset" | "transfer_fee_asset";
+  label: string;
+  items: string[];
+  onItemsChange: (state: string[]) => void;
+}
+
+const FieldComboboxComp: React.FC<FieldComboboxCompProps> = ({
+  form,
+  name,
+  label,
+  items,
+  onItemsChange,
+}) => {
+  const isSubmitting = form.formState.isSubmitting;
+  return (
+    <FieldGroup>
+      <Controller
+        name={name}
+        control={form.control}
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldContent>
+              <FieldLabel htmlFor={name}>{label}</FieldLabel>
+            </FieldContent>
+            <ComboboxWithCreateAction
+              items={items}
+              onItemsChange={onItemsChange}
+              onValueChange={field.onChange}
+              value={field.value ?? ""}
+              disabled={isSubmitting}
+              valuePlaceholder="Cari atau Buat Aset Baru"
+            />
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+    </FieldGroup>
   );
 };

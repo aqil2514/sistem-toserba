@@ -88,10 +88,15 @@ export class CashflowDto {
   @IsString()
   to_asset?: string;
 
+  
   @IsOptional()
   @IsNumber()
   @IsPositive()
   transfer_fee?: number;
+
+  @IsOptional()
+  @IsString()
+  transfer_fee_asset?: string;
 
   @IsNumber()
   @IsPositive({ message: 'Harga tidak valid' })
