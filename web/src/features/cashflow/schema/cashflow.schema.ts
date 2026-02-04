@@ -7,7 +7,7 @@ import {
 export const cashflowSchema = z
   .object({
     transaction_at: z.iso
-      .datetime("Data Transaksi wajib diisi")
+      .datetime("Tanggal Transaksi wajib diisi")
       .refine(
         (val) => new Date(val) <= new Date(),
         "Tanggal tidak boleh dari masa depan",

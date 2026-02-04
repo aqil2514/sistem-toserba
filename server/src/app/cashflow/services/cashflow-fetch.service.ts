@@ -31,6 +31,19 @@ export class CashflowFetchService {
     return data;
   }
 
+  async getAllCashflowAsset(){
+    const {data, error} = await this.supabase.from("cashflow_unique_via").select("*");
+    
+    if(error){
+      console.error(error);
+      throw error;
+    }
+
+    const values = data.map((item) => item.via );
+
+    return values;
+  }
+
   async getCashflowsData(query: BasicQuery) {
     const { limit, page } = query;
 

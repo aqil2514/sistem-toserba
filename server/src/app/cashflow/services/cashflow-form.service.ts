@@ -99,6 +99,18 @@ export class CashflowFormService {
     }
   }
 
+  private async editCashflow(
+    payload: CashflowDbInsert | CashflowDbInsert[],
+    cashflowId:string
+  ) {
+    const { error } = await this.supabase.from('cashflow').update(payload).eq("id", cashflowId);
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   private async createNewCashflowCategoryIfNoExist(
     payload: CashflowCategoryInsert,
   ): Promise<string> {
@@ -143,5 +155,21 @@ export class CashflowFormService {
         : this.mapCashflowDtoToDb(payload, categoryId);
 
     await this.createNewCashflow(mappedCashflow);
+  }
+
+  async editCashflowData(payload: CashflowDto, cashflowId:string) {
+    const { category } = payload;
+
+    const mappedCategory = this.mapCashflowCategoryDtoToDb(category);
+
+    const categoryId =
+      await this.createNewCashflowCategoryIfNoExist(mappedCategory);
+
+    const mappedCashflow =
+      category.status === 'transfer'
+        ? this.mapTransferCasfhlotDtoToDb(payload, categoryId)
+        : this.mapCashflowDtoToDb(payload, categoryId);
+
+    await this.editCashflow(mappedCashflow, cashflowId);
   }
 }

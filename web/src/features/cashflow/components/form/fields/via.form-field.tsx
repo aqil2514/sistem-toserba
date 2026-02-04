@@ -1,3 +1,4 @@
+import { ComboboxWithCreateAction } from "@/components/molecules/combobox/create-new-combobox";
 import { CurrencyInputID } from "@/components/ui/currency-input-id";
 import {
   Field,
@@ -7,16 +8,11 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { SERVER_URL } from "@/constants/url";
 import { CashflowSchemaType } from "@/features/cashflow/schema/cashflow.schema";
-import React, { useState } from "react";
+import { useFetch } from "@/hooks/use-fetch";
+import React, { useMemo, useState } from "react";
 import { Controller, UseFormReturn, useWatch } from "react-hook-form";
 
 interface Props {
@@ -24,17 +20,44 @@ interface Props {
 }
 
 export function CashflowViaField({ form }: Props) {
+  const { data, isLoading } = useFetch<string[]>(
+    `${SERVER_URL}/cashflow/assets`,
+  );
+
+  const viaData: string[] = useMemo(() => data ?? [], [data]);
+
+  const [viaItems, setViaItems] = useState<string[]>(viaData);
+
   const statusCashflow = useWatch({
     control: form.control,
     name: "category.status",
   });
 
-  if (statusCashflow !== "transfer") return <NonTransferField form={form} />;
+  if (isLoading) return null;
 
-  return <TransferField form={form} />;
+  if (statusCashflow !== "transfer")
+    return (
+      <NonTransferField
+        form={form}
+        items={viaItems}
+        onItemsChange={setViaItems}
+      />
+    );
+
+  return (
+    <TransferField form={form} items={viaItems} onItemsChange={setViaItems} />
+  );
 }
 
-const NonTransferField: React.FC<Props> = ({ form }) => {
+type TransferFieldProps = Props & {
+  items: string[];
+  onItemsChange: (state: string[]) => void;
+};
+const NonTransferField: React.FC<TransferFieldProps> = ({
+  form,
+  items,
+  onItemsChange,
+}) => {
   const isSubmitting = form.formState.isSubmitting;
 
   return (
@@ -47,24 +70,14 @@ const NonTransferField: React.FC<Props> = ({ form }) => {
             <FieldContent>
               <FieldLabel htmlFor="aset">Aset</FieldLabel>
             </FieldContent>
-            <Select
-              name={field.name}
-              value={field.value}
+            <ComboboxWithCreateAction
+              items={items}
+              onItemsChange={onItemsChange}
               onValueChange={field.onChange}
+              value={field.value ?? ""}
               disabled={isSubmitting}
-            >
-              <SelectTrigger
-                id="aset"
-                aria-invalid={fieldState.invalid}
-                className="w-full"
-              >
-                <SelectValue placeholder="Pilih Aset" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="cash">Tunai</SelectItem>
-                <SelectItem value="digital">Digital</SelectItem>
-              </SelectContent>
-            </Select>
+              valuePlaceholder="Cari atau Buat Aset Baru"
+            />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
         )}
@@ -73,7 +86,11 @@ const NonTransferField: React.FC<Props> = ({ form }) => {
   );
 };
 
-const TransferField: React.FC<Props> = ({ form }) => {
+const TransferField: React.FC<TransferFieldProps> = ({
+  form,
+  items,
+  onItemsChange,
+}) => {
   const isSubmitting = form.formState.isSubmitting;
   const [isHaveFee, setIsHaveFee] = useState<boolean>(false);
 
@@ -85,11 +102,14 @@ const TransferField: React.FC<Props> = ({ form }) => {
         </p>
         <div className="flex gap-4 items-center">
           <Label htmlFor="switch-fee">
-
-          <Switch id="switch-fee" checked={isHaveFee} onCheckedChange={setIsHaveFee} />
-          <p className="text-muted-foreground text-sm font-semibold underline">
-            {isHaveFee ? "Ada Biaya" : "Gratis"}
-          </p>
+            <Switch
+              id="switch-fee"
+              checked={isHaveFee}
+              onCheckedChange={setIsHaveFee}
+            />
+            <p className="text-muted-foreground text-sm font-semibold underline">
+              {isHaveFee ? "Ada Biaya" : "Gratis"}
+            </p>
           </Label>
         </div>
       </div>
@@ -133,24 +153,14 @@ const TransferField: React.FC<Props> = ({ form }) => {
                 <FieldContent>
                   <FieldLabel htmlFor="aset">Dari Aset</FieldLabel>
                 </FieldContent>
-                <Select
-                  name={field.name}
-                  value={field.value}
+                <ComboboxWithCreateAction
+                  items={items}
+                  onItemsChange={onItemsChange}
                   onValueChange={field.onChange}
+                  value={field.value ?? ""}
                   disabled={isSubmitting}
-                >
-                  <SelectTrigger
-                    id="aset"
-                    aria-invalid={fieldState.invalid}
-                    className="w-full"
-                  >
-                    <SelectValue placeholder="Pilih Aset" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="cash">Tunai</SelectItem>
-                    <SelectItem value="digital">Digital</SelectItem>
-                  </SelectContent>
-                </Select>
+                  valuePlaceholder="Cari atau Buat Aset Baru"
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
@@ -167,24 +177,14 @@ const TransferField: React.FC<Props> = ({ form }) => {
                 <FieldContent>
                   <FieldLabel htmlFor="aset">Ke Aset</FieldLabel>
                 </FieldContent>
-                <Select
-                  name={field.name}
-                  value={field.value}
+                <ComboboxWithCreateAction
+                  items={items}
+                  onItemsChange={onItemsChange}
                   onValueChange={field.onChange}
+                  value={field.value ?? ""}
                   disabled={isSubmitting}
-                >
-                  <SelectTrigger
-                    id="aset"
-                    aria-invalid={fieldState.invalid}
-                    className="w-full"
-                  >
-                    <SelectValue placeholder="Pilih Aset" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="cash">Tunai</SelectItem>
-                    <SelectItem value="digital">Digital</SelectItem>
-                  </SelectContent>
-                </Select>
+                  valuePlaceholder="Cari atau Buat Aset Baru"
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}

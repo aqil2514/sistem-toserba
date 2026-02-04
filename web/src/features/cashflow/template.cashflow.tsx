@@ -8,6 +8,7 @@ import { CashflowProvider } from "./store/provider.cashflow";
 import { CashflowAddDialog } from "./components/dialog/add-dialog.cashflow";
 import { CashflowData } from "./components/data/data.cashflow";
 import { CashflowToolbar } from "./components/toolbar/toolbar.cashflow";
+import { CashflowEditDialog } from "./components/dialog/edit-dialog.cashflow";
 
 interface Props {
   mode: TemplateMode;
@@ -35,6 +36,7 @@ const InnerTemplate = () => {
       </MainContainer>
 
       <CashflowAddDialog />
+      <CashflowEditDialog />
     </>
   );
 };

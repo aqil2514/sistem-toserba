@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { Roles } from '../../decorator/roles.decorator';
 import { PasetoGuard } from '../../guards/paseto.guard';
 import { RoleGuard } from '../../guards/role.guard';
@@ -23,6 +23,13 @@ export class CashflowController {
 
   @UseGuards(PasetoGuard, RoleGuard)
   @Roles('admin')
+  @Put(":id/edit")
+  async editCashflow(@Body() body:CashflowDto, @Param("id") cashflowId:string){
+    return await this.cashflowFormService.editCashflowData(body, cashflowId);
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
   @Get()
   async getCashflowsData(@Query() query: BasicQuery) {
     return await this.cashflowFetchService.getCashflowsData(query);
@@ -33,5 +40,12 @@ export class CashflowController {
   @Get('categories')
   async getCashflowCategories() {
     return await this.cashflowFetchService.getAllCashflowCategory();
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Get('assets')
+  async getCashflowAset() {
+    return await this.cashflowFetchService.getAllCashflowAsset();
   }
 }

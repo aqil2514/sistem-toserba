@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ColumnDef } from "@tanstack/react-table";
+import { SelectRow } from "./rows/select-row.cashflow";
 
 export const cashflowDataColumns: ColumnDef<CashflowDb>[] = [
   {
@@ -40,16 +41,6 @@ export const cashflowDataColumns: ColumnDef<CashflowDb>[] = [
   {
     accessorKey: "via",
     header: "Via",
-    cell: ({ row }) => {
-      const via = row.original.via;
-
-      const mappingStatus: Record<string, string> = {
-        digital: "Digital",
-        cash: "Tunai",
-      };
-
-      return mappingStatus[via];
-    },
   },
   {
     accessorKey: "price",
@@ -76,4 +67,9 @@ export const cashflowDataColumns: ColumnDef<CashflowDb>[] = [
       );
     },
   },
+  {
+    accessorKey:"action",
+    header:"Aksi",
+    cell:({row}) => <SelectRow row={row} />
+  }
 ];
