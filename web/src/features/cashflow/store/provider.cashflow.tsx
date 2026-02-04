@@ -45,7 +45,12 @@ const defaultQuery: BasicQuery = {
   limit: 10,
   page: 1,
   filters: [],
-  sort: [],
+  sort: [
+    {
+      key: "transaction_at",
+      value: "asc",
+    },
+  ],
   from: new Date(),
   to: new Date(),
 };
