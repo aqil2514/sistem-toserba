@@ -12,19 +12,27 @@ import { CashflowSchemaType } from "../../schema/cashflow.schema";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
 import { mapDbToCashflowSchema } from "../../utils/map-db-to-cashflow-schema";
+import { useFetch } from "@/hooks/use-fetch";
+import { CashflowDb } from "../../types/cashflow.types";
+import { SERVER_URL } from "@/constants/url";
 
 export function CashflowEditDialog() {
-  const { mutate, editDialog, setEditDialog, data } = useCashflow();
+  const { mutate, editDialog, setEditDialog } = useCashflow();
+  const open = Boolean(editDialog);
 
-  const open = !!editDialog;
+  const { data, isLoading } = useFetch<CashflowDb[]>(
+    open ? `${SERVER_URL}/cashflow/${editDialog}` : null,
+  );
 
-  if (!editDialog || !data) return null;
-
-  const isTransfer = Boolean(editDialog.transfer_group_id);
+  if (!editDialog || !data || isLoading) return null;
 
   const editHandler = async (values: CashflowSchemaType) => {
+    const transferGroupId = data[0].transfer_group_id;
     try {
-      await api.put(`/cashflow/${editDialog.id}/edit`, values);
+      await api.put(
+        `/cashflow/${editDialog}/edit${transferGroupId ? `?transfer_group_id=${transferGroupId}` : ""}`,
+        values,
+      );
       setEditDialog(null);
       toast.success("Data transaksi berhasil diedit");
 
@@ -40,13 +48,7 @@ export function CashflowEditDialog() {
     }
   };
 
-  const transferData = data.data.filter(
-    (data) => data.transfer_group_id === editDialog.transfer_group_id,
-  );
-
-  const defaultValues: CashflowSchemaType = mapDbToCashflowSchema(
-    isTransfer ? transferData : editDialog,
-  );
+  const defaultValues: CashflowSchemaType = mapDbToCashflowSchema(data);
 
   return (
     <Dialog

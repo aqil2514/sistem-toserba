@@ -19,7 +19,7 @@ export function SelectRow({ row }: Props) {
     },
     {
       itemLabel: "Edit",
-      onClick: () => setEditDialog(row.original),
+      onClick: () => setEditDialog(row.original.id),
     },
   ];
 

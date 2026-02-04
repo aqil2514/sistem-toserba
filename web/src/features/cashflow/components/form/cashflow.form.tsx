@@ -32,23 +32,23 @@ export function CashflowForm({ submitHandler, defaultValues }: Props) {
 
   return (
     <form
-      onSubmit={form.handleSubmit(submitHandler, () =>
-        toast.error("Ada data yang tidak lengkap"),
-      )}
+      onSubmit={form.handleSubmit(submitHandler, (error) => {
+        toast.error("Ada data yang tidak lengkap");
+        console.error(error);
+      })}
       className="space-y-4"
     >
       <Separator />
       <ScrollArea className="h-96 px-4 pb-4">
         <div className="space-y-4">
-
-        <CashflowTransactionAtField form={form} />
-        <div className="grid grid-cols-2 gap-4">
-          <CashflowProductServiceField form={form} />
-          <CashflowPriceField form={form} />
-        </div>
-        <CasfhlowCategoryField form={form} />
-        <CashflowViaField form={form} />
-        <CashflowNoteServiceField form={form} />
+          <CashflowTransactionAtField form={form} />
+          <div className="grid grid-cols-2 gap-4">
+            <CashflowProductServiceField form={form} />
+            <CashflowPriceField form={form} />
+          </div>
+          <CasfhlowCategoryField form={form} />
+          <CashflowViaField form={form} />
+          <CashflowNoteServiceField form={form} />
         </div>
       </ScrollArea>
       <Separator />

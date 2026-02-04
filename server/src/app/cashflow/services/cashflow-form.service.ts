@@ -11,7 +11,8 @@ import { randomUUID } from 'crypto';
 
 @Injectable()
 export class CashflowFormService {
-  private readonly transfer_category_id = "d8d34dd6-4010-4e96-a081-288821917620";
+  private readonly transfer_category_id =
+    'd8d34dd6-4010-4e96-a081-288821917620';
   constructor(
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
@@ -102,9 +103,12 @@ export class CashflowFormService {
 
   private async editCashflow(
     payload: CashflowDbInsert | CashflowDbInsert[],
-    cashflowId:string
+    cashflowId: string,
   ) {
-    const { error } = await this.supabase.from('cashflow').update(payload).eq("id", cashflowId);
+    const { error } = await this.supabase
+      .from('cashflow')
+      .update(payload)
+      .eq('id', cashflowId);
 
     if (error) {
       console.error(error);
@@ -142,6 +146,30 @@ export class CashflowFormService {
     return data.id;
   }
 
+  private async hardDeleteCashflowByTransferGroupId(transferGroupId: string) {
+    const { error } = await this.supabase
+      .from('cashflow')
+      .delete()
+      .eq('transfer_group_id', transferGroupId);
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  private async hardDeleteCashflowByCashflowId(cashflowId: string) {
+    const { error } = await this.supabase
+      .from('cashflow')
+      .delete()
+      .eq('id', cashflowId);
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   async createNewCashflowData(payload: CashflowDto) {
     const { category } = payload;
 
@@ -158,19 +186,17 @@ export class CashflowFormService {
     await this.createNewCashflow(mappedCashflow);
   }
 
-  async editCashflowData(payload: CashflowDto, cashflowId:string) {
-    const { category } = payload;
+  async editCashflowData(
+    payload: CashflowDto,
+    cashflowId: string,
+    transferGroupId: string,
+  ) {
+    if (transferGroupId) {
+      await this.hardDeleteCashflowByTransferGroupId(transferGroupId);
+    } else {
+      await this.hardDeleteCashflowByCashflowId(cashflowId);
+    }
 
-    const mappedCategory = this.mapCashflowCategoryDtoToDb(category);
-
-    const categoryId =
-      await this.createNewCashflowCategoryIfNoExist(mappedCategory);
-
-    const mappedCashflow =
-      category.status === 'transfer'
-        ? this.mapTransferCashflowDtoToDb(payload, categoryId)
-        : this.mapCashflowDtoToDb(payload, categoryId);
-
-    await this.editCashflow(mappedCashflow, cashflowId);
+    await this.createNewCashflowData(payload);
   }
 }

@@ -2,6 +2,7 @@ import {
   Inject,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { CashflowCategoryDb } from '../types/cashflow-category.types';
@@ -31,15 +32,17 @@ export class CashflowFetchService {
     return data;
   }
 
-  async getAllCashflowAsset(){
-    const {data, error} = await this.supabase.from("cashflow_unique_via").select("*");
-    
-    if(error){
+  async getAllCashflowAsset() {
+    const { data, error } = await this.supabase
+      .from('cashflow_unique_via')
+      .select('*');
+
+    if (error) {
       console.error(error);
       throw error;
     }
 
-    const values = data.map((item) => item.via );
+    const values = data.map((item) => item.via);
 
     return values;
   }
@@ -67,5 +70,44 @@ export class CashflowFetchService {
       data,
       meta,
     };
+  }
+
+  async getCashflowDataById(cashflowId: string) {
+    const { data, error } = await this.supabase
+      .from('cashflow')
+      .select('*, category!inner(*)')
+      .eq('id', cashflowId)
+      .single();
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    console.log(data)
+    
+    const transferGroupId = data.transfer_group_id;
+    
+    if (transferGroupId) {
+      console.log(transferGroupId)
+      const { data: transferData, error: transferError } = await this.supabase
+      .from('cashflow')
+      .select('*, category!inner(*)')
+      .eq('transfer_group_id', transferGroupId);
+      console.log(transferData)
+
+      if (transferError) {
+        console.error('Error Transfer', transferError);
+        throw transferError;
+      }
+
+      if (!transferData || transferData.length === 0) {
+        throw new NotFoundException('Data transfer tidak ditemukan');
+      }
+
+      return transferData;
+    }
+
+    return [data];
   }
 }

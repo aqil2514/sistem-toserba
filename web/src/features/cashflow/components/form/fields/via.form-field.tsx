@@ -12,7 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { SERVER_URL } from "@/constants/url";
 import { CashflowSchemaType } from "@/features/cashflow/schema/cashflow.schema";
 import { useFetch } from "@/hooks/use-fetch";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Controller, UseFormReturn, useWatch } from "react-hook-form";
 
 interface Props {
@@ -26,7 +26,11 @@ export function CashflowViaField({ form }: Props) {
 
   const viaData: string[] = useMemo(() => data ?? [], [data]);
 
-  const [viaItems, setViaItems] = useState<string[]>(viaData);
+  const [viaItems, setViaItems] = useState<string[]>([]);
+
+  useEffect(() => {
+    setViaItems(viaData);
+  }, [viaData]);
 
   const statusCashflow = useWatch({
     control: form.control,

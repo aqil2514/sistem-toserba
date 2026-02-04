@@ -4,12 +4,13 @@ import { CashflowDb } from "../types/cashflow.types";
 const transfer_fee_category_id = "d8d34dd6-4010-4e96-a081-288821917620";
 
 // CashflowDb => expense & income || CashflowDb[] => Handle Transfer
-export function mapDbToCashflowSchema(
-  raw: CashflowDb | CashflowDb[],
-): CashflowSchemaType {
-  const isTransfer = Array.isArray(raw);
+export function mapDbToCashflowSchema(raw: CashflowDb[]): CashflowSchemaType {
+  console.log(raw)
+  const isTransfer = Boolean(raw[0].transfer_group_id);
 
-  return isTransfer ? transferCashflow(raw) : nonTransferCashflow(raw);
+  console.log(isTransfer)
+
+  return isTransfer ? transferCashflow(raw) : nonTransferCashflow(raw[0]);
 }
 
 const normalizeIso = (date: string) => new Date(date).toISOString();
@@ -54,6 +55,6 @@ const transferCashflow = (raw: CashflowDb[]): CashflowSchemaType => {
     from_asset: expense.via,
     to_asset: income.via,
     transfer_fee: fee?.price,
-    transfer_fee_asset: fee?.via
+    transfer_fee_asset: fee?.via,
   };
 };
