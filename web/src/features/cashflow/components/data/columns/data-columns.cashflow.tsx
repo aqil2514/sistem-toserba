@@ -13,7 +13,7 @@ export const cashflowDataColumns: ColumnDef<CashflowRpcReturn>[] = [
     accessorKey: "transaction_at",
     header: "Tanggal",
     cell: ({ row }) =>
-      formatDate(row.original.transaction_at, "Senin, 29 Desember 2025"),
+      formatDate(row.original.transaction_at, "Senin, 29 Desember 2025, 09:21"),
   },
   {
     accessorKey: "product_service",

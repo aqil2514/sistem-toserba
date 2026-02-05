@@ -12,11 +12,26 @@ import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 
+const PRESET_LABELS = {
+  "all-time": "Sepanjang Masa",
+  today: "Hari Ini",
+  yesterday: "Kemarin",
+  "this-week": "Minggu Ini",
+  "this-month": "Bulan Ini",
+  "this-year": "Tahun Ini",
+} as const;
+
 /**
  * Daterange Helper
  */
 function getPresetDateRange(
-  preset: "today" | "yesterday" | "this-week" | "this-month" | "this-year"
+  preset:
+    | "today"
+    | "yesterday"
+    | "this-week"
+    | "this-month"
+    | "this-year"
+    | "all-time",
 ): DateRange {
   const today = startOfDay(new Date());
 
@@ -49,6 +64,12 @@ function getPresetDateRange(
         from: startOfYear(today),
         to: today,
       };
+
+    case "all-time":
+      return {
+        from: new Date(1970, 0, 1),
+        to: today,
+      };
   }
 }
 
@@ -78,6 +99,41 @@ function startOfYear(date: Date): Date {
   return new Date(date.getFullYear(), 0, 1);
 }
 
+function isSameDay(a?: Date, b?: Date) {
+  if (!a || !b) return false;
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+}
+
+function isSameRange(a?: DateRange, b?: DateRange) {
+  if (!a || !b) return false;
+  return isSameDay(a.from, b.from) && isSameDay(a.to, b.to);
+}
+
+function getDateTriggerLabel(date?: DateRange) {
+  if (!date?.from) return "Pick a date";
+
+  // cek preset
+  for (const [key, label] of Object.entries(PRESET_LABELS)) {
+    const presetRange = getPresetDateRange(key as keyof typeof PRESET_LABELS);
+
+    if (isSameRange(date, presetRange)) {
+      return label;
+    }
+  }
+
+  // custom range
+  if (date.from && date.to) {
+    return `${formatDate(date.from, "29 Des 2025")} - ${formatDate(date.to, "29 Des 2025")}`;
+  }
+
+  // fallback (harusnya jarang kepakai)
+  return format(date.from, "dd/MM/yyyy");
+}
+
 interface Props {
   date: DateRange;
   setDate: (value: DateRange) => void;
@@ -101,7 +157,7 @@ export function ToolbarDatepicker({ onApply, setDate, date }: Props) {
           className="data-[empty=true]:text-muted-foreground w-70 justify-start text-left font-normal"
         >
           <CalendarIcon />
-          {date?.from ? format(date.from, "PPP") : <span>Pick a date</span>}
+          <span className="ml-2">{getDateTriggerLabel(date)}</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full max-w-lg p-0 space-y-1">
@@ -132,6 +188,7 @@ export function ToolbarDatepicker({ onApply, setDate, date }: Props) {
 
               <div className="flex gap-2 flex-wrap">
                 {[
+                  ["all-time", "Sepanjang Masa"],
                   ["today", "Hari Ini"],
                   ["yesterday", "Kemarin"],
                   ["this-week", "Minggu Ini"],
@@ -151,8 +208,8 @@ export function ToolbarDatepicker({ onApply, setDate, date }: Props) {
                             | "yesterday"
                             | "this-week"
                             | "this-month"
-                            | "this-year"
-                        )
+                            | "this-year",
+                        ),
                       )
                     }
                   >

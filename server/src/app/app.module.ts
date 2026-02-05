@@ -10,6 +10,7 @@ import { SalesModule } from './sales/sales.module';
 import { PdfModule } from './export/pdf/pdf.module';
 import { TelegramBotModule } from './telegram-bot/telegram-bot.module';
 import { CashflowModule } from './cashflow/cashflow.module';
+import { AssetFinancialModule } from './asset-financial/asset-financial.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { CashflowModule } from './cashflow/cashflow.module';
     PdfModule,
     TelegramBotModule,
     CashflowModule,
+    AssetFinancialModule,
   ],
   controllers: [AppController],
   providers: [AppService],

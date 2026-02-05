@@ -80,6 +80,7 @@ export function CashflowToolbar() {
         setDate={(date) => {
           updateQuery("from", date.from);
           updateQuery("to", date.to);
+          updateQuery("page", 1);
         }}
       />
     </div>

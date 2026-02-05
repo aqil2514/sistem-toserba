@@ -10,6 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { CashflowDetailData } from "../detail-data/cashflow.detail-data";
+import { MutateButton } from "@/components/ui/mutate-button";
 
 export function CashflowDetailDialog() {
   const { mutate, detailDialog, setDetailDialog } = useCashflow();
@@ -30,7 +31,11 @@ export function CashflowDetailDialog() {
     >
       <DialogContent className="sm:max-w-xl space-y-4">
         <DialogHeader>
+            <div className="flex gap-4 items-center justify-between">
+
           <DialogTitle>Detail Transaksi</DialogTitle>
+          <MutateButton mutate={mutate} />
+            </div>
           <DialogDescription>
             Isi form di bawah ini untuk mengedit data transaksi
           </DialogDescription>
