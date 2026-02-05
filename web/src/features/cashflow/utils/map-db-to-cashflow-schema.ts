@@ -1,7 +1,6 @@
 import { CashflowSchemaType } from "../schema/cashflow.schema";
 import { CashflowDb } from "../types/cashflow.types";
-
-const transfer_fee_category_id = "d8d34dd6-4010-4e96-a081-288821917620";
+import { extractTransferCashflow } from "./extract-transfer-cashflow";
 
 // CashflowDb => expense & income || CashflowDb[] => Handle Transfer
 export function mapDbToCashflowSchema(raw: CashflowDb[]): CashflowSchemaType {
@@ -27,17 +26,7 @@ const nonTransferCashflow = (raw: CashflowDb): CashflowSchemaType => ({
 });
 
 const transferCashflow = (raw: CashflowDb[]): CashflowSchemaType => {
-  const expense = raw.find((v) => v.status_cashflow === "expense");
-  const income = raw.find((v) => v.status_cashflow === "income");
-  const fee = raw.find(
-    (v) =>
-      v.status_cashflow === "expense" &&
-      v.category.id === transfer_fee_category_id,
-  );
-
-  if (!expense || !income) {
-    throw new Error("Invalid transfer cashflow data");
-  }
+  const { expense, fee, income } = extractTransferCashflow(raw);
 
   return {
     category: {

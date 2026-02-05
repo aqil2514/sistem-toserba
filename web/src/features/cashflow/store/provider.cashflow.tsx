@@ -31,6 +31,9 @@ interface CashflowContextType {
   deleteDialog: string | null;
   setDeleteDialog: React.Dispatch<React.SetStateAction<string | null>>;
 
+  detailDialog: string | null;
+  setDetailDialog: React.Dispatch<React.SetStateAction<string | null>>;
+
   data: DataQueryResponse<CashflowRpcReturn[]> | undefined;
   error: Error;
   isLoading: boolean;
@@ -59,6 +62,8 @@ export function CashflowProvider({ children }: { children: React.ReactNode }) {
   const [addDialog, setAddDialog] = useState<boolean>(false);
   const [editDialog, setEditDialog] = useState<string | null>(null);
   const [deleteDialog, setDeleteDialog] = useState<string | null>(null);
+  const [detailDialog, setDetailDialog] = useState<string | null>(null);
+
   const [query, setQuery] = useState<BasicQuery>(defaultQuery);
 
   // >>>>>> FETCHER AREA <<<<<<
@@ -83,6 +88,8 @@ export function CashflowProvider({ children }: { children: React.ReactNode }) {
     setEditDialog,
     deleteDialog,
     setDeleteDialog,
+    detailDialog,
+    setDetailDialog,
 
     query,
     resetQuery,

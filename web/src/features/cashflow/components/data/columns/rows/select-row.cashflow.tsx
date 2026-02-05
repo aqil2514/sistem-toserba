@@ -11,11 +11,11 @@ interface Props {
 }
 
 export function SelectRow({ row }: Props) {
-  const { setEditDialog, setDeleteDialog } = useCashflow();
+  const { setEditDialog, setDeleteDialog, setDetailDialog } = useCashflow();
   const items: DropdownActionItems[] = [
     {
       itemLabel: "Detail",
-      onClick: () => alert(row.original),
+      onClick: () => setDetailDialog(row.original.id),
     },
     {
       itemLabel: "Edit",

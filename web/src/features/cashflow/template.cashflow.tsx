@@ -10,6 +10,7 @@ import { CashflowData } from "./components/data/data.cashflow";
 import { CashflowToolbar } from "./components/toolbar/toolbar.cashflow";
 import { CashflowEditDialog } from "./components/dialog/edit-dialog.cashflow";
 import { CashflowDeleteDialog } from "./components/dialog/delete-dialog.cashflow";
+import { CashflowDetailDialog } from "./components/dialog/detail-dialog.cashflow";
 
 interface Props {
   mode: TemplateMode;
@@ -36,6 +37,7 @@ const InnerTemplate = () => {
         </SectionContainer>
       </MainContainer>
 
+      <CashflowDetailDialog />
       <CashflowAddDialog />
       <CashflowEditDialog />
       <CashflowDeleteDialog />

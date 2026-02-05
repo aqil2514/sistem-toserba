@@ -1,0 +1,1 @@
+export const transfer_fee_category_id = "d8d34dd6-4010-4e96-a081-288821917620";
