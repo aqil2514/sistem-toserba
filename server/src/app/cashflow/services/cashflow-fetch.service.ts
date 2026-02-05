@@ -1,16 +1,16 @@
 import {
   Inject,
   Injectable,
-  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { CashflowCategoryDb } from '../types/cashflow-category.types';
-import { BasicQuery } from '../../../@types/general';
+import { BasicQuery, DataQueryResponse } from '../../../@types/general';
 import {
   buildPaginationMeta,
-  executeSupabaseBasicQuery,
 } from '../../../utils/query-builder';
+import { formatQueryDate } from '../../../utils/format-date';
+import { CashflowRPCReturn } from '../types/cashflow-rpc.types';
 
 @Injectable()
 export class CashflowFetchService {
@@ -49,22 +49,27 @@ export class CashflowFetchService {
     return values;
   }
 
-  async getCashflowsData(query: BasicQuery) {
-    const { limit, page } = query;
+  async getCashflowsData(
+    query: BasicQuery,
+  ): Promise<DataQueryResponse<CashflowRPCReturn[]>> {
+    const { limit, page, filters, sort } = query;
+    const { endUtc, startUtc } = formatQueryDate(query);
 
-    let supabase = this.supabase
-      .from('cashflow')
-      .select('*, category!inner(*)', { count: 'exact' })
-      .is('deleted_at', null);
-
-    const client = executeSupabaseBasicQuery(supabase, query, 'transaction_at');
-
-    const { data, error, count } = await client;
+    const { data, error } = await this.supabase.rpc('get_cashflow_data', {
+      p_limit: limit,
+      p_page: page,
+      p_start_utc: startUtc,
+      p_end_utc: endUtc,
+      p_filters: filters,
+      p_sortings: sort,
+    });
 
     if (error) {
       console.error(error);
-      throw new InternalServerErrorException('Terjadi error saat mencari data');
+      throw error;
     }
+
+    const count = data?.[0]?.total_count ?? 0;
 
     const meta = buildPaginationMeta(page, limit, count ?? 0);
 
@@ -86,17 +91,13 @@ export class CashflowFetchService {
       throw error;
     }
 
-    console.log(data);
-
     const transferGroupId = data.transfer_group_id;
 
     if (transferGroupId) {
-      console.log(transferGroupId);
       const { data: transferData, error: transferError } = await this.supabase
         .from('cashflow')
         .select('*, category!inner(*)')
         .eq('transfer_group_id', transferGroupId);
-      console.log(transferData);
 
       if (transferError) {
         console.error('Error Transfer', transferError);

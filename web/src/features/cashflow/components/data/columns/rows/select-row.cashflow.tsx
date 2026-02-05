@@ -3,11 +3,11 @@ import {
   DropdownActionItems,
 } from "@/components/organisms/data-table-columns/dropdown-action-columns";
 import { useCashflow } from "@/features/cashflow/store/provider.cashflow";
-import { CashflowDb } from "@/features/cashflow/types/cashflow.types";
+import {  CashflowRpcReturn } from "@/features/cashflow/types/cashflow.types";
 import { Row } from "@tanstack/react-table";
 
 interface Props {
-  row: Row<CashflowDb>;
+  row: Row<CashflowRpcReturn>;
 }
 
 export function SelectRow({ row }: Props) {
@@ -30,7 +30,7 @@ export function SelectRow({ row }: Props) {
 
   return (
     <DropdownActionColumn
-      menuLabel={`${row.original.product_service} (${row.original.category.name})`}
+      menuLabel={`${row.original.product_service} (${row.original.status_cashflow})`}
       items={items}
     />
   );

@@ -1,6 +1,6 @@
 import {
   CashflowCategoryStatus,
-  CashflowDb,
+  CashflowRpcReturn,
 } from "@/features/cashflow/types/cashflow.types";
 import { cn } from "@/lib/utils";
 import { formatDate } from "@/utils/format-date.fns";
@@ -8,7 +8,7 @@ import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ColumnDef } from "@tanstack/react-table";
 import { SelectRow } from "./rows/select-row.cashflow";
 
-export const cashflowDataColumns: ColumnDef<CashflowDb>[] = [
+export const cashflowDataColumns: ColumnDef<CashflowRpcReturn>[] = [
   {
     accessorKey: "transaction_at",
     header: "Tanggal",
@@ -20,7 +20,7 @@ export const cashflowDataColumns: ColumnDef<CashflowDb>[] = [
     header: "Nama Produk / Jasa",
   },
   {
-    accessorKey: "category.name",
+    accessorKey: "cashflow_category",
     header: "Kategori",
   },
   {
@@ -32,7 +32,7 @@ export const cashflowDataColumns: ColumnDef<CashflowDb>[] = [
       const mappingStatus: Record<CashflowCategoryStatus, string> = {
         expense: "Pengeluaran",
         income: "Pemasukan",
-        transfer: "Pindah Aset",
+        transfer: "Transfer",
       };
 
       return mappingStatus[statusCashflow];
@@ -68,8 +68,8 @@ export const cashflowDataColumns: ColumnDef<CashflowDb>[] = [
     },
   },
   {
-    accessorKey:"action",
-    header:"Aksi",
-    cell:({row}) => <SelectRow row={row} />
-  }
+    accessorKey: "action",
+    header: "Aksi",
+    cell: ({ row }) => <SelectRow row={row} />,
+  },
 ];

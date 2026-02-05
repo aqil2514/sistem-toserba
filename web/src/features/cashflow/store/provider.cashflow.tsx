@@ -11,7 +11,7 @@ import React, {
   useContext,
   useState,
 } from "react";
-import { CashflowDb } from "../types/cashflow.types";
+import { CashflowRpcReturn } from "../types/cashflow.types";
 import { KeyedMutator } from "swr";
 
 interface CashflowContextType {
@@ -31,10 +31,10 @@ interface CashflowContextType {
   deleteDialog: string | null;
   setDeleteDialog: React.Dispatch<React.SetStateAction<string | null>>;
 
-  data: DataQueryResponse<CashflowDb[]> | undefined;
+  data: DataQueryResponse<CashflowRpcReturn[]> | undefined;
   error: Error;
   isLoading: boolean;
-  mutate: KeyedMutator<DataQueryResponse<CashflowDb[]>>;
+  mutate: KeyedMutator<DataQueryResponse<CashflowRpcReturn[]>>;
 }
 
 const CashflowContext = createContext<CashflowContextType>(
@@ -63,7 +63,7 @@ export function CashflowProvider({ children }: { children: React.ReactNode }) {
 
   // >>>>>> FETCHER AREA <<<<<<
   const url = buildUrl<BasicQuery>(SERVER_URL, "/cashflow", query);
-  const fetcher = useFetch<DataQueryResponse<CashflowDb[]>>(url);
+  const fetcher = useFetch<DataQueryResponse<CashflowRpcReturn[]>>(url);
 
   //   >>>>>> QUERY AREA <<<<<<
 
