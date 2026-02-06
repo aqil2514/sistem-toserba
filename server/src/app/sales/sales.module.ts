@@ -8,5 +8,6 @@ import { SalesReportService } from './helper/sales-report.service';
 @Module({
   controllers: [SalesController],
   providers: [SalesService, SalesStockService, SalesRpcService, SalesReportService],
+  exports:[SalesReportService]
 })
 export class SalesModule {}

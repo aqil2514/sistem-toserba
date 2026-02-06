@@ -36,6 +36,7 @@ export function MutateButton<T>({
       size={"icon"}
       variant={"outline"}
       onClick={mutateHandler}
+      title="Refresh Data"
     >
       <RefreshCcw className={cn(isLoading && "animate-spin")} />
     </Button>

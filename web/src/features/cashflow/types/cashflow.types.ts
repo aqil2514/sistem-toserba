@@ -1,18 +1,24 @@
 import { CashflowCategoryDb } from "./cashflow-category.types";
-export type CashflowCategoryStatus = "expense" | "transfer" | "income";
+export type CashflowCategoryStatus =
+  | "expense"
+  | "transfer"
+  | "income"
+  | "receivable";
 
-export interface CashflowDb {
-  category: CashflowCategoryDb;
-  created_at: string;
-  deleted_at: string;
+export interface CashflowDb<T = unknown> {
   id: string;
-  note: string;
-  price: number;
-  product_service: string;
-  status_cashflow: CashflowCategoryStatus;
+  created_at: string;
   transaction_at: string;
+  status_cashflow: CashflowCategoryStatus;
+  product_service: string;
+  category: CashflowCategoryDb;
   via: string;
+  price: number;
+  note: string;
+  deleted_at?: string;
   transfer_group_id?: string;
+  source?: string;
+  meta?: T;
 }
 
 export interface CashflowRpcReturn {

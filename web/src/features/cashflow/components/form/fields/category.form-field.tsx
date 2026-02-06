@@ -41,6 +41,10 @@ const cashflowStatus: LabelValue<CashflowCategoryStatus>[] = [
     label: "Pindah Aset",
     value: "transfer",
   },
+  {
+    label: "Piutang",
+    value: "receivable",
+  },
 ];
 
 export function CasfhlowCategoryField({ form }: Props) {

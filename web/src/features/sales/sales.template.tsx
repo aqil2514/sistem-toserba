@@ -4,7 +4,7 @@ import { salesColumns } from "./components/columns/columns.sales";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { MainContainer } from "@/components/layout/container/main-container";
 import { SectionContainer } from "@/components/layout/container/section-container";
-import { SalesHeader } from "./components/header.sales";
+import { SalesHeader } from "./components/header/header.sales";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { SalesToolbar } from "./components/toolbar/toolbar.sales";
 import { SalesDetailDialog } from "./components/detail/detail.sales";

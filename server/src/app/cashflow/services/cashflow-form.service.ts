@@ -101,21 +101,6 @@ export class CashflowFormService {
     }
   }
 
-  private async editCashflow(
-    payload: CashflowDbInsert | CashflowDbInsert[],
-    cashflowId: string,
-  ) {
-    const { error } = await this.supabase
-      .from('cashflow')
-      .update(payload)
-      .eq('id', cashflowId);
-
-    if (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-
   private async createNewCashflowCategoryIfNoExist(
     payload: CashflowCategoryInsert,
   ): Promise<string> {

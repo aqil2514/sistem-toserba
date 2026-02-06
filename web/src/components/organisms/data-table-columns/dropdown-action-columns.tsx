@@ -15,6 +15,7 @@ export interface DropdownActionItems {
   onClick: () => void;
   itemLabel: string;
   className?: string;
+  disabled?: boolean;
 }
 
 interface Props {
@@ -38,6 +39,7 @@ export function DropdownActionColumn({ menuLabel, items }: Props) {
             key={`dropdown-action-${i + 1}`}
             onClick={item.onClick}
             className={cn(item.className)}
+            disabled={item.disabled}
           >
             {item.itemLabel}
           </DropdownMenuItem>

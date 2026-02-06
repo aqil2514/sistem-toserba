@@ -1,6 +1,10 @@
-export type CashflowCategoryStatus = 'expense' | 'transfer' | 'income';
+export type CashflowCategoryStatus =
+  | 'expense'
+  | 'transfer'
+  | 'income'
+  | 'receivable';
 
-export interface CashflowDb {
+export interface CashflowDb<T = unknown> {
   id: string;
   created_at: string;
   transaction_at: string;
@@ -12,6 +16,8 @@ export interface CashflowDb {
   note: string;
   deleted_at?: string;
   transfer_group_id?: string;
+  source?: string;
+  meta?: T;
 }
 
-export type CashflowDbInsert = Omit<CashflowDb, 'id' | 'created_at'>;
+export type CashflowDbInsert<T = unknown> = Omit<CashflowDb<T>, 'id' | 'created_at'>;

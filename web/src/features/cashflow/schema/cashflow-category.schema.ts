@@ -2,7 +2,7 @@ import z from "zod";
 
 export const cashflowCategorySchema = z.object({
   name: z.string().min(1, "Kategori wajib diisi"),
-  status: z.enum(["expense", "transfer", "income"]),
+  status: z.enum(["expense", "transfer", "income", 'receivable']),
   description: z.string().optional(),
 });
 

@@ -33,6 +33,7 @@ export const cashflowDataColumns: ColumnDef<CashflowRpcReturn>[] = [
         expense: "Pengeluaran",
         income: "Pemasukan",
         transfer: "Transfer",
+        receivable: "Piutang",
       };
 
       return mappingStatus[statusCashflow];
@@ -52,6 +53,7 @@ export const cashflowDataColumns: ColumnDef<CashflowRpcReturn>[] = [
       const isExpense =
         row.original.status_cashflow === "expense" && !isTransfer;
       const isIncome = row.original.status_cashflow === "income" && !isTransfer;
+      const isReceivable = row.original.status_cashflow === "receivable" && !isTransfer;
 
       return (
         <p
@@ -60,6 +62,7 @@ export const cashflowDataColumns: ColumnDef<CashflowRpcReturn>[] = [
             isTransfer && "text-blue-500",
             isExpense && "text-red-500",
             isIncome && "text-green-500",
+            isReceivable && "text-orange-500"
           )}
         >
           {value}

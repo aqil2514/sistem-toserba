@@ -6,21 +6,34 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useSales } from "../store/sales.provider";
+import { useSales } from "../../store/sales.provider";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { defaultQuery } from "../constants/default-query.sales";
-import { FormSales } from "./form/form.sales";
+import { defaultQuery } from "../../constants/default-query.sales";
+import { FormSales } from "../form/form.sales";
 import { toast } from "sonner";
-import { SalesSchemaType } from "../schemas/sales-schema";
+import { SalesSchemaType } from "../../schemas/sales-schema";
 import { api } from "@/lib/api";
 import { isAxiosError } from "axios";
 import { MutateButton } from "@/components/ui/mutate-button";
+import { AddToCashflowButton } from "./add-to-cashflow-button";
 
 export function SalesHeader() {
   const { mode, data, resetQuery, query, mutate } = useSales();
 
   const isFiltered = JSON.stringify(query) !== JSON.stringify(defaultQuery);
+
+  const cashflowAddHandler = async () => {
+    try {
+      await api.post("/cashflow/sales");
+
+      toast.success("Transaksi berhasil ditambah")
+    } catch (error) {
+      console.error(error);
+      toast.error("Terjadi Kesalahan");
+      throw error;
+    }
+  };
   return (
     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
       <div className="flex gap-4 items-center">
@@ -34,6 +47,7 @@ export function SalesHeader() {
         )}
       </div>
       <div className="md:flex gap-4 grid grid-cols-2">
+        <AddToCashflowButton onClickButton={cashflowAddHandler} />
         <MutateButton
           mutate={mutate}
           successToastMessage="Data penjualan telah dimuat ulang"

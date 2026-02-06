@@ -16,12 +16,14 @@ import { CashflowDto } from './dto/cashflow.dto';
 import { CashflowFormService } from './services/cashflow-form.service';
 import { CashflowFetchService } from './services/cashflow-fetch.service';
 import { BasicQuery } from '../../@types/general';
+import { CashflowSalesService } from './services/cashflow-sales.service';
 
 @Controller('cashflow')
 export class CashflowController {
   constructor(
     private readonly cashflowFormService: CashflowFormService,
     private readonly cashflowFetchService: CashflowFetchService,
+    private readonly cashflowSalesService: CashflowSalesService,
   ) {}
 
   @UseGuards(PasetoGuard, RoleGuard)
@@ -29,6 +31,13 @@ export class CashflowController {
   @Post()
   async createNewCashflow(@Body() body: CashflowDto) {
     return await this.cashflowFormService.createNewCashflowData(body);
+  }
+
+  @UseGuards(PasetoGuard, RoleGuard)
+  @Roles('admin')
+  @Post('sales')
+  async createNewCashflowFromSales() {
+    return await this.cashflowSalesService.createNewCashflowFromSales();
   }
 
   @UseGuards(PasetoGuard, RoleGuard)
