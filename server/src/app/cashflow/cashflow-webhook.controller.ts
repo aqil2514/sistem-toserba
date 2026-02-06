@@ -21,6 +21,7 @@ export class CashflowWebhookController {
       transaction_at: new Date().toISOString(),
       from_asset: 'Seabank',
       to_asset: 'RDN Bibit',
+      note:"Otomatis dari Webhook"
     };
     return await this.cashflowFormService.createNewCashflowData(payload);
   }
@@ -38,6 +39,7 @@ export class CashflowWebhookController {
       transaction_at: new Date().toISOString(),
       from_asset: 'RDN Bibit',
       to_asset: 'Bahana Likuid Syariah Kelas G',
+      note:"Otomatis dari Webhook"
     };
     return await this.cashflowFormService.createNewCashflowData(payload);
   }
