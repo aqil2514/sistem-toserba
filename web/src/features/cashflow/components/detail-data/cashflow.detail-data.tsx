@@ -1,5 +1,5 @@
 import React from "react";
-import { CashflowDb, ReceivableCashflowMeta } from "../../types/cashflow.types";
+import { CashflowDb, PayableCashflowMeta, ReceivableCashflowMeta } from "../../types/cashflow.types";
 import { OneLineItem } from "@/components/molecules/items/one-line-item";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
@@ -25,6 +25,7 @@ export function CashflowDetailData({ data }: Props) {
 const NonTransferDetail: React.FC<Props> = ({ data }) => {
   const cashflowData = data[0];
   const isReceivableData = cashflowData.status_cashflow === "receivable";
+  const isPayableData = cashflowData.status_cashflow === "payable";
 
   return (
     <div className="space-y-4">
@@ -42,6 +43,12 @@ const NonTransferDetail: React.FC<Props> = ({ data }) => {
         <OneLineItem
           label="Pihak yang berhutang"
           value={(cashflowData.meta as ReceivableCashflowMeta).customer_name}
+        />
+      )}
+      {isPayableData && (
+        <OneLineItem
+          label="Utang ke"
+          value={(cashflowData.meta as PayableCashflowMeta).vendor_name}
         />
       )}
       <OneLineItem label="Kategori" value={cashflowData.category.name} />

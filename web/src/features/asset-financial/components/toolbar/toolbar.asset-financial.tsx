@@ -37,7 +37,7 @@ const extractAsset = (
 };
 
 export function AssetFinancialToolbar() {
-  const { query, updateQuery, data } = useAssetFinancial();
+  const { query, updateQuery } = useAssetFinancial();
   return (
     <div className="flex flex-col gap-4">
       <div className="flex gap-4 items-center">

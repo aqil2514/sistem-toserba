@@ -20,6 +20,21 @@ export class CashflowFormService {
     private readonly supabase: SupabaseClient,
   ) {}
 
+  private buildMetaForAsset(
+    asset: string,
+    raw: CashflowDto,
+  ): Record<string, string> | null {
+    if (asset === 'Utang' && raw.payable_vendor_name) {
+      return { vendor_name: raw.payable_vendor_name };
+    }
+
+    if (asset === 'Piutang' && raw.receivable_customer_name) {
+      return { customer_name: raw.receivable_customer_name };
+    }
+
+    return null;
+  }
+
   private mapCashflowCategoryDtoToDb(
     raw: CashflowCategoryDto,
   ): CashflowCategoryInsert {
@@ -33,6 +48,7 @@ export class CashflowFormService {
     raw: CashflowDto,
     categoryId: string,
   ): CashflowDbInsert {
+    const assetMeta = this.buildMetaForAsset(raw.via, raw);
     const basicPayload: CashflowDbInsert = {
       category: categoryId,
       note: raw.note,
@@ -41,27 +57,8 @@ export class CashflowFormService {
       product_service: raw.product_service,
       transaction_at: raw.transaction_at,
       via: raw.via,
+      ...(assetMeta && { meta: assetMeta }),
     };
-
-    if (raw.category.status === 'receivable') {
-      const receivablePayload: CashflowDbInsert<ReceivableCashflowMeta> = {
-        ...basicPayload,
-        meta: {
-          customer_name: raw.receivable_customer_name,
-        },
-      };
-
-      return receivablePayload;
-    }
-
-    if (raw.category.status === 'payable') {
-      const payablePayload: CashflowDbInsert<PayableCashflowMeta> = {
-        ...basicPayload,
-        meta: { vendor_name: raw.payable_vendor_name },
-      };
-
-      return payablePayload;
-    }
 
     return basicPayload;
   }
@@ -70,6 +67,9 @@ export class CashflowFormService {
     raw: CashflowDto,
     categoryId: string,
   ): CashflowDbInsert[] {
+    const fromAssetMeta = this.buildMetaForAsset(raw.from_asset, raw);
+    const toAssetMeta = this.buildMetaForAsset(raw.to_asset, raw);
+
     const transfer_group_id = randomUUID();
     const fromAssetTransfer: CashflowDbInsert = {
       category: categoryId,
@@ -80,6 +80,7 @@ export class CashflowFormService {
       transaction_at: raw.transaction_at,
       via: raw.from_asset,
       transfer_group_id,
+      ...(fromAssetMeta && { meta: fromAssetMeta }),
     };
 
     const toAssetTransfer: CashflowDbInsert = {
@@ -91,6 +92,7 @@ export class CashflowFormService {
       transaction_at: raw.transaction_at,
       via: raw.to_asset,
       transfer_group_id,
+      ...(toAssetMeta && { meta: toAssetMeta }),
     };
 
     const transferFee: CashflowDbInsert | null =

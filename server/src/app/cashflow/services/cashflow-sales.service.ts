@@ -146,7 +146,7 @@ export class CashflowSalesService {
   private async editDataDb(price: number, cashflowId: string) {
     const { error } = await this.supabase
       .from('cashflow')
-      .update({ price })
+      .update({ price, transaction_at: new Date().toISOString() })
       .eq('id', cashflowId);
     if (error) {
       console.error(error);

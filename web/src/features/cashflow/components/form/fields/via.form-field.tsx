@@ -14,6 +14,8 @@ import { CashflowSchemaType } from "@/features/cashflow/schema/cashflow.schema";
 import { useFetch } from "@/hooks/use-fetch";
 import React, { useEffect, useMemo, useState } from "react";
 import { Controller, UseFormReturn, useWatch } from "react-hook-form";
+import { DebtorFormField } from "./debtor.form-field";
+import { VendorFormField } from "./payable-vendor.form-field";
 
 interface Props {
   form: UseFormReturn<CashflowSchemaType>;
@@ -82,7 +84,21 @@ const TransferField: React.FC<TransferFieldProps> = ({
     control: form.control,
     name: "transfer_fee",
   });
+
+  const toAsset = useWatch({
+    control: form.control,
+    name: "to_asset",
+  });
+
+  const fromAsset = useWatch({
+    control: form.control,
+    name: "from_asset",
+  });
+
   const isSubmitting = form.formState.isSubmitting;
+  const isReceivable = toAsset === "Piutang" || fromAsset === "Piutang";
+  const isPayable = fromAsset === "Utang" || toAsset === "Utang";
+
   const [isHaveFee, setIsHaveFee] = useState<boolean>(
     transfer_fee ? true : false,
   );
@@ -156,11 +172,13 @@ const TransferField: React.FC<TransferFieldProps> = ({
         <FieldComboboxComp
           form={form}
           items={items}
-          label="Ke Aset Aset"
+          label="Ke Aset"
           name="to_asset"
           onItemsChange={onItemsChange}
         />
       </div>
+      {isReceivable && <DebtorFormField form={form} /> }
+      {isPayable && <VendorFormField form={form} /> }
     </div>
   );
 };

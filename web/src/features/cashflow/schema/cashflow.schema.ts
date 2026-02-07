@@ -41,10 +41,26 @@ export const cashflowSchema = z
         });
       }
 
+      if (data.from_asset === "Utang" && !data.payable_vendor_name) {
+        ctx.addIssue({
+          path: ["payable_vendor_name"],
+          message: "Nama Vendor wajib diisi",
+          code: "custom",
+        });
+      }
+
       if (!data.to_asset) {
         ctx.addIssue({
           path: ["to_asset"],
           message: "Aset tujuan wajib diisi",
+          code: "custom",
+        });
+      }
+
+      if (data.to_asset === "Piutang" && !data.receivable_customer_name) {
+        ctx.addIssue({
+          path: ["receivable_customer_name"],
+          message: "Pihak yang berutang wajib diisi",
           code: "custom",
         });
       }
@@ -72,11 +88,11 @@ export const cashflowSchema = z
           message: "Aset biaya trasfer wajib diisi",
         });
       }
-    } 
+    }
 
-    if(data.category.status === "receivable"){
-      if(!data.receivable_customer_name){
-         ctx.addIssue({
+    if (data.category.status === "receivable") {
+      if (!data.receivable_customer_name) {
+        ctx.addIssue({
           path: ["receivable_customer_name"],
           message: "Pihak yang berutang wajib diisi",
           code: "custom",
@@ -84,9 +100,9 @@ export const cashflowSchema = z
       }
     }
 
-    if(data.category.status === "payable"){
-      if(!data.payable_vendor_name){
-         ctx.addIssue({
+    if (data.category.status === "payable") {
+      if (!data.payable_vendor_name) {
+        ctx.addIssue({
           path: ["payable_vendor_name"],
           message: "Nama Vendor wajib diisi",
           code: "custom",

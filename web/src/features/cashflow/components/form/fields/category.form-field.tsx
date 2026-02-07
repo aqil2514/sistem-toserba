@@ -22,7 +22,7 @@ import { CashflowCategoryDb } from "@/features/cashflow/types/cashflow-category.
 import { CashflowCategoryStatus } from "@/features/cashflow/types/cashflow.types";
 import { useFetch } from "@/hooks/use-fetch";
 import React, { useEffect, useState } from "react";
-import { Controller, UseFormReturn } from "react-hook-form";
+import { Controller, UseFormReturn, useWatch } from "react-hook-form";
 
 interface Props {
   form: UseFormReturn<CashflowSchemaType>;
@@ -111,6 +111,20 @@ const CategoryName: React.FC<CategoryNameProps> = ({
 
 const StatusCashflow: React.FC<Props> = ({ form }) => {
   const isSubmitting = form.formState.isSubmitting;
+  const asset = useWatch({
+    control: form.control,
+    name: "via",
+  });
+
+  useEffect(() => {
+    if (asset === "Piutang") {
+      return form.setValue("category.status", "receivable");
+    }
+    if (asset === "Utang") {
+      return form.setValue("category.status", "payable");
+    }
+  }, [asset, form]);
+
   return (
     <FieldGroup>
       <Controller
