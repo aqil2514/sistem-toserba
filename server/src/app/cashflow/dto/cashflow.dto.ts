@@ -105,6 +105,12 @@ export class CashflowDto {
   receivable_customer_name?: string;
   // Receivable Cashflow End
 
+  // Payable Cashflow Start
+  @IsOptional()
+  @IsString()
+  payable_vendor_name?: string;
+  // Payable Cashflow End
+
   @IsNumber()
   @IsPositive({ message: 'Harga tidak valid' })
   price: number;

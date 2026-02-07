@@ -25,6 +25,9 @@ export const cashflowSchema = z
     // Piutang Cashflow
     receivable_customer_name: z.string().optional(),
 
+    // Utang Cashflow
+    payable_vendor_name: z.string().optional(),
+
     price: z.number().min(1, "Harga tidak valid"),
     note: z.string(),
   })
@@ -76,6 +79,16 @@ export const cashflowSchema = z
          ctx.addIssue({
           path: ["receivable_customer_name"],
           message: "Pihak yang berutang wajib diisi",
+          code: "custom",
+        });
+      }
+    }
+
+    if(data.category.status === "payable"){
+      if(!data.payable_vendor_name){
+         ctx.addIssue({
+          path: ["payable_vendor_name"],
+          message: "Nama Vendor wajib diisi",
           code: "custom",
         });
       }

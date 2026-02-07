@@ -1,0 +1,1 @@
+CREATE INDEX idx_cashflow_meta_vendor_name ON cashflow ((meta->> 'vendor_name'))

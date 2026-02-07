@@ -24,7 +24,11 @@ FROM (
           WHEN c.status_cashflow = 'receivable' AND cuv.via = 'Piutang' THEN c.price  
           ELSE 0 
         END) AS income,
-    SUM(CASE WHEN c.status_cashflow = 'expense' THEN c.price ELSE 0 END) AS expense
+    SUM(CASE 
+          WHEN c.status_cashflow = 'expense' THEN c.price
+          WHEN c.status_cashflow = 'payable' AND cuv.via = 'Utang' THEN c.price  
+          ELSE 0 
+        END) AS expense
   FROM cashflow_unique_via cuv
     JOIN cashflow c ON c.via = cuv.via
   WHERE c.transaction_at >= p_start_utc

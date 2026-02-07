@@ -1,14 +1,8 @@
-import {
-  Inject,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { CashflowCategoryDb } from '../types/cashflow-category.types';
 import { BasicQuery, DataQueryResponse } from '../../../@types/general';
-import {
-  buildPaginationMeta,
-} from '../../../utils/query-builder';
+import { buildPaginationMeta } from '../../../utils/query-builder';
 import { formatQueryDate } from '../../../utils/format-date';
 import { CashflowRPCReturn } from '../types/cashflow-rpc.types';
 
@@ -112,5 +106,18 @@ export class CashflowFetchService {
     }
 
     return [data];
+  }
+
+  async getVendorName() {
+    const { data, error } = await this.supabase.from('vendor_name').select('*');
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    const vendorName = data.map((vendor) => vendor.vendor_name);
+
+    return vendorName;
   }
 }

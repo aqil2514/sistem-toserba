@@ -1,5 +1,6 @@
-CREATE VIEW public.customer_name AS
+CREATE OR REPLACE VIEW public.customer_name AS
 SELECT DISTINCT
   customer_name
 FROM 
-  sales;
+  sales
+WHERE deleted_at IS NULL;

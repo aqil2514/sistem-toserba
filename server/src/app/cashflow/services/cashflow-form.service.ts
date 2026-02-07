@@ -4,6 +4,7 @@ import { CashflowCategoryInsert } from '../types/cashflow-category.types';
 import {
   CashflowCategoryStatus,
   CashflowDbInsert,
+  PayableCashflowMeta,
   ReceivableCashflowMeta,
 } from '../types/cashflow.types';
 import { CashflowDto } from '../dto/cashflow.dto';
@@ -51,6 +52,15 @@ export class CashflowFormService {
       };
 
       return receivablePayload;
+    }
+
+    if (raw.category.status === 'payable') {
+      const payablePayload: CashflowDbInsert<PayableCashflowMeta> = {
+        ...basicPayload,
+        meta: { vendor_name: raw.payable_vendor_name },
+      };
+
+      return payablePayload;
     }
 
     return basicPayload;
@@ -103,8 +113,6 @@ export class CashflowFormService {
       ...(transferFee ? [transferFee] : []),
     ];
   }
-
-  private mapReceivableSchema;
 
   private async createNewCashflow(
     payload: CashflowDbInsert | CashflowDbInsert[],

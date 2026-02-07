@@ -29,3 +29,7 @@ export type CashflowDbInsert<T = unknown> = Omit<
 export interface ReceivableCashflowMeta {
   customer_name: string;
 }
+
+export interface PayableCashflowMeta {
+  vendor_name: string;
+}

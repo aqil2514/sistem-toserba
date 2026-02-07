@@ -36,3 +36,7 @@ export interface CashflowRpcReturn {
 export interface ReceivableCashflowMeta {
   customer_name: string;
 }
+
+export interface PayableCashflowMeta {
+  vendor_name: string;
+}

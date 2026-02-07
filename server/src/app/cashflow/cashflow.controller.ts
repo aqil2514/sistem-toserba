@@ -18,6 +18,8 @@ import { CashflowFetchService } from './services/cashflow-fetch.service';
 import { BasicQuery } from '../../@types/general';
 import { CashflowSalesService } from './services/cashflow-sales.service';
 
+@UseGuards(PasetoGuard, RoleGuard)
+@Roles('admin')
 @Controller('cashflow')
 export class CashflowController {
   constructor(
@@ -26,50 +28,41 @@ export class CashflowController {
     private readonly cashflowSalesService: CashflowSalesService,
   ) {}
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Post()
   async createNewCashflow(@Body() body: CashflowDto) {
     return await this.cashflowFormService.createNewCashflowData(body);
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Post('sales')
   async createNewCashflowFromSales() {
     return await this.cashflowSalesService.createNewCashflowFromSales();
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Get()
   async getCashflowsData(@Query() query: BasicQuery) {
     return await this.cashflowFetchService.getCashflowsData(query);
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Get('categories')
   async getCashflowCategories() {
     return await this.cashflowFetchService.getAllCashflowCategory();
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Get('assets')
   async getCashflowAset() {
     return await this.cashflowFetchService.getAllCashflowAsset();
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
+  @Get('vendor_name')
+  async getVendorName() {
+    return await this.cashflowFetchService.getVendorName();
+  }
+
   @Get(':id')
   async getCashflowDataById(@Param('id') cashflowId: string) {
     return await this.cashflowFetchService.getCashflowDataById(cashflowId);
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Put(':id/edit')
   async editCashflow(
     @Body() body: CashflowDto,
@@ -83,8 +76,6 @@ export class CashflowController {
     );
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Delete(':id')
   async deleteCashflowData(
     @Param('id') cashflowId: string,

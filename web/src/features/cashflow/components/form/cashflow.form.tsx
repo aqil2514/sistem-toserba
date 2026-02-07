@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { DebtorFormField } from "./fields/debtor.form-field";
+import { VendorFormField } from "./fields/payable-vendor.form-field";
 
 interface Props {
   defaultValues?: CashflowSchemaType;
@@ -53,6 +54,7 @@ export function CashflowForm({ submitHandler, defaultValues }: Props) {
           </div>
           <CasfhlowCategoryField form={form} />
           {cashflow === "receivable" && <DebtorFormField form={form} /> }
+          {cashflow === "payable" && <VendorFormField form={form} /> }
           <CashflowViaField form={form} />
           <CashflowNoteServiceField form={form} />
         </div>
