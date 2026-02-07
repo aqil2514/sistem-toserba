@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import {
   cashflowSchema,
   CashflowSchemaType,
@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { DebtorFormField } from "./fields/debtor.form-field";
 
 interface Props {
   defaultValues?: CashflowSchemaType;
@@ -29,6 +30,10 @@ export function CashflowForm({ submitHandler, defaultValues }: Props) {
   });
 
   const isSubmitting = form.formState.isSubmitting;
+  const cashflow = useWatch({
+    control: form.control,
+    name: "category.status",
+  });
 
   return (
     <form
@@ -47,6 +52,7 @@ export function CashflowForm({ submitHandler, defaultValues }: Props) {
             <CashflowPriceField form={form} />
           </div>
           <CasfhlowCategoryField form={form} />
+          {cashflow === "receivable" && <DebtorFormField form={form} /> }
           <CashflowViaField form={form} />
           <CashflowNoteServiceField form={form} />
         </div>

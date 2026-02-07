@@ -1,5 +1,5 @@
 import React from "react";
-import { CashflowDb } from "../../types/cashflow.types";
+import { CashflowDb, ReceivableCashflowMeta } from "../../types/cashflow.types";
 import { OneLineItem } from "@/components/molecules/items/one-line-item";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
@@ -24,6 +24,8 @@ export function CashflowDetailData({ data }: Props) {
 
 const NonTransferDetail: React.FC<Props> = ({ data }) => {
   const cashflowData = data[0];
+  const isReceivableData = cashflowData.status_cashflow === "receivable";
+
   return (
     <div className="space-y-4">
       <Separator />
@@ -36,6 +38,12 @@ const NonTransferDetail: React.FC<Props> = ({ data }) => {
       />
       <OneLineItem label="Total" value={formatRupiah(cashflowData.price)} />
       <OneLineItem label="Produk / Jasa" value={cashflowData.product_service} />
+      {isReceivableData && (
+        <OneLineItem
+          label="Pihak yang berhutang"
+          value={(cashflowData.meta as ReceivableCashflowMeta).customer_name}
+        />
+      )}
       <OneLineItem label="Kategori" value={cashflowData.category.name} />
       <OneLineItem
         label="Status Cashflow"
@@ -67,7 +75,12 @@ const TransferDetail: React.FC<Props> = ({ data }) => {
         )}
       />
       <OneLineItem label="Total" value={`${formatRupiah(expense.price)}`} />
-      {fee && <OneLineItem label="Biaya Transfer" value={`${formatRupiah(fee.price)}`} />}
+      {fee && (
+        <OneLineItem
+          label="Biaya Transfer"
+          value={`${formatRupiah(fee.price)}`}
+        />
+      )}
       <OneLineItem label="Produk / Jasa" value={expense.product_service} />
       <OneLineItem label="Kategori" value={expense.category.name} />
       <OneLineItem label="Status Cashflow" value={"Transfer"} />

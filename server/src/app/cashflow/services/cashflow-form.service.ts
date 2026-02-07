@@ -4,6 +4,7 @@ import { CashflowCategoryInsert } from '../types/cashflow-category.types';
 import {
   CashflowCategoryStatus,
   CashflowDbInsert,
+  ReceivableCashflowMeta,
 } from '../types/cashflow.types';
 import { CashflowDto } from '../dto/cashflow.dto';
 import { CashflowCategoryDto } from '../dto/cashflow-category.dto';
@@ -31,7 +32,7 @@ export class CashflowFormService {
     raw: CashflowDto,
     categoryId: string,
   ): CashflowDbInsert {
-    return {
+    const basicPayload: CashflowDbInsert = {
       category: categoryId,
       note: raw.note,
       status_cashflow: raw.category.status as CashflowCategoryStatus,
@@ -40,6 +41,19 @@ export class CashflowFormService {
       transaction_at: raw.transaction_at,
       via: raw.via,
     };
+
+    if (raw.category.status === 'receivable') {
+      const receivablePayload: CashflowDbInsert<ReceivableCashflowMeta> = {
+        ...basicPayload,
+        meta: {
+          customer_name: raw.receivable_customer_name,
+        },
+      };
+
+      return receivablePayload;
+    }
+
+    return basicPayload;
   }
 
   private mapTransferCashflowDtoToDb(
@@ -89,6 +103,8 @@ export class CashflowFormService {
       ...(transferFee ? [transferFee] : []),
     ];
   }
+
+  private mapReceivableSchema;
 
   private async createNewCashflow(
     payload: CashflowDbInsert | CashflowDbInsert[],

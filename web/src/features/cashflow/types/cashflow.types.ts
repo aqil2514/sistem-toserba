@@ -3,7 +3,8 @@ export type CashflowCategoryStatus =
   | "expense"
   | "transfer"
   | "income"
-  | "receivable";
+  | "receivable"
+  | "payable";
 
 export interface CashflowDb<T = unknown> {
   id: string;
@@ -30,4 +31,8 @@ export interface CashflowRpcReturn {
   via: string;
   price: number;
   transfer_group_id?: string;
+}
+
+export interface ReceivableCashflowMeta {
+  customer_name: string;
 }

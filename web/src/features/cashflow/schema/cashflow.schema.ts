@@ -16,10 +16,14 @@ export const cashflowSchema = z
     category: cashflowCategorySchema,
     via: z.string().optional(),
 
+    // Trasnfer Cashflow
     from_asset: z.string().optional(),
     to_asset: z.string().optional(),
     transfer_fee: z.number().optional(),
     transfer_fee_asset: z.string().optional(),
+
+    // Piutang Cashflow
+    receivable_customer_name: z.string().optional(),
 
     price: z.number().min(1, "Harga tidak valid"),
     note: z.string(),
@@ -63,6 +67,16 @@ export const cashflowSchema = z
           path: ["transfer_fee_asset"],
           code: "custom",
           message: "Aset biaya trasfer wajib diisi",
+        });
+      }
+    } 
+
+    if(data.category.status === "receivable"){
+      if(!data.receivable_customer_name){
+         ctx.addIssue({
+          path: ["receivable_customer_name"],
+          message: "Pihak yang berutang wajib diisi",
+          code: "custom",
         });
       }
     }

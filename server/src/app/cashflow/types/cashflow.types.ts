@@ -2,7 +2,8 @@ export type CashflowCategoryStatus =
   | 'expense'
   | 'transfer'
   | 'income'
-  | 'receivable';
+  | 'receivable'
+  | 'payable';
 
 export interface CashflowDb<T = unknown> {
   id: string;
@@ -20,4 +21,11 @@ export interface CashflowDb<T = unknown> {
   meta?: T;
 }
 
-export type CashflowDbInsert<T = unknown> = Omit<CashflowDb<T>, 'id' | 'created_at'>;
+export type CashflowDbInsert<T = unknown> = Omit<
+  CashflowDb<T>,
+  'id' | 'created_at'
+>;
+
+export interface ReceivableCashflowMeta {
+  customer_name: string;
+}

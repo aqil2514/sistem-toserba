@@ -80,6 +80,7 @@ export class CashflowDto {
   @IsOptional()
   via?: string;
 
+  // Transfer Cashflow Start
   @IsOptional()
   @IsString()
   from_asset?: string;
@@ -88,7 +89,6 @@ export class CashflowDto {
   @IsString()
   to_asset?: string;
 
-  
   @IsOptional()
   @IsNumber()
   @IsPositive()
@@ -97,6 +97,13 @@ export class CashflowDto {
   @IsOptional()
   @IsString()
   transfer_fee_asset?: string;
+  // Transfer Cashflow End
+
+  // Receivable Cashflow Start
+  @IsOptional()
+  @IsString()
+  receivable_customer_name?: string;
+  // Receivable Cashflow End
 
   @IsNumber()
   @IsPositive({ message: 'Harga tidak valid' })

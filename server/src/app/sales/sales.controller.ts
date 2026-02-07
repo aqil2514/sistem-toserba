@@ -19,24 +19,24 @@ import { GetSummaryQuery } from './interface/sales-rpc.interface';
 import { SalesRpcService } from './helper/sales-rpc.service';
 import { SalesReportQuery } from './interface/sales-report.interface';
 import { SalesReportService } from './helper/sales-report.service';
+import { SalesFetcherService } from './helper/sales-fetcher.service';
 
+@UseGuards(PasetoGuard, RoleGuard)
+@Roles('admin')
 @Controller('sales')
 export class SalesController {
   constructor(
     private readonly salesService: SalesService,
     private readonly salesRpcService: SalesRpcService,
     private readonly salesReportService: SalesReportService,
+    private readonly salesFetcherService: SalesFetcherService,
   ) {}
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Get()
   async getTransaction(@Query() query: SalesQuery) {
-    return await this.salesService.findByQuery(query);
+    return await this.salesFetcherService.findByQuery(query);
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Get('report')
   async getSalesReport(@Query() query: SalesReportQuery) {
     if (query.content === 'summary')
@@ -58,8 +58,6 @@ export class SalesController {
     }
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Get('summary')
   async getSummarySales(@Query() query: GetSummaryQuery) {
     const { endDate, startDate, timezone } = query;
@@ -70,22 +68,21 @@ export class SalesController {
     );
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
-  @Get(':sales_id')
-  async getTransactionBySalesId(@Param('sales_id') sales_id: string) {
-    return await this.salesService.findItemBySalesId(sales_id);
+  @Get('customer_name')
+  async getCustomerName() {
+    return await this.salesFetcherService.getCustomerName();
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
+  @Get(':sales_id')
+  async getTransactionBySalesId(@Param('sales_id') sales_id: string) {
+    return await this.salesFetcherService.findItemBySalesId(sales_id);
+  }
+
   @Post()
   async createNewTransaction(@Body() body: CreateSalesDto) {
     return await this.salesService.createNewTransaction(body);
-  } 
+  }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Put(':sales_id')
   async editTransaction(
     @Body() body: CreateSalesDto,
@@ -94,8 +91,6 @@ export class SalesController {
     return await this.salesService.updateTransaction(sales_id, body);
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Delete(':sales_id')
   async deleteTransaction(@Param('sales_id') sales_id: string) {
     return await this.salesService.deleteTransaction(sales_id);
