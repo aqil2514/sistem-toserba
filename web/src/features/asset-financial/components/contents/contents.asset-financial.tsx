@@ -18,9 +18,11 @@ export function AssetFinancialContents() {
   if (isLoading) return <LoadingSpinner label="Mengambil data..." />;
   if (!data) return null;
 
+  const filteredData = data.filter((d) => d.asset !== "Piutang" && d.asset !== "Utang" )
+
   return (
     <div className="grid grid-cols-3 gap-4">
-      {data.map((asset) => (
+      {filteredData.map((asset) => (
         <Card key={asset.asset}>
           <CardHeader>
             <CardTitle>{asset.asset}</CardTitle>

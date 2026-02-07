@@ -52,10 +52,10 @@ export function CashflowForm({ submitHandler, defaultValues }: Props) {
             <CashflowProductServiceField form={form} />
             <CashflowPriceField form={form} />
           </div>
-          <CashflowViaField form={form} />
+          <CasfhlowCategoryField form={form} />
           {cashflow === "receivable" && <DebtorFormField form={form} /> }
           {cashflow === "payable" && <VendorFormField form={form} /> }
-          <CasfhlowCategoryField form={form} />
+          <CashflowViaField form={form} />
           <CashflowNoteServiceField form={form} />
         </div>
       </ScrollArea>
