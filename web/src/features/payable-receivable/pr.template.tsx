@@ -4,35 +4,33 @@ import { MainContainer } from "@/components/layout/container/main-container";
 import { SectionContainer } from "@/components/layout/container/section-container";
 import { UnavailableDemo } from "@/components/templates/unavailable-demo";
 import {
-  AssetFinancialProvider,
-  useAssetFinancial,
-} from "./store/asset-financial.store";
-import { AssetFinancialContents } from "./components/contents/contents.asset-financial";
-import { AssetFinancialToolbar } from "./components/toolbar/toolbar.asset-financial";
+  ReceivablePayableProvider,
+  useReceivablePayable,
+} from "./store/payable-receivable.provider";
 import { HeaderWithMutate } from "@/components/organisms/header/header-with-mutate";
+import { PayableReceivableContent } from "./components/contents/contents.payable-receivable";
 
 interface Props {
   mode: TemplateMode;
 }
 
-export function AssetFinancialTemplate({ mode }: Props) {
+export function PayableReceivableTemplate({ mode }: Props) {
   if (mode === "demo") return <UnavailableDemo />;
 
   return (
-    <AssetFinancialProvider>
+    <ReceivablePayableProvider>
       <InnerTemplate />
-    </AssetFinancialProvider>
+    </ReceivablePayableProvider>
   );
 }
 
 const InnerTemplate = () => {
-  const { mutate } = useAssetFinancial();
+  const { mutate } = useReceivablePayable();
   return (
     <MainContainer>
       <SectionContainer>
-        <HeaderWithMutate title="Aset Finansial" mutate={mutate} />
-        <AssetFinancialToolbar />
-        <AssetFinancialContents />
+        <HeaderWithMutate mutate={mutate} title="Utang Piutang" />
+        <PayableReceivableContent />
       </SectionContainer>
     </MainContainer>
   );

@@ -1,4 +1,4 @@
-import { ChartNoAxesCombined, Database } from "lucide-react";
+import { ChartNoAxesCombined, Database, HandCoins } from "lucide-react";
 import { NavItemsTypes, RouteItems } from "../types/nav-items.interface";
 
 const NAV_ITEMS: RouteItems[] = [
@@ -13,6 +13,12 @@ const NAV_ITEMS: RouteItems[] = [
     description: "Aset Finansial Warung",
     href: "/asset-financial",
     title: "Aset Finansial",
+  },
+  {
+    icon: HandCoins,
+    description: "Utang Piutang Warung",
+    href: "/payable-receivable",
+    title: "Utang Piutang",
   },
 ];
 
