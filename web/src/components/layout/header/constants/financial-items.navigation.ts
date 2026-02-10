@@ -1,4 +1,4 @@
-import { ChartLine, ChartNoAxesCombined, Database, HandCoins } from "lucide-react";
+import { Calculator, ChartLine, ChartNoAxesCombined, Database, HandCoins } from "lucide-react";
 import { NavItemsTypes, RouteItems } from "../types/nav-items.interface";
 
 const NAV_ITEMS: RouteItems[] = [
@@ -25,6 +25,12 @@ const NAV_ITEMS: RouteItems[] = [
     description: "Utang Piutang Warung",
     href: "/payable-receivable",
     title: "Utang Piutang",
+  },
+  {
+    icon: Calculator,
+    description: "Penghitung Uang",
+    href: "/cash-counter",
+    title: "Penghitung Uang",
   },
 ];
 

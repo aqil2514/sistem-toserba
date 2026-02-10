@@ -1,17 +1,17 @@
 import { LabelValue } from "@/@types/general";
 import { PurchaseReportContent } from "../../types/query.purchase-report";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePurchaseReport } from "../../store/provider.purchase-report";
 import React from "react";
 import { PurchaseReportSummaryContent } from "./summary/summary-content.purchase-report";
 import { PurchaseReportDetailContent } from "./detail/detail-content.purchase-report";
 import { PurchaseReportChartContent } from "./chart/chart-content.purchase-report";
+import { TabsContentData } from "@/components/organisms/contents/tabs-content";
 
 type TabsContentType = LabelValue<PurchaseReportContent> & {
   content: React.ReactNode;
 };
 
-const contentTrigger: TabsContentType[] = [
+const tabContents: TabsContentType[] = [
   {
     label: "Ringkasan",
     value: "summary",
@@ -25,7 +25,7 @@ const contentTrigger: TabsContentType[] = [
   {
     label: "Diagram",
     value: "chart",
-    content: <PurchaseReportChartContent />
+    content: <PurchaseReportChartContent />,
   },
 ];
 
@@ -33,23 +33,10 @@ export function PurchaseReportContents() {
   const { query, updateQuery } = usePurchaseReport();
 
   return (
-    <Tabs
+    <TabsContentData
       value={query.content}
-      onValueChange={(e) => updateQuery("content", e as PurchaseReportContent)}
-      className="w-full"
-    >
-      <TabsList>
-        {contentTrigger.map((content) => (
-          <TabsTrigger value={content.value} key={content.value}>
-            {content.label}
-          </TabsTrigger>
-        ))}
-      </TabsList>
-      {contentTrigger.map((content) => (
-        <TabsContent key={content.value} value={content.value}>
-          {content.content}
-        </TabsContent>
-      ))}
-    </Tabs>
+      onValueChange={(e) => updateQuery("content", e)}
+      tabContents={tabContents}
+    />
   );
 }
