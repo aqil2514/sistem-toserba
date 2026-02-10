@@ -29,16 +29,17 @@ export interface SortState {
 
 // Standardized metadata structure for paginated responses
 // Keeps pagination logic consistent across different endpoints
-export interface MetaResponseQuery {
+export interface MetaResponseQuery<T = unknown> {
   page: number;
   limit: number;
   total: number;
   totalPages: number;
+  type?: T;
 }
 
 // Generic wrapper for query-based API responses
 // Allows reusing the same response shape while keeping strong typing
-export interface DataQueryResponse<T = unknown> {
+export interface DataQueryResponse<T = unknown, K = string> {
   data: T;
-  meta: MetaResponseQuery;
+  meta: MetaResponseQuery<K>;
 }

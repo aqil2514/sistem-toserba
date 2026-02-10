@@ -13,7 +13,7 @@ $$
 WITH base AS (
   SELECT
     c.meta->>'vendor_name' AS vendor_name,
-    SUM(CASE WHEN c.status_cashflow = 'expense' AND c.via = 'Utang' THEN c.price ELSE 0 END) AS total,
+    SUM(CASE WHEN c.status_cashflow IN ('expense', 'payable') AND c.via = 'Utang' THEN c.price ELSE 0 END) AS total,
     SUM(CASE WHEN c.status_cashflow = 'income'  AND c.via = 'Utang' THEN c.price ELSE 0 END) AS paid
   FROM cashflow c
   WHERE c.via = 'Utang'

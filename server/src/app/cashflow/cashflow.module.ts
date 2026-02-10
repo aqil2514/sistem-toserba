@@ -6,6 +6,7 @@ import { CashflowSalesService } from './services/cashflow-sales.service';
 import { SalesModule } from '../sales/sales.module';
 import { CashflowWebhookController } from './cashflow-webhook.controller';
 import { CashflowPRService } from './services/cashflow-pr.service';
+import { CashflowReportService } from './services/cashflow-report.service';
 
 @Module({
   imports: [SalesModule],
@@ -15,6 +16,7 @@ import { CashflowPRService } from './services/cashflow-pr.service';
     CashflowFetchService,
     CashflowSalesService,
     CashflowPRService,
+    CashflowReportService,
   ],
 })
 export class CashflowModule {}

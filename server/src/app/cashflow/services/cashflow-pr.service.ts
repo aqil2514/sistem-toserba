@@ -7,6 +7,7 @@ import {
 } from '../types/cashflow-pr.types';
 
 @Injectable()
+// PR = Payable Receivable
 export class CashflowPRService {
   constructor(
     @Inject('SUPABASE_CLIENT')

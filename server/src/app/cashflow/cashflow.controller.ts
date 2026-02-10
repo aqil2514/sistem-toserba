@@ -18,6 +18,8 @@ import { CashflowFetchService } from './services/cashflow-fetch.service';
 import { BasicQuery } from '../../@types/general';
 import { CashflowSalesService } from './services/cashflow-sales.service';
 import { CashflowPRService } from './services/cashflow-pr.service';
+import { CashflowReportService } from './services/cashflow-report.service';
+import { CashflowReportQuery } from './types/cashflow-report.types';
 
 @UseGuards(PasetoGuard, RoleGuard)
 @Roles('admin')
@@ -27,7 +29,8 @@ export class CashflowController {
     private readonly cashflowFormService: CashflowFormService,
     private readonly cashflowFetchService: CashflowFetchService,
     private readonly cashflowSalesService: CashflowSalesService,
-    private readonly cashflowPRService:CashflowPRService
+    private readonly cashflowPRService: CashflowPRService,
+    private readonly cashflowReportService: CashflowReportService,
   ) {}
 
   @Post()
@@ -41,7 +44,7 @@ export class CashflowController {
   }
 
   @Get()
-  async getCashflowsData(@Query() query: BasicQuery) {
+  async getCashflowsData(@Query() query: CashflowReportQuery) {
     return await this.cashflowFetchService.getCashflowsData(query);
   }
 
@@ -55,9 +58,14 @@ export class CashflowController {
     return await this.cashflowFetchService.getAllCashflowAsset();
   }
 
-  @Get("payable-receivable")
-  async getCashflowPayableReceivable(){
-    return await this.cashflowPRService.getPayableReceivable()
+  @Get('payable-receivable')
+  async getCashflowPayableReceivable() {
+    return await this.cashflowPRService.getPayableReceivable();
+  }
+
+  @Get('report')
+  async getCashflowReport(@Query() query: BasicQuery) {
+    return await this.cashflowReportService.getCashflowBreakdown(query);
   }
 
   @Get('vendor_name')
