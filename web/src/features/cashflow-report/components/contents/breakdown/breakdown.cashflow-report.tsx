@@ -3,15 +3,16 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { useCashflowReport } from "@/features/cashflow-report/store/cashflow-report.provider";
 import { breakdownCashflowReportColumns } from "./columns/breakdown-columns.cashflow-report";
 import { DataTableFooterServer } from "@/components/organisms/ori-data-table/data-table-footer-server";
-import {
-  FilterKeyType,
-  MultiFilter,
-} from "@/components/filters/multi-filter";
 import { useMemo } from "react";
 import {
   SingleSorting,
   SortingKeyType,
 } from "@/components/molecules/sorting/single-sorting";
+import { FilterPanel } from "@/components/filters/filter-panel/master.filter-panel";
+import { FilterConfig } from "@/components/filters/filter-panel/types.filter-panel";
+import { viaCashflow } from "@/features/cashflow/constants/cashflow-filter-options.constants";
+import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
+import { statusCashflowFilterOptions } from "@/features/cashflow-report/constants/filters";
 
 export function CashflowReportBreakdown() {
   const { data, isLoading, query, updateQuery } = useCashflowReport();
@@ -38,10 +39,24 @@ export function CashflowReportBreakdown() {
   );
 }
 
-const filterKeys: FilterKeyType[] = [
+const filterConfig: FilterConfig[] = [
   {
-    filterKey: "via",
+    field: "via",
     label: "Aset",
+    type: "select",
+    selectOptions: viaCashflow,
+  },
+  {
+    field: "status_cashflow",
+    label: "Status Cashflow",
+    type: "select",
+    selectOptions: statusCashflowFilterOptions,
+  },
+  {
+    field: "price",
+    label: "Nominal",
+    type: "text",
+    withOperator: true,
   },
 ];
 
@@ -70,14 +85,30 @@ const FilterSorting = () => {
 
   return (
     <div className="flex gap-4">
-      <MultiFilter
+      <FilterPanel
         initialValue={memoQueryFilter}
         onApplyFilter={(values) => updateQuery("filters", values)}
-        filterKeys={filterKeys}
+        config={filterConfig}
       />
       <SingleSorting
         onSortStateChange={(values) => updateQuery("sort", values)}
         sortingkeys={sortingkeys}
+      />
+      <ToolbarDatepicker
+        date={{
+          from: query.from,
+          to: query.to,
+        }}
+        onApply={(date) => {
+          if (!date) return;
+          updateQuery("from", date.from);
+          updateQuery("to", date.to);
+        }}
+        setDate={(date) => {
+          if (!date) return;
+          updateQuery("from", date.from);
+          updateQuery("to", date.to);
+        }}
       />
     </div>
   );

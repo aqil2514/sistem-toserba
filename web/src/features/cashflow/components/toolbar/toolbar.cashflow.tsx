@@ -58,6 +58,12 @@ const filterConfig: FilterConfig[] = [
     type: "select",
     selectOptions: viaCashflow,
   },
+  {
+    field: "price",
+    label: "Nominal",
+    type: "text",
+    withOperator: true,
+  },
 ];
 export function CashflowToolbar() {
   const { updateQuery, query } = useCashflow();
