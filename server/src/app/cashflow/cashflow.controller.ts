@@ -32,7 +32,7 @@ export class CashflowController {
     private readonly cashflowSalesService: CashflowSalesService,
     private readonly cashflowPRService: CashflowPRService,
     private readonly cashflowReportService: CashflowReportService,
-    private readonly cashflowResourcesService:CashflowResourcesService
+    private readonly cashflowResourcesService: CashflowResourcesService,
   ) {}
 
   @Post()
@@ -66,7 +66,9 @@ export class CashflowController {
   }
 
   @Get('report')
-  async getCashflowReport(@Query() query: BasicQuery) {
+  async getCashflowReport(@Query() query: CashflowReportQuery) {
+    if (query.content === 'summary')
+      return await this.cashflowReportService.getCashflowSummary(query);
     return await this.cashflowReportService.getCashflowBreakdown(query);
   }
 

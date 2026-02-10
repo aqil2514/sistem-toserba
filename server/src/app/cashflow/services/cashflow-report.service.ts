@@ -2,7 +2,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { BasicQuery, DataQueryResponse } from '../../../@types/general';
 import { formatQueryDate } from '../../../utils/format-date';
-import { CashflowBreakdownRpc } from '../types/cashflow-report.types';
+import { CashflowBreakdownRpc, DailyCashflowSummaryRow } from '../types/cashflow-report.types';
 import { buildPaginationMeta } from '../../../utils/query-builder';
 
 @Injectable()
@@ -43,5 +43,24 @@ export class CashflowReportService {
       data,
       meta,
     };
+  }
+
+  async getCashflowSummary(query: BasicQuery):Promise<DailyCashflowSummaryRow[]> {
+    const { endUtc, startUtc } = formatQueryDate(query);
+
+    const { data, error } = await this.supabase.rpc(
+      'get_daily_cashflow_summary',
+      {
+        p_start_utc: startUtc,
+        p_end_utc: endUtc,
+      },
+    );
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    return data;
   }
 }

@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/organisms/ori-data-table/data-table";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { useCashflowReport } from "@/features/cashflow-report/store/cashflow-report.provider";
-import { breakdownCashflowReportColumns } from "./columns/breakdown-columns.cashflow-report";
+import { breakdownCashflowReportColumns } from "./breakdown-columns.cashflow-report";
 import { DataTableFooterServer } from "@/components/organisms/ori-data-table/data-table-footer-server";
 import { useMemo } from "react";
 import {
@@ -13,30 +13,34 @@ import { FilterConfig } from "@/components/filters/filter-panel/types.filter-pan
 import { viaCashflow } from "@/features/cashflow/constants/cashflow-filter-options.constants";
 import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
 import { statusCashflowFilterOptions } from "@/features/cashflow-report/constants/filters";
+import { isBreakdownCashflowReport } from "@/features/cashflow-report/types/type-guard";
 
 export function CashflowReportBreakdown() {
   const { data, isLoading, query, updateQuery } = useCashflowReport();
 
-  return (
-    <div className="space-y-4">
-      <FilterSorting />
-      {isLoading || !data ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          <DataTable
-            columns={breakdownCashflowReportColumns}
-            data={data.data}
-          />
-          <DataTableFooterServer
-            meta={data.meta}
-            query={query}
-            onQueryChange={updateQuery}
-          />
-        </>
-      )}
-    </div>
-  );
+  if (!data || isLoading) return <LoadingSpinner />;
+
+  if (data && isBreakdownCashflowReport(query.content, data))
+    return (
+      <div className="space-y-4">
+        <FilterSorting />
+        {isLoading || !data ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            <DataTable
+              columns={breakdownCashflowReportColumns}
+              data={data.data}
+            />
+            <DataTableFooterServer
+              meta={data.meta}
+              query={query}
+              onQueryChange={updateQuery}
+            />
+          </>
+        )}
+      </div>
+    );
 }
 
 const filterConfig: FilterConfig[] = [

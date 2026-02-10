@@ -4,12 +4,18 @@ import React from "react";
 import { CashflowReportContent } from "../../types/cashflow-report-query.types";
 import { CashflowReportBreakdown } from "./breakdown/breakdown.cashflow-report";
 import { useCashflowReport } from "../../store/cashflow-report.provider";
+import { CashflowReportSummary } from "./summary/summary.cashflow-report";
 
 type TabsContentType = LabelValue<CashflowReportContent> & {
   content: React.ReactNode;
 };
 
 const contentTrigger: TabsContentType[] = [
+  {
+    label: "Ringkasan",
+    value: "summary",
+    content: <CashflowReportSummary />,
+  },
   {
     label: "Detail",
     value: "breakdown",

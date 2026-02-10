@@ -8,3 +8,4 @@ export interface CashflowRPCReturn {
   price: number;
   transfer_group_id?: string;
 }
+
