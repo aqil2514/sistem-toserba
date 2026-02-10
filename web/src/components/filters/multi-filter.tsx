@@ -3,7 +3,6 @@ import {
   FilterState,
 } from "@/@types/general";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
@@ -20,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import React, { useEffect, useEffectEvent, useState } from "react";
+import { FilterTextInput } from "./filter-text-input";
 
 const dummyKey = [
   {
@@ -211,26 +211,16 @@ const FilterContent: React.FC<FilterContentProps> = ({
               index={i}
             />
 
-            <div className="flex gap-1 items-center ">
-              <Input
-                value={snap.value}
-                disabled={snap.operator === "is_null" || snap.operator === "is_not_null"}
-                className="w-full"
-                onChange={(e) => updateValue(i, e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") onApplyFilter(snapshot);
-                  if ((e.ctrlKey && e.key === "X") || e.key === "x")
-                    deleteFilter(i);
-                }}
-              />
-              <Button
-                variant={"outline"}
-                size={"icon"}
-                onClick={() => deleteFilter(i)}
-              >
-                X
-              </Button>
-            </div>
+            <FilterTextInput
+              value={snap.value}
+              disabled={
+                snap.operator === "is_null" || snap.operator === "is_not_null"
+              }
+              onValueChange={(e) => updateValue(i, e)}
+              onEnterEvent={() => onApplyFilter(snapshot)}
+              onClear={() => deleteFilter(i)}
+              clearable
+            />
           </div>
         );
       })}

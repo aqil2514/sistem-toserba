@@ -24,6 +24,7 @@ export const breakdownCashflowReportColumns: ColumnDef<CashflowBreakdownRpc>[] =
           income: "Pemasukan",
           transfer_out: "Transfer Keluar",
           transfer_in: "Transfer Masuk",
+          transfer_fee: "Biaya Transfer",
           payable: "Utang",
           receivable: "Piutang",
         };

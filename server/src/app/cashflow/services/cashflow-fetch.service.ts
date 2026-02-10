@@ -107,17 +107,4 @@ export class CashflowFetchService {
 
     return [data];
   }
-
-  async getVendorName() {
-    const { data, error } = await this.supabase.from('vendor_name').select('*');
-
-    if (error) {
-      console.error(error);
-      throw error;
-    }
-
-    const vendorName = data.map((vendor) => vendor.vendor_name);
-
-    return vendorName;
-  }
 }

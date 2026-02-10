@@ -1,4 +1,4 @@
-import { FilterKeyType } from "@/components/molecules/filters/multi-filter";
+import { FilterKeyType } from "@/components/filters/multi-filter";
 import { SalesReportQuery } from "../types/query.report-sales";
 
 export function getFilterKey(query: SalesReportQuery): FilterKeyType[] {

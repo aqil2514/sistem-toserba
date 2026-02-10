@@ -3,9 +3,9 @@ import { usePurchaseReport } from "../../store/provider.purchase-report";
 import {
   FilterKeyType,
   MultiFilter,
-} from "@/components/molecules/filters/multi-filter";
+} from "@/components/filters/multi-filter";
 import { SingleSorting, SortingKeyType } from "@/components/molecules/sorting/single-sorting";
-import { ToolbarDatepicker } from "@/components/molecules/filters/toolbar-datepicker";
+import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
 
 const filterKey: FilterKeyType[] = [
   {

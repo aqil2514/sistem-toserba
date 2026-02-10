@@ -6,7 +6,7 @@ import { DataTableFooterServer } from "@/components/organisms/ori-data-table/dat
 import {
   FilterKeyType,
   MultiFilter,
-} from "@/components/molecules/filters/multi-filter";
+} from "@/components/filters/multi-filter";
 import { useMemo } from "react";
 import {
   SingleSorting,

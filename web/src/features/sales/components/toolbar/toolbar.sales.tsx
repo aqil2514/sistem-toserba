@@ -1,4 +1,4 @@
-import { ToolbarDatepicker } from "@/components/molecules/filters/toolbar-datepicker";
+import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
 import { useSales } from "../../store/sales.provider";
 import { SalesToolbarFilter } from "./toolbar-filter";
 import { SalesToolbarSorting } from "./toolbar-sorting";

@@ -20,6 +20,7 @@ import { CashflowSalesService } from './services/cashflow-sales.service';
 import { CashflowPRService } from './services/cashflow-pr.service';
 import { CashflowReportService } from './services/cashflow-report.service';
 import { CashflowReportQuery } from './types/cashflow-report.types';
+import { CashflowResourcesService } from './services/cashflow-resources.service';
 
 @UseGuards(PasetoGuard, RoleGuard)
 @Roles('admin')
@@ -31,6 +32,7 @@ export class CashflowController {
     private readonly cashflowSalesService: CashflowSalesService,
     private readonly cashflowPRService: CashflowPRService,
     private readonly cashflowReportService: CashflowReportService,
+    private readonly cashflowResourcesService:CashflowResourcesService
   ) {}
 
   @Post()
@@ -70,7 +72,7 @@ export class CashflowController {
 
   @Get('vendor_name')
   async getVendorName() {
-    return await this.cashflowFetchService.getVendorName();
+    return await this.cashflowResourcesService.getVendorName();
   }
 
   @Get(':id')

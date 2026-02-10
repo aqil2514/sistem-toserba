@@ -1,33 +1,16 @@
-import { ToolbarDatepicker } from "@/components/molecules/filters/toolbar-datepicker";
+import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
 import { useCashflow } from "../../store/provider.cashflow";
-import {
-  FilterKeyType,
-  MultiFilter,
-} from "@/components/molecules/filters/multi-filter";
 import {
   SingleSorting,
   SortingKeyType,
 } from "@/components/molecules/sorting/single-sorting";
 import { useMemo } from "react";
-
-const filterKeys: FilterKeyType[] = [
-  {
-    filterKey: "product_service",
-    label: "Nama Produk / Jasa",
-  },
-  {
-    filterKey: "cashflow_category",
-    label: "Kategori",
-  },
-  {
-    filterKey: "status_cashflow",
-    label: "Status Cashflow",
-  },
-  {
-    filterKey: "via",
-    label: "Via",
-  },
-];
+import { FilterPanel } from "@/components/filters/filter-panel/master.filter-panel";
+import { FilterConfig } from "@/components/filters/filter-panel/types.filter-panel";
+import {
+  statusCashflow,
+  viaCashflow,
+} from "../../constants/cashflow-filter-options.constants";
 
 const sortingkeys: SortingKeyType[] = [
   {
@@ -56,14 +39,35 @@ const sortingkeys: SortingKeyType[] = [
   },
 ];
 
+const filterConfig: FilterConfig[] = [
+  {
+    field: "product_service",
+    label: "Nama Produk / Jasa",
+    type: "text",
+    withOperator: true,
+  },
+  {
+    field: "status_cashflow",
+    label: "Status Cashflow",
+    type: "select",
+    selectOptions: statusCashflow,
+  },
+  {
+    field: "via",
+    label: "Aset",
+    type: "select",
+    selectOptions: viaCashflow,
+  },
+];
 export function CashflowToolbar() {
   const { updateQuery, query } = useCashflow();
 
   const memoQueryFilter = useMemo(() => query.filters, [query.filters]);
+
   return (
     <div className="flex gap-4 items-center">
-      <MultiFilter
-        filterKeys={filterKeys}
+      <FilterPanel
+        config={filterConfig}
         initialValue={memoQueryFilter ?? []}
         onApplyFilter={(state) => updateQuery("filters", state)}
       />
