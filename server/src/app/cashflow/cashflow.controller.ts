@@ -21,6 +21,7 @@ import { CashflowPRService } from './services/cashflow-pr.service';
 import { CashflowReportService } from './services/cashflow-report.service';
 import { CashflowReportQuery } from './types/cashflow-report.types';
 import { CashflowResourcesService } from './services/cashflow-resources.service';
+import { CashflowCashCounterService } from './services/cashflow-cash-counter.service';
 
 @UseGuards(PasetoGuard, RoleGuard)
 @Roles('admin')
@@ -33,6 +34,7 @@ export class CashflowController {
     private readonly cashflowPRService: CashflowPRService,
     private readonly cashflowReportService: CashflowReportService,
     private readonly cashflowResourcesService: CashflowResourcesService,
+    private readonly cashflowCashCounterService: CashflowCashCounterService,
   ) {}
 
   @Post()
@@ -43,6 +45,11 @@ export class CashflowController {
   @Post('sales')
   async createNewCashflowFromSales() {
     return await this.cashflowSalesService.createNewCashflowFromSales();
+  }
+
+  @Post('cash-counter')
+  async createNewCashflowFromCashCounter(@Body() body:any) {
+    return await this.cashflowCashCounterService.createNewData(body);
   }
 
   @Get()

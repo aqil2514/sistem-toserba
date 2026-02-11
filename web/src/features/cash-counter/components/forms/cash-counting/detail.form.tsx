@@ -175,7 +175,7 @@ const useCalculateSummary = (
 
   const net_store_cash = total_physical_cash - third_party_cash;
 
-  const difference = system_cash - net_store_cash;
+  const difference = net_store_cash - system_cash;
 
   return {
     total_physical_cash,

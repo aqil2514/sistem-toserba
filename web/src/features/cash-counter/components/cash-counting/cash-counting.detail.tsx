@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   CashCounterDetail,
   CashCounterHeader,
@@ -14,13 +14,43 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
+import { api } from "@/lib/api";
 
 interface Props {
   data: CashCountingApiReturn | undefined;
 }
 
 export function CashCountingDetail({ data }: Props) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   if (!data) return null;
+
+  const adjusmentHandler = async () => {
+    try {
+      const { difference } = data.header;
+
+      if (difference === 0) {
+        toast.info("Tidak ada selisih untuk disesuaikan");
+        return;
+      }
+
+      const adjusmentData = {
+        status_cashflow: difference > 0 ? "expense" : "income",
+        adjusment_value: Math.abs(difference),
+      };
+
+      setIsLoading(true);
+      await api.post("/cashflow/cash-counter", adjusmentData);
+      toast.success("Penyesuaian di Cashflow berhasil");
+    } catch (error) {
+      console.error(error);
+      toast.error("Terjadi kesalahan");
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -35,8 +65,19 @@ export function CashCountingDetail({ data }: Props) {
       </ScrollArea>
       <Separator />
       <DialogFooter>
-
-      <Button variant={"outline"}> Sesuaikan Cashflow </Button>
+        <Button
+          variant={"outline"}
+          onClick={adjusmentHandler}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <span className="flex gap-1">
+              <Spinner /> Menyesuaikan...
+            </span>
+          ) : (
+            "Sesuaikan Cashflow"
+          )}
+        </Button>
       </DialogFooter>
     </div>
   );
