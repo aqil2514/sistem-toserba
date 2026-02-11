@@ -45,6 +45,8 @@ export function HeaderForm({ form }: Props) {
       </div>
 
       {isHaveThirdParty && <ThirdPartyForm form={form} />}
+
+      <FormFieldTextArea form={form} name="notes" label="Catatan" />
     </div>
   );
 }

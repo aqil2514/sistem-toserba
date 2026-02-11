@@ -21,6 +21,7 @@ export const cashCountsSchema = z.object({
   isHaveThirdParty: z.boolean(),
   thirdParty: z.array(thirdPartySchema).optional(),
   detail: z.array(cashCountsDetail).min(1, "Detail wajib diisi"),
+  notes: z.string().optional(),
 });
 
 export type ThirdPartySchemaType = z.infer<typeof thirdPartySchema>;
