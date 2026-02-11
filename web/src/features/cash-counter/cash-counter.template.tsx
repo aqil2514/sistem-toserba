@@ -1,3 +1,4 @@
+"use client";
 import { TemplateMode } from "@/@types/general";
 import { MainContainer } from "@/components/layout/container/main-container";
 import { SectionContainer } from "@/components/layout/container/section-container";

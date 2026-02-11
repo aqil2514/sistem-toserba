@@ -8,11 +8,13 @@ import { cn } from "@/lib/utils";
 interface Props<T> {
   mutate?: KeyedMutator<T>;
   successToastMessage?: string;
+  onMutateSuccess?: () => void;
 }
 
 export function MutateButton<T>({
   mutate,
   successToastMessage = "Data sudah diperbarui",
+  onMutateSuccess
 }: Props<T>) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const mutateHandler = async () => {
@@ -21,6 +23,7 @@ export function MutateButton<T>({
     try {
       setIsLoading(true);
       await mutate();
+      onMutateSuccess?.()
 
       toast.info(successToastMessage);
     } catch (error) {
@@ -37,6 +40,7 @@ export function MutateButton<T>({
       variant={"outline"}
       onClick={mutateHandler}
       title="Refresh Data"
+      type="button"
     >
       <RefreshCcw className={cn(isLoading && "animate-spin")} />
     </Button>
