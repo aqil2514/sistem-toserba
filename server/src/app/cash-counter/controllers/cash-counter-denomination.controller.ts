@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -44,6 +45,13 @@ export class CashCounterDenominationController {
     return await this.cashCounterDenominationService.editDenominationById(
       id,
       body,
+    );
+  }
+
+  @Delete(':id')
+  async softDeleteDenomination(@Param('id') id: string) {
+    return await this.cashCounterDenominationService.softDeleteDenominationById(
+      id,
     );
   }
 }

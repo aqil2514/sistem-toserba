@@ -21,6 +21,8 @@ interface DenominationContextTypes {
   setAddDialog: Dispatch<SetStateAction<boolean>>;
   editDialog: string | null;
   setEditDialog: Dispatch<SetStateAction<string | null>>;
+  deleteDialog: string | null;
+  setDeleteDialog: Dispatch<SetStateAction<string | null>>;
 }
 
 const DenominationContext = createContext<DenominationContextTypes>(
@@ -34,6 +36,7 @@ export function DenominationProvider({
 }) {
   const [addDialog, setAddDialog] = useState<boolean>(false);
   const [editDialog, setEditDialog] = useState<string | null>(null);
+  const [deleteDialog, setDeleteDialog] = useState<string | null>(null);
 
   const fetcher = useFetch<CashDenomination[]>(
     `${SERVER_URL}/cash-counter/denomination`,
@@ -46,6 +49,8 @@ export function DenominationProvider({
     setAddDialog,
     editDialog,
     setEditDialog,
+    deleteDialog,
+    setDeleteDialog,
   };
 
   return (

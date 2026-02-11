@@ -12,12 +12,17 @@ interface Props {
 
 export function ColumnActionDenomination({ row }: Props) {
   const { id, label } = row.original;
-  const { setEditDialog } = useDenomination();
+  const { setEditDialog, setDeleteDialog } = useDenomination();
 
   const items: DropdownActionItems[] = [
     {
       itemLabel: "Edit",
       onClick: () => setEditDialog(id),
+    },
+    {
+      itemLabel: "Hapus",
+      onClick: () => setDeleteDialog(id),
+      className: "text-red-500",
     },
   ];
   return <DropdownActionColumn menuLabel={`Menu (${label})`} items={items} />;

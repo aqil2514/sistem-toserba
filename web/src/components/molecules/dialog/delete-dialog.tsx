@@ -12,7 +12,7 @@ import { AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import React, { useState } from "react";
 import { Button } from "../../ui/button";
-import { toast } from "sonner";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 interface Props {
   title?: string;
@@ -23,6 +23,8 @@ interface Props {
   onOpenChange: (state: boolean) => void;
 
   onDeleteHandle: () => Promise<void> | void;
+
+  isLoading?: boolean;
 }
 
 export function DeleteDialog({
@@ -33,6 +35,8 @@ export function DeleteDialog({
   open,
   onOpenChange,
   onDeleteHandle,
+
+  isLoading,
 }: Props) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -44,7 +48,7 @@ export function DeleteDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <ContentDialog contents={contents} />
+        {isLoading ? <LoadingSpinner /> : <ContentDialog contents={contents} />}
 
         <ContentFooter
           onDeleteHandle={onDeleteHandle}
@@ -86,11 +90,9 @@ const ContentFooter: React.FC<FooterDialogProps> = ({
     try {
       setIsLoading(true);
       await onDeleteHandle();
-      toast.success("Data berhasil dihapus");
       onOpenChange(false);
     } catch (error) {
       console.error(error);
-      toast.error("Terjadi kesalahan saat hapus data");
     } finally {
       setIsLoading(false);
     }

@@ -14,7 +14,8 @@ export class CashCounterDenominationService {
     const { data, error } = await this.supabase
       .from('denominations')
       .select('*')
-      .order('nominal');
+      .order('nominal')
+      .is('deleted_at', null);
 
     if (error) {
       console.error(error);
@@ -54,6 +55,18 @@ export class CashCounterDenominationService {
     const { error } = await this.supabase
       .from('denominations')
       .update(payload)
+      .eq('id', id);
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async softDeleteDenominationById(id: string) {
+    const { error } = await this.supabase
+      .from('denominations')
+      .update({ deleted_at: new Date().toISOString() })
       .eq('id', id);
 
     if (error) {

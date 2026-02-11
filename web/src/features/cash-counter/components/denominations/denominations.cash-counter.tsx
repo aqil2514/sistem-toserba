@@ -9,6 +9,7 @@ import { DenominationAddDialog } from "../dialog/add-dialog.denomination";
 import { Button } from "@/components/ui/button";
 import { DenominationEditDialog } from "../dialog/edit-dialog.denomination";
 import { MutateButton } from "@/components/ui/mutate-button";
+import { DenominationDeleteDialog } from "../dialog/delete-dialog-denomination";
 
 export function CashCounterDenominations() {
   return (
@@ -43,6 +44,7 @@ const InnerTemplate = () => {
 
       <DenominationAddDialog />
       <DenominationEditDialog />
+      <DenominationDeleteDialog />
     </>
   );
 };
