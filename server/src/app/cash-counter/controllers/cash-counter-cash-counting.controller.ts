@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -34,10 +35,21 @@ export class CashCounterCashCountingController {
     return await this.fetchService.getDataByCashCountsId(id);
   }
 
+  @Get(':id/form')
+  async getCashCountsByIdForm(@Param('id') id: string) {
+    return await this.fetchService.getDataCashCountForm(id);
+  }
+
   @Post()
   async createNewCashCounts(@Body() body: CreateCashCountDto) {
-    return await this.crudService.createNewCashCountData(
-      body,
-    );
+    return await this.crudService.createNewCashCountData(body);
+  }
+
+  @Put(':id')
+  async reCreateCashCounts(
+    @Body() body: CreateCashCountDto,
+    @Param('id') cashCounterId: string,
+  ) {
+    return await this.crudService.reCreateCashCountData(body, cashCounterId);
   }
 }

@@ -214,6 +214,42 @@ export class CashCounterCashCountingService {
     return data.id;
   }
 
+  private async deleteThirdPartyCashByCashCountId(cash_count_id: string) {
+    const { error } = await this.supabase
+      .from('third_party_cash')
+      .delete()
+      .eq('cash_count_id', cash_count_id);
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  private async deleteCashCountDetailsByCashCountId(cash_count_id: string) {
+    const { error } = await this.supabase
+      .from('cash_count_details')
+      .delete()
+      .eq('cash_count_id', cash_count_id);
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  private async deleteCashCountsById(id: string) {
+    const { error } = await this.supabase
+      .from('cash_counts')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   async getCashCounts(query: BasicQuery): Promise<CashCountsReturnApi> {
     const { limit, page } = query;
 
@@ -258,5 +294,19 @@ export class CashCounterCashCountingService {
       this.createNewThirdPartyCash(mappedThirdParty),
       this.createCashCountDetails(mappedCashCountDetail),
     ]);
+  }
+
+  async reCreateCashCountData(
+    payload: CreateCashCountDto,
+    cash_count_id: string,
+  ) {
+    await Promise.all([
+      this.deleteThirdPartyCashByCashCountId(cash_count_id),
+      this.deleteCashCountDetailsByCashCountId(cash_count_id),
+    ]);
+
+    await this.deleteCashCountsById(cash_count_id);
+
+    await this.createNewCashCountData(payload);
   }
 }

@@ -40,6 +40,7 @@ export function FormFieldDatePicker<T extends FieldValues>({
         control={form.control}
         render={({ field, fieldState }) => {
           const date = field.value ? new Date(field.value) : undefined;
+
           return (
             <div>
               <div className="flex gap-4">

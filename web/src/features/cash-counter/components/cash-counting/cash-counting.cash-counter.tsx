@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { MutateButton } from "@/components/ui/mutate-button";
 import { CashCountingAddDialog } from "../dialog/add-dialog.cash-counting";
 import { CashCountingDetailDialog } from "../dialog/detail-dialog.cash-counting";
+import { CashCountingEditDialog } from "../dialog/edit-dialog.cash-counting";
 
 export function CashCounting() {
   return (
@@ -60,6 +61,7 @@ const InnerTemplate = () => {
 
       <CashCountingAddDialog />
       <CashCountingDetailDialog />
+      <CashCountingEditDialog />
     </>
   );
 };

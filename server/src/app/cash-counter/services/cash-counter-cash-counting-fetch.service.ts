@@ -7,6 +7,7 @@ import {
   CashCounterThirdParty,
   CashCountingApiReturn,
   CashCounts,
+  CashCountSchemaType,
   ThirdPartyCash,
 } from '../types/cash-counting.types';
 
@@ -98,6 +99,39 @@ export class CashCounterCashCountingFetchService {
     return {
       header,
       details,
+      thirdParty,
+    };
+  }
+
+  async getDataCashCountForm(id: string): Promise<CashCountSchemaType> {
+    const [cashCounts, thirdPartyCash, cashCountsDetails] = await Promise.all([
+      this.getCashCountsById(id),
+      this.getThirdPartyByCashCountId(id),
+      this.getCashCountDetailsByCashCountId(id),
+    ]);
+
+    const date = new Date(cashCounts.date).toISOString();
+    const notes = cashCounts?.note ?? "";
+    const isHaveThirdParty = thirdPartyCash.length > 0;
+    const thirdParty: CashCountSchemaType['thirdParty'] = isHaveThirdParty
+      ? thirdPartyCash.map((val) => ({
+          amount: val.amount,
+          source: val.source,
+          note: val.note,
+        }))
+      : undefined;
+    const detail: CashCountSchemaType['detail'] = cashCountsDetails.map(
+      (val) => ({
+        denominationId: val.denomination_id,
+        quantity: val.quantity,
+      }),
+    );
+
+    return {
+      date,
+      isHaveThirdParty,
+      detail,
+      notes,
       thirdParty,
     };
   }

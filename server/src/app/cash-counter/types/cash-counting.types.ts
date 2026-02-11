@@ -79,3 +79,20 @@ export type CashCountDetailsInsert = Omit<
   CashCountDetails,
   'id' | 'created_at'
 >;
+
+export interface CashCountSchemaType {
+  date: string;
+  isHaveThirdParty: boolean;
+  detail: {
+    denominationId: string;
+    quantity: number;
+  }[];
+  thirdParty?:
+    | {
+        source: string;
+        amount: number;
+        note?: string | undefined;
+      }[]
+    | undefined;
+  notes?: string | undefined;
+}

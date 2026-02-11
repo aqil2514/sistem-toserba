@@ -13,13 +13,22 @@ interface Props {
 
 export function ColumnActionCashCounting({ row }: Props) {
   const { id, date } = row.original;
-  const { setDetailDialog } = useCashCounts();
+  const { setDetailDialog, setEditDialog } = useCashCounts();
 
   const items: DropdownActionItems[] = [
     {
       itemLabel: "Detail",
       onClick: () => setDetailDialog(id),
     },
+    {
+      itemLabel: "Edit",
+      onClick: () => setEditDialog(id),
+    },
   ];
-  return <DropdownActionColumn menuLabel={`Tanggal (${formatDate(date, "Senin, 29 Desember 2025")})`} items={items} />;
+  return (
+    <DropdownActionColumn
+      menuLabel={`Tanggal (${formatDate(date, "Senin, 29 Desember 2025")})`}
+      items={items}
+    />
+  );
 }

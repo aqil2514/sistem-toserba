@@ -10,7 +10,6 @@ import {
   cashCountsSchema,
   defaultCashCounts,
 } from "../../../schemas/cash-counts.schema";
-import { CashCounts } from "../../../types/type.cash-counter-cash-counting";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { HeaderForm } from "./header.form";
@@ -19,7 +18,7 @@ import { DetailForm } from "./detail.form";
 interface Props {
   onFormSubmit: (values: CashCountSchemaType) => void;
   defaultValues?: CashCountSchemaType;
-  mutate?: KeyedMutator<CashCounts>;
+  mutate?: KeyedMutator<CashCountSchemaType>;
 }
 
 export function CashCountingForms({
