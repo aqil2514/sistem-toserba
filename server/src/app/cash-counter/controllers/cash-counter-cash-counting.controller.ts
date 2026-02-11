@@ -1,26 +1,43 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { Roles } from '../../../decorator/roles.decorator';
 import { PasetoGuard } from '../../../guards/paseto.guard';
 import { RoleGuard } from '../../../guards/role.guard';
 import { CashCounterCashCountingService } from '../services/cash-counter-cash-counting.service';
 import { BasicQuery } from '../../../@types/general';
 import { CreateCashCountDto } from '../dto/cash-counting.dto';
+import { CashCounterCashCountingFetchService } from '../services/cash-counter-cash-counting-fetch.service';
 
 @UseGuards(PasetoGuard, RoleGuard)
 @Roles('admin')
 @Controller('cash-counter/cash-counting')
 export class CashCounterCashCountingController {
   constructor(
-    private readonly cashCounterCashCountingService: CashCounterCashCountingService,
+    private readonly crudService: CashCounterCashCountingService,
+    private readonly fetchService: CashCounterCashCountingFetchService,
   ) {}
 
   @Get()
   async getCashCounts(@Query() query: BasicQuery) {
-    return await this.cashCounterCashCountingService.getCashCounts(query);
+    return await this.crudService.getCashCounts(query);
+  }
+
+  @Get(':id')
+  async getCashCountsById(@Param('id') id: string) {
+    return await this.fetchService.getDataByCashCountsId(id);
   }
 
   @Post()
   async createNewCashCounts(@Body() body: CreateCashCountDto) {
-    return await this.cashCounterCashCountingService.createNewCashCountData(body);
+    return await this.crudService.createNewCashCountData(
+      body,
+    );
   }
 }

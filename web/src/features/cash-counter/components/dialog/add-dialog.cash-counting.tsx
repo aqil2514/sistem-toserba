@@ -13,7 +13,7 @@ export function CashCountingAddDialog() {
       await api.post("/cash-counter/cash-counting", values);
 
       toast.success("Data denominasi berhasil ditambah");
-      // setAddDialog(false);
+      setAddDialog(false);
       mutate?.();
     } catch (error) {
       console.error(error);

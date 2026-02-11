@@ -28,6 +28,9 @@ interface CashCountingContextType {
 
   addDialog: boolean;
   setAddDialog: Dispatch<SetStateAction<boolean>>;
+
+  detailDialog: string | null;
+  setDetailDialog: Dispatch<SetStateAction<string | null>>;
 }
 
 const CashCountingContext = createContext<CashCountingContextType>(
@@ -50,7 +53,8 @@ export function CashCountingProvider({
 }) {
   const [query, setQuery] = useState<BasicQuery>(defaultQuery);
 
-  const [addDialog, setAddDialog] = useState<boolean>(false)
+  const [addDialog, setAddDialog] = useState<boolean>(false);
+  const [detailDialog, setDetailDialog] = useState<string | null>(null);
 
   // >>>>>> FETCHER AREA <<<<<<
   const url = buildUrl<BasicQuery>(
@@ -74,6 +78,8 @@ export function CashCountingProvider({
 
     addDialog,
     setAddDialog,
+    detailDialog,
+    setDetailDialog,
 
     query,
     resetQuery,

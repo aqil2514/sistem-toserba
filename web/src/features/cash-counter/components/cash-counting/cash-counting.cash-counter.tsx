@@ -11,6 +11,7 @@ import { DataTableFooterServer } from "@/components/organisms/ori-data-table/dat
 import { Button } from "@/components/ui/button";
 import { MutateButton } from "@/components/ui/mutate-button";
 import { CashCountingAddDialog } from "../dialog/add-dialog.cash-counting";
+import { CashCountingDetailDialog } from "../dialog/detail-dialog.cash-counting";
 
 export function CashCounting() {
   return (
@@ -21,7 +22,8 @@ export function CashCounting() {
 }
 
 const InnerTemplate = () => {
-  const { data, isLoading, query, updateQuery, mutate, setAddDialog } = useCashCounts();
+  const { data, isLoading, query, updateQuery, mutate, setAddDialog } =
+    useCashCounts();
 
   const tableData = useMemo<CashCounts[]>(() => {
     if (!data) return [];
@@ -57,6 +59,7 @@ const InnerTemplate = () => {
       </div>
 
       <CashCountingAddDialog />
+      <CashCountingDetailDialog />
     </>
   );
 };

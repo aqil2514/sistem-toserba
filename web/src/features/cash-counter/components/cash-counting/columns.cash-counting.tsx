@@ -2,6 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CashCounts } from "../../types/type.cash-counter-cash-counting";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
+import { ColumnActionCashCounting } from "./column-action.cash-couting";
 
 export const cashCountsColumns: ColumnDef<CashCounts>[] = [
   {
@@ -29,9 +30,9 @@ export const cashCountsColumns: ColumnDef<CashCounts>[] = [
     header: "Selisih",
     cell: ({ row }) => formatRupiah(row.original.difference),
   },
-  //   {
-  //     accessorKey: "action",
-  //     header: "Aksi",
-  //     cell: ({ row }) => <ColumnActionDenomination row={row} />,
-  //   },
+    {
+      accessorKey: "action",
+      header: "Aksi",
+      cell: ({ row }) => <ColumnActionCashCounting row={row} />,
+    },
 ];
