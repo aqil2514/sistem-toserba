@@ -60,7 +60,7 @@ export function CashCountingForms({
             <HeaderForm form={form} />
           </TabsContent>
           <TabsContent value="detail">
-            <DetailForm form={form} />
+            <DetailForm form={form} defaultValues={defaultValues} />
           </TabsContent>
         </Tabs>
       </ScrollArea>

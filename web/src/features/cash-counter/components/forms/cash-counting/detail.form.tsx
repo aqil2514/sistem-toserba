@@ -21,9 +21,13 @@ import { useFieldArray, UseFormReturn, useWatch } from "react-hook-form";
 
 interface Props {
   form: UseFormReturn<CashCountSchemaType>;
+  defaultValues?: CashCountSchemaType;
 }
 
-const useDetailForm = (form: UseFormReturn<CashCountSchemaType>) => {
+const useDetailForm = (
+  form: UseFormReturn<CashCountSchemaType>,
+  defaultValues?: CashCountSchemaType,
+) => {
   const { data, isLoading } = useFetch<CashDenomination[]>(
     `${SERVER_URL}/cash-counter/denomination`,
   );
@@ -49,7 +53,7 @@ const useDetailForm = (form: UseFormReturn<CashCountSchemaType>) => {
   }, [denominationData]);
 
   useEffect(() => {
-    if (denominationData.length === 0) return;
+    if (denominationData.length === 0 || defaultValues) return;
     const newDenominationValue: CashCountsDetailSchemaType[] =
       denominationData.map((data) => ({
         denominationId: data.id,
@@ -57,7 +61,7 @@ const useDetailForm = (form: UseFormReturn<CashCountSchemaType>) => {
       }));
 
     replace(newDenominationValue);
-  }, [denominationData, replace]);
+  }, [denominationData, replace, defaultValues]);
 
   const detail = useWatch({
     control: form.control,
@@ -67,8 +71,11 @@ const useDetailForm = (form: UseFormReturn<CashCountSchemaType>) => {
   return { isLoading, fields, detail, denominationMap };
 };
 
-export function DetailForm({ form }: Props) {
-  const { isLoading, fields, detail, denominationMap } = useDetailForm(form);
+export function DetailForm({ form, defaultValues }: Props) {
+  const { isLoading, fields, detail, denominationMap } = useDetailForm(
+    form,
+    defaultValues,
+  );
 
   if (isLoading) return <LoadingSpinner />;
 
