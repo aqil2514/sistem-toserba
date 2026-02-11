@@ -112,7 +112,7 @@ const Details: React.FC<{ data: CashCounterDetail[] }> = ({ data }) => {
           <InfoItem
             key={d.label}
             label={d.label}
-            value={`${formatRupiah(d.subtotal)}`}
+            value={`${formatRupiah(d.subtotal)} (${d.quantity} pcs)`}
           />
         ))}
       </div>
