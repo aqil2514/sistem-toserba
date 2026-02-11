@@ -2,6 +2,7 @@ import { BasicQuery } from "@/@types/general";
 import { FormFieldNumber } from "@/components/forms/field-number.form";
 import { InfoItem } from "@/components/molecules/items/info-item";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { MutateButton } from "@/components/ui/mutate-button";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
 import { SERVER_URL } from "@/constants/url";
@@ -198,7 +199,7 @@ const Summary: React.FC<SummaryProps> = ({ form, denominationMap }) => {
     "/asset-financial/summary",
     defaultQuery,
   );
-  const { data, isLoading } = useFetch<AssetRpcReturn[]>(url);
+  const { data, isLoading, mutate } = useFetch<AssetRpcReturn[]>(url);
 
   const systemCash = useMemo<number>(() => {
     if (!data) return 0;
@@ -218,7 +219,10 @@ const Summary: React.FC<SummaryProps> = ({ form, denominationMap }) => {
 
   return (
     <>
-      <p className="text-sm font-semibold underline">Ringkasan</p>
+      <div className="flex justify-between items-center">
+        <p className="text-sm font-semibold underline">Ringkasan</p>
+        <MutateButton mutate={mutate} />
+      </div>
       <div className="grid grid-cols-3 gap-4">
         <InfoItem
           label="Data di Sistem"

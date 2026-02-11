@@ -1,6 +1,7 @@
 import { FormFieldCurrency } from "@/components/forms/field-currency.form";
 import { FormFieldDatePicker } from "@/components/forms/field-date-picker.form";
 import { FormFieldText } from "@/components/forms/field-text.form";
+import { FormFieldTextArea } from "@/components/forms/field-textarea.form";
 import { FormFieldSwitch } from "@/components/forms/field.switch.form";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -86,6 +87,12 @@ const ThirdPartyForm: React.FC<{
                     placeholder="Misal : Rp. 10.000"
                   />
                 </div>
+                <FormFieldTextArea
+                  form={form}
+                  name={`thirdParty.${i}.note`}
+                  label="Catatan"
+                  placeholder="Misal: Kembaliannya kurang"
+                />
               </div>
             );
           })

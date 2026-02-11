@@ -30,6 +30,7 @@ export type CashCountSchemaType = z.infer<typeof cashCountsSchema>;
 export const defaultThirdPartySchema: ThirdPartySchemaType = {
   amount: 0,
   source: "",
+  note: "",
 };
 
 export const defaultCashcountsDetail: CashCountsDetailSchemaType = {
