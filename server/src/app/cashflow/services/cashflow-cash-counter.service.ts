@@ -6,6 +6,7 @@ import {
   endOfTodayUtcJakarta,
   startOfTodayUtcJakarta,
 } from '../../../utils/format-date';
+import { CashCounterCashCountingFetchService } from '../../cash-counter/services/cash-counter-cash-counting-fetch.service';
 
 @Injectable()
 export class CashflowCashCounterService {
@@ -14,6 +15,7 @@ export class CashflowCashCounterService {
   constructor(
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
+    private readonly fetchService: CashCounterCashCountingFetchService,
   ) {}
 
   private async saveToDb(raw: CashflowDbInsert | CashflowDbInsert[]) {
@@ -36,10 +38,13 @@ export class CashflowCashCounterService {
     }
   }
 
-  private async existingCashPaymentId(): Promise<string | null> {
+  private async existingCashPayment(): Promise<{
+    id: string;
+    price: number;
+  } | null> {
     let client = this.supabase
       .from('cashflow')
-      .select('id')
+      .select('id, price')
       .eq('via', 'Tunai')
       .eq('source', 'cash-counter');
 
@@ -59,27 +64,32 @@ export class CashflowCashCounterService {
 
     if (!data) return null;
 
-    return data.id;
+    return data;
   }
 
   async createNewData(raw: any) {
+    const existingCashPayment = await this.existingCashPayment();
+    const { header } = await this.fetchService.getDataByCashCountsId(raw.id);
+    const { difference } = header;
+
+    const isSurplusNet = difference > 0;
+    if (difference === 0) return;
+
     const payload: CashflowDbInsert = {
       category: this.adjusment_category_id,
       note: 'Dibuat otomatis melalui Cash Counter',
-      price: raw.adjusment_value,
-      status_cashflow: raw.status_cashflow,
+      price: Math.abs(difference),
+      status_cashflow: isSurplusNet ? 'income' : 'expense',
       product_service: 'Penyesuaian',
       transaction_at: new Date().toISOString(),
       via: 'Tunai',
       source: 'cash-counter',
     };
 
-    const existingCashPaymentId = await this.existingCashPaymentId();
-
-    if (!existingCashPaymentId) {
+    if (!existingCashPayment) {
       await this.saveToDb(payload);
     } else {
-      await this.editDataDb(payload.price, existingCashPaymentId);
+      await this.editDataDb(payload.price, existingCashPayment.id);
     }
   }
 }

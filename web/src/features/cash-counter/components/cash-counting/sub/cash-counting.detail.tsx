@@ -17,6 +17,7 @@ import { DialogFooter } from "@/components/ui/dialog";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
+import { useCashCounts } from "@/features/cash-counter/store/cash-counting.provider";
 
 interface Props {
   data: CashCountingApiReturn | undefined;
@@ -24,24 +25,16 @@ interface Props {
 
 export function CashCountingDetail({ data }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { openDialog } = useCashCounts();
+  const id = openDialog?.type === "detail" ? openDialog.id : null;
   if (!data) return null;
 
   const adjusmentHandler = async () => {
+    const {difference} = data.header;
+    if(difference === 0) return toast.info("Data sudah sesuai")
     try {
-      const { difference } = data.header;
-
-      if (difference === 0) {
-        toast.info("Tidak ada selisih untuk disesuaikan");
-        return;
-      }
-
-      const adjusmentData = {
-        status_cashflow: difference > 0 ? "expense" : "income",
-        adjusment_value: Math.abs(difference),
-      };
-
       setIsLoading(true);
-      await api.post("/cashflow/cash-counter", adjusmentData);
+      await api.post("/cashflow/cash-counter", { id });
       toast.success("Penyesuaian di Cashflow berhasil");
     } catch (error) {
       console.error(error);

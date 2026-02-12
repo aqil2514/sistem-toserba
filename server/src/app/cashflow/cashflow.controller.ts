@@ -48,7 +48,7 @@ export class CashflowController {
   }
 
   @Post('cash-counter')
-  async createNewCashflowFromCashCounter(@Body() body:any) {
+  async createNewCashflowFromCashCounter(@Body() body:{id:string}) {
     return await this.cashflowCashCounterService.createNewData(body);
   }
 

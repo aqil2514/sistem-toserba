@@ -48,7 +48,12 @@ const defaultQuery: BasicQuery = {
   from: startOfMonth(startOfDay(new Date())),
   to: startOfDay(new Date()),
   filters: [],
-  sort: [],
+  sort: [
+    {
+      key: "date",
+      value: "desc",
+    },
+  ],
 };
 
 export function CashCountingProvider({

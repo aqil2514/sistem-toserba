@@ -9,9 +9,10 @@ import { CashflowPRService } from './services/cashflow-pr.service';
 import { CashflowReportService } from './services/cashflow-report.service';
 import { CashflowResourcesService } from './services/cashflow-resources.service';
 import { CashflowCashCounterService } from './services/cashflow-cash-counter.service';
+import { CashCounterModule } from '../cash-counter/cash-counter.module';
 
 @Module({
-  imports: [SalesModule],
+  imports: [SalesModule, CashCounterModule],
   controllers: [CashflowController, CashflowWebhookController],
   providers: [
     CashflowFormService,
@@ -20,7 +21,7 @@ import { CashflowCashCounterService } from './services/cashflow-cash-counter.ser
     CashflowPRService,
     CashflowReportService,
     CashflowResourcesService,
-    CashflowCashCounterService
+    CashflowCashCounterService,
   ],
 })
 export class CashflowModule {}

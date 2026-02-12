@@ -15,5 +15,6 @@ import { CashCounterCashCountingFetchService } from './services/cash-counter-cas
     CashCounterCashCountingService,
     CashCounterCashCountingFetchService,
   ],
+  exports:[CashCounterCashCountingFetchService]
 })
 export class CashCounterModule {}
