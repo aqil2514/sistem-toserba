@@ -27,7 +27,8 @@ const CashflowReportContext = createContext<CashflowReportContextType>(
 
 const defaultQuery: CashflowReportQuery = {
   limit: 50,
-  content: "breakdown",
+  content: "summary",
+  mode: null,
   page: 1,
   from: startOfMonth(startOfDay(new Date())),
   to: startOfDay(new Date()),

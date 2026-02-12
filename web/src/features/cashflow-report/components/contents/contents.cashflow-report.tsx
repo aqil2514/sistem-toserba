@@ -5,6 +5,7 @@ import { CashflowReportBreakdown } from "./breakdown/breakdown.cashflow-report";
 import { useCashflowReport } from "../../store/cashflow-report.provider";
 import { CashflowReportSummary } from "./summary/summary.cashflow-report";
 import { TabsContentData } from "@/components/organisms/contents/tabs-content";
+import { CashflowReportMovement } from "./movement/movement.cashflow-report";
 
 type TabsContentType = LabelValue<CashflowReportContent> & {
   content: React.ReactNode;
@@ -20,6 +21,11 @@ const contentTrigger: TabsContentType[] = [
     label: "Detail",
     value: "breakdown",
     content: <CashflowReportBreakdown />,
+  },
+  {
+    label: "Pergerakan",
+    value: "movement",
+    content: <CashflowReportMovement />,
   },
 ];
 

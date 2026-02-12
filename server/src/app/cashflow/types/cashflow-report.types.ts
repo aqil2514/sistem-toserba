@@ -1,9 +1,11 @@
 import { BasicQuery } from '../../../@types/general';
 
-type CashflowReportContent = 'breakdown' | 'summary';
+export type CashflowReportContent = 'breakdown' | 'summary' | 'movement';
+export type CashflowReportMode = 'movement-global' | 'movement-asset' | null;
 
 export interface CashflowReportQuery extends BasicQuery {
   content: CashflowReportContent;
+  mode: CashflowReportMode;
 }
 
 export interface CashflowBreakdownRpc {
@@ -33,4 +35,13 @@ export interface DailyCashflowSummaryRow {
   total_expense_period: number;
   total_receivable_period: number;
   total_payable_period: number;
+}
+
+export interface MovementAssetSummary {
+  date: string;
+  running_total: number;
+}
+
+export interface MovementAssetSummaryWithAsset extends MovementAssetSummary {
+  via: string;
 }

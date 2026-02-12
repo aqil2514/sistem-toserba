@@ -48,7 +48,7 @@ export class CashflowController {
   }
 
   @Post('cash-counter')
-  async createNewCashflowFromCashCounter(@Body() body:{id:string}) {
+  async createNewCashflowFromCashCounter(@Body() body: { id: string }) {
     return await this.cashflowCashCounterService.createNewData(body);
   }
 
@@ -76,6 +76,12 @@ export class CashflowController {
   async getCashflowReport(@Query() query: CashflowReportQuery) {
     if (query.content === 'summary')
       return await this.cashflowReportService.getCashflowSummary(query);
+    if (query.content === 'movement') {
+      if (query.mode === 'movement-global')
+        return await this.cashflowReportService.getCashflowMovement(query);
+      if (query.mode === 'movement-asset')
+        return await this.cashflowReportService.getCashflowMovementWithAsset(query);
+    }
     return await this.cashflowReportService.getCashflowBreakdown(query);
   }
 

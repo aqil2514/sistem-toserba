@@ -2,7 +2,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { BasicQuery, DataQueryResponse } from '../../../@types/general';
 import { formatQueryDate } from '../../../utils/format-date';
-import { CashflowBreakdownRpc, DailyCashflowSummaryRow } from '../types/cashflow-report.types';
+import { CashflowBreakdownRpc, DailyCashflowSummaryRow, MovementAssetSummary, MovementAssetSummaryWithAsset } from '../types/cashflow-report.types';
 import { buildPaginationMeta } from '../../../utils/query-builder';
 
 @Injectable()
@@ -50,6 +50,44 @@ export class CashflowReportService {
 
     const { data, error } = await this.supabase.rpc(
       'get_daily_cashflow_summary',
+      {
+        p_start_utc: startUtc,
+        p_end_utc: endUtc,
+      },
+    );
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    return data;
+  }
+
+  async getCashflowMovement(query: BasicQuery):Promise<MovementAssetSummary[]> {
+    const { endUtc, startUtc } = formatQueryDate(query);
+
+    const { data, error } = await this.supabase.rpc(
+      'get_asset_running_global',
+      {
+        p_start_utc: startUtc,
+        p_end_utc: endUtc,
+      },
+    );
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    return data;
+  }
+
+  async getCashflowMovementWithAsset(query: BasicQuery):Promise<MovementAssetSummaryWithAsset[]> {
+    const { endUtc, startUtc } = formatQueryDate(query);
+
+    const { data, error } = await this.supabase.rpc(
+      'get_asset_running_per_via',
       {
         p_start_utc: startUtc,
         p_end_utc: endUtc,
