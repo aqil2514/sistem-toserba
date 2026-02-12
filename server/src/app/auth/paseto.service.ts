@@ -7,11 +7,16 @@ export class PasetoService {
   async sign(payload: Record<string, any>) {
     const { encrypt } = await import('paseto-ts/v4');
 
-    return encrypt(this.key, payload, {
-      addExp: false,
-      addIat: false,
+    const now = Math.floor(Date.now() / 1000);
 
-    });
+    return encrypt(
+      this.key,
+      { ...payload, exp: (now + 60 * 60 * 24).toString(), iat: now.toString() },
+      {
+        addExp: false,
+        addIat: false,
+      },
+    );
   }
 
   async verify(token: string) {
