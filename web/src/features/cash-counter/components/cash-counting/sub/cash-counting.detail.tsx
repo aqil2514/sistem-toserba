@@ -4,7 +4,7 @@ import {
   CashCounterHeader,
   CashCounterThirdParty,
   CashCountingApiReturn,
-} from "../../types/type.cash-counter-cash-counting";
+} from "../../../types/type.cash-counter-cash-counting";
 import { Separator } from "@/components/ui/separator";
 import { InfoItem } from "@/components/molecules/items/info-item";
 import { formatDate } from "@/utils/format-date.fns";

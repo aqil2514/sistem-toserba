@@ -6,13 +6,15 @@ import {
 import { useMemo } from "react";
 import { CashCounts } from "../../types/type.cash-counter-cash-counting";
 import { DataTable } from "@/components/organisms/ori-data-table/data-table";
-import { cashCountsColumns } from "./columns.cash-counting";
+import { cashCountsColumns } from "./sub/columns.cash-counting";
 import { DataTableFooterServer } from "@/components/organisms/ori-data-table/data-table-footer-server";
 import { Button } from "@/components/ui/button";
 import { MutateButton } from "@/components/ui/mutate-button";
-import { CashCountingAddDialog } from "../dialog/add-dialog.cash-counting";
-import { CashCountingDetailDialog } from "../dialog/detail-dialog.cash-counting";
-import { CashCountingEditDialog } from "../dialog/edit-dialog.cash-counting";
+import { CashCountingAddDialog } from "../dialog/cash-counting/add-dialog.cash-counting";
+import { CashCountingDetailDialog } from "../dialog/cash-counting/detail-dialog.cash-counting";
+import { CashCountingEditDialog } from "../dialog/cash-counting/edit-dialog.cash-counting";
+import { CashCountingDupplicateDialog } from "../dialog/cash-counting/dupplicate-dialog.cash-counting";
+import { CashCountingDeleteDialog } from "../dialog/cash-counting/delete-dialog.cash-counting";
 
 export function CashCounting() {
   return (
@@ -23,7 +25,7 @@ export function CashCounting() {
 }
 
 const InnerTemplate = () => {
-  const { data, isLoading, query, updateQuery, mutate, setAddDialog } =
+  const { data, isLoading, query, updateQuery, mutate, setOpenDialog } =
     useCashCounts();
 
   const tableData = useMemo<CashCounts[]>(() => {
@@ -39,7 +41,7 @@ const InnerTemplate = () => {
           <Button
             variant={"outline"}
             size={"sm"}
-            onClick={() => setAddDialog(true)}
+            onClick={() => setOpenDialog({ type: "add" })}
           >
             Tambah Data
           </Button>
@@ -62,6 +64,8 @@ const InnerTemplate = () => {
       <CashCountingAddDialog />
       <CashCountingDetailDialog />
       <CashCountingEditDialog />
+      <CashCountingDupplicateDialog />
+      <CashCountingDeleteDialog />
     </>
   );
 };

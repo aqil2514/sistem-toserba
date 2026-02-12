@@ -13,6 +13,14 @@ import { buildUrl } from "@/utils/build-url";
 import { SERVER_URL } from "@/constants/url";
 import { startOfDay, startOfMonth } from "date-fns";
 
+type DialogState =
+  | { type: "add" }
+  | { type: "edit"; id: string }
+  | { type: "detail"; id: string }
+  | { type: "delete"; id: string }
+  | { type: "copy"; id: string }
+  | null;
+
 interface CashCountingContextType {
   data: CashCountsReturnApi | undefined;
   error: Error;
@@ -26,12 +34,8 @@ interface CashCountingContextType {
   ) => void;
   resetQuery: () => void;
 
-  addDialog: boolean;
-  setAddDialog: Dispatch<SetStateAction<boolean>>;
-  detailDialog: string | null;
-  setDetailDialog: Dispatch<SetStateAction<string | null>>;
-  editDialog: string | null;
-  setEditDialog: Dispatch<SetStateAction<string | null>>;
+  openDialog: DialogState;
+  setOpenDialog: Dispatch<SetStateAction<DialogState>>;
 }
 
 const CashCountingContext = createContext<CashCountingContextType>(
@@ -54,9 +58,7 @@ export function CashCountingProvider({
 }) {
   const [query, setQuery] = useState<BasicQuery>(defaultQuery);
 
-  const [addDialog, setAddDialog] = useState<boolean>(false);
-  const [detailDialog, setDetailDialog] = useState<string | null>(null);
-  const [editDialog, setEditDialog] = useState<string | null>(null);
+  const [openDialog, setOpenDialog] = useState<DialogState>(null);
 
   // >>>>>> FETCHER AREA <<<<<<
   const url = buildUrl<BasicQuery>(
@@ -78,12 +80,8 @@ export function CashCountingProvider({
   const values: CashCountingContextType = {
     ...fetcher,
 
-    addDialog,
-    setAddDialog,
-    detailDialog,
-    setDetailDialog,
-    editDialog,
-    setEditDialog,
+    openDialog,
+    setOpenDialog,
 
     query,
     resetQuery,

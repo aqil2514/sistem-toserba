@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -51,5 +52,11 @@ export class CashCounterCashCountingController {
     @Param('id') cashCounterId: string,
   ) {
     return await this.crudService.reCreateCashCountData(body, cashCounterId);
+  }
+
+  @Delete(':id')
+  async deleteCashCountsData(@Param("id") cashCounterId: string) {
+    console.log(cashCounterId)
+    return await this.crudService.deleteCashCountData(cashCounterId);
   }
 }

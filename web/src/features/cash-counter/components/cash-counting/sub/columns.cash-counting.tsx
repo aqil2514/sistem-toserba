@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { CashCounts } from "../../types/type.cash-counter-cash-counting";
+import { CashCounts } from "../../../types/type.cash-counter-cash-counting";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ColumnActionCashCounting } from "./column-action.cash-couting";

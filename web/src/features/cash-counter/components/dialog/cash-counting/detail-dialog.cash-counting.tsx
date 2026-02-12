@@ -1,16 +1,17 @@
 import { DetailDialog } from "@/components/molecules/dialog/detail-dialog";
-import { useCashCounts } from "../../store/cash-counting.provider";
 import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";
-import { CashCountingDetail } from "../cash-counting/cash-counting.detail";
-import { CashCountingApiReturn } from "../../types/type.cash-counter-cash-counting";
+import { CashCountingApiReturn } from "@/features/cash-counter/types/type.cash-counter-cash-counting";
+import { useCashCounts } from "@/features/cash-counter/store/cash-counting.provider";
+import { CashCountingDetail } from "../../cash-counting/sub/cash-counting.detail";
 
 export function CashCountingDetailDialog() {
-  const { detailDialog, setDetailDialog } = useCashCounts();
-  const open = Boolean(detailDialog);
+  const { openDialog, setOpenDialog } = useCashCounts();
+  const open = openDialog?.type === "detail";
+  const id = openDialog?.type === "detail" ? openDialog.id : null;
 
   const { data, isLoading, mutate } = useFetch<CashCountingApiReturn>(
-    open ? `${SERVER_URL}/cash-counter/cash-counting/${detailDialog}` : null,
+    open ? `${SERVER_URL}/cash-counter/cash-counting/${id}` : null,
   );
 
   return (
@@ -19,7 +20,7 @@ export function CashCountingDetailDialog() {
       description="Informasi data menghitung uang"
       title="Detail Hitung Uang"
       onOpenChange={(open) => {
-        if (!open) setDetailDialog(null);
+        if (!open) setOpenDialog(null);
       }}
       mutate={mutate}
       open={open}

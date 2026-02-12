@@ -300,13 +300,17 @@ export class CashCounterCashCountingService {
     payload: CreateCashCountDto,
     cash_count_id: string,
   ) {
+    await this.deleteCashCountData(cash_count_id)
+
+    await this.createNewCashCountData(payload);
+  }
+
+  async deleteCashCountData(cash_count_id: string) {
     await Promise.all([
       this.deleteThirdPartyCashByCashCountId(cash_count_id),
       this.deleteCashCountDetailsByCashCountId(cash_count_id),
     ]);
 
     await this.deleteCashCountsById(cash_count_id);
-
-    await this.createNewCashCountData(payload);
   }
 }
