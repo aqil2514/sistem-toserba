@@ -21,6 +21,8 @@ export class PasetoGuard implements CanActivate {
     try {
       const payload = await this.pasetoService.verify(token);
       req.user = payload;
+
+      console.log(payload);
       return true;
     } catch {
       throw new UnauthorizedException('Token tidak valid');
