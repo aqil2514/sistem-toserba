@@ -8,8 +8,9 @@ export class PasetoService {
     const { encrypt } = await import('paseto-ts/v4');
 
     return encrypt(this.key, payload, {
-      addExp: true,
-      addIat: true,
+      addExp: false,
+      addIat: false,
+
     });
   }
 
