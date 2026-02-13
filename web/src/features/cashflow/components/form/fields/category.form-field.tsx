@@ -1,28 +1,15 @@
 import { LabelValue } from "@/@types/general";
-import { ComboboxWithCreateAction } from "@/components/molecules/combobox/create-new-combobox";
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { FormFieldComboboxAction } from "@/components/forms/field-combobox-action.form";
+import { FormFieldSelect } from "@/components/forms/field-select.form";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { SERVER_URL } from "@/constants/url";
 import { CashflowSchemaType } from "@/features/cashflow/schema/cashflow.schema";
 import { useCashflow } from "@/features/cashflow/store/provider.cashflow";
 import { CashflowCategoryDb } from "@/features/cashflow/types/cashflow-category.types";
 import { CashflowCategoryStatus } from "@/features/cashflow/types/cashflow.types";
 import { useFetch } from "@/hooks/use-fetch";
-import React, { useEffect, useState } from "react";
-import { Controller, UseFormReturn, useWatch } from "react-hook-form";
+import { useEffect } from "react";
+import { UseFormReturn, useWatch } from "react-hook-form";
 
 interface Props {
   form: UseFormReturn<CashflowSchemaType>;
@@ -61,56 +48,6 @@ export function CasfhlowCategoryField({ form }: Props) {
     mutate?.();
   }, [addDialog, mutate]);
 
-  if (isLoading) return <LoadingSpinner label="Mengambil Data Category...." />;
-
-  const existCategories = data?.map((d) => d.name) ?? [];
-
-  return (
-    <div>
-      <div className="grid grid-cols-2 gap-4">
-        <CategoryName form={form} existCategories={existCategories} />
-        <StatusCashflow form={form} />
-      </div>
-    </div>
-  );
-}
-
-type CategoryNameProps = Props & {
-  existCategories: string[];
-};
-
-const CategoryName: React.FC<CategoryNameProps> = ({
-  form,
-  existCategories,
-}) => {
-  const [categories, setCategories] = useState<string[]>(existCategories);
-
-  const isSubmitting = form.formState.isSubmitting;
-  return (
-    <FieldGroup>
-      <Controller
-        name="category.name"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel>Kategori</FieldLabel>
-            <ComboboxWithCreateAction
-              items={categories}
-              onValueChange={field.onChange}
-              onItemsChange={setCategories}
-              disabled={isSubmitting}
-              value={field.value}
-            />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-    </FieldGroup>
-  );
-};
-
-const StatusCashflow: React.FC<Props> = ({ form }) => {
-  const isSubmitting = form.formState.isSubmitting;
   const asset = useWatch({
     control: form.control,
     name: "via",
@@ -125,38 +62,27 @@ const StatusCashflow: React.FC<Props> = ({ form }) => {
     }
   }, [asset, form]);
 
+  if (isLoading) return <LoadingSpinner label="Mengambil Data Category...." />;
+
+  const existCategories = data?.map((d) => d.name) ?? [];
+
   return (
-    <FieldGroup>
-      <Controller
-        name="category.status"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel>Status Cashflow</FieldLabel>
-            <Select
-              value={field.value}
-              onValueChange={(value: CashflowCategoryStatus) =>
-                field.onChange(value)
-              }
-              disabled={isSubmitting}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Status Cashflow" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  {cashflowStatus.map((status) => (
-                    <SelectItem key={status.value} value={status.value}>
-                      {status.label}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-    </FieldGroup>
+    <div>
+      <div className="grid grid-cols-2 gap-4">
+        <FormFieldComboboxAction
+          form={form}
+          label="Kategori"
+          name="category.name"
+          options={existCategories}
+        />
+        <FormFieldSelect
+          form={form}
+          label="Status Cashflow"
+          name="category.status"
+          options={cashflowStatus}
+          placeholder="Pilih status Cashflow"
+        />
+      </div>
+    </div>
   );
-};
+}

@@ -5,10 +5,6 @@ import {
   defaultCashflow,
 } from "../../schema/cashflow.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CashflowProductServiceField } from "./fields/product-service.form-field";
-import { CashflowTransactionAtField } from "./fields/transaction-at.form-field";
-import { CashflowPriceField } from "./fields/price.form-field";
-import { CashflowNoteServiceField } from "./fields/note.form-field";
 import { CashflowViaField } from "./fields/via.form-field";
 import { CasfhlowCategoryField } from "./fields/category.form-field";
 import { Button } from "@/components/ui/button";
@@ -17,6 +13,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { DebtorFormField } from "./fields/debtor.form-field";
 import { VendorFormField } from "./fields/payable-vendor.form-field";
+import { FormFieldDatePicker } from "@/components/forms/field-date-picker.form";
+import { FormFieldText } from "@/components/forms/field-text.form";
+import { FormFieldCurrency } from "@/components/forms/field-currency.form";
+import { FormFieldTextArea } from "@/components/forms/field-textarea.form";
 
 interface Props {
   defaultValues?: CashflowSchemaType;
@@ -47,16 +47,36 @@ export function CashflowForm({ submitHandler, defaultValues }: Props) {
       <Separator />
       <ScrollArea className="h-96 px-4 pb-4">
         <div className="space-y-4">
-          <CashflowTransactionAtField form={form} />
+          <FormFieldDatePicker
+            form={form}
+            name="transaction_at"
+            label="Pilih Tanggal"
+            placeholder="Pilih Tanggal"
+          />
           <div className="grid grid-cols-2 gap-4">
-            <CashflowProductServiceField form={form} />
-            <CashflowPriceField form={form} />
+            <FormFieldText
+              form={form}
+              name="product_service"
+              label="Nama Produk / Jasa"
+              placeholder="Contoh : Omzet"
+            />
+            <FormFieldCurrency
+              form={form}
+              label="Harga"
+              name="price"
+              placeholder="Contoh : Rp. 10.000"
+            />
           </div>
           <CasfhlowCategoryField form={form} />
-          {cashflow === "receivable" && <DebtorFormField form={form} /> }
-          {cashflow === "payable" && <VendorFormField form={form} /> }
+          {cashflow === "receivable" && <DebtorFormField form={form} />}
+          {cashflow === "payable" && <VendorFormField form={form} />}
           <CashflowViaField form={form} />
-          <CashflowNoteServiceField form={form} />
+          <FormFieldTextArea
+            form={form}
+            name="note"
+            label="Catatan"
+            placeholder="Contoh : Dapat harga diskon"
+          />
         </div>
       </ScrollArea>
       <Separator />

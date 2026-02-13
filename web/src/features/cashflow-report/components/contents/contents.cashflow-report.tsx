@@ -35,7 +35,13 @@ export function CashflowReportContents() {
   return (
     <TabsContentData
       value={query.content}
-      onValueChange={(e) => updateQuery("content", e)}
+      onValueChange={(e) => {
+        updateQuery("content", e);
+        if (e === "movement") {
+          updateQuery("mode", "movement-global");
+          return;
+        }
+      }}
       tabContents={contentTrigger}
     />
   );
