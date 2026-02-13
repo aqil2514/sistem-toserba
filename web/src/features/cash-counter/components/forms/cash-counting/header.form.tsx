@@ -87,6 +87,7 @@ const ThirdPartyForm: React.FC<{
                     label={`Jumlah Dana Pihak ke-${i + 1}`}
                     name={`thirdParty.${i}.amount`}
                     placeholder="Misal : Rp. 10.000"
+                    withCalculator
                   />
                 </div>
                 <FormFieldTextArea

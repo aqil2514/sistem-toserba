@@ -86,6 +86,7 @@ const FormComponent: React.FC<FormComponentProps> = ({
         label="Harga"
         name={`items.${index}.price`}
         placeholder="Contoh : Rp. 1.000"
+        withCalculator
       />
 
       <div className="flex gap-4">

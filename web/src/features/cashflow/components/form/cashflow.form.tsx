@@ -65,6 +65,7 @@ export function CashflowForm({ submitHandler, defaultValues }: Props) {
               label="Harga"
               name="price"
               placeholder="Contoh : Rp. 10.000"
+              withCalculator
             />
           </div>
           <CasfhlowCategoryField form={form} />

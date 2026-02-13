@@ -77,6 +77,7 @@ export function FormComponent({ index, form, data, stocks }: Props) {
           label="Diskon"
           name={`items.${index}.discount`}
           placeholder="Misal : Rp. 1.000"
+          withCalculator
         />
 
         <FormFieldCurrency
@@ -84,6 +85,7 @@ export function FormComponent({ index, form, data, stocks }: Props) {
           label="Tip"
           name={`items.${index}.tip`}
           placeholder="Misal : Rp. 1.000"
+          withCalculator
         />
       </div>
       <Separator />
