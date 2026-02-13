@@ -10,7 +10,7 @@ import {
   useFieldArray,
   UseFormReturn,
 } from "react-hook-form";
-import { ScrollableTabsTrigger } from "./scrollable-tabs-trigger";
+import { ScrollableTabsTrigger } from "../molecules/tabs/scrollable-tabs-trigger";
 
 interface Props<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -43,19 +43,38 @@ export function FormFieldArrayTabs<T extends FieldValues>({
     setActiveTab(next);
   };
 
+  const handleRemoveIndex = () => {
+    if (!activeTab || fields.length <= 1) return;
+    const index = fields.findIndex((f) => f.id === activeTab);
+    if (index === -1) return;
+
+    handleRemove(index);
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <p className="text-sm font-semibold">{title}</p>
-        <Button
-          onClick={() => append(defaultItem)}
-          size={"icon"}
-          disabled={isSubmitting}
-          variant={"outline"}
-          type="button"
-        >
-          <Plus />
-        </Button>
+        <div className="space-x-3">
+          {fields.length > 1 && (
+            <Button
+              variant="destructive"
+              type="button"
+              onClick={handleRemoveIndex}
+            >
+              <Trash />
+            </Button>
+          )}
+          <Button
+            onClick={() => append(defaultItem)}
+            size={"icon"}
+            disabled={isSubmitting}
+            variant={"outline"}
+            type="button"
+          >
+            <Plus />
+          </Button>
+        </div>
       </div>
       <Separator />
       <Tabs
@@ -69,16 +88,6 @@ export function FormFieldArrayTabs<T extends FieldValues>({
           const component = formComponent(form, i);
           return (
             <TabsContent key={field.id} value={field.id} className="space-y-4">
-              {fields.length > 1 && (
-                <Button
-                  variant="destructive"
-                  type="button"
-                  onClick={() => handleRemove(i)}
-                >
-                  <Trash />
-                </Button>
-              )}
-
               {component}
             </TabsContent>
           );

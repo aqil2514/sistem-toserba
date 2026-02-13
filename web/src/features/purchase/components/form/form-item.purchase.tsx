@@ -10,7 +10,7 @@ import { LabelValue } from "@/@types/general";
 import { FormFieldCombobox } from "@/components/forms/field-combobox.form";
 import { FormFieldNumber } from "@/components/forms/field-number.form";
 import { FormFieldCurrency } from "@/components/forms/field-currency.form";
-import { FormFieldArrayTabs } from "@/components/forms/array-tabs/field-array.form";
+import { FormFieldArrayTabs } from "@/components/forms/field-array-tabs.form";
 
 interface Props {
   form: UseFormReturn<PurchaseFormValues>;
