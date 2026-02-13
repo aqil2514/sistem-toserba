@@ -33,6 +33,7 @@ export function FormFieldNumber<T extends FieldValues>({
               {...field}
               value={field.value}
               onChange={(e) => field.onChange(e.target.valueAsNumber)}
+              onFocus={(e) => e.target.select()}
               type="number"
               disabled={isSubmitting}
               id={field.name}
