@@ -43,7 +43,7 @@ export function FormFieldDatePicker<T extends FieldValues>({
 
           return (
             <div>
-              <div className="flex gap-4">
+              <div className="flex flex-col md:flex-row gap-4">
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel>{label}</FieldLabel>
 

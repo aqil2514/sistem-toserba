@@ -19,6 +19,7 @@ import {
 import { Separator } from "../ui/separator";
 import React, { useState } from "react";
 import { Input } from "../ui/input";
+import { toast } from "sonner";
 
 interface Props<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -77,6 +78,7 @@ interface CalculatorPopoverProps {
 }
 const CalculatorPopover: React.FC<CalculatorPopoverProps> = ({ onApply }) => {
   const [expression, setExpression] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleCalculate = () => {
     try {
@@ -86,7 +88,9 @@ const CalculatorPopover: React.FC<CalculatorPopoverProps> = ({ onApply }) => {
 
       if (typeof result === "number" && !isNaN(result)) {
         onApply(result);
+        setIsOpen(false);
         setExpression("");
+        toast.success("Berhasil dihitung")
       }
     } catch {
       // ignore invalid expression
@@ -94,7 +98,7 @@ const CalculatorPopover: React.FC<CalculatorPopoverProps> = ({ onApply }) => {
   };
 
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
