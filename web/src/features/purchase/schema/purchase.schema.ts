@@ -39,17 +39,18 @@ export const purchaseSchema = z.object({
 export type PurchaseFormValues = z.infer<typeof purchaseSchema>;
 export type PurchaseItemFormValues = z.infer<typeof purchaseItemSchema>;
 
+export const defaultPurchaseItem: PurchaseItemFormValues = {
+  price: 0,
+  product_id: "",
+  quantity: 0,
+};
+
 export const EMPTY_VALUES: PurchaseFormValues = {
   purchase_date: new Date().toISOString(),
   purchase_code: "",
   supplier_name: "",
   supplier_type: "",
   notes: "",
-  items: [
-    {
-      price: 0,
-      product_id: "",
-      quantity: 0,
-    },
-  ],
+  items: [defaultPurchaseItem],
 };
+
