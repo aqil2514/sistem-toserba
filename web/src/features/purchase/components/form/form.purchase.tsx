@@ -16,6 +16,7 @@ import { PurchaseFormRss } from "../../types/purchase-form-rss";
 import { FormPurchaseItem } from "./form-item.purchase";
 import { AddProductFormPurchaseDialog } from "../dialog/add/dialog-add-product.purchase";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface Props {
   initialValues?: PurchaseFormValues;
@@ -44,7 +45,7 @@ export function PurchaseForm({ onSubmit, initialValues }: Props) {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit, () => toast.error("Ada data yang belum diisi"))}>
           <div className="grid md:grid-cols-2 gap-4">
             <FormHeader
               form={form}

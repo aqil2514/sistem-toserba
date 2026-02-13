@@ -1,3 +1,4 @@
+import { LabelValue } from "@/@types/general";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -16,24 +17,26 @@ import { cn } from "@/lib/utils";
 import { CheckIcon, ChevronsUpDownIcon } from "lucide-react";
 import React from "react";
 
-interface ComboboxItem {
-  value: string;
-  label: string;
-}
+// interface ComboboxItem {
+//   value: string;
+//   label: string;
+// }
 
-interface Props {
-  data: ComboboxItem[];
+interface Props<T extends string> {
+  data: LabelValue<T>[];
   value: string;
   onValueChange: (state: string) => void;
 
-  getLabel?: (item: ComboboxItem) => React.ReactNode;
+  getLabel?: (item: LabelValue<T>) => React.ReactNode;
 
   placeholder?: string;
   searchPlaceholder?: string;
   emptyText?: string;
+
+  disabled?:boolean;
 }
 
-export function Combobox({
+export function Combobox<T extends string>({
   data,
   placeholder = "Cari item...",
   searchPlaceholder = "Cari...",
@@ -41,7 +44,8 @@ export function Combobox({
   onValueChange,
   getLabel,
   value,
-}: Props) {
+  disabled
+}: Props<T>) {
   const [open, setOpen] = React.useState(false);
 
   const selectedLabel = data.find((item) => item.value === value)?.label;
@@ -54,6 +58,7 @@ export function Combobox({
           role="combobox"
           aria-expanded={open}
           className="w-full justify-between"
+          disabled={disabled}
         >
           {selectedLabel ?? placeholder}
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />

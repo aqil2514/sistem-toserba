@@ -6,18 +6,11 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Plus, Trash } from "lucide-react";
 import { PurchaseFormRss } from "../../types/purchase-form-rss";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Combobox } from "@/components/molecules/combobox/basic-combobox";
 import { useEffect, useMemo, useState } from "react";
 import { LabelValue } from "@/@types/general";
-import { Input } from "@/components/ui/input";
-import { CurrencyInputID } from "@/components/ui/currency-input-id";
+import { FormFieldCombobox } from "@/components/forms/field-combobox.form";
+import { FormFieldNumber } from "@/components/forms/field-number.form";
+import { FormFieldCurrency } from "@/components/forms/field-currency.form";
 
 interface Props {
   form: UseFormReturn<PurchaseFormValues>;
@@ -107,60 +100,26 @@ export function FormPurchaseItem({
         {fields.map((field, i) => (
           <TabsContent key={field.id} value={field.id} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
+              <FormFieldCombobox
+                form={form}
+                label="Nama Produk"
                 name={`items.${i}.product_id`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nama Produk</FormLabel>
-                    <FormControl>
-                      <Combobox
-                        data={list}
-                        onValueChange={(e) => field.onChange(e)}
-                        value={field.value}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                options={list}
               />
 
-              <FormField
-                control={form.control}
+              <FormFieldNumber
+                form={form}
+                label="Kuantiti"
                 name={`items.${i}.quantity`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Kuantiti</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        disabled={isSubmitting}
-                        value={field.value}
-                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                placeholder="Contoh : 1"
               />
             </div>
 
-            <FormField
-              control={form.control}
+            <FormFieldCurrency
+              form={form}
+              label="Harga"
               name={`items.${i}.price`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Harga</FormLabel>
-                  <FormControl>
-                    <CurrencyInputID
-                      disabled={isSubmitting}
-                      onValueChange={(e) => field.onChange(e)}
-                      value={field.value}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              placeholder="Contoh : Rp. 1.000"
             />
 
             <div className="flex gap-4">

@@ -18,7 +18,12 @@ export const purchaseItemSchema = z.object({
  * PURCHASE (BARANG MASUK)
  */
 export const purchaseSchema = z.object({
-  purchase_date: z.date().optional(),
+  purchase_date: z.iso
+    .datetime("Tanggal Transaksi wajib diisi")
+    .refine(
+      (val) => new Date(val) <= new Date(),
+      "Tanggal tidak boleh dari masa depan",
+    ),
 
   purchase_code: z.string().optional(),
 
@@ -35,7 +40,7 @@ export type PurchaseFormValues = z.infer<typeof purchaseSchema>;
 export type PurchaseItemFormValues = z.infer<typeof purchaseItemSchema>;
 
 export const EMPTY_VALUES: PurchaseFormValues = {
-  purchase_date: new Date(),
+  purchase_date: new Date().toISOString(),
   purchase_code: "",
   supplier_name: "",
   supplier_type: "",
