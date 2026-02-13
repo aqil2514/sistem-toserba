@@ -36,8 +36,6 @@ export function FormComponent({ index, form, data, stocks }: Props) {
   }, [data]);
   return (
     <div className="space-y-4">
-      <p className="font-semibold text-gray-500 text-lg">Produk {index + 1}</p>
-
       <FormFieldCombobox
         form={form}
         label="Nama Produk"
