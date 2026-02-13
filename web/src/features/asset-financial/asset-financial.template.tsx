@@ -10,6 +10,7 @@ import {
 import { AssetFinancialContents } from "./components/contents/contents.asset-financial";
 import { AssetFinancialToolbar } from "./components/toolbar/toolbar.asset-financial";
 import { HeaderWithMutate } from "@/components/organisms/header/header-with-mutate";
+import { AssetFinancialHeader } from "./components/header/header.asset-financial";
 
 interface Props {
   mode: TemplateMode;
@@ -32,6 +33,7 @@ const InnerTemplate = () => {
       <SectionContainer>
         <HeaderWithMutate title="Aset Finansial" mutate={mutate} />
         <AssetFinancialToolbar />
+        <AssetFinancialHeader />
         <AssetFinancialContents />
       </SectionContainer>
     </MainContainer>

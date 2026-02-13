@@ -5,6 +5,10 @@ export interface LabelValue<T = string> {
   value: T;
 }
 
+export interface LabelValueWithColor<T = string> extends LabelValue<T> {
+  color: string;
+}
+
 export interface BasicQuery {
   page: number;
   limit: number;

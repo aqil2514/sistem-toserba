@@ -1,7 +1,13 @@
-import { BasicQuery } from "@/@types/general";
+import { BasicQuery, LabelValueWithColor } from "@/@types/general";
 import { KeyedMutator } from "swr";
 import { AssetRpcReturn } from "../types/api-return";
-import { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 import { buildUrl } from "@/utils/build-url";
 import { SERVER_URL } from "@/constants/url";
 import { useFetch } from "@/hooks/use-fetch";
@@ -13,6 +19,11 @@ interface AssetFinancialStoreTypes {
     value: BasicQuery[T],
   ) => void;
   resetQuery: () => void;
+
+  assetSelected: AssetRpcReturn[];
+  setAssetSelected: Dispatch<SetStateAction<AssetRpcReturn[]>>;
+  headerSelected: LabelValueWithColor<number>[];
+  setHeaderSelected: Dispatch<SetStateAction<LabelValueWithColor<number>[]>>;
 
   data: AssetRpcReturn[] | undefined;
   error: Error;
@@ -40,6 +51,11 @@ export function AssetFinancialProvider({
 }) {
   const [query, setQuery] = useState<BasicQuery>(defaultQuery);
 
+  const [assetSelected, setAssetSelected] = useState<AssetRpcReturn[]>([]);
+  const [headerSelected, setHeaderSelected] = useState<LabelValueWithColor<number>[]>(
+      [],
+    );
+
   // >>>>>> FETCHER AREA <<<<<<
   const url = buildUrl<BasicQuery>(
     SERVER_URL,
@@ -59,6 +75,11 @@ export function AssetFinancialProvider({
 
   const values: AssetFinancialStoreTypes = {
     ...fetcher,
+
+    assetSelected,
+    setAssetSelected,
+    headerSelected,
+    setHeaderSelected,
 
     query,
     resetQuery,
