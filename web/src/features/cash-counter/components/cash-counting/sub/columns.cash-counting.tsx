@@ -3,12 +3,18 @@ import { CashCounts } from "../../../types/type.cash-counter-cash-counting";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ColumnActionCashCounting } from "./column-action.cash-couting";
+import { Notebook } from "lucide-react";
 
 export const cashCountsColumns: ColumnDef<CashCounts>[] = [
   {
     accessorKey: "date",
     header: "Tanggal",
-    cell: ({ row }) => formatDate(row.original.date, "Senin, 29 Desember 2025"),
+    cell: ({ row }) => {
+      const isHaveNote = row.original.note;
+      return (
+        <span className="flex gap-4 items-center">{formatDate(row.original.date, "Senin, 29 Desember 2025")} {isHaveNote && <Notebook size={20} /> } </span>
+      );
+    },
   },
   {
     accessorKey: "system_cash",
@@ -30,9 +36,9 @@ export const cashCountsColumns: ColumnDef<CashCounts>[] = [
     header: "Selisih",
     cell: ({ row }) => formatRupiah(row.original.difference),
   },
-    {
-      accessorKey: "action",
-      header: "Aksi",
-      cell: ({ row }) => <ColumnActionCashCounting row={row} />,
-    },
+  {
+    accessorKey: "action",
+    header: "Aksi",
+    cell: ({ row }) => <ColumnActionCashCounting row={row} />,
+  },
 ];
