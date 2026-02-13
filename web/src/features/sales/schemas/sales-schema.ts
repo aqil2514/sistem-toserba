@@ -7,7 +7,12 @@ export const salesSchema = z.object({
   customer_name: z.string().min(1, "Nama pembeli wajib diisi"),
   notes: z.string(),
   items: z.array(salesItemSchema).min(1),
-  transaction_at: z.string(),
+  transaction_at: z.iso
+    .datetime("Tanggal Transaksi wajib diisi")
+    .refine(
+      (val) => new Date(val) <= new Date(),
+      "Tanggal tidak boleh dari masa depan",
+    ),
 });
 
 export type SalesSchemaType = z.infer<typeof salesSchema>;

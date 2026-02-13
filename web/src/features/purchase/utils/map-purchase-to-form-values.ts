@@ -7,7 +7,7 @@ export function mapPurchaseToFormValues(
   items: MappedResponse[]
 ): PurchaseFormValues {
   return {
-    purchase_date: new Date(purchase.purchase_date),
+    purchase_date: new Date(purchase.purchase_date).toISOString(),
     purchase_code: purchase.purchase_code ?? "",
     supplier_name: purchase.supplier_name ?? "",
     supplier_type: purchase.supplier_type ?? "",

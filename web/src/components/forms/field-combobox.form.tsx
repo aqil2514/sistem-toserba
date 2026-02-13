@@ -15,12 +15,21 @@ interface Props<T extends FieldValues, TOptions extends string> {
   placeholder?: string;
   options: LabelValue<TOptions>[];
   getLabel?: (item: LabelValue<TOptions>) => React.ReactNode;
+  onValueChange?: (value: string) => void;
 }
 
 export function FormFieldCombobox<
   T extends FieldValues,
   TOptions extends string,
->({ form, name, label, placeholder, options, getLabel }: Props<T, TOptions>) {
+>({
+  form,
+  name,
+  label,
+  placeholder,
+  options,
+  getLabel,
+  onValueChange,
+}: Props<T, TOptions>) {
   const isSubmitting = form.formState.isSubmitting;
   return (
     <FieldGroup>
@@ -32,7 +41,10 @@ export function FormFieldCombobox<
             <FieldLabel>{label}</FieldLabel>
             <Combobox
               data={options}
-              onValueChange={(e) => field.onChange(e)}
+              onValueChange={(e) => {
+                field.onChange(e);
+                onValueChange?.(e);
+              }}
               value={field.value}
               disabled={isSubmitting}
               placeholder={placeholder}

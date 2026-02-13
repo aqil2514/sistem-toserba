@@ -12,6 +12,7 @@ interface Props<T extends FieldValues> {
   name: Path<T>;
   label: string;
   placeholder?: string;
+  disabled?: boolean;
 }
 
 export function FormFieldCurrency<T extends FieldValues>({
@@ -19,6 +20,7 @@ export function FormFieldCurrency<T extends FieldValues>({
   name,
   label,
   placeholder = "Contoh : Rp. 10.000",
+  disabled
 }: Props<T>) {
   const isSubmitting = form.formState.isSubmitting;
   return (
@@ -39,7 +41,7 @@ export function FormFieldCurrency<T extends FieldValues>({
               }}
               aria-invalid={fieldState.invalid}
               placeholder={placeholder}
-              disabled={isSubmitting}
+              disabled={disabled || isSubmitting}
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
