@@ -8,12 +8,14 @@ import { DeleteDialog } from "@/components/molecules/dialog/delete-dialog";
 import { LabelValue } from "@/@types/general";
 import { useMemo } from "react";
 import { formatDate } from "@/utils/format-date.fns";
+import { useQueryParams } from "@/hooks/use-query-params";
 
 export function CashCountingDeleteDialog() {
-  const { mutate, openDialog, setOpenDialog } = useCashCounts();
+  const { mutate } = useCashCounts();
+  const { get, update } = useQueryParams();
 
-  const open = openDialog?.type === "delete";
-  const id = openDialog?.type === "delete" ? openDialog.id : null;
+  const open = get("action") === "delete";
+  const id = get("id");
 
   const { data, isLoading } = useFetch<CashCountSchemaType>(
     id ? `${SERVER_URL}/cash-counter/cash-counting/${id}/form` : null,
@@ -24,8 +26,11 @@ export function CashCountingDeleteDialog() {
     try {
       await api.delete(`/cash-counter/cash-counting/${id}`);
 
-      toast.success("Data denominasi berhasil ditambah");
-      setOpenDialog(null);
+      toast.success("Data berhasl dihapus");
+      update({
+        action: null,
+        id: null,
+      });
       mutate?.();
     } catch (error) {
       console.error(error);
@@ -48,7 +53,12 @@ export function CashCountingDeleteDialog() {
     <DeleteDialog
       onDeleteHandle={deleteHandler}
       onOpenChange={(open) => {
-        if (!open) setOpenDialog(null);
+        if (!open) {
+          update({
+            action: null,
+            id: null,
+          });
+        }
       }}
       contents={contents}
       isLoading={isLoading}

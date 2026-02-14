@@ -16,6 +16,7 @@ import { CashCountingEditDialog } from "./dialogs/edit-dialog.cash-counting";
 import { CashCountingDupplicateDialog } from "./dialogs/dupplicate-dialog.cash-counting";
 import { CashCountingDeleteDialog } from "./dialogs/delete-dialog.cash-counting";
 import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
+import { useQueryParams } from "@/hooks/use-query-params";
 
 export function CashCounting() {
   return (
@@ -26,8 +27,9 @@ export function CashCounting() {
 }
 
 const InnerTemplate = () => {
-  const { data, isLoading, query, updateQuery, mutate, setOpenDialog } =
+  const { data, isLoading, query, updateQuery, mutate } =
     useCashCounts();
+    const {set} = useQueryParams()
 
   const tableData = useMemo<CashCounts[]>(() => {
     if (!data) return [];
@@ -59,7 +61,7 @@ const InnerTemplate = () => {
             <Button
               variant={"outline"}
               size={"sm"}
-              onClick={() => setOpenDialog({ type: "add" })}
+              onClick={() => set("action", "add" )}
             >
               Tambah Data
             </Button>

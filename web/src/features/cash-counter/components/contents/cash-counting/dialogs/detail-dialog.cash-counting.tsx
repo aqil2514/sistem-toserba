@@ -2,13 +2,14 @@ import { DetailDialog } from "@/components/molecules/dialog/detail-dialog";
 import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";
 import { CashCountingApiReturn } from "@/features/cash-counter/types/type.cash-counter-cash-counting";
-import { useCashCounts } from "@/features/cash-counter/store/cash-counting.provider";
 import { CashCountingDetail } from "../sub/cash-counting.detail";
+import { useQueryParams } from "@/hooks/use-query-params";
 
 export function CashCountingDetailDialog() {
-  const { openDialog, setOpenDialog } = useCashCounts();
-  const open = openDialog?.type === "detail";
-  const id = openDialog?.type === "detail" ? openDialog.id : null;
+  const { get, update } = useQueryParams();
+
+  const open = get("action") === "detail";
+  const id = get("id");
 
   const { data, isLoading, mutate } = useFetch<CashCountingApiReturn>(
     open ? `${SERVER_URL}/cash-counter/cash-counting/${id}` : null,
@@ -20,7 +21,12 @@ export function CashCountingDetailDialog() {
       description="Informasi data menghitung uang"
       title="Detail Hitung Uang"
       onOpenChange={(open) => {
-        if (!open) setOpenDialog(null);
+        if (!open) {
+          update({
+            action: null,
+            id: null,
+          });
+        }
       }}
       mutate={mutate}
       open={open}

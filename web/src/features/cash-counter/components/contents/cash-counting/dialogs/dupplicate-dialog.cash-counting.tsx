@@ -6,12 +6,14 @@ import { SERVER_URL } from "@/constants/url";
 import { useCashCounts } from "../../../../store/cash-counting.provider";
 import { CashCountSchemaType } from "../../../../schemas/cash-counts.schema";
 import { CashCountingForms } from "../forms/forms.cash-counting";
+import { useQueryParams } from "@/hooks/use-query-params";
 
 export function CashCountingDupplicateDialog() {
-  const { mutate, openDialog, setOpenDialog } = useCashCounts();
+  const { mutate } = useCashCounts();
+  const { get, update } = useQueryParams();
 
-  const open = openDialog?.type === "copy";
-  const id = openDialog?.type === "copy" ? openDialog.id : null;
+  const open = get("action") === "copy";
+  const id = get("id");
 
   const {
     data,
@@ -27,7 +29,10 @@ export function CashCountingDupplicateDialog() {
       await api.post("/cash-counter/cash-counting", values);
 
       toast.success("Data duplikat berhasil ditambah");
-      setOpenDialog(null);
+      update({
+        action: null,
+        id: null,
+      });
       mutate?.();
     } catch (error) {
       console.error(error);
@@ -40,7 +45,12 @@ export function CashCountingDupplicateDialog() {
       title={`Duplikat Data Hitung Uang`}
       description="Isi data di bawah ini untuk duplikat data hitung uang"
       onOpenChange={(open) => {
-        if (!open) setOpenDialog(null);
+        if (!open) {
+          update({
+            action: null,
+            id: null,
+          });
+        }
       }}
       open={open}
       FormComponent={

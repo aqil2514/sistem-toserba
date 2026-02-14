@@ -6,12 +6,14 @@ import { SERVER_URL } from "@/constants/url";
 import { useCashCounts } from "@/features/cash-counter/store/cash-counting.provider";
 import { CashCountSchemaType } from "@/features/cash-counter/schemas/cash-counts.schema";
 import { CashCountingForms } from "../forms/forms.cash-counting";
+import { useQueryParams } from "@/hooks/use-query-params";
 
 export function CashCountingEditDialog() {
-  const { mutate, openDialog, setOpenDialog } = useCashCounts();
+  const { mutate } = useCashCounts();
+  const { get, update } = useQueryParams();
 
-  const open = openDialog?.type === "edit";
-  const id = openDialog?.type === "edit" ? openDialog.id : null;
+  const open = get("action") === "edit";
+  const id = get("id");
 
   const {
     data,
@@ -27,7 +29,10 @@ export function CashCountingEditDialog() {
       await api.put(`/cash-counter/cash-counting/${id}`, values);
 
       toast.success("Data denominasi berhasil ditambah");
-      setOpenDialog(null);
+      update({
+        action: null,
+        id: null,
+      });
       mutate?.();
     } catch (error) {
       console.error(error);
@@ -40,7 +45,12 @@ export function CashCountingEditDialog() {
       title={`Edit Denominasi`}
       description="Isi data di bawah ini untuk edit data denominasi"
       onOpenChange={(open) => {
-        if (!open) setOpenDialog(null);
+        if (!open) {
+          update({
+            action: null,
+            id: null,
+          });
+        }
       }}
       open={open}
       FormComponent={

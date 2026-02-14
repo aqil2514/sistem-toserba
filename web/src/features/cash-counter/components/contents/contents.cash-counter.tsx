@@ -27,13 +27,15 @@ const tabsContent: TabsContentType<CashCounterValues>[] = [
 ];
 
 export function CashCounterContents() {
-  const { set, get } = useQueryParams();
+  const { get, update } = useQueryParams();
 
-  const content =
-    (get("content") as CashCounterValues) ?? "denominations";
+  const content = (get("content") as CashCounterValues) ?? "denominations";
 
   const changeHandler = (value: CashCounterValues) => {
-    set("content", value);
+    update({
+      content: value,
+      action: null,
+    });
   };
 
   return (

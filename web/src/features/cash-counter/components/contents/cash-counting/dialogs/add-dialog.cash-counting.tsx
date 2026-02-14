@@ -4,18 +4,20 @@ import { api } from "@/lib/api";
 import { useCashCounts } from "../../../../store/cash-counting.provider";
 import { CashCountingForms } from "../forms/forms.cash-counting";
 import { CashCountSchemaType } from "../../../../schemas/cash-counts.schema";
+import { useQueryParams } from "@/hooks/use-query-params";
 
 export function CashCountingAddDialog() {
-  const { mutate, openDialog, setOpenDialog } = useCashCounts();
+  const { mutate } = useCashCounts();
+  const {get, remove} = useQueryParams()
 
-  const open = openDialog?.type === "add";
+  const open = get("action") === "add";
 
   const addHandler = async (values: CashCountSchemaType) => {
     try {
       await api.post("/cash-counter/cash-counting", values);
 
       toast.success("Data hitung uang berhasil ditambah");
-      setOpenDialog(null);
+      remove("action")
       mutate?.();
     } catch (error) {
       console.error(error);
@@ -29,7 +31,7 @@ export function CashCountingAddDialog() {
       title="Tambah Data Baru"
       description="Isi data di bawah ini untuk menambah data baru"
       onOpenChange={(open) => {
-        if (!open) setOpenDialog(null);
+        if (!open) remove("action");
       }}
       open={open}
       FormComponent={<CashCountingForms onFormSubmit={addHandler} />}

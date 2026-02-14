@@ -1,8 +1,6 @@
 import { KeyedMutator } from "swr";
 import React, {
   createContext,
-  Dispatch,
-  SetStateAction,
   useContext,
   useState,
 } from "react";
@@ -12,14 +10,6 @@ import { CashCountsReturnApi } from "../types/type.cash-counter-cash-counting";
 import { buildUrl } from "@/utils/build-url";
 import { SERVER_URL } from "@/constants/url";
 import { startOfDay, startOfMonth } from "date-fns";
-
-type DialogState =
-  | { type: "add" }
-  | { type: "edit"; id: string }
-  | { type: "detail"; id: string }
-  | { type: "delete"; id: string }
-  | { type: "copy"; id: string }
-  | null;
 
 interface CashCountingContextType {
   data: CashCountsReturnApi | undefined;
@@ -33,9 +23,6 @@ interface CashCountingContextType {
     value: BasicQuery[T],
   ) => void;
   resetQuery: () => void;
-
-  openDialog: DialogState;
-  setOpenDialog: Dispatch<SetStateAction<DialogState>>;
 }
 
 const CashCountingContext = createContext<CashCountingContextType>(
@@ -63,8 +50,6 @@ export function CashCountingProvider({
 }) {
   const [query, setQuery] = useState<BasicQuery>(defaultQuery);
 
-  const [openDialog, setOpenDialog] = useState<DialogState>(null);
-
   // >>>>>> FETCHER AREA <<<<<<
   const url = buildUrl<BasicQuery>(
     SERVER_URL,
@@ -85,8 +70,6 @@ export function CashCountingProvider({
   const values: CashCountingContextType = {
     ...fetcher,
 
-    openDialog,
-    setOpenDialog,
 
     query,
     resetQuery,
