@@ -3,7 +3,7 @@ import {
   defaultDenomination,
   denominationSchema,
   DenominationSchemaType,
-} from "../../schemas/denominations.schema";
+} from "../../../../schemas/denominations.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { FormFieldText } from "@/components/forms/field-text.form";
@@ -13,7 +13,7 @@ import { FormFieldRadio } from "@/components/forms/field.radio.form";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { KeyedMutator } from "swr";
-import { CashDenomination } from "../../types/types.cash-counter-denomination";
+import { CashDenomination } from "../../../../types/types.cash-counter-denomination";
 import { MutateButton } from "@/components/ui/mutate-button";
 
 interface Props {

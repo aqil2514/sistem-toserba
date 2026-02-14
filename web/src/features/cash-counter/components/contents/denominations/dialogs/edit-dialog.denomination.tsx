@@ -1,13 +1,13 @@
 import { DialogWithForm } from "@/components/molecules/dialog/dialog-with-form";
-import { useDenomination } from "../../store/denomination.provider";
-import { DenominationForms } from "../forms/forms.denomination";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
-import { DenominationSchemaType } from "../../schemas/denominations.schema";
 import { useFetch } from "@/hooks/use-fetch";
-import { CashDenomination } from "../../types/types.cash-counter-denomination";
 import { SERVER_URL } from "@/constants/url";
 import { useMemo } from "react";
+import { useDenomination } from "@/features/cash-counter/store/denomination.provider";
+import { CashDenomination } from "@/features/cash-counter/types/types.cash-counter-denomination";
+import { DenominationSchemaType } from "@/features/cash-counter/schemas/denominations.schema";
+import { DenominationForms } from "../forms/forms.denomination";
 
 export function DenominationEditDialog() {
   const { mutate, editDialog, setEditDialog } = useDenomination();

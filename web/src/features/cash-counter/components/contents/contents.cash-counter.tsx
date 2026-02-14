@@ -4,8 +4,9 @@ import {
   TabsContentData,
   TabsContentType,
 } from "@/components/organisms/contents/tabs-content";
-import { CashCounterDenominations } from "../denominations/denominations.cash-counter";
-import { CashCounting } from "../cash-counting/cash-counting.cash-counter";
+import { CashCounterDenominations } from "./denominations/denominations.cash-counter";
+import { CashCounting } from "./cash-counting/cash-counting.cash-counter";
+import { CashCountingReport } from "./cash-counting-report/cash-counting-report";
 
 const tabsContent: TabsContentType<CashCounterValues>[] = [
   {
@@ -17,6 +18,11 @@ const tabsContent: TabsContentType<CashCounterValues>[] = [
     content: <CashCounting />,
     label: "Hitung Uang",
     value: "cash-counting",
+  },
+  {
+    content: <CashCountingReport />,
+    label: "Laporan Hitung Uang",
+    value: "report-cash-counting",
   },
 ];
 

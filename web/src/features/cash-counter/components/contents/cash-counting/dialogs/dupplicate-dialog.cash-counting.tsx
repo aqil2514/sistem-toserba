@@ -3,9 +3,9 @@ import { toast } from "sonner";
 import { api } from "@/lib/api";
 import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";
-import { useCashCounts } from "../../../store/cash-counting.provider";
-import { CashCountSchemaType } from "../../../schemas/cash-counts.schema";
-import { CashCountingForms } from "../../forms/cash-counting/forms.cash-counting";
+import { useCashCounts } from "../../../../store/cash-counting.provider";
+import { CashCountSchemaType } from "../../../../schemas/cash-counts.schema";
+import { CashCountingForms } from "../forms/forms.cash-counting";
 
 export function CashCountingDupplicateDialog() {
   const { mutate, openDialog, setOpenDialog } = useCashCounts();

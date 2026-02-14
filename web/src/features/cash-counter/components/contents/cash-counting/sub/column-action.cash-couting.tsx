@@ -3,8 +3,8 @@ import {
   DropdownActionItems,
 } from "@/components/organisms/data-table-columns/dropdown-action-columns";
 import { Row } from "@tanstack/react-table";
-import { useCashCounts } from "../../../store/cash-counting.provider";
-import { CashCounts } from "../../../types/type.cash-counter-cash-counting";
+import { useCashCounts } from "../../../../store/cash-counting.provider";
+import { CashCounts } from "../../../../types/type.cash-counter-cash-counting";
 import { formatDate } from "@/utils/format-date.fns";
 
 interface Props {

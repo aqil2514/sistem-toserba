@@ -9,7 +9,7 @@ import {
   CashCountSchemaType,
   cashCountsSchema,
   defaultCashCounts,
-} from "../../../schemas/cash-counts.schema";
+} from "../../../../schemas/cash-counts.schema";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { HeaderForm } from "./header.form";

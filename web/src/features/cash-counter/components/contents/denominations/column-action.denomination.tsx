@@ -3,8 +3,8 @@ import {
   DropdownActionItems,
 } from "@/components/organisms/data-table-columns/dropdown-action-columns";
 import { Row } from "@tanstack/react-table";
-import { CashDenomination } from "../../types/types.cash-counter-denomination";
-import { useDenomination } from "../../store/denomination.provider";
+import { CashDenomination } from "../../../types/types.cash-counter-denomination";
+import { useDenomination } from "../../../store/denomination.provider";
 
 interface Props {
   row: Row<CashDenomination>;

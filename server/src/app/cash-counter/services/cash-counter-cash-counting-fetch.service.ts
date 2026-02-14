@@ -10,6 +10,9 @@ import {
   CashCountSchemaType,
   ThirdPartyCash,
 } from '../types/cash-counting.types';
+import { BasicQuery } from '../../../@types/general';
+import { formatQueryDate } from '../../../utils/format-date';
+import { CashCountPivotReturn } from '../types/cash-counting-report.types';
 
 @Injectable()
 export class CashCounterCashCountingFetchService {
@@ -111,7 +114,7 @@ export class CashCounterCashCountingFetchService {
     ]);
 
     const date = new Date(cashCounts.date).toISOString();
-    const notes = cashCounts?.note ?? "";
+    const notes = cashCounts?.note ?? '';
     const isHaveThirdParty = thirdPartyCash.length > 0;
     const thirdParty: CashCountSchemaType['thirdParty'] = isHaveThirdParty
       ? thirdPartyCash.map((val) => ({
@@ -134,5 +137,21 @@ export class CashCounterCashCountingFetchService {
       notes,
       thirdParty,
     };
+  }
+
+  async getCashcountPivot(query: BasicQuery):Promise<CashCountPivotReturn> {
+    const { endUtc, startUtc } = formatQueryDate(query);
+
+    const { data, error } = await this.supabase.rpc('get_cash_count_pivot', {
+      p_start_date: startUtc,
+      p_end_date: endUtc,
+    });
+
+    if(error){
+      console.error(error);
+      throw error;
+    }
+
+    return data;
   }
 }

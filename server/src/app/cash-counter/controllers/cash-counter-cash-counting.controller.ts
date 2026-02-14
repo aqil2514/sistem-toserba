@@ -31,6 +31,11 @@ export class CashCounterCashCountingController {
     return await this.crudService.getCashCounts(query);
   }
 
+  @Get("report")
+  async getCashCountsReport(@Query() query:BasicQuery){
+    return await this.fetchService.getCashcountPivot(query)
+  }
+
   @Get(':id')
   async getCashCountsById(@Param('id') id: string) {
     return await this.fetchService.getDataByCashCountsId(id);

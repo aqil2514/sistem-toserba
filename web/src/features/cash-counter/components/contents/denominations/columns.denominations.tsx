@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { CashDenomination } from "../../types/types.cash-counter-denomination";
+import { CashDenomination } from "../../../types/types.cash-counter-denomination";
 import { Badge } from "@/components/ui/badge";
 import { ColumnActionDenomination } from "./column-action.denomination";
 

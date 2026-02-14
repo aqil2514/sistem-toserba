@@ -5,7 +5,7 @@ import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";
 import { useCashCounts } from "@/features/cash-counter/store/cash-counting.provider";
 import { CashCountSchemaType } from "@/features/cash-counter/schemas/cash-counts.schema";
-import { CashCountingForms } from "../../forms/cash-counting/forms.cash-counting";
+import { CashCountingForms } from "../forms/forms.cash-counting";
 
 export function CashCountingEditDialog() {
   const { mutate, openDialog, setOpenDialog } = useCashCounts();

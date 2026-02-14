@@ -2,19 +2,19 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import {
   CashCountingProvider,
   useCashCounts,
-} from "../../store/cash-counting.provider";
+} from "../../../store/cash-counting.provider";
 import { useMemo } from "react";
-import { CashCounts } from "../../types/type.cash-counter-cash-counting";
+import { CashCounts } from "../../../types/type.cash-counter-cash-counting";
 import { DataTable } from "@/components/organisms/ori-data-table/data-table";
 import { cashCountsColumns } from "./sub/columns.cash-counting";
 import { DataTableFooterServer } from "@/components/organisms/ori-data-table/data-table-footer-server";
 import { Button } from "@/components/ui/button";
 import { MutateButton } from "@/components/ui/mutate-button";
-import { CashCountingAddDialog } from "../dialog/cash-counting/add-dialog.cash-counting";
-import { CashCountingDetailDialog } from "../dialog/cash-counting/detail-dialog.cash-counting";
-import { CashCountingEditDialog } from "../dialog/cash-counting/edit-dialog.cash-counting";
-import { CashCountingDupplicateDialog } from "../dialog/cash-counting/dupplicate-dialog.cash-counting";
-import { CashCountingDeleteDialog } from "../dialog/cash-counting/delete-dialog.cash-counting";
+import { CashCountingAddDialog } from "./dialogs/add-dialog.cash-counting";
+import { CashCountingDetailDialog } from "./dialogs/detail-dialog.cash-counting";
+import { CashCountingEditDialog } from "./dialogs/edit-dialog.cash-counting";
+import { CashCountingDupplicateDialog } from "./dialogs/dupplicate-dialog.cash-counting";
+import { CashCountingDeleteDialog } from "./dialogs/delete-dialog.cash-counting";
 import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
 
 export function CashCounting() {

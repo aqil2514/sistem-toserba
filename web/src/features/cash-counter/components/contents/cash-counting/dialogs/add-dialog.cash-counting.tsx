@@ -1,9 +1,9 @@
 import { DialogWithForm } from "@/components/molecules/dialog/dialog-with-form";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
-import { useCashCounts } from "../../../store/cash-counting.provider";
-import { CashCountingForms } from "../../forms/cash-counting/forms.cash-counting";
-import { CashCountSchemaType } from "../../../schemas/cash-counts.schema";
+import { useCashCounts } from "../../../../store/cash-counting.provider";
+import { CashCountingForms } from "../forms/forms.cash-counting";
+import { CashCountSchemaType } from "../../../../schemas/cash-counts.schema";
 
 export function CashCountingAddDialog() {
   const { mutate, openDialog, setOpenDialog } = useCashCounts();

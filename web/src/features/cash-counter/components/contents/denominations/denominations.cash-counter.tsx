@@ -1,15 +1,12 @@
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import {
-  DenominationProvider,
-  useDenomination,
-} from "../../store/denomination.provider";
 import { DataTable } from "@/components/organisms/ori-data-table/data-table";
 import { denominationColumns } from "./columns.denominations";
-import { DenominationAddDialog } from "../dialog/add-dialog.denomination";
 import { Button } from "@/components/ui/button";
-import { DenominationEditDialog } from "../dialog/edit-dialog.denomination";
 import { MutateButton } from "@/components/ui/mutate-button";
-import { DenominationDeleteDialog } from "../dialog/delete-dialog-denomination";
+import { DenominationAddDialog } from "./dialogs/add-dialog.denomination";
+import { DenominationEditDialog } from "./dialogs/edit-dialog.denomination";
+import { DenominationDeleteDialog } from "./dialogs/delete-dialog-denomination";
+import { DenominationProvider, useDenomination } from "@/features/cash-counter/store/denomination.provider";
 
 export function CashCounterDenominations() {
   return (

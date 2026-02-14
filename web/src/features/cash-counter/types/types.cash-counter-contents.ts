@@ -1,1 +1,1 @@
-export type CashCounterValues = "denominations" | "cash-counting";
+export type CashCounterValues = "denominations" | "cash-counting" | "report-cash-counting";

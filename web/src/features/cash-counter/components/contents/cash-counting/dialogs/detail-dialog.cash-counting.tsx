@@ -3,7 +3,7 @@ import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";
 import { CashCountingApiReturn } from "@/features/cash-counter/types/type.cash-counter-cash-counting";
 import { useCashCounts } from "@/features/cash-counter/store/cash-counting.provider";
-import { CashCountingDetail } from "../../cash-counting/sub/cash-counting.detail";
+import { CashCountingDetail } from "../sub/cash-counting.detail";
 
 export function CashCountingDetailDialog() {
   const { openDialog, setOpenDialog } = useCashCounts();

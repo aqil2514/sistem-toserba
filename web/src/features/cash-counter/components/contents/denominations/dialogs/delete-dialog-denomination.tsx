@@ -1,13 +1,13 @@
-import { useDenomination } from "../../store/denomination.provider";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
 import { useFetch } from "@/hooks/use-fetch";
-import { CashDenomination } from "../../types/types.cash-counter-denomination";
 import { SERVER_URL } from "@/constants/url";
 import { useMemo } from "react";
 import { DeleteDialog } from "@/components/molecules/dialog/delete-dialog";
 import { LabelValue } from "@/@types/general";
 import { formatRupiah } from "@/utils/format-to-rupiah";
+import { useDenomination } from "@/features/cash-counter/store/denomination.provider";
+import { CashDenomination } from "@/features/cash-counter/types/types.cash-counter-denomination";
 
 export function DenominationDeleteDialog() {
   const { mutate, deleteDialog, setDeleteDialog } = useDenomination();
