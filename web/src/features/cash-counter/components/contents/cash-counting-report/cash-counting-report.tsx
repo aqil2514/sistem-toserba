@@ -8,6 +8,7 @@ import { useMemo } from "react";
 import { getCashCountingReportColumns } from "./columns/cash-counting-report.columns";
 import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
 import { MutateButton } from "@/components/ui/mutate-button";
+import { useQueryParams } from "@/hooks/use-query-params";
 
 export function CashCountingReport() {
   return (
@@ -19,6 +20,8 @@ export function CashCountingReport() {
 
 const InnerTemplate = () => {
   const { data, isLoading, query, updateQuery, mutate } = useCashCountsReport();
+
+  useQueryParams()
 
   const columns = useMemo(() => {
     if (!data) return [];

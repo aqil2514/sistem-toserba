@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { CashCounterValues } from "../../types/types.cash-counter-contents";
 import {
   TabsContentData,
@@ -7,6 +6,7 @@ import {
 import { CashCounterDenominations } from "./denominations/denominations.cash-counter";
 import { CashCounting } from "./cash-counting/cash-counting.cash-counter";
 import { CashCountingReport } from "./cash-counting-report/cash-counting-report";
+import { useQueryParams } from "@/hooks/use-query-params";
 
 const tabsContent: TabsContentType<CashCounterValues>[] = [
   {
@@ -27,11 +27,19 @@ const tabsContent: TabsContentType<CashCounterValues>[] = [
 ];
 
 export function CashCounterContents() {
-  const [content, setContent] = useState<CashCounterValues>("denominations");
+  const { set, get } = useQueryParams();
+
+  const content =
+    (get("content") as CashCounterValues) ?? "denominations";
+
+  const changeHandler = (value: CashCounterValues) => {
+    set("content", value);
+  };
+
   return (
     <TabsContentData
       value={content}
-      onValueChange={setContent}
+      onValueChange={changeHandler}
       tabContents={tabsContent}
     />
   );
