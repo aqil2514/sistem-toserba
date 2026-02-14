@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export async function fetcher<T>(url: string): Promise<T> {
   const res = await fetch(url, {
     credentials: "include", // ⬅️ penting untuk Paseto cookie
@@ -11,4 +13,14 @@ export async function fetcher<T>(url: string): Promise<T> {
   }
 
   return res.json();
+}
+
+export async function fetcherAxios<T>(url: string): Promise<T> {
+  try {
+    const { data } = await axios(url);
+
+    return data;
+  } catch (error) {
+    throw error
+  }
 }

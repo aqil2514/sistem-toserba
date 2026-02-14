@@ -12,6 +12,7 @@ import { TelegramBotModule } from './telegram-bot/telegram-bot.module';
 import { CashflowModule } from './cashflow/cashflow.module';
 import { AssetFinancialModule } from './asset-financial/asset-financial.module';
 import { CashCounterModule } from './cash-counter/cash-counter.module';
+import { ActivityModule } from './activity/activity.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { CashCounterModule } from './cash-counter/cash-counter.module';
     CashflowModule,
     AssetFinancialModule,
     CashCounterModule,
+    ActivityModule,
   ],
   controllers: [AppController],
   providers: [AppService],
