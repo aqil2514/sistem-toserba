@@ -1,4 +1,4 @@
-import { BasicQuery } from "@/@types/general";
+import { BasicQuery, FilterState } from "@/@types/general";
 import {
   mergeQueryWithDefaults,
   parseSearchParamsToBasicQuery,
@@ -63,5 +63,26 @@ export function useQueryBasics(defaults?: BasicQuery) {
     }
   };
 
-  return { query, updateDateRange, updatePage, updateLimit, updateFooter };
+  const updateFilter = (state: FilterState[]) => {
+    if(state.length === 0){
+      replaceParams((params) => params.delete("filter") )
+      return;
+    }
+    state.forEach((value) => {
+      const val = `${value.key}:${value.operator ?? "eq"}:${value.value}`;
+      replaceParams((params) => {
+        params.set("filter", val);
+        params.set("page", "1")
+      });
+    });
+  };
+
+  return {
+    query,
+    updateDateRange,
+    updatePage,
+    updateLimit,
+    updateFooter,
+    updateFilter,
+  };
 }

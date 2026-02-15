@@ -15,7 +15,7 @@ import React, { useMemo, useState } from "react";
 interface Props<T extends BasicQuery> {
   query: T;
   onQueryChange: <K extends keyof T>(key: K, value: T[K]) => void;
-  meta: MetaResponseQuery;
+  meta?: MetaResponseQuery;
 }
 
 export function DataTableFooterServer<T extends BasicQuery>({
@@ -23,6 +23,8 @@ export function DataTableFooterServer<T extends BasicQuery>({
   query,
   meta,
 }: Props<T>) {
+  if(!meta) return null;
+  
   return (
     <div className="flex flex-col sm:flex-row gap-4 p-4">
       <Pagination
