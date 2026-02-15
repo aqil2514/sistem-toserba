@@ -22,6 +22,8 @@ import { AssetRpcReturn } from '../../../app/asset-financial/types/asset.types';
 import { CashDenomination } from '../types/denomination.types';
 import { BasicQueryDto } from '../../../services/query/dto/query.dto';
 import { BasicQueryService } from '../../../services/query/query.service';
+import { ActivityLogsInsert } from '../../../app/activity/types/activity.types';
+import { ActivityService } from '../../../app/activity/activity.service';
 
 @Injectable()
 export class CashCounterCashCountingService {
@@ -29,6 +31,7 @@ export class CashCounterCashCountingService {
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
     private readonly basicQueryService: BasicQueryService,
+    private readonly logActivityService:ActivityService
   ) {}
 
   private readonly query: BasicQuery = {
@@ -255,7 +258,7 @@ export class CashCounterCashCountingService {
 
   async getCashCounts(queryDto: BasicQueryDto): Promise<CashCountsReturnApi> {
     const query = this.basicQueryService.mapToBasicQuery(queryDto);
-    
+
     const { limit, page } = query;
 
     let supabase = this.supabase
@@ -295,9 +298,18 @@ export class CashCounterCashCountingService {
       denominationMap,
     );
 
+    const activityPayload: ActivityLogsInsert = {
+      description: `Data hitung uang #${cashCountId} berhasil dibuat`,
+      type: 'cash-counter-cash-counting',
+      action:"ADD_CASH_COUNTER_CASH_COUNTING",
+      reference_id: cashCountId,
+      title: 'Data Hitung Uang Dibuat',
+    };
+
     await Promise.all([
       this.createNewThirdPartyCash(mappedThirdParty),
       this.createCashCountDetails(mappedCashCountDetail),
+      this.logActivityService.createActivity(activityPayload)
     ]);
   }
 

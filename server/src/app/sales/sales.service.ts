@@ -23,6 +23,8 @@ import { formatDateYYYYMMDD } from '../../utils/format-date';
 import { SalesStockService } from './helper/sales-stock.service';
 import { DateTime } from 'luxon';
 import { DataQueryResponse } from '../../@types/general';
+import { ActivityService } from '../activity/activity.service';
+import { ActivityLogsInsert } from '../activity/types/activity.types';
 
 @Injectable()
 export class SalesService {
@@ -30,6 +32,7 @@ export class SalesService {
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
     private readonly salesStockService: SalesStockService,
+    private readonly activityService: ActivityService,
   ) {}
 
   private async generateSalesCode(date: Date): Promise<string> {
@@ -215,8 +218,19 @@ export class SalesService {
         );
       }
 
+      const activityPayload: ActivityLogsInsert = {
+        title: 'Tambah Data Penjualan',
+        reference_id: sales.id,
+        action: 'ADD_SALES',
+        type: 'sales',
+        description: `Data Penjualan ${sales.id} berhasil ditambah. Data-data lain yang berkaitan dengan data ini sudah disesuaikan.`,
+      };
+
       // 4️⃣ Insert sales items ke DB
-      await this.supabase.from('sales_items').insert(salesItems);
+      Promise.all([
+        await this.supabase.from('sales_items').insert(salesItems),
+        await this.activityService.createActivity(activityPayload),
+      ]);
     } catch (error) {
       // rollback sales header jika gagal
       await this.supabase.from('sales').delete().eq('id', sales.id);
@@ -248,6 +262,13 @@ export class SalesService {
       .delete()
       .eq('sales_id', transaction_id);
     await this.supabase.from('sales').delete().eq('id', transaction_id);
+    await this.activityService.createActivity({
+      action: 'DELETE_SALES',
+      description: `Data penjualan ${transaction_id} telah dihapus. Data-data lain yang berkaitan dengan ini sudah dipulihkan`,
+      reference_id: transaction_id,
+      title: 'Hapus Data Penjualan',
+      type: 'sales',
+    });
   }
 
   async updateTransaction(transaction_id: string, raw: CreateSalesDto) {
@@ -286,9 +307,14 @@ export class SalesService {
 
     // 6️⃣ Insert sales_items baru
     await this.supabase.from('sales_items').insert(newSalesItems);
+    await this.activityService.createActivity({
+      title: 'Edit Data Penjualan',
+      action: 'EDIT_SALES',
+      reference_id: transaction_id,
+      description: `Data penjualan ${transaction_id} berhasil diedit.`,
+      type: 'sales',
+    });
 
     return newSalesItems;
   }
-
-
 }
