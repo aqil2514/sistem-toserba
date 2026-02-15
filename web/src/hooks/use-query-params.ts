@@ -41,28 +41,28 @@ export function useQueryParams(options?: Options) {
   };
 
   const update = (updates: Record<string, string | null>) => {
-  const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams.toString());
 
-  Object.entries(updates).forEach(([key, value]) => {
-    if (value === null) {
-      params.delete(key);
-    } else {
-      params.set(key, value);
-    }
-  });
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === null) {
+        params.delete(key);
+      } else {
+        params.set(key, value);
+      }
+    });
 
-  const url = params.toString()
-    ? `${basePath}?${params.toString()}`
-    : basePath;
+    const url = params.toString()
+      ? `${basePath}?${params.toString()}`
+      : basePath;
 
-  navigate(url);
-};
+    navigate(url);
+  };
 
   return {
     get,
     getAll,
     set,
     remove,
-    update
+    update,
   };
 }

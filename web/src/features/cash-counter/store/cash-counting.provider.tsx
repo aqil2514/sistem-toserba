@@ -1,15 +1,11 @@
 import { KeyedMutator } from "swr";
-import React, {
-  createContext,
-  useContext,
-  useState,
-} from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useFetch } from "@/hooks/use-fetch";
 import { BasicQuery } from "@/@types/general";
 import { CashCountsReturnApi } from "../types/type.cash-counter-cash-counting";
-import { buildUrl } from "@/utils/build-url";
 import { SERVER_URL } from "@/constants/url";
 import { startOfDay, startOfMonth } from "date-fns";
+import { buildUrlBasicQuery } from "@/utils/url-builder/build-url-basic-query";
 
 interface CashCountingContextType {
   data: CashCountsReturnApi | undefined;
@@ -51,12 +47,12 @@ export function CashCountingProvider({
   const [query, setQuery] = useState<BasicQuery>(defaultQuery);
 
   // >>>>>> FETCHER AREA <<<<<<
-  const url = buildUrl<BasicQuery>(
-    SERVER_URL,
-    "/cash-counter/cash-counting",
-    query,
-  );
-  const fetcher = useFetch<CashCountsReturnApi>(url);
+  const serverUrl = buildUrlBasicQuery({
+    endpoint: "/cash-counter/cash-counting",
+    base: SERVER_URL,
+    rawQuery: defaultQuery,
+  });
+  const fetcher = useFetch<CashCountsReturnApi>(serverUrl);
 
   //   >>>>>> QUERY AREA <<<<<<
 
@@ -69,7 +65,6 @@ export function CashCountingProvider({
 
   const values: CashCountingContextType = {
     ...fetcher,
-
 
     query,
     resetQuery,

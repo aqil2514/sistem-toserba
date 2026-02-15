@@ -13,14 +13,17 @@ import { CashflowModule } from './cashflow/cashflow.module';
 import { AssetFinancialModule } from './asset-financial/asset-financial.module';
 import { CashCounterModule } from './cash-counter/cash-counter.module';
 import { ActivityModule } from './activity/activity.module';
+import { BasicQueryModule } from '../services/query/query.module';
 
 @Module({
   imports: [
     AuthModule,
     SupabaseModule,
+    BasicQueryModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+
     ProductsModule,
     PurchaseModule,
     SalesModule,

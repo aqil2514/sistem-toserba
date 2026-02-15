@@ -16,6 +16,7 @@ import { CashCounterCashCountingService } from '../services/cash-counter-cash-co
 import { BasicQuery } from '../../../@types/general';
 import { CreateCashCountDto } from '../dto/cash-counting.dto';
 import { CashCounterCashCountingFetchService } from '../services/cash-counter-cash-counting-fetch.service';
+import { BasicQueryDto } from '../../../services/query/dto/query.dto';
 
 @UseGuards(PasetoGuard, RoleGuard)
 @Roles('admin')
@@ -27,13 +28,13 @@ export class CashCounterCashCountingController {
   ) {}
 
   @Get()
-  async getCashCounts(@Query() query: BasicQuery) {
+  async getCashCounts(@Query() query: BasicQueryDto) {
     return await this.crudService.getCashCounts(query);
   }
 
-  @Get("report")
-  async getCashCountsReport(@Query() query:BasicQuery){
-    return await this.fetchService.getCashcountPivot(query)
+  @Get('report')
+  async getCashCountsReport(@Query() query: BasicQuery) {
+    return await this.fetchService.getCashcountPivot(query);
   }
 
   @Get(':id')
@@ -60,8 +61,8 @@ export class CashCounterCashCountingController {
   }
 
   @Delete(':id')
-  async deleteCashCountsData(@Param("id") cashCounterId: string) {
-    console.log(cashCounterId)
+  async deleteCashCountsData(@Param('id') cashCounterId: string) {
+    console.log(cashCounterId);
     return await this.crudService.deleteCashCountData(cashCounterId);
   }
 }

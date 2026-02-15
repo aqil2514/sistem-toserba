@@ -20,12 +20,15 @@ import { CreateCashCountDto } from '../dto/cash-counting.dto';
 import { formatQueryDate } from '../../../utils/format-date';
 import { AssetRpcReturn } from '../../../app/asset-financial/types/asset.types';
 import { CashDenomination } from '../types/denomination.types';
+import { BasicQueryDto } from '../../../services/query/dto/query.dto';
+import { BasicQueryService } from '../../../services/query/query.service';
 
 @Injectable()
 export class CashCounterCashCountingService {
   constructor(
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
+    private readonly basicQueryService: BasicQueryService,
   ) {}
 
   private readonly query: BasicQuery = {
@@ -250,7 +253,9 @@ export class CashCounterCashCountingService {
     }
   }
 
-  async getCashCounts(query: BasicQuery): Promise<CashCountsReturnApi> {
+  async getCashCounts(queryDto: BasicQueryDto): Promise<CashCountsReturnApi> {
+    const query = this.basicQueryService.mapToBasicQuery(queryDto);
+    
     const { limit, page } = query;
 
     let supabase = this.supabase
@@ -300,7 +305,7 @@ export class CashCounterCashCountingService {
     payload: CreateCashCountDto,
     cash_count_id: string,
   ) {
-    await this.deleteCashCountData(cash_count_id)
+    await this.deleteCashCountData(cash_count_id);
 
     await this.createNewCashCountData(payload);
   }
