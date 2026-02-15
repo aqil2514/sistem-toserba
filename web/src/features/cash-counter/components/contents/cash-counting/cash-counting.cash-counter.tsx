@@ -17,6 +17,7 @@ import { CashCountingDupplicateDialog } from "./dialogs/dupplicate-dialog.cash-c
 import { CashCountingDeleteDialog } from "./dialogs/delete-dialog.cash-counting";
 import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
 import { useQueryParams } from "@/hooks/use-query-params";
+import { BasicQuery } from "@/@types/general";
 
 export function CashCounting() {
   return (
@@ -27,9 +28,8 @@ export function CashCounting() {
 }
 
 const InnerTemplate = () => {
-  const { data, isLoading, query, updateQuery, mutate } =
-    useCashCounts();
-    const {set} = useQueryParams()
+  const { data, isLoading, query, updateQuery, mutate } = useCashCounts();
+  const { set } = useQueryParams();
 
   const tableData = useMemo<CashCounts[]>(() => {
     if (!data) return [];
@@ -47,21 +47,21 @@ const InnerTemplate = () => {
               to: query.to,
             }}
             onApply={(date) => {
-              if(!date) return;
-              updateQuery("from", date.from)
-              updateQuery("to", date.to)
+              if (!date) return;
+              updateQuery("from", date.from);
+              updateQuery("to", date.to);
             }}
             setDate={(date) => {
-              if(!date) return;
-              updateQuery("from", date.from)
-              updateQuery("to", date.to)
+              if (!date) return;
+              updateQuery("from", date.from);
+              updateQuery("to", date.to);
             }}
           />
           <div className="flex gap-4">
             <Button
               variant={"outline"}
               size={"sm"}
-              onClick={() => set("action", "add" )}
+              onClick={() => set("action", "add")}
             >
               Tambah Data
             </Button>
@@ -73,10 +73,10 @@ const InnerTemplate = () => {
         ) : (
           <DataTable columns={cashCountsColumns} data={tableData} />
         )}
-        {data && (
+        {data && query && (
           <DataTableFooterServer
             meta={data.meta}
-            query={query}
+            query={query as BasicQuery}
             onQueryChange={updateQuery}
           />
         )}

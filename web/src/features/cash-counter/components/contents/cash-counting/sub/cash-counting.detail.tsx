@@ -17,7 +17,7 @@ import { DialogFooter } from "@/components/ui/dialog";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
-import { useCashCounts } from "@/features/cash-counter/store/cash-counting.provider";
+import { useQueryParams } from "@/hooks/use-query-params";
 
 interface Props {
   data: CashCountingApiReturn | undefined;
@@ -25,13 +25,13 @@ interface Props {
 
 export function CashCountingDetail({ data }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { openDialog } = useCashCounts();
-  const id = openDialog?.type === "detail" ? openDialog.id : null;
+  const { get } = useQueryParams();
+  const id = get("id");
   if (!data) return null;
 
   const adjusmentHandler = async () => {
-    const {difference} = data.header;
-    if(difference === 0) return toast.info("Data sudah sesuai")
+    const { difference } = data.header;
+    if (difference === 0) return toast.info("Data sudah sesuai");
     try {
       setIsLoading(true);
       await api.post("/cashflow/cash-counter", { id });
