@@ -64,17 +64,24 @@ export function useQueryBasics(defaults?: BasicQuery) {
   };
 
   const updateFilter = (state: FilterState[]) => {
-    if(state.length === 0){
-      replaceParams((params) => params.delete("filter") )
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.delete("filter");
+
+    if (state.length === 0) {
+      params.set("page", "1");
+      router.replace(`?${params.toString()}`);
       return;
     }
+
     state.forEach((value) => {
       const val = `${value.key}:${value.operator ?? "eq"}:${value.value}`;
-      replaceParams((params) => {
-        params.set("filter", val);
-        params.set("page", "1")
-      });
+      params.append("filter", val);
     });
+
+    params.set("page", "1");
+
+    router.replace(`?${params.toString()}`);
   };
 
   return {

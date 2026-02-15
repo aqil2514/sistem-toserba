@@ -6,6 +6,7 @@ export function handleActivityDetail(activity: ActivityLogsDb) {
       window.open(
         `/cash-counter?content=cash-counting&action=detail&id=${activity.reference_id}`,
         "_blank",
+        "noopener,noreferrer"
       );
       break;
 

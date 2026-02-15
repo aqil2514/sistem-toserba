@@ -3,13 +3,13 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { CashflowCategoryInsert } from '../types/cashflow-category.types';
 import {
   CashflowCategoryStatus,
+  CashflowDb,
   CashflowDbInsert,
-  PayableCashflowMeta,
-  ReceivableCashflowMeta,
 } from '../types/cashflow.types';
 import { CashflowDto } from '../dto/cashflow.dto';
 import { CashflowCategoryDto } from '../dto/cashflow-category.dto';
 import { randomUUID } from 'crypto';
+import { ActivityService } from '../../activity/activity.service';
 
 @Injectable()
 export class CashflowFormService {
@@ -18,6 +18,8 @@ export class CashflowFormService {
   constructor(
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
+    // TODO : Buat perbaiki & log aktivitas
+    private readonly activityService: ActivityService,
   ) {}
 
   private buildMetaForAsset(
@@ -118,13 +120,19 @@ export class CashflowFormService {
 
   private async createNewCashflow(
     payload: CashflowDbInsert | CashflowDbInsert[],
-  ) {
-    const { error } = await this.supabase.from('cashflow').insert(payload);
+  ): Promise<CashflowDb> {
+    const { data, error } = await this.supabase
+      .from('cashflow')
+      .insert(payload)
+      .select('*')
+      .maybeSingle();
 
     if (error) {
       console.error(error);
       throw error;
     }
+
+    return data;
   }
 
   private async createNewCashflowCategoryIfNoExist(

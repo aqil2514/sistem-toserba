@@ -5,10 +5,18 @@ import { SalesStockService } from './helper/sales-stock.service';
 import { SalesRpcService } from './helper/sales-rpc.service';
 import { SalesReportService } from './helper/sales-report.service';
 import { SalesFetcherService } from './helper/sales-fetcher.service';
+import { SalesLogService } from './helper/sales-log.service';
 
 @Module({
   controllers: [SalesController],
-  providers: [SalesService, SalesStockService, SalesRpcService, SalesReportService, SalesFetcherService],
-  exports:[SalesReportService]
+  providers: [
+    SalesService,
+    SalesStockService,
+    SalesRpcService,
+    SalesReportService,
+    SalesFetcherService,
+    SalesLogService,
+  ],
+  exports: [SalesReportService],
 })
 export class SalesModule {}
