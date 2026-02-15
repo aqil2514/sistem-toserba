@@ -27,21 +27,14 @@ const tabsContent: TabsContentType<CashCounterValues>[] = [
 ];
 
 export function CashCounterContents() {
-  const { get, update } = useQueryParams();
+  const { get, resetToContent } = useQueryParams();
 
   const content = (get("content") as CashCounterValues) ?? "denominations";
-
-  const changeHandler = (value: CashCounterValues) => {
-    update({
-      content: value,
-      action: null,
-    });
-  };
 
   return (
     <TabsContentData
       value={content}
-      onValueChange={changeHandler}
+      onValueChange={resetToContent}
       tabContents={tabsContent}
     />
   );

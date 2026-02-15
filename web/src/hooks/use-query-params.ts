@@ -58,11 +58,19 @@ export function useQueryParams(options?: Options) {
     navigate(url);
   };
 
+  const resetToContent = (content: string) => {
+    const params = new URLSearchParams();
+
+    params.set("content", content);
+    router.replace(`?${params.toString()}`);
+  };
+
   return {
     get,
     getAll,
     set,
     remove,
     update,
+    resetToContent
   };
 }
