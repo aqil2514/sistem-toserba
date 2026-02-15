@@ -18,6 +18,7 @@ import { CashCountingDeleteDialog } from "./dialogs/delete-dialog.cash-counting"
 import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
 import { useQueryParams } from "@/hooks/use-query-params";
 import { BasicQuery } from "@/@types/general";
+import { useQueryBasics } from "@/hooks/use-query-basics";
 
 export function CashCounting() {
   return (
@@ -28,8 +29,9 @@ export function CashCounting() {
 }
 
 const InnerTemplate = () => {
-  const { data, isLoading, query, updateQuery, mutate } = useCashCounts();
+  const { data, isLoading, query, mutate } = useCashCounts();
   const { set } = useQueryParams();
+  const { updateDateRange, updateFooter } = useQueryBasics();
 
   const tableData = useMemo<CashCounts[]>(() => {
     if (!data) return [];
@@ -48,13 +50,11 @@ const InnerTemplate = () => {
             }}
             onApply={(date) => {
               if (!date) return;
-              updateQuery("from", date.from);
-              updateQuery("to", date.to);
+              updateDateRange(date);
             }}
             setDate={(date) => {
               if (!date) return;
-              updateQuery("from", date.from);
-              updateQuery("to", date.to);
+              updateDateRange(date);
             }}
           />
           <div className="flex gap-4">
@@ -77,7 +77,7 @@ const InnerTemplate = () => {
           <DataTableFooterServer
             meta={data.meta}
             query={query as BasicQuery}
-            onQueryChange={updateQuery}
+            onQueryChange={updateFooter}
           />
         )}
       </div>

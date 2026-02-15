@@ -28,7 +28,8 @@ export class BasicQueryService {
       .filter(Boolean) as FilterState[];
   }
 
-  extractSortState(sorts: string[]): SortState[] {
+  extractSortState(sorts?: string[]): SortState[] {
+    if (!sorts) return [];
     return sorts.map((sort) => {
       const splittedSort = sort.split(':');
       return {

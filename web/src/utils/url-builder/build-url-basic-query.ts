@@ -1,7 +1,7 @@
 import { BasicQuery } from "@/@types/general";
 import { buildUrlClient, BuildUrlClientOptions } from "./build-url-client";
 
-interface BuildUrlBasicQueryOptions extends BuildUrlClientOptions {
+export interface BuildUrlBasicQueryOptions extends BuildUrlClientOptions {
   rawQuery: BasicQuery;
 }
 
@@ -16,5 +16,5 @@ export function buildUrlBasicQuery(options: BuildUrlBasicQueryOptions) {
     base: options.base,
   });
 
-  return url
+  return url;
 }
