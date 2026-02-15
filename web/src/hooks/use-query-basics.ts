@@ -11,6 +11,16 @@ export function useQueryBasics(defaults?: BasicQuery) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
+  // HELPERS
+  const replaceParams = (modifier: (params: URLSearchParams) => void) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    modifier(params);
+
+    router.replace(`?${params.toString()}`);
+  };
+
+  // EXPORTS
   const query = useMemo(() => {
     return defaults
       ? mergeQueryWithDefaults(defaults, searchParams)
@@ -18,42 +28,34 @@ export function useQueryBasics(defaults?: BasicQuery) {
   }, [searchParams, defaults]);
 
   const updatePage = (page: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    params.set("page", String(page));
-
-    router.replace(`?${params.toString()}`);
+    replaceParams((params) => {
+      params.set("page", String(page));
+    });
   };
 
   const updateLimit = (limit: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    params.set("limit", String(limit));
-
-    router.replace(`?${params.toString()}`);
+    replaceParams((params) => {
+      params.set("limit", String(limit));
+      params.set("page", "1");
+    });
   };
 
   const updateDateRange = (date: DateRange) => {
-    const params = new URLSearchParams(searchParams.toString());
+    replaceParams((params) => {
+      if (date.from) params.set("from", date.from.toISOString());
+      else params.delete("from");
 
-    if (date.from) {
-      params.set("from", date.from.toISOString());
-    } else {
-      params.delete("from");
-    }
+      if (date.to) params.set("to", date.to.toISOString());
+      else params.delete("to");
 
-    if (date.to) {
-      params.set("to", date.to.toISOString());
-    } else {
-      params.delete("to");
-    }
-
-    params.set("page", "1");
-
-    router.replace(`?${params.toString()}`);
+      params.set("page", "1");
+    });
   };
 
-  const updateFooter = (key: keyof BasicQuery, value: BasicQuery[keyof BasicQuery]) => {
+  const updateFooter = <K extends keyof BasicQuery>(
+    key: keyof BasicQuery,
+    value: BasicQuery[K],
+  ) => {
     if (key === "limit") {
       updateLimit(value as number);
     } else {
