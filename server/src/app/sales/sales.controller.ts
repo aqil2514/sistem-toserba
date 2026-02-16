@@ -20,6 +20,7 @@ import { SalesRpcService } from './services/sales-rpc.service';
 import { SalesReportQuery } from './interface/sales-report.interface';
 import { SalesReportService } from './services/sales-report.service';
 import { SalesFetcherService } from './services/sales-fetcher.service';
+import { BasicQueryDto } from '../../services/query/dto/query.dto';
 
 @UseGuards(PasetoGuard, RoleGuard)
 @Roles('admin')
@@ -33,7 +34,7 @@ export class SalesController {
   ) {}
 
   @Get()
-  async getTransaction(@Query() query: SalesQuery) {
+  async getTransaction(@Query() query: BasicQueryDto) {
     return await this.salesFetcherService.findByQuery(query);
   }
 

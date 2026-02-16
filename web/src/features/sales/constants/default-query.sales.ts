@@ -1,10 +1,16 @@
-import { endOfDay, startOfDay } from "date-fns";
-import { SalesQuery } from "../types/sales-query";
+import { startOfDay } from "date-fns";
+import { BasicQuery } from "@/@types/general";
 
-export const defaultQuery: SalesQuery = {
+export const defaultQuery: BasicQuery = {
+  limit: 10,
   page: 1,
-  limit: 20,
   from: startOfDay(new Date()),
-  to: endOfDay(new Date()),
-  toggleColumnKey: "customer_name",
+  to: startOfDay(new Date()),
+  filters: [],
+  sort: [
+    {
+      key: "transaction_at",
+      value: "desc",
+    },
+  ],
 };

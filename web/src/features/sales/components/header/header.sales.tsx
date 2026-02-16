@@ -1,7 +1,6 @@
 import { useSales } from "../../store/sales.provider";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { defaultQuery } from "../../constants/default-query.sales";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
 import { MutateButton } from "@/components/ui/mutate-button";
@@ -9,10 +8,8 @@ import { AddToCashflowButton } from "./add-to-cashflow-button";
 import { useQueryParams } from "@/hooks/use-query-params";
 
 export function SalesHeader() {
-  const { data, resetQuery, query, mutate } = useSales();
+  const { data, mutate } = useSales();
   const { set } = useQueryParams();
-
-  const isFiltered = JSON.stringify(query) !== JSON.stringify(defaultQuery);
 
   const cashflowAddHandler = async () => {
     try {
@@ -45,11 +42,6 @@ export function SalesHeader() {
         <Button variant={"outline"} onClick={() => set("action", "add")}>
           <Plus /> Tambah Data
         </Button>
-        {isFiltered && (
-          <Button onClick={resetQuery} variant={"destructive"}>
-            Reset Filter
-          </Button>
-        )}
       </div>
     </div>
   );

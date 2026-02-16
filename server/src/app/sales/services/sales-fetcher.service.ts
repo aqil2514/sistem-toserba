@@ -5,46 +5,34 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { SalesQuery } from '../interface/sales-query.interface';
 import { DataQueryResponse } from '../../../@types/general';
 import { SalesDb } from '../interface/sales.interface';
 import {
-  applyDateRangeFilter,
-  applyPagination,
+  buildPaginationMeta,
+  executeSupabaseBasicQuery,
 } from '../../../utils/query-builder';
 import { SalesItemApiResponse } from '../interface/sales-items.interface';
+import { BasicQueryDto } from '../../../services/query/dto/query.dto';
+import { BasicQueryService } from '../../../services/query/query.service';
 
 @Injectable()
 export class SalesFetcherService {
   constructor(
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
+    private readonly basicQueryService: BasicQueryService,
   ) {}
 
-  async findByQuery(query: SalesQuery): Promise<DataQueryResponse<SalesDb[]>> {
-    const {
-      page,
-      limit,
-      from,
-      to,
-      toggleColumnKey,
-      toggleColumnValue,
-      sortedKey,
-      sortedValue,
-    } = query;
-    let client = this.supabase
+  async findByQuery(
+    rawquery: BasicQueryDto,
+  ): Promise<DataQueryResponse<SalesDb[]>> {
+    const query = this.basicQueryService.mapToBasicQuery(rawquery);
+    let supabase = this.supabase
       .from('sales')
       .select('*', { count: 'exact' })
       .is('deleted_at', null);
 
-    if (page && limit) applyPagination(client, page, limit);
-
-    if (from) applyDateRangeFilter(client, 'transaction_at', from, to);
-    if (toggleColumnKey && toggleColumnValue)
-      client.ilike(toggleColumnKey, `%${toggleColumnValue}%`);
-
-    if (sortedKey && sortedValue)
-      client.order(sortedKey, { ascending: sortedValue === 'asc' });
+    const client = executeSupabaseBasicQuery(supabase, query, 'created_at');
 
     const { data, error, count } = await client;
 
@@ -53,14 +41,11 @@ export class SalesFetcherService {
       throw new InternalServerErrorException('Terjadi error saat mencari data');
     }
 
+    const meta = buildPaginationMeta(query.page, query.limit, count);
+
     return {
       data,
-      meta: {
-        page: Number(page),
-        limit: Number(limit),
-        total: Number(count ?? 0),
-        totalPages: Math.ceil((count ?? 0) / limit),
-      },
+      meta,
     };
   }
 
@@ -80,15 +65,17 @@ export class SalesFetcherService {
     return data;
   }
 
-  async getCustomerName(){
-    const {data,error} = await this.supabase.from("customer_name").select("*");
+  async getCustomerName() {
+    const { data, error } = await this.supabase
+      .from('customer_name')
+      .select('*');
 
-    if(error){
-        console.error(error);
-        throw error
+    if (error) {
+      console.error(error);
+      throw error;
     }
 
-    const customer_name = data.map(cust => cust.customer_name);
+    const customer_name = data.map((cust) => cust.customer_name);
 
     return customer_name;
   }
