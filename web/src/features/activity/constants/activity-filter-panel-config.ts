@@ -39,6 +39,12 @@ export const activityFilterPanel: FilterConfig[] = [
     withOperator: true,
   },
   {
+    field: "description",
+    label: "Deskripsi",
+    type: "text",
+    withOperator: true,
+  },
+  {
     field: "type",
     label: "Tipe Log",
     type: "select",

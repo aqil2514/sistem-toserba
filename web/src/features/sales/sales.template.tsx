@@ -7,13 +7,13 @@ import { SectionContainer } from "@/components/layout/container/section-containe
 import { SalesHeader } from "./components/header/header.sales";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { SalesToolbar } from "./components/toolbar/toolbar.sales";
-import { SalesDetailDialog } from "./components/detail/detail.sales";
 import { DataTable } from "@/components/organisms/ori-data-table/data-table";
-import { SalesEditDialog } from "./components/edit-item.sales";
-import { SalesDeleteDialog } from "./components/delete-item.sales";
-import { useShortcut } from "@/hooks/use-shortcut";
+import { SalesDeleteDialog } from "./components/dialog/delete-dialog.sales";
 import { DataTableFooterServer } from "@/components/organisms/ori-data-table/data-table-footer-server";
 import { TemplateMode } from "@/@types/general";
+import { SalesAddDialog } from "./components/dialog/add-dialog.sales";
+import { SalesDetailDialog } from "./components/dialog/detail-dialog.sales";
+import { SalesEditDialog } from "./components/dialog/edit-dialog.sales";
 
 interface Props {
   mode: TemplateMode;
@@ -30,16 +30,15 @@ export default function SalesTemplate({ mode }: Props) {
     );
 
   return (
-    <SalesProvider mode={mode}>
+    <SalesProvider>
       <InnerTemplate />
     </SalesProvider>
   );
 }
 
 const InnerTemplate = () => {
-  const { data, isLoading, setOpenAddDialog, query, updateQuery } = useSales();
+  const { data, isLoading, query, updateQuery } = useSales();
 
-  useShortcut(() => setOpenAddDialog(true), { ctrl: true, key: "x" });
 
   return (
     <>
@@ -67,8 +66,10 @@ const InnerTemplate = () => {
         </SectionContainer>
       </MainContainer>
 
+      <SalesAddDialog />
       <SalesDetailDialog />
       <SalesEditDialog />
+
       <SalesDeleteDialog />
     </>
   );

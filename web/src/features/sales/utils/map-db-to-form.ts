@@ -25,7 +25,7 @@ export function mapDbDataToForm(raw: SalesItemApiResponse[]): SalesSchemaType {
       quantity: r.quantity,
       subtotal: r.subtotal,
       tip: r.tip,
-      transaction_date: r.transaction_date,
+      transaction_date: new Date(r.transaction_date).toISOString(),
     };
   });
 
@@ -34,7 +34,7 @@ export function mapDbDataToForm(raw: SalesItemApiResponse[]): SalesSchemaType {
     notes: salesHeader.notes,
     payment_method: salesHeader.payment_method,
     total_amount: salesHeader.total_amount,
-    transaction_at: salesHeader.transaction_at,
+    transaction_at: new Date(salesHeader.transaction_at).toISOString(),
     items,
   };
 }

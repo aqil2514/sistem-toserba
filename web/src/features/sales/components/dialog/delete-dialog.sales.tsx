@@ -1,6 +1,6 @@
 import { DeleteDialog } from "@/components/molecules/dialog/delete-dialog";
-import { useSales } from "../store/sales.provider";
-import { SalesItemApiResponse } from "../types/sales-item-api";
+import { useSales } from "../../store/sales.provider";
+import { SalesItemApiResponse } from "../../types/sales-item-api";
 import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";
 import { api } from "@/lib/api";
@@ -9,37 +9,34 @@ import { isAxiosError } from "axios";
 import { LabelValue } from "@/@types/general";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { formatDate } from "@/utils/format-date.fns";
-import { LoadingDialog } from "@/components/molecules/dialog/loading-dialog";
-import { isSalesHeader } from "../utils/type-guard.sales";
+import { isSalesHeader } from "../../utils/type-guard.sales";
+import { useQueryParams } from "@/hooks/use-query-params";
 
 export function SalesDeleteDialog() {
-  const { deleteSalesId, setDeleteSalesId, mutate } = useSales();
-  const open = Boolean(deleteSalesId);
+  const { mutate } = useSales();
+  const { get, update } = useQueryParams();
 
-  const deleteSalesFetcher = useFetch<SalesItemApiResponse[]>(
-    open ? `${SERVER_URL}/sales/${deleteSalesId}` : null
+  const open = get("action") === "delete";
+  const id = get("id");
+
+  const {data, isLoading} = useFetch<SalesItemApiResponse[]>(
+    open ? `${SERVER_URL}/sales/${id}` : null,
   );
-  const sales = deleteSalesFetcher.data?.[0];
+  const sales = data?.[0];
 
   if (!open || !sales) return null;
 
   if (!isSalesHeader(sales.sales_id)) return null;
 
-  if (deleteSalesFetcher.isLoading)
-    return (
-      <LoadingDialog
-        onOpenChange={(open) => {
-          if (!open) setDeleteSalesId("");
-        }}
-        open={open}
-      />
-    );
-
   const handleDelete = async () => {
     try {
-      await api.delete(`/sales/${deleteSalesId}`);
+      await api.delete(`/sales/${id}`);
+      toast.success("Data penjualan berhasil dihapus");
       mutate?.();
-      setDeleteSalesId("");
+      update({
+        action: null,
+        id: null,
+      });
     } catch (error) {
       if (isAxiosError(error)) {
         const data = error.response?.data;
@@ -70,16 +67,23 @@ export function SalesDeleteDialog() {
       value:
         formatDate(
           sales?.sales_id.transaction_at ?? "",
-          "Senin, 29 Desember 2025, 09:21"
+          "Senin, 29 Desember 2025, 09:21",
         ) ?? "",
     },
   ];
+
   return (
     <DeleteDialog
       onDeleteHandle={handleDelete}
       onOpenChange={(open) => {
-        if (!open) setDeleteSalesId("");
+        if (!open) {
+          update({
+            action: null,
+            id: null,
+          });
+        }
       }}
+      isLoading={isLoading}
       open={open}
       title="Yakin hapus data penjualan"
       contents={content}

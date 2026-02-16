@@ -22,12 +22,11 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { SalesHeaderForm } from "./header/header-form.sales";
 
 interface Props {
-  setOpen: (state: boolean) => void;
   defaultValues?: SalesSchemaType;
   submitHandler: (values: SalesSchemaType) => void | Promise<void>;
 }
 
-export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
+export function FormSales({ submitHandler, defaultValues }: Props) {
   const form = useForm<SalesSchemaType>({
     resolver: zodResolver(salesSchema),
     defaultValues: defaultValues ?? {
@@ -51,24 +50,12 @@ export function FormSales({ setOpen, submitHandler, defaultValues }: Props) {
     `${SERVER_URL}/products/stocks`,
   );
 
-  async function onSubmit(values: SalesSchemaType) {
-    try {
-      await submitHandler(values);
-      setOpen(false);
-      fetcherProducts.mutate();
-      fetcherPurchase.mutate();
-    } catch (error) {
-      console.error(error);
-      toast.error("Gagal menyimpan data");
-    }
-  }
-
   const isLoading = fetcherProducts.isLoading || fetcherPurchase.isLoading;
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit, () =>
+        onSubmit={form.handleSubmit(submitHandler, () =>
           toast.error("Data belum lengkap"),
         )}
       >
