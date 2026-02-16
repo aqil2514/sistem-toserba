@@ -71,7 +71,12 @@ export function ActivityLogCard() {
                     activityType={item.type}
                     activityAction={item.action}
                   />
-                  <p className="text-sm font-bold mt-2 text-muted-foreground">{formatDate(item.created_at, "Senin, 29 Desember 2025, 09:21")}</p>
+                  <p className="text-sm font-bold mt-2 text-muted-foreground">
+                    {formatDate(
+                      item.created_at,
+                      "Senin, 29 Desember 2025, 09:21",
+                    )}
+                  </p>
                   <Separator className="my-2" />
                   <p className="text-sm font-semibold text-muted-foreground">
                     {item.description}

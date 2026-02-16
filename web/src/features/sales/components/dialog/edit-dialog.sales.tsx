@@ -11,8 +11,6 @@ import { useFetch } from "@/hooks/use-fetch";
 import { SalesItemApiResponse } from "../../types/sales-item-api";
 import { isSalesHeader } from "../../utils/type-guard.sales";
 import { mapDbDataToForm } from "../../utils/map-db-to-form";
-import { useMemo } from "react";
-import { SalesHeader } from "../../types/sales-header";
 
 export function SalesEditDialog() {
   const { mutate } = useSales();
@@ -21,27 +19,31 @@ export function SalesEditDialog() {
   const open = get("action") === "edit";
   const id = get("id");
 
+
   const { data } = useFetch<SalesItemApiResponse[]>(
     open ? `${SERVER_URL}/sales/${id}` : null,
   );
 
-  const formMappedData = useMemo<SalesSchemaType | undefined>(() => {
-    if (!data) return undefined;
+  if(!data) return null;
 
-    return mapDbDataToForm(data);
-  }, [data]);
+  const formMappedData = mapDbDataToForm(data);
 
-  const salesHeader = useMemo<SalesHeader | undefined>(() => {
-    if (!data) return undefined;
-
-    return data[0].sales_id;
-  }, [data]);
+  const salesHeader = data[0].sales_id;
 
   const submitHandler = async (values: SalesSchemaType) => {
     if (!salesHeader || !isSalesHeader(salesHeader)) return;
 
     try {
       await api.put(`/sales/${salesHeader.id}`, values);
+      if (window.opener) {
+        window.opener.postMessage(
+          { type: "EDIT_SALES_SUCCESS" },
+          window.location.origin,
+        );
+
+        window.close();
+        return;
+      }
       toast.success("Data penjualan berhasil diedit");
       mutate?.();
       update({
@@ -63,8 +65,8 @@ export function SalesEditDialog() {
   return (
     <DialogWithForm
       size="xxl"
-      title="Tambah Data Baru"
-      description="Isi data di bawah ini untuk menambah data baru"
+      title="Edit Data Penjualan"
+      description="Isi data di bawah ini untuk edit data penjualan"
       onOpenChange={(open) => {
         if (!open) {
           update({

@@ -16,6 +16,15 @@ export function SalesAddDialog() {
   const submitHandler = async (values: SalesSchemaType) => {
     try {
       await api.post("/sales", values);
+      if (window.opener) {
+        window.opener.postMessage(
+          { type: "ADD_SALES_SUCCESS" },
+          window.location.origin,
+        );
+
+        window.close();
+        return;
+      }
       toast.success("Data penjualan berhasil ditambah");
       mutate?.();
       remove("action");

@@ -19,7 +19,7 @@ export function SalesDeleteDialog() {
   const open = get("action") === "delete";
   const id = get("id");
 
-  const {data, isLoading} = useFetch<SalesItemApiResponse[]>(
+  const { data, isLoading } = useFetch<SalesItemApiResponse[]>(
     open ? `${SERVER_URL}/sales/${id}` : null,
   );
   const sales = data?.[0];
@@ -32,6 +32,15 @@ export function SalesDeleteDialog() {
     try {
       await api.delete(`/sales/${id}`);
       toast.success("Data penjualan berhasil dihapus");
+      if (window.opener) {
+        window.opener.postMessage(
+          { type: "DELETE_SALES_SUCCESS" },
+          window.location.origin,
+        );
+
+        window.close();
+        return;
+      }
       mutate?.();
       update({
         action: null,

@@ -9,8 +9,14 @@ import { DashboardService } from '../services/dashboard.service';
 @Controller('dashboard')
 export class DashboardController {
   constructor(private readonly service: DashboardService) {}
-  @Get("/logs")
-  async getDashboardData() {
+
+  @Get('/logs')
+  async getLatestLogs() {
     return await this.service.getLatestLogs();
+  }
+
+  @Get('/sales')
+  async getLatestSales() {
+    return await this.service.getLatestSales();
   }
 }
