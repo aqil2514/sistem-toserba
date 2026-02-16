@@ -15,6 +15,7 @@ export function FilterPanel({
   initialValue,
   onApplyFilter,
 }: FilterPanelProps) {
+  if(config.length < 1) throw new Error("Konfigurasi filter minimal 1")
   return (
     <FilterPanelProvider
       config={config}
