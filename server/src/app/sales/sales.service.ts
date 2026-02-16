@@ -260,6 +260,8 @@ export class SalesService {
   }
 
   async updateTransaction(transaction_id: string, raw: CreateSalesDto) {
+    const beforeUpdatedHeader =
+      await this.salesLog.getSalesForLogById(transaction_id);
     await this.updateSales(transaction_id, raw);
     // 1️⃣ Ambil sales_items lama
     const { data: oldItems } = await this.supabase
@@ -295,7 +297,7 @@ export class SalesService {
 
     // 6️⃣ Insert sales_items baru
     await this.supabase.from('sales_items').insert(newSalesItems);
-    await this.salesLog.editSalesLog(transaction_id)
+    await this.salesLog.editSalesLog(transaction_id, beforeUpdatedHeader);
 
     return newSalesItems;
   }
