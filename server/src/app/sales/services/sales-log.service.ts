@@ -28,31 +28,30 @@ export class SalesLogService {
     return data;
   }
 
+  private buildProductNaration(salesData: SalesLogDetailRpc[]) {
+    if (!salesData || salesData.length === 0) return '';
+
+    const products = salesData.map(
+      (item) => `${item.product_name} (${item.quantity} pcs)`,
+    );
+
+    if (products.length === 1) return products[0];
+    if (products.length === 2) return products.join(' dan');
+
+    return (
+      products.slice(0, -1).join(', ') +
+      ', dan ' +
+      products[products.length - 1]
+    );
+  }
+
   async createSalesLog(salesId: string) {
     const salesData = await this.getSalesById(salesId);
     if (!salesData || salesData.length === 0) return;
 
     const customerName = salesData[0].customer_name;
     const totalAmount = salesData[0].total_amount;
-    const buildProductNaration = () => {
-      if (!salesData || salesData.length === 0) return '';
-
-      const formatted = salesData.map(
-        (item) => `${item.product_name} ${item.quantity} pcs`,
-      );
-
-      if (formatted.length === 1) return formatted[0];
-
-      if (formatted.length === 2) return formatted.join(' dan ');
-
-      return (
-        formatted.slice(0, -1).join(', ') +
-        ', dan ' +
-        formatted[formatted.length - 1]
-      );
-    };
-
-    const productNaration = buildProductNaration();
+    const productNaration = this.buildProductNaration(salesData);
 
     this.activityService.createActivity({
       action: 'ADD_SALES',
@@ -60,6 +59,40 @@ export class SalesLogService {
       reference_id: salesId,
       title: 'Penjualan Baru',
       description: `${customerName} baru saja membeli ${productNaration} dengan total harga ${formatRupiah(totalAmount)}`,
+    });
+  }
+
+  async deleteSalesLog(salesId: string) {
+    const salesData = await this.getSalesById(salesId);
+    if (!salesData || salesData.length === 0) return;
+
+    const customerName = salesData[0].customer_name;
+    const totalAmount = salesData[0].total_amount;
+    const productNaration = this.buildProductNaration(salesData);
+
+    await this.activityService.createActivity({
+      action: 'DELETE_SALES',
+      description: `Data penjualan ${customerName} yang berisi ${productNaration} dengan total harga ${totalAmount} telah dihapus`,
+      reference_id: salesId,
+      title: 'Hapus Data Penjualan',
+      type: 'sales',
+    });
+  }
+
+  async editSalesLog(salesId: string) {
+    const salesData = await this.getSalesById(salesId);
+    if (!salesData || salesData.length === 0) return;
+
+    const customerName = salesData[0].customer_name;
+    const totalAmount = salesData[0].total_amount;
+    const productNaration = this.buildProductNaration(salesData);
+
+    await this.activityService.createActivity({
+      title: 'Edit Data Penjualan',
+      action: 'EDIT_SALES',
+      reference_id: salesId,
+      description: `Data penjualan ${customerName} berubah menjadi ${productNaration} dan total harga menjadi ${formatRupiah(totalAmount)}`,
+      type: 'sales',
     });
   }
 }

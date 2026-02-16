@@ -34,7 +34,7 @@ export class SalesService {
     private readonly supabase: SupabaseClient,
     private readonly salesStockService: SalesStockService,
     private readonly activityService: ActivityService,
-    private readonly salesLog:SalesLogService
+    private readonly salesLog: SalesLogService,
   ) {}
 
   private async generateSalesCode(date: Date): Promise<string> {
@@ -220,11 +220,10 @@ export class SalesService {
         );
       }
 
-
       // 4️⃣ Insert sales items ke DB
       Promise.all([
         await this.supabase.from('sales_items').insert(salesItems),
-        await this.salesLog.createSalesLog(sales.id)
+        await this.salesLog.createSalesLog(sales.id),
       ]);
     } catch (error) {
       // rollback sales header jika gagal
@@ -252,18 +251,12 @@ export class SalesService {
     await this.salesStockService.restoreStockFromSalesItems(salesItems);
 
     // 3️⃣ Hapus sales_items dan header sales
+    await this.salesLog.deleteSalesLog(transaction_id);
     await this.supabase
       .from('sales_items')
       .delete()
       .eq('sales_id', transaction_id);
     await this.supabase.from('sales').delete().eq('id', transaction_id);
-    await this.activityService.createActivity({
-      action: 'DELETE_SALES',
-      description: `Data penjualan ${transaction_id} telah dihapus. Data-data lain yang berkaitan dengan ini sudah dipulihkan`,
-      reference_id: transaction_id,
-      title: 'Hapus Data Penjualan',
-      type: 'sales',
-    });
   }
 
   async updateTransaction(transaction_id: string, raw: CreateSalesDto) {
@@ -302,13 +295,7 @@ export class SalesService {
 
     // 6️⃣ Insert sales_items baru
     await this.supabase.from('sales_items').insert(newSalesItems);
-    await this.activityService.createActivity({
-      title: 'Edit Data Penjualan',
-      action: 'EDIT_SALES',
-      reference_id: transaction_id,
-      description: `Data penjualan ${transaction_id} berhasil diedit.`,
-      type: 'sales',
-    });
+    await this.salesLog.editSalesLog(transaction_id)
 
     return newSalesItems;
   }
