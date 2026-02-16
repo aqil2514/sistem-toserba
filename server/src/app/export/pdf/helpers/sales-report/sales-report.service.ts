@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { SalesReportService as SalesReport } from '../../../../sales/helper/sales-report.service';
+import { SalesReportService as SalesReport } from '../../../../sales/services/sales-report.service';
 import {
   SalesReportProductRpcReturn,
   SalesReportQuery,

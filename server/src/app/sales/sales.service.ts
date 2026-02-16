@@ -20,11 +20,12 @@ import { CreateSalesDto } from './dto/create-sales.dto';
 import { SalesItemDto } from './dto/sales-item.dto';
 import { SalesDb, SalesDbInsert } from './interface/sales.interface';
 import { formatDateYYYYMMDD } from '../../utils/format-date';
-import { SalesStockService } from './helper/sales-stock.service';
+import { SalesStockService } from './services/sales-stock.service';
 import { DateTime } from 'luxon';
 import { DataQueryResponse } from '../../@types/general';
 import { ActivityService } from '../activity/activity.service';
 import { ActivityLogsInsert } from '../activity/types/activity.types';
+import { SalesLogService } from './services/sales-log.service';
 
 @Injectable()
 export class SalesService {
@@ -33,6 +34,7 @@ export class SalesService {
     private readonly supabase: SupabaseClient,
     private readonly salesStockService: SalesStockService,
     private readonly activityService: ActivityService,
+    private readonly salesLog:SalesLogService
   ) {}
 
   private async generateSalesCode(date: Date): Promise<string> {
@@ -218,18 +220,11 @@ export class SalesService {
         );
       }
 
-      const activityPayload: ActivityLogsInsert = {
-        title: 'Tambah Data Penjualan',
-        reference_id: sales.id,
-        action: 'ADD_SALES',
-        type: 'sales',
-        description: `Data Penjualan ${sales.id} berhasil ditambah. Data-data lain yang berkaitan dengan data ini sudah disesuaikan.`,
-      };
 
       // 4️⃣ Insert sales items ke DB
       Promise.all([
         await this.supabase.from('sales_items').insert(salesItems),
-        await this.activityService.createActivity(activityPayload),
+        await this.salesLog.createSalesLog(sales.id)
       ]);
     } catch (error) {
       // rollback sales header jika gagal

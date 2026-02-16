@@ -16,10 +16,10 @@ import { RoleGuard } from '../../guards/role.guard';
 import { Roles } from '../../decorator/roles.decorator';
 import { CreateSalesDto } from './dto/create-sales.dto';
 import { GetSummaryQuery } from './interface/sales-rpc.interface';
-import { SalesRpcService } from './helper/sales-rpc.service';
+import { SalesRpcService } from './services/sales-rpc.service';
 import { SalesReportQuery } from './interface/sales-report.interface';
-import { SalesReportService } from './helper/sales-report.service';
-import { SalesFetcherService } from './helper/sales-fetcher.service';
+import { SalesReportService } from './services/sales-report.service';
+import { SalesFetcherService } from './services/sales-fetcher.service';
 
 @UseGuards(PasetoGuard, RoleGuard)
 @Roles('admin')

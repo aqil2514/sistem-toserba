@@ -18,7 +18,6 @@ export class CashflowFormService {
   constructor(
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
-    // TODO : Buat perbaiki & log aktivitas
     private readonly activityService: ActivityService,
   ) {}
 

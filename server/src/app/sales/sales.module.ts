@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { SalesController } from './sales.controller';
 import { SalesService } from './sales.service';
-import { SalesStockService } from './helper/sales-stock.service';
-import { SalesRpcService } from './helper/sales-rpc.service';
-import { SalesReportService } from './helper/sales-report.service';
-import { SalesFetcherService } from './helper/sales-fetcher.service';
-import { SalesLogService } from './helper/sales-log.service';
+import { SalesStockService } from './services/sales-stock.service';
+import { SalesRpcService } from './services/sales-rpc.service';
+import { SalesReportService } from './services/sales-report.service';
+import { SalesFetcherService } from './services/sales-fetcher.service';
+import { SalesLogService } from './services/sales-log.service';
 
 @Module({
   controllers: [SalesController],
