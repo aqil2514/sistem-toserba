@@ -14,15 +14,21 @@ import { AssetFinancialModule } from './asset-financial/asset-financial.module';
 import { CashCounterModule } from './cash-counter/cash-counter.module';
 import { ActivityModule } from './activity/activity.module';
 import { BasicQueryModule } from '../services/query/query.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { PusherModule } from '../services/pusher/pusher.module';
+import { RealtimeModule } from 'src/services/realtime/realtime.module';
 
 @Module({
   imports: [
     AuthModule,
     SupabaseModule,
-    BasicQueryModule,
+    PusherModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+
+    BasicQueryModule,
+    RealtimeModule,
 
     ProductsModule,
     PurchaseModule,
@@ -33,6 +39,7 @@ import { BasicQueryModule } from '../services/query/query.module';
     AssetFinancialModule,
     CashCounterModule,
     ActivityModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],

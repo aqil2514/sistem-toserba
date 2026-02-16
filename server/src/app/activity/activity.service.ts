@@ -8,6 +8,7 @@ import {
   executeSupabaseBasicQuery,
 } from '../../utils/query-builder';
 import { ActivityLogsDb, ActivityLogsInsert } from './types/activity.types';
+import { RealtimeService } from '../../services/realtime/realtime.service';
 
 @Injectable()
 export class ActivityService {
@@ -15,6 +16,7 @@ export class ActivityService {
     private readonly basicQueryService: BasicQueryService,
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
+    private readonly realtimeService: RealtimeService,
   ) {}
 
   async getActivity(
@@ -43,10 +45,15 @@ export class ActivityService {
   }
 
   async createActivity(payload: ActivityLogsInsert | ActivityLogsInsert[]) {
-    const { error } = await this.supabase.from('activity_logs').insert(payload);
+    const { error, data } = await this.supabase
+      .from('activity_logs')
+      .insert(payload)
+      .select('*');
     if (error) {
       console.error(error);
       throw error;
     }
+
+    await this.realtimeService.emitNewLog(data);
   }
 }
