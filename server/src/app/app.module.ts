@@ -16,7 +16,7 @@ import { ActivityModule } from './activity/activity.module';
 import { BasicQueryModule } from '../services/query/query.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PusherModule } from '../services/pusher/pusher.module';
-import { RealtimeModule } from 'src/services/realtime/realtime.module';
+import { RealtimeModule } from '../services/realtime/realtime.module';
 
 @Module({
   imports: [
