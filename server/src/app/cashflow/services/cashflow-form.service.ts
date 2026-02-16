@@ -119,12 +119,11 @@ export class CashflowFormService {
 
   private async createNewCashflow(
     payload: CashflowDbInsert | CashflowDbInsert[],
-  ): Promise<CashflowDb> {
+  ): Promise<CashflowDb[]> {
     const { data, error } = await this.supabase
       .from('cashflow')
       .insert(payload)
-      .select('*')
-      .maybeSingle();
+      .select('*');
 
     if (error) {
       console.error(error);
