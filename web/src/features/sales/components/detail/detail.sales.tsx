@@ -3,11 +3,12 @@ import React from "react";
 import { SalesDetailHeader } from "./detail-header.sales";
 import { DetailItem } from "./detail-item.sales";
 import { isSalesHeader } from "../../utils/type-guard.sales";
+import { EmptyData } from "@/components/molecules/empty/empty-data";
 
 export const SalesDetail: React.FC<{ data?: SalesItemApiResponse[] }> = ({
   data,
 }) => {
-  if (!data) return null;
+  if (!data) return <EmptyData />;
   const salesHeader = data[0].sales_id;
   const totalHpp = data.reduce((acc, curr) => acc + curr.hpp, 0);
 

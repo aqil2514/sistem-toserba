@@ -13,7 +13,11 @@ export function SalesToolbar() {
 
   return (
     <div className="flex flex-col md:flex-row gap-4">
-      <FilterPanel config={salesFilterPanelConfig} initialValue={memoInitialValue} onApplyFilter={updateFilter} />
+      <FilterPanel
+        config={salesFilterPanelConfig}
+        initialValue={memoInitialValue}
+        onApplyFilter={updateFilter}
+      />
       <ToolbarDatepicker
         onApply={updateDateRange}
         date={{ from: query.from, to: query.to }}

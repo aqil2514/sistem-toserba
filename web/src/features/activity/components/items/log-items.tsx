@@ -3,7 +3,7 @@ import { ActivityLogsDb } from "../../types/activity.types";
 import { ActivityBadge } from "./badge-activity";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/utils/format-date.fns";
-import { ActivityItemsFooter } from "./items-footer.activity";
+import { FlexItemFooter } from "./items-footer.activity";
 
 interface Props {
   activity: ActivityLogsDb;
@@ -25,7 +25,7 @@ export function ActivityLogItem({ activity }: Props) {
         <Separator />
       </CardContent>
       <CardFooter>
-        <ActivityItemsFooter activity={activity} />
+        <FlexItemFooter activity={activity} />
       </CardFooter>
     </Card>
   );

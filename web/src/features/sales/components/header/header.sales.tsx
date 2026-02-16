@@ -33,7 +33,7 @@ export function SalesHeader() {
           </p>
         )}
       </div>
-      <div className="md:flex gap-4 grid grid-cols-2">
+      <div className="flex gap-4 flex-wrap">
         <AddToCashflowButton onClickButton={cashflowAddHandler} />
         <MutateButton
           mutate={mutate}
