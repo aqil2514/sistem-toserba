@@ -1,12 +1,3 @@
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { usePurchase } from "@/features/purchase/store/provider.purchase";
 import { PurchaseForm } from "../../form/form.purchase";
 import { PurchaseFormValues } from "@/features/purchase/schema/purchase.schema";
@@ -18,34 +9,44 @@ import { SERVER_URL } from "@/constants/url";
 import { useMemo } from "react";
 import { mapPurchaseToFormValues } from "@/features/purchase/utils/map-purchase-to-form-values";
 import { MappedResponse } from "@/features/purchase/types/mapped-response";
+import { useQueryParams } from "@/hooks/use-query-params";
+import { DialogWithForm } from "@/components/molecules/dialog/dialog-with-form";
 
 export function PurchaseEditDialog() {
-  const { editPurchaseId, setEditPurchaseId, mutate, data } = usePurchase();
+  const { mutate, data } = usePurchase();
 
-  const open = Boolean(editPurchaseId);
+  const { get, update } = useQueryParams();
+
+  const open = get("action") === "edit";
+  const id = get("id");
 
   const existingFetcher = useFetch<MappedResponse[]>(
-    open ? `${SERVER_URL}/purchase/${editPurchaseId}` : null
+    open ? `${SERVER_URL}/purchase/${id}` : null,
   );
 
-  const formValues = useMemo(() => {
-    if (!data || !existingFetcher.data) return null;
+  // if(!data || !existingFetcher.data || !id) return null;
 
-    const selectedData = data.data.find(
-      (purchase) => purchase.id === editPurchaseId
-    );
+  // const formValues = mapPurchaseToFormValues()
+
+  const formValues = useMemo(() => {
+    if (!data || !existingFetcher.data || !id) return null;
+
+    const selectedData = data.data.find((purchase) => purchase.id === id);
     if (!selectedData) return null;
 
     return mapPurchaseToFormValues(selectedData, existingFetcher.data);
-  }, [data, existingFetcher.data, editPurchaseId]);
+  }, [data, existingFetcher.data, id]);
   if (existingFetcher.isLoading) return null;
 
   const submitHandler = async (values: PurchaseFormValues) => {
     try {
-      await api.patch(`/purchase/${editPurchaseId}`, values);
+      await api.patch(`/purchase/${id}`, values);
       toast.success("Edit Data Pembelian Berhasil");
       mutate?.();
-      setEditPurchaseId("");
+      update({
+        action: null,
+        id: null,
+      });
     } catch (error) {
       if (isAxiosError(error)) {
         const data = error.response?.data;
@@ -58,29 +59,25 @@ export function PurchaseEditDialog() {
     }
   };
 
-  if(!formValues) return null;
+  if (!formValues) return null;
 
   return (
-    <AlertDialog
+    <DialogWithForm
+      FormComponent={
+        <PurchaseForm onSubmit={submitHandler} initialValues={formValues} />
+      }
+      description="Isi form di bawah ini untuk menambah data pembelian"
+      title="Tambah Data Pembelian"
       open={open}
       onOpenChange={(open) => {
-        if (!open) return setEditPurchaseId("");
+        if (!open)
+          return update({
+            action: null,
+            id: null,
+          });
       }}
-    >
-      <AlertDialogContent className="sm:max-w-7xl">
-        <AlertDialogHeader>
-          <AlertDialogTitle>Edit Data Pembelian</AlertDialogTitle>
-          <AlertDialogDescription>
-            Isi form di bawah ini untuk menambah data pembelian
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-
-        <PurchaseForm onSubmit={submitHandler} initialValues={formValues} />
-
-        <AlertDialogFooter>
-          <AlertDialogCancel>Kembali</AlertDialogCancel>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+      size="3xl"
+      isLoadingEdit={existingFetcher.isLoading}
+    />
   );
 }

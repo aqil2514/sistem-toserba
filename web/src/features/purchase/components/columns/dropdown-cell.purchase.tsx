@@ -2,30 +2,41 @@ import {
   DropdownActionColumn,
   DropdownActionItems,
 } from "@/components/organisms/data-table-columns/dropdown-action-columns";
-import { usePurchase } from "../../store/provider.purchase";
 import { Row } from "@tanstack/react-table";
 import { Purchase } from "../../types/purchase";
+import { useQueryParams } from "@/hooks/use-query-params";
 
 interface Props {
   row: Row<Purchase>;
 }
 
 export function PurchaseColumnAction({ row }: Props) {
-  const { setDetailPurchaseId, setEditPurchaseId, setDeletePurchaseId } =
-    usePurchase();
+  const { update } = useQueryParams();
 
   const items: DropdownActionItems[] = [
     {
       itemLabel: "Detail",
-      onClick: () => setDetailPurchaseId(row.original.id),
+      onClick: () =>
+        update({
+          action: "detail",
+          id: row.original.id,
+        }),
     },
     {
       itemLabel: "Edit",
-      onClick: () => setEditPurchaseId(row.original.id),
+      onClick: () =>
+        update({
+          action: "edit",
+          id: row.original.id,
+        }),
     },
     {
       itemLabel: "Hapus",
-      onClick: () => setDeletePurchaseId(row.original.id),
+      onClick: () =>
+        update({
+          action: "delete",
+          id: row.original.id,
+        }),
     },
   ];
 

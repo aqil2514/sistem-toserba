@@ -9,7 +9,7 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { cn } from "@/lib/utils";
 import React from "react";
 
-type SizeType = "sm" | "md" | "lg" | "xl" | "xxl";
+type SizeType = "sm" | "md" | "lg" | "xl" | "xxl" | "3xl";
 
 interface DialogWithFormProps {
   open: boolean;
@@ -27,6 +27,7 @@ const sizeMapper: Record<SizeType, string> = {
   lg: "sm:max-w-3xl",
   xl: "sm:max-w-4xl",
   xxl: "sm:max-w-5xl",
+  "3xl": "sm:max-w-6xl",
 };
 
 export function DialogWithForm({

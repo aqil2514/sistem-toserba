@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { usePurchase } from "../store/provider.purchase";
+import { useQueryParams } from "@/hooks/use-query-params";
 
 export function PurchaseHeader() {
-  const { setAddOpen } = usePurchase();
+  const { set } = useQueryParams();
   return (
     <div className="flex items-center justify-between">
       <h1 className="text-lg font-semibold">Barang Masuk</h1>
 
-      <Button variant={"outline"} onClick={() => setAddOpen(true)}>
+      <Button variant={"outline"} onClick={() => set("action", "add")}>
         Tambah Pembelian
       </Button>
     </div>

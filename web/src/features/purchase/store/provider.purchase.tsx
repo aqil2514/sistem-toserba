@@ -20,18 +20,6 @@ interface PurchaseContextType {
     value: PurchaseQuery[T],
   ) => void;
   resetQuery: () => void;
-
-  detailPurchaseId: string;
-  setDetailPurchaseId: React.Dispatch<React.SetStateAction<string>>;
-
-  editPurchaseId: string;
-  setEditPurchaseId: React.Dispatch<React.SetStateAction<string>>;
-
-  deletePurchaseId: string;
-  setDeletePurchaseId: React.Dispatch<React.SetStateAction<string>>;
-
-  addOpen: boolean;
-  setAddOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PurchaseContext = createContext<PurchaseContextType>(
@@ -40,10 +28,6 @@ const PurchaseContext = createContext<PurchaseContextType>(
 
 export function PurchaseProvider({ children }: { children: React.ReactNode }) {
   const [query, setQuery] = useState<PurchaseQuery>(defaultQuery);
-  const [detailPurchaseId, setDetailPurchaseId] = useState<string>("");
-  const [editPurchaseId, setEditPurchaseId] = useState<string>("");
-  const [deletePurchaseId, setDeletePurchaseId] = useState<string>("");
-  const [addOpen, setAddOpen] = useState<boolean>(false);
 
   const url = buildUrl<PurchaseQuery>(SERVER_URL, "purchase", {
     page: query.page,
@@ -70,18 +54,6 @@ export function PurchaseProvider({ children }: { children: React.ReactNode }) {
     query,
     resetQuery,
     updateQuery,
-
-    detailPurchaseId,
-    setDetailPurchaseId,
-
-    editPurchaseId,
-    setEditPurchaseId,
-
-    deletePurchaseId,
-    setDeletePurchaseId,
-
-    addOpen,
-    setAddOpen,
   };
 
   return (

@@ -10,13 +10,13 @@ import { Button } from "@/components/ui/button";
 import { FormHeader } from "./form-header.purchase";
 import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";
-import { usePurchase } from "../../store/provider.purchase";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { PurchaseFormRss } from "../../types/purchase-form-rss";
 import { FormPurchaseItem } from "./form-item.purchase";
 import { AddProductFormPurchaseDialog } from "../dialog/add/dialog-add-product.purchase";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useQueryParams } from "@/hooks/use-query-params";
 
 interface Props {
   initialValues?: PurchaseFormValues;
@@ -24,17 +24,21 @@ interface Props {
 }
 
 export function PurchaseForm({ onSubmit, initialValues }: Props) {
-  const { addOpen, editPurchaseId } = usePurchase();
   const [addNewProduct, setAddNewProduct] = useState<boolean>(false);
   const form = useForm<PurchaseFormValues>({
     resolver: zodResolver(purchaseSchema),
     defaultValues: initialValues ?? EMPTY_VALUES,
   });
 
-  const isCanFetch = addOpen || Boolean(editPurchaseId);
+  const { get } = useQueryParams();
+
+  const isAddOpen = get("action") === "add";
+  const isEditOpen = get("action") === "edit";
+
+  const isCanFetch = isAddOpen || isEditOpen;
 
   const fetcher = useFetch<PurchaseFormRss>(
-    isCanFetch ? `${SERVER_URL}/purchase/form-rss` : null
+    isCanFetch ? `${SERVER_URL}/purchase/form-rss` : null,
   );
 
   if (fetcher.isLoading || !fetcher.data)
@@ -45,7 +49,11 @@ export function PurchaseForm({ onSubmit, initialValues }: Props) {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit, () => toast.error("Ada data yang belum diisi"))}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit, () =>
+            toast.error("Ada data yang belum diisi"),
+          )}
+        >
           <div className="grid md:grid-cols-2 gap-4">
             <FormHeader
               form={form}

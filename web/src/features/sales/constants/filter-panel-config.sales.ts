@@ -2,6 +2,12 @@ import { FilterConfig } from "@/components/filters/filter-panel/types.filter-pan
 
 export const salesFilterPanelConfig: FilterConfig[] = [
   {
+    field: "sales_code",
+    label: "Kode Pembelian",
+    type: "text",
+    withOperator: true,
+  },
+  {
     field: "customer_name",
     label: "Nama Pembeli",
     type: "text",
