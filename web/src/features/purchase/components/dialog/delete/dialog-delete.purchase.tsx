@@ -1,6 +1,6 @@
 import { LabelValue } from "@/@types/general";
 import { DeleteDialog } from "@/components/molecules/dialog/delete-dialog";
-import { usePurchase } from "@/features/purchase/store/provider.purchase";
+import { usePurchase } from "@/features/purchase/store/purchase.provider";
 import { useQueryParams } from "@/hooks/use-query-params";
 import { api } from "@/lib/api";
 import { formatDate } from "@/utils/format-date.fns";

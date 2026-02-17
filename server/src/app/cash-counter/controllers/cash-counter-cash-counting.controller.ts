@@ -62,7 +62,6 @@ export class CashCounterCashCountingController {
 
   @Delete(':id')
   async deleteCashCountsData(@Param('id') cashCounterId: string) {
-    console.log(cashCounterId);
     return await this.crudService.deleteCashCountData(cashCounterId);
   }
 }

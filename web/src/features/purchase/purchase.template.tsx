@@ -1,7 +1,7 @@
 "use client";
 import { MainContainer } from "@/components/layout/container/main-container";
 import { SectionContainer } from "@/components/layout/container/section-container";
-import { PurchaseProvider, usePurchase } from "./store/provider.purchase";
+import { PurchaseProvider, usePurchase } from "./store/purchase.provider";
 import { PurchaseHeader } from "./components/header.purchase";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { DataTable } from "@/components/organisms/ori-data-table/data-table";
@@ -13,6 +13,7 @@ import { PurchaseEditDialog } from "./components/dialog/edit/dialog-edit.purchas
 import { PurchaseDeleteDialog } from "./components/dialog/delete/dialog-delete.purchase";
 import { DataTableFooterServer } from "@/components/organisms/ori-data-table/data-table-footer-server";
 import { TemplateMode } from "@/@types/general";
+import { useQueryBasics } from "@/hooks/use-query-basics";
 
 interface Props {
   mode: TemplateMode;
@@ -35,7 +36,8 @@ export function PurchaseTemplate({ mode }: Props) {
 }
 
 const InnerTemplate = () => {
-  const { data, isLoading, query, updateQuery } = usePurchase();
+  const { data, isLoading, query } = usePurchase();
+  const {updateFooter} = useQueryBasics()
 
   return (
     <>
@@ -52,7 +54,7 @@ const InnerTemplate = () => {
               <DataTableFooterServer
                 meta={data.meta}
                 query={query}
-                onQueryChange={updateQuery}
+                onQueryChange={updateFooter}
               />
             </>
           )}

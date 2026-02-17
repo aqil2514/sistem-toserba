@@ -12,17 +12,15 @@ import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { formatDateYYYYMMDD } from '../../utils/format-date';
 import { CreatePurchaseItemDto } from './dto/create-purchase-item.dto';
 import { PurchaseItemInsert } from './interface/purchase-items.interface';
-import { ProductsService } from '../products/products.service';
 import { UpdatePurchaseDto } from './dto/update-purchase.dto';
-import { PurchaseQuery } from './interface/purchase-query.interface';
 import { DataQueryResponse } from '../../@types/general';
 import {
-  applyDateRangeFilter,
-  applyPagination,
   buildPaginationMeta,
   executeSupabaseBasicQuery,
 } from '../../utils/query-builder';
 import { ProductFetchService } from '../products/helpers/products-fetch.service';
+import { BasicQueryDto } from '../../services/query/dto/query.dto';
+import { BasicQueryService } from '../../services/query/query.service';
 
 @Injectable()
 export class PurchaseService {
@@ -30,6 +28,7 @@ export class PurchaseService {
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
     private readonly productFetchService: ProductFetchService,
+    private readonly queryService: BasicQueryService,
   ) {}
 
   private async generatePurchaseCode(date: Date): Promise<string> {
@@ -120,8 +119,9 @@ export class PurchaseService {
   }
 
   async findByQuery(
-    query: PurchaseQuery,
+    rawQuery: BasicQueryDto,
   ): Promise<DataQueryResponse<Purchase[]>> {
+    const query = this.queryService.mapToBasicQuery(rawQuery);
     const { limit, page } = query;
 
     let supabase = this.supabase
@@ -129,7 +129,7 @@ export class PurchaseService {
       .select('*', { count: 'exact' })
       .is('deleted_at', null);
 
-    const client = executeSupabaseBasicQuery(supabase, query, "purchase_date"); 
+    const client = executeSupabaseBasicQuery(supabase, query, 'purchase_date');
 
     const { data, error, count } = await client;
     if (error) {

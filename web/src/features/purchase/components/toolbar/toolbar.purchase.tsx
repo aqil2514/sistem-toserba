@@ -1,14 +1,12 @@
 import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
-import { usePurchase } from "../../store/provider.purchase";
-import {
-  FilterKeyType,
-  MultiFilter,
-} from "@/components/filters/multi-filter";
+import { usePurchase } from "../../store/purchase.provider";
+import { FilterKeyType, MultiFilter } from "@/components/filters/multi-filter";
 import { useMemo } from "react";
 import {
   SingleSorting,
   SortingKeyType,
 } from "@/components/molecules/sorting/single-sorting";
+import { useQueryBasics } from "@/hooks/use-query-basics";
 
 const filterKey: FilterKeyType[] = [
   {
@@ -37,7 +35,8 @@ const sortingKey: SortingKeyType[] = [
 ];
 
 export function PurchaseToolbar() {
-  const { updateQuery, query } = usePurchase();
+  const { query } = usePurchase();
+  const { updateDateRange, updateFilter, updateSort } = useQueryBasics();
   const memoQueryFilter = useMemo(() => query.filters, [query.filters]);
 
   return (
@@ -45,22 +44,16 @@ export function PurchaseToolbar() {
       <MultiFilter
         initialValue={memoQueryFilter ?? []}
         filterKeys={filterKey}
-        onApplyFilter={(state) => updateQuery("filters", state)}
+        onApplyFilter={updateFilter}
       />
       <SingleSorting
-        onSortStateChange={(state) => updateQuery("sort", state)}
+        onSortStateChange={updateSort}
         sortingkeys={sortingKey}
       />
       <ToolbarDatepicker
-        onApply={(date) => {
-          updateQuery("from", date.from);
-          updateQuery("to", date.to);
-        }}
+        onApply={updateDateRange}
         date={{ from: query.from, to: query.to }}
-        setDate={(date) => {
-          updateQuery("from", date.from);
-          updateQuery("to", date.to);
-        }}
+        setDate={updateDateRange}
       />
     </div>
   );

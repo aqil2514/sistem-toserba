@@ -16,9 +16,12 @@ import { PurchaseService } from './purchase.service';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { UpdatePurchaseDto } from './dto/update-purchase.dto';
 import { PurchaseQuery } from './interface/purchase-query.interface';
-import { PurchaseFormService } from './helpers/purchase-form.service';
-import { PurchaseReportService } from './helpers/purchase-report.service';
+import { PurchaseFormService } from './services/purchase-form.service';
+import { PurchaseReportService } from './services/purchase-report.service';
+import { BasicQueryDto } from '../../services/query/dto/query.dto';
 
+@UseGuards(PasetoGuard, RoleGuard)
+@Roles('admin')
 @Controller('purchase')
 export class PurchaseController {
   constructor(
@@ -27,15 +30,11 @@ export class PurchaseController {
     private readonly purchaseReportService: PurchaseReportService,
   ) {}
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Get()
-  async getPurchase(@Query() query: PurchaseQuery) {
+  async getPurchase(@Query() query: BasicQueryDto) {
     return await this.purchaseService.findByQuery(query);
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Get('report')
   async getPurchaseReport(@Query() query: PurchaseQuery) {
     if (query.content === 'detail')
@@ -61,29 +60,21 @@ export class PurchaseController {
     return await this.purchaseReportService.getPurchaseSummaryReport(query);
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Get('form-rss')
   async getFormResources() {
     return await this.purchaseFormService.getPurchaseFormResources();
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Get(':id')
   async getPurchaseItem(@Param('id') id: string) {
     return await this.purchaseService.findByIdWithItems(id);
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Delete(':id')
   async softDeletePurchase(@Param('id') id: string) {
     return await this.purchaseService.softDeletePurchase(id);
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Patch(':id')
   async updatePurchase(
     @Param('id') id: string,
@@ -92,8 +83,6 @@ export class PurchaseController {
     return await this.purchaseService.updatePurchase(id, body);
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Patch(':item_id/remaining_quantity')
   async updateRemainingQuantityPurchase(
     @Param('item_id') item_id: string,
@@ -105,8 +94,6 @@ export class PurchaseController {
     );
   }
 
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
   @Post()
   async addPurchase(@Body() body: CreatePurchaseDto) {
     return await this.purchaseService.createPurchase(body);

@@ -1,4 +1,4 @@
-import { usePurchase } from "@/features/purchase/store/provider.purchase";
+import { usePurchase } from "@/features/purchase/store/purchase.provider";
 import { PurchaseForm } from "../../form/form.purchase";
 import { PurchaseFormValues } from "@/features/purchase/schema/purchase.schema";
 import { api } from "@/lib/api";

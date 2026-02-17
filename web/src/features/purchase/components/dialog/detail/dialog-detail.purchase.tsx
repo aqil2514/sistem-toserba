@@ -1,5 +1,5 @@
 import { SERVER_URL } from "@/constants/url";
-import { usePurchase } from "@/features/purchase/store/provider.purchase";
+import { usePurchase } from "@/features/purchase/store/purchase.provider";
 import { PurchaseMappedDetail } from "@/features/purchase/types/purchase-mapped-detail";
 import { useFetch } from "@/hooks/use-fetch";
 import { DetailHeader } from "./detail-header.purchase";

@@ -1,4 +1,4 @@
-import { BasicQuery, FilterState } from "@/@types/general";
+import { BasicQuery, FilterState, SortState } from "@/@types/general";
 import {
   mergeQueryWithDefaults,
   parseSearchParamsToBasicQuery,
@@ -84,6 +84,27 @@ export function useQueryBasics(defaults?: BasicQuery) {
     router.replace(`?${params.toString()}`);
   };
 
+  const updateSort = (state: SortState[]) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.delete("sort");
+
+    if (state.length === 0) {
+      params.set("page", "1");
+      router.replace(`?${params.toString()}`);
+      return;
+    }
+
+    state.forEach((value) => {
+      const val = `${value.key}:${value.value}`;
+      params.append("sort", val);
+    });
+
+    params.set("page", "1");
+
+    router.replace(`?${params.toString()}`);
+  };
+
   return {
     query,
     updateDateRange,
@@ -91,5 +112,6 @@ export function useQueryBasics(defaults?: BasicQuery) {
     updateLimit,
     updateFooter,
     updateFilter,
+    updateSort,
   };
 }
