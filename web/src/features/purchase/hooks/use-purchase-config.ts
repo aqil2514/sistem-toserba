@@ -10,7 +10,7 @@ export function usePurchaseConfig() {
   );
 
   return {
-    supplierName: supplierNameFetcher.data ?? [],
-    supplierType: supplierTypeFetcher.data ??[],
+    supplierName: supplierNameFetcher.data?.sort() ?? [],
+    supplierType: supplierTypeFetcher.data?.sort() ??[],
   };
 }

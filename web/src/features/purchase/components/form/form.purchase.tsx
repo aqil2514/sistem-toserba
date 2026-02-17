@@ -57,8 +57,6 @@ export function PurchaseForm({ onSubmit, initialValues }: Props) {
           <div className="grid md:grid-cols-2 gap-4">
             <FormHeader
               form={form}
-              supplierName={fetcher.data.supplier.supplierName}
-              supplierType={fetcher.data.supplier.supplierType}
             />
             <FormPurchaseItem
               form={form}

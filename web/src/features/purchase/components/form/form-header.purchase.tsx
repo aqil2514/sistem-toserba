@@ -3,14 +3,14 @@ import { PurchaseFormValues } from "../../schema/purchase.schema";
 import { FormFieldDatePicker } from "@/components/forms/field-date-picker.form";
 import { FormFieldComboboxAction } from "@/components/forms/field-combobox-action.form";
 import { FormFieldTextArea } from "@/components/forms/field-textarea.form";
+import { usePurchaseConfig } from "../../hooks/use-purchase-config";
 
 interface Props {
   form: UseFormReturn<PurchaseFormValues>;
-  supplierName: string[];
-  supplierType: string[];
 }
 
-export function FormHeader({ form, supplierName, supplierType }: Props) {
+export function FormHeader({ form }: Props) {
+  const { supplierName, supplierType } = usePurchaseConfig();
   return (
     <div className="space-y-4">
       <FormFieldDatePicker
