@@ -1,12 +1,12 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { ActivityLogsDb } from "../../types/activity.types";
+import {  ActivityLogsUnion } from "../../types/activity.types";
 import { ActivityBadge } from "./badge-activity";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/utils/format-date.fns";
 import { FlexItemFooter } from "./items-footer.activity";
 
 interface Props {
-  activity: ActivityLogsDb;
+  activity: ActivityLogsUnion;
 }
 export function ActivityLogItem({ activity }: Props) {
   return (

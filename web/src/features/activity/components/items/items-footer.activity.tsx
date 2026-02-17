@@ -1,8 +1,8 @@
 import { activityRegistry } from "../../activity.registry";
-import { ActivityLogsDb } from "../../types/activity.types";
+import { ActivityLogsUnion } from "../../types/activity.types";
 
 interface Props {
-  activity: ActivityLogsDb;
+  activity: ActivityLogsUnion;
 }
 
 export function FlexItemFooter({ activity }: Props) {

@@ -15,20 +15,20 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { SERVER_URL } from "@/constants/url";
 import { ActivityBadge } from "@/features/activity/components/items/badge-activity";
-import { ActivityLogsDb } from "@/features/activity/types/activity.types";
+import { ActivityLogsUnion } from "@/features/activity/types/activity.types";
 import { useFetch } from "@/hooks/use-fetch";
 import { usePusher } from "@/hooks/use-pusher";
 import { formatDate } from "@/utils/format-date.fns";
 import Link from "next/link";
 
 export function ActivityLogCard() {
-  const { data, isLoading, mutate } = useFetch<ActivityLogsDb[]>(
+  const { data, isLoading, mutate } = useFetch<ActivityLogsUnion[]>(
     `${SERVER_URL}/dashboard/logs`,
   );
 
   const serverData = data ?? [];
 
-  usePusher<{ logs: ActivityLogsDb[] }>(
+  usePusher<{ logs: ActivityLogsUnion[] }>(
     "dashboard-channel",
     "new-log",
     (payload) => {
@@ -89,7 +89,7 @@ export function ActivityLogCard() {
       </CardContent>
       <Separator />
       <CardFooter>
-        <Link href={"/activity"}>
+        <Link href={"/activity"} target="_blank">
           <Button variant={"outline"}>Halaman Log Aktivitas</Button>
         </Link>
       </CardFooter>

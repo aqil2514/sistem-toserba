@@ -1,14 +1,14 @@
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { useActivity } from "../../store/activity.store";
 import { useMemo } from "react";
-import { ActivityLogsDb } from "../../types/activity.types";
+import { ActivityLogsUnion } from "../../types/activity.types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ActivityLogItem } from "./log-items";
 
 export function ActivityItems() {
   const { isLoading, data } = useActivity();
 
-  const activities = useMemo<ActivityLogsDb[]>(() => {
+  const activities = useMemo<ActivityLogsUnion[]>(() => {
     if (!data) return [];
 
     return data.data;

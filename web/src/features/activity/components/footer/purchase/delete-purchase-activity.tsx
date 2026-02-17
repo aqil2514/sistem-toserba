@@ -1,17 +1,16 @@
 import { DetailDialog } from "@/components/molecules/dialog/detail-dialog";
 import { EmptyData } from "@/components/molecules/empty/empty-data";
 import { Button } from "@/components/ui/button";
-import { ActivityLogsDb } from "@/features/activity/types/activity.types";
-import { SalesLogMetaDetail } from "@/features/activity/types/per-feature/sales-activity";
+import { ActivityLogsUnion } from "@/features/activity/types/activity.types";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { Info } from "lucide-react";
 import React, { useState } from "react";
 
 interface Props {
-  activity: ActivityLogsDb<SalesLogMetaDetail>;
+  activity: Extract<ActivityLogsUnion, { action: "DELETE_PURCHASE" }>;
 }
 
-export function DeleteSalesFooter({ activity }: Props) {
+export function DeletePurchaseActivity({ activity }: Props) {
   const [openDetail, setOpenDetail] = useState(false);
 
   return (
@@ -37,16 +36,20 @@ const DetailComponent: React.FC<Props> = ({ activity }) => {
   const { meta } = activity;
   if (!meta) return <EmptyData />;
 
+  const total = meta.items.reduce((acc, curr) => acc + (curr?.price ?? 0), 0);
+
+
   return (
     <div className="space-y-6 text-sm">
       {/* Deleted Banner */}
       <div className="flex items-center justify-between rounded-xl border border-red-200 bg-red-50 px-4 py-3">
         <div>
           <p className="font-semibold text-red-600">
-            Data Penjualan Telah Dihapus
+            Data Pembelian Telah Dihapus
           </p>
           <p className="text-xs text-red-500">
-            Data ini sudah tidak tersedia di sistem dan hanya tersimpan sebagai arsip aktivitas.
+            Data ini sudah tidak tersedia di sistem dan hanya tersimpan sebagai
+            arsip aktivitas.
           </p>
         </div>
         <span className="text-xs font-medium text-red-600 bg-red-100 px-3 py-1 rounded-full">
@@ -54,22 +57,19 @@ const DetailComponent: React.FC<Props> = ({ activity }) => {
         </span>
       </div>
 
-      {/* Customer & Total */}
       <div className="grid grid-cols-2 gap-6">
         <div className="rounded-xl border bg-muted/40 p-4 space-y-1">
           <p className="text-xs uppercase tracking-wide text-muted-foreground">
-            Nama Customer
+            Nama Supplier
           </p>
-          <p className="font-medium">{meta.customer_name}</p>
+          <p className="font-medium">{meta.supplier_name}</p>
         </div>
 
         <div className="rounded-xl border bg-muted/40 p-4 space-y-1">
           <p className="text-xs uppercase tracking-wide text-muted-foreground">
             Total Harga
           </p>
-          <p className="font-medium">
-            {formatRupiah(meta.total_amount)}
-          </p>
+          <p className="font-medium">{formatRupiah(total)}</p>
         </div>
       </div>
 
@@ -80,15 +80,13 @@ const DetailComponent: React.FC<Props> = ({ activity }) => {
         </p>
 
         <ul className="space-y-2">
-          {meta.products.map((prod, i) => (
+          {meta.items.map((prod, i) => (
             <li
               key={`${prod.product_name}-${i}`}
               className="flex justify-between border-b pb-1 last:border-0"
             >
               <span>{prod.product_name}</span>
-              <span className="text-muted-foreground">
-                {prod.quantity} pcs
-              </span>
+              <span className="text-muted-foreground">{prod.quantity} pcs</span>
             </li>
           ))}
         </ul>
@@ -96,7 +94,7 @@ const DetailComponent: React.FC<Props> = ({ activity }) => {
 
       {/* Reference ID */}
       <div className="text-xs text-muted-foreground pt-2">
-        Reference ID: {meta.sales_id}
+        Reference ID: {meta.id}
       </div>
     </div>
   );

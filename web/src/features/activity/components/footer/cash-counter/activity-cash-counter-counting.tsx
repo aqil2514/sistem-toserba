@@ -1,7 +1,7 @@
-import { ActivityLogsDb } from "@/features/activity/types/activity.types";
+import { ActivityLogsUnion } from "@/features/activity/types/activity.types";
 
 interface Props {
-  activity: ActivityLogsDb;
+  activity: ActivityLogsUnion;
 }
 
 export function CashCounterCountingActivityItemFooter({ activity }: Props) {

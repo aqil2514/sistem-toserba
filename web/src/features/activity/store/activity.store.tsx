@@ -6,13 +6,13 @@ import { SERVER_URL } from "@/constants/url";
 import { startOfDay, startOfMonth } from "date-fns";
 import { buildUrlBasicQuery } from "@/utils/url-builder/build-url-basic-query";
 import { useQueryBasics } from "@/hooks/use-query-basics";
-import { ActivityLogsDb } from "../types/activity.types";
+import {  ActivityLogsUnion } from "../types/activity.types";
 
 interface ActivityContextType {
-  data: DataQueryResponse<ActivityLogsDb[]> | undefined;
+  data: DataQueryResponse<ActivityLogsUnion[]> | undefined;
   error: Error;
   isLoading: boolean;
-  mutate: KeyedMutator<DataQueryResponse<ActivityLogsDb[]>>;
+  mutate: KeyedMutator<DataQueryResponse<ActivityLogsUnion[]>>;
 
   query: BasicQuery;
 }
@@ -53,7 +53,7 @@ export function ActivityProvider({
     [query],
   );
   
-  const fetcher = useFetch<DataQueryResponse<ActivityLogsDb[]>>(serverUrl);
+  const fetcher = useFetch<DataQueryResponse<ActivityLogsUnion[]>>(serverUrl);
 
   const values: ActivityContextType = {
     ...fetcher,

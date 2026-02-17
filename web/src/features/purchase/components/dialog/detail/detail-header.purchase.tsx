@@ -3,10 +3,12 @@ import { Purchase } from "@/features/purchase/types/purchase";
 import { formatDate } from "@/utils/format-date.fns";
 
 interface Props {
-  data: Purchase;
+  data?: Purchase;
 }
 
 export function DetailHeader({ data }: Props) {
+  if(!data) return null;
+
   return (
     <div className="space-y-4">
       <OneLineItem label="Kode Pembelian" value={data.purchase_code} />

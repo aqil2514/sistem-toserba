@@ -1,7 +1,7 @@
+import { BasicQuery } from "@/@types/general";
 import { endOfDay, startOfDay } from "date-fns";
-import { PurchaseQuery } from "../types/purchase-query";
 
-export const defaultQuery: PurchaseQuery = {
+export const defaultQuery: BasicQuery = {
   page: 1,
   limit: 20,
   from: startOfDay(new Date()),

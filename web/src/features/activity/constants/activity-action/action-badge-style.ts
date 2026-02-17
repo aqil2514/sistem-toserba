@@ -6,10 +6,15 @@ export const actionBadgeStyle: Record<ActivityLogsAction, string> = {
 
   ADD_SALES:
     "bg-green-50 text-green-700 border-green-200",
-
   DELETE_SALES:
     "bg-red-50 text-red-700 border-red-200",
-
   EDIT_SALES:
+    "bg-amber-50 text-amber-700 border-amber-200",
+
+  ADD_PURCHASE:
+    "bg-green-50 text-green-700 border-green-200",
+  DELETE_PURCHASE:
+    "bg-red-50 text-red-700 border-red-200",
+  EDIT_PURCHASE:
     "bg-amber-50 text-amber-700 border-amber-200",
 };

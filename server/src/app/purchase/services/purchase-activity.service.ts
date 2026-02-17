@@ -36,6 +36,7 @@ export class PurchaseActivityService {
   ): PurchaseDetailMeta {
     const mappedItem: PurchaseDetailMeta['items'] = items.map((item) => ({
       hpp: item.hpp,
+      price: item.price,
       product_name: item.product_name,
       quantity: item.quantity,
     }));

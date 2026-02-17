@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { ActivityLogsDb } from "@/features/activity/types/activity.types";
+import {  ActivityLogsUnion } from "@/features/activity/types/activity.types";
 import { ExternalLink } from "lucide-react";
 
 interface Props {
-  activity: ActivityLogsDb;
+  activity: Extract<ActivityLogsUnion, {action:"ADD_SALES"}>;
 }
 
 export function AddSalesFooter({ activity }: Props) {
