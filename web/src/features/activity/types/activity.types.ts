@@ -1,6 +1,4 @@
-import {
-  ActivityLogsType,
-} from "./per-feature/00.master-activity";
+import { ActivityLogsType } from "./per-feature/00.master-activity";
 import {
   PurchaseDetailMeta,
   PurchaseEditMeta,
@@ -20,17 +18,6 @@ export interface ActivityMetaMapping {
   ADD_PURCHASE: PurchaseDetailMeta;
   DELETE_PURCHASE: PurchaseDetailMeta;
   EDIT_PURCHASE: PurchaseEditMeta;
-}
-
-export interface ActivityLogsDb<T extends keyof ActivityMetaMapping> {
-  id: number;
-  created_at: string;
-  type: ActivityLogsType;
-  title: string;
-  action: T;
-  description: string;
-  reference_id: string;
-  meta?: ActivityMetaMapping[T];
 }
 
 export type ActivityLogsUnion = {
