@@ -9,7 +9,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { PasetoService } from '../auth/paseto.service';
-import { BadRequestException, UnauthorizedException } from '@nestjs/common';
+import {  UnauthorizedException } from '@nestjs/common';
 
 @WebSocketGateway({
   cors: {

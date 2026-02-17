@@ -9,16 +9,16 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { PasetoGuard } from '../../guards/paseto.guard';
-import { RoleGuard } from '../../guards/role.guard';
-import { Roles } from '../../decorator/roles.decorator';
-import { PurchaseService } from './purchase.service';
-import { CreatePurchaseDto } from './dto/create-purchase.dto';
-import { UpdatePurchaseDto } from './dto/update-purchase.dto';
-import { PurchaseQuery } from './interface/purchase-query.interface';
-import { PurchaseFormService } from './services/purchase-form.service';
-import { PurchaseReportService } from './services/purchase-report.service';
-import { BasicQueryDto } from '../../services/query/dto/query.dto';
+import { PasetoGuard } from '../../../guards/paseto.guard';
+import { RoleGuard } from '../../../guards/role.guard';
+import { Roles } from '../../../decorator/roles.decorator';
+import { PurchaseService } from '../services/purchase.service';
+import { CreatePurchaseDto } from '../dto/create-purchase.dto';
+import { UpdatePurchaseDto } from '../dto/update-purchase.dto';
+import { PurchaseQuery } from '../interface/purchase-query.interface';
+import { PurchaseFormService } from '../services/purchase-form.service';
+import { PurchaseReportService } from '../services/purchase-report.service';
+import { BasicQueryDto } from '../../../services/query/dto/query.dto';
 
 @UseGuards(PasetoGuard, RoleGuard)
 @Roles('admin')

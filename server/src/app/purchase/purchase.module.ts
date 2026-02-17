@@ -1,13 +1,20 @@
 import { Module } from '@nestjs/common';
-import { PurchaseService } from './purchase.service';
-import { PurchaseController } from './purchase.controller';
+import { PurchaseController } from './controller/purchase.controller';
 import { ProductsModule } from '../products/products.module';
 import { PurchaseFormService } from './services/purchase-form.service';
 import { PurchaseReportService } from './services/purchase-report.service';
+import { PurchaseService } from './services/purchase.service';
+import { PurchaseFetcherController } from './controller/purchase-fetcher.controller';
+import { PurchaseFetcherService } from './services/purchase-fetcher.service';
 
 @Module({
   imports: [ProductsModule],
-  providers: [PurchaseService, PurchaseFormService, PurchaseReportService],
-  controllers: [PurchaseController],
+  providers: [
+    PurchaseService,
+    PurchaseFormService,
+    PurchaseReportService,
+    PurchaseFetcherService,
+  ],
+  controllers: [PurchaseController, PurchaseFetcherController],
 })
 export class PurchaseModule {}
