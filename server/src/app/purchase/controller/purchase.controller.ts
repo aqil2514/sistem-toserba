@@ -60,11 +60,6 @@ export class PurchaseController {
     return await this.purchaseReportService.getPurchaseSummaryReport(query);
   }
 
-  @Get('form-rss')
-  async getFormResources() {
-    return await this.purchaseFormService.getPurchaseFormResources();
-  }
-
   @Get(':id')
   async getPurchaseItem(@Param('id') id: string) {
     return await this.purchaseService.findByIdWithItems(id);
@@ -72,7 +67,7 @@ export class PurchaseController {
 
   @Delete(':id')
   async softDeletePurchase(@Param('id') id: string) {
-    return await this.purchaseService.softDeletePurchase(id);
+    return await this.purchaseFormService.softDeletePurchase(id);
   }
 
   @Patch(':id')
@@ -80,7 +75,7 @@ export class PurchaseController {
     @Param('id') id: string,
     @Body() body: UpdatePurchaseDto,
   ) {
-    return await this.purchaseService.updatePurchase(id, body);
+    return await this.purchaseFormService.updatePurchase(id, body);
   }
 
   @Patch(':item_id/remaining_quantity')
@@ -88,7 +83,7 @@ export class PurchaseController {
     @Param('item_id') item_id: string,
     @Body() body: { remaining_quantity: number },
   ) {
-    return await this.purchaseService.updateQuantityRemaining(
+    return await this.purchaseFormService.updateQuantityRemaining(
       item_id,
       body.remaining_quantity,
     );
@@ -96,6 +91,6 @@ export class PurchaseController {
 
   @Post()
   async addPurchase(@Body() body: CreatePurchaseDto) {
-    return await this.purchaseService.createPurchase(body);
+    return await this.purchaseFormService.createPurchase(body);
   }
 }

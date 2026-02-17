@@ -29,8 +29,8 @@ export const purchaseColumns: ColumnDef<Purchase>[] = [
     header: "Jenis Supplier",
   },
   {
-    accessorKey:"action",
-    header:"Aksi",
-    cell:({row}) => <PurchaseColumnAction row={row} />
-  }
+    accessorKey: "action",
+    header: "Aksi",
+    cell: ({ row }) => <PurchaseColumnAction row={row} />,
+  },
 ];

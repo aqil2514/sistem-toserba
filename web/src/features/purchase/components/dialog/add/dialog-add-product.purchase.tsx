@@ -12,7 +12,7 @@ import { KeyedMutator } from "swr";
 interface Props {
   addNewProduct: boolean;
   setAddNewProduct: React.Dispatch<React.SetStateAction<boolean>>;
-  mutate: KeyedMutator<PurchaseFormRss>;
+  mutate: KeyedMutator<PurchaseFormRss['products']>;
 }
 
 export function AddProductFormPurchaseDialog({

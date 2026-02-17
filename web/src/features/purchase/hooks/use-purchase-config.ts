@@ -8,9 +8,13 @@ export function usePurchaseConfig() {
   const supplierTypeFetcher = useFetch<string[]>(
     `${SERVER_URL}/purchase/fetcher/supplier-type`,
   );
+  const productNameFetcher = useFetch<{ id: string; name: string }[]>(
+    `${SERVER_URL}/purchase/fetcher/products`,
+  );
 
   return {
     supplierName: supplierNameFetcher.data?.sort() ?? [],
-    supplierType: supplierTypeFetcher.data?.sort() ??[],
+    supplierType: supplierTypeFetcher.data?.sort() ?? [],
+    productNameFetcher,
   };
 }

@@ -8,15 +8,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { FormHeader } from "./form-header.purchase";
-import { useFetch } from "@/hooks/use-fetch";
-import { SERVER_URL } from "@/constants/url";
-import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { PurchaseFormRss } from "../../types/purchase-form-rss";
 import { FormPurchaseItem } from "./form-item.purchase";
 import { AddProductFormPurchaseDialog } from "../dialog/add/dialog-add-product.purchase";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useQueryParams } from "@/hooks/use-query-params";
+import { usePurchaseConfig } from "../../hooks/use-purchase-config";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 interface Props {
   initialValues?: PurchaseFormValues;
@@ -29,20 +26,7 @@ export function PurchaseForm({ onSubmit, initialValues }: Props) {
     resolver: zodResolver(purchaseSchema),
     defaultValues: initialValues ?? EMPTY_VALUES,
   });
-
-  const { get } = useQueryParams();
-
-  const isAddOpen = get("action") === "add";
-  const isEditOpen = get("action") === "edit";
-
-  const isCanFetch = isAddOpen || isEditOpen;
-
-  const fetcher = useFetch<PurchaseFormRss>(
-    isCanFetch ? `${SERVER_URL}/purchase/form-rss` : null,
-  );
-
-  if (fetcher.isLoading || !fetcher.data)
-    return <LoadingSpinner label="Memuat data..." />;
+  const { productNameFetcher } = usePurchaseConfig();
 
   const isSubmitting = form.formState.isSubmitting;
 
@@ -55,14 +39,12 @@ export function PurchaseForm({ onSubmit, initialValues }: Props) {
           )}
         >
           <div className="grid md:grid-cols-2 gap-4">
-            <FormHeader
+            <FormHeader form={form} />
+            {productNameFetcher.data ? <FormPurchaseItem
               form={form}
-            />
-            <FormPurchaseItem
-              form={form}
-              productList={fetcher.data.products}
+              productList={productNameFetcher.data}
               setAddNewProduct={setAddNewProduct}
-            />
+            /> : <LoadingSpinner /> }
           </div>
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Menyimpan..." : "Simpan"}
@@ -72,7 +54,7 @@ export function PurchaseForm({ onSubmit, initialValues }: Props) {
 
       <AddProductFormPurchaseDialog
         addNewProduct={addNewProduct}
-        mutate={fetcher.mutate}
+        mutate={productNameFetcher.mutate}
         setAddNewProduct={setAddNewProduct}
       />
     </>

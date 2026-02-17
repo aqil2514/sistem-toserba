@@ -23,6 +23,6 @@ export function handleActivityDetail(activity: ActivityLogsDb) {
       break;
 
     default:
-      console.log("No handler for this action");
+      console.info("No handler for this action");
   }
 }
