@@ -1,15 +1,16 @@
 import { DataTable } from "@/components/organisms/ori-data-table/data-table";
 import { SummarizedReportColumns } from "./columns/product-summary-columns.sales-report";
 import { DataTableFooterServer } from "@/components/organisms/ori-data-table/data-table-footer-server";
-import { useSalesReport } from "../../../store/provider.sales-report";
-import { DetailContentProductSummaryMode } from "@/features/sales-report/types/api.report-sales";
+import { useQueryBasics } from "@/hooks/use-query-basics";
+import { DataQueryResponse } from "@/@types/general";
+import { ProductSummaryApiResponse } from "@/features/sales-report/types/detail.report-sales-type";
 
 interface Props {
-  data: DetailContentProductSummaryMode;
+  data: DataQueryResponse<ProductSummaryApiResponse[]>;
 }
 
 export function SalesReportSummarizedProduct({ data }: Props) {
-  const { query, updateQuery } = useSalesReport();
+  const { query, updateFooter } = useQueryBasics();
   return (
     <DataTable
       data={data.data}
@@ -17,7 +18,7 @@ export function SalesReportSummarizedProduct({ data }: Props) {
       footer={() => (
         <DataTableFooterServer
           query={query}
-          onQueryChange={(key, value) => updateQuery(key, value)}
+          onQueryChange={updateFooter}
           meta={data.meta}
         />
       )}

@@ -17,15 +17,24 @@ export interface FilterState {
 
 export interface SortState {
   key: string;
-  value: "asc" | "desc";
+  value: 'asc' | 'desc';
+}
+
+export interface BaseMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
 }
 
 export interface DataQueryResponse<T = unknown> {
   data: T;
-  meta: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
+  meta: BaseMeta;
+}
+
+export interface DataQueryResponseWithMode<
+  T = unknown,
+  M extends string = string,
+> extends DataQueryResponse<T> {
+  mode: M;
 }

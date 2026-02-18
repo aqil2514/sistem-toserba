@@ -9,18 +9,17 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { SalesService } from './sales.service';
-import { SalesQuery } from './interface/sales-query.interface';
-import { PasetoGuard } from '../../guards/paseto.guard';
-import { RoleGuard } from '../../guards/role.guard';
-import { Roles } from '../../decorator/roles.decorator';
-import { CreateSalesDto } from './dto/create-sales.dto';
-import { GetSummaryQuery } from './interface/sales-rpc.interface';
-import { SalesRpcService } from './services/sales-rpc.service';
-import { SalesReportQuery } from './interface/sales-report.interface';
-import { SalesReportService } from './services/sales-report.service';
-import { SalesFetcherService } from './services/sales-fetcher.service';
-import { BasicQueryDto } from '../../services/query/dto/query.dto';
+import { SalesService } from '../sales.service';
+import { PasetoGuard } from '../../../guards/paseto.guard';
+import { RoleGuard } from '../../../guards/role.guard';
+import { Roles } from '../../../decorator/roles.decorator';
+import { CreateSalesDto } from '../dto/create-sales.dto';
+import { GetSummaryQuery } from '../interface/sales-rpc.interface';
+import { SalesRpcService } from '../services/sales-rpc.service';
+import { SalesReportQuery } from '../interface/sales-report.interface';
+import { SalesReportService } from '../services/sales-report.service';
+import { SalesFetcherService } from '../services/sales-fetcher.service';
+import { BasicQueryDto } from '../../../services/query/dto/query.dto';
 
 @UseGuards(PasetoGuard, RoleGuard)
 @Roles('admin')
@@ -40,8 +39,6 @@ export class SalesController {
 
   @Get('report')
   async getSalesReport(@Query() query: SalesReportQuery) {
-    if (query.content === 'summary')
-      return await this.salesReportService.getSalesSummaryContent(query);
     if (query.content === 'chart') {
       if (query.mode === 'breakdown-omzet')
         return await this.salesReportService.getSalesBreakdown(query);

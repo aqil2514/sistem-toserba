@@ -1,7 +1,7 @@
+import { ProductSummaryApiResponse } from "@/features/sales-report/types/detail.report-sales-type";
 import { formatPercent } from "@/utils/format-percent";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ColumnDef } from "@tanstack/react-table";
-import { ProductSummaryApiResponse } from "../../../../types/api-return.report-sales";
 
 export const SummarizedReportColumns: ColumnDef<ProductSummaryApiResponse>[] = [
   {

@@ -16,7 +16,7 @@ export class SalesLogService {
     private readonly supabase: SupabaseClient,
     private readonly activityService: ActivityService,
   ) {}
-
+  
   async getSalesForLogById(salesId: string): Promise<SalesLogDetailRpc[]> {
     const { error, data } = await this.supabase.rpc('get_log_sales_detail', {
       p_sales_id: salesId,

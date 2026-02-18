@@ -1,66 +1,28 @@
 "use client";
 import { MainContainer } from "@/components/layout/container/main-container";
 import { SectionContainer } from "@/components/layout/container/section-container";
-import {
-  SalesReportProvider,
-  useSalesReport,
-} from "./store/provider.sales-report";
 import { SalesReportHeader } from "./components/header/header.sales-report";
-import { SalesReportToolbar } from "./components/toolbar/toolbar.sales-report";
-import { DataSalesReport } from "./components/contents/data/data.sales-report";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ReportSalesSummary } from "./components/contents/summary/summary.report-sales";
-import { ReportContent } from "./types/query.report-sales";
-import { SalesReportChart } from "./components/contents/chart/chart.sales-report";
 import { TemplateMode } from "@/@types/general";
 import { UnavailableDemo } from "@/components/templates/unavailable-demo";
+import { SalesReportContents } from "./components/contents/sales-report.contents";
 
 interface Props {
   mode: TemplateMode;
 }
 
 export function SalesReportTemplate({ mode }: Props) {
-  if (mode === "demo") return <UnavailableDemo />
+  if (mode === "demo") return <UnavailableDemo />;
 
-  return (
-    <SalesReportProvider>
-      <InnerTemplate />
-    </SalesReportProvider>
-  );
+  return <InnerTemplate />;
 }
 
 const InnerTemplate = () => {
-  const { query, updateQuery } = useSalesReport();
-
   return (
     <MainContainer>
       <SectionContainer>
         <SalesReportHeader />
-        <SalesReportToolbar />
 
-        <Tabs
-          value={query.content}
-          onValueChange={(e) => {
-            updateQuery("filters", []);
-            updateQuery("content", e as ReportContent);
-          }}
-          className="w-full"
-        >
-          <TabsList>
-            <TabsTrigger value="summary">Ringkasan</TabsTrigger>
-            <TabsTrigger value="detail">Detail</TabsTrigger>
-            <TabsTrigger value="chart">Diagram</TabsTrigger>
-          </TabsList>
-          <TabsContent value="summary">
-            <ReportSalesSummary />
-          </TabsContent>
-          <TabsContent value="detail">
-            <DataSalesReport />
-          </TabsContent>
-          <TabsContent value="chart">
-            <SalesReportChart />
-          </TabsContent>
-        </Tabs>
+        <SalesReportContents />
       </SectionContainer>
     </MainContainer>
   );

@@ -15,17 +15,148 @@ import {
   buildPaginationMeta,
   executeSupabaseBasicQuery,
 } from '../../../utils/query-builder';
-import { DataQueryResponse } from '../../../@types/general';
+import {
+  DataQueryResponse,
+  DataQueryResponseWithMode,
+} from '../../../@types/general';
 import { SalesItemApiResponse } from '../interface/sales-items.interface';
 import { formatQueryDate } from '../../../utils/format-date';
+import { BasicQueryDto } from '../../../services/query/dto/query.dto';
+import { BasicQueryService } from '../../../services/query/query.service';
+import { SalesReportDetailDto } from '../dto/sales-report-detail.dto';
+import { SalesReportChartDto } from '../dto/sales-report-chart.dto';
 
 @Injectable()
 export class SalesReportService {
   constructor(
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
+
+    private readonly queryService: BasicQueryService,
   ) {}
 
+  // >>>>>> NEW START <<<<<<
+  async getSalesReportSummary(
+    rawQuery: BasicQueryDto,
+  ): Promise<SalesReportSummaryRpcReturn> {
+    const query = this.queryService.mapToBasicQuery(rawQuery);
+    const { endUtc, startUtc } = formatQueryDate(query);
+
+    const { data, error } = await this.supabase.rpc(
+      'get_sales_report_summary',
+      {
+        p_start_utc: startUtc,
+        p_end_utc: endUtc,
+        p_filters: query.filters,
+      },
+    );
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+    return data[0];
+  }
+
+  // ====== DATA DETAIL START ======
+
+  async getSalesReportDetailFullMode(
+    rawQuery: SalesReportDetailDto,
+  ): Promise<DataQueryResponseWithMode<SalesItemApiResponse[], 'full'>> {
+    const query = this.queryService.mapToBasicQuery(rawQuery);
+    const { limit, page } = query;
+
+    let supabase = this.supabase
+      .from('sales_items')
+      .select('*, product_id!inner(*), sales_id!inner(*)', { count: 'exact' })
+      .is('deleted_at', null);
+
+    const client = executeSupabaseBasicQuery(
+      supabase,
+      query,
+      'transaction_date',
+    );
+
+    const { data, error, count } = await client;
+
+    if (error) {
+      console.error(error);
+      throw new InternalServerErrorException('Terjadi error saat mencari data');
+    }
+
+    const meta = buildPaginationMeta(page, limit, count ?? 0);
+
+    return {
+      data,
+      meta,
+      mode: 'full',
+    };
+  }
+
+  async getSalesReportDetailProductMode(
+    rawQuery: BasicQueryDto,
+  ): Promise<
+    DataQueryResponseWithMode<SalesReportProductRpcReturn[], 'product'>
+  > {
+    const query = this.queryService.mapToBasicQuery(rawQuery);
+    const { endUtc, startUtc } = formatQueryDate(query);
+
+    const { data, error } = await this.supabase.rpc(
+      'get_sales_report_by_products_summary',
+      {
+        p_limit: query.limit,
+        p_page: query.page,
+        p_start_utc: startUtc,
+        p_end_utc: endUtc,
+        p_filters: query.filters,
+        p_sortings: query.sort,
+      },
+    );
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    const meta = buildPaginationMeta(
+      query.page,
+      query.limit,
+      data?.[0]?.total_count ?? 0,
+    );
+
+    return {
+      data,
+      meta,
+      mode: 'product',
+    };
+  }
+
+  // ====== DATA DETAIL END ======
+
+  // ====== CHART START ======
+  async getSalesReportChartBreakdown(rawQuery: SalesReportChartDto) {
+    const query = this.queryService.mapToBasicQuery(rawQuery);
+    const { endUtc, startUtc } = formatQueryDate(query);
+    const { data, error } = await this.supabase.rpc('get_breakdown_sales', {
+      p_start_utc: startUtc,
+      p_end_utc: endUtc,
+      p_mode: rawQuery.groupBy ?? "day",
+    });
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+
+    return {
+      data,
+      mode: 'breakdown',
+    };
+  }
+  // ====== CHART END ======
+
+  // >>>>>> NEW END <<<<<<
 
   private mapToReportSummaryByProduct(
     raw: SalesReportQuery,
@@ -54,6 +185,7 @@ export class SalesReportService {
     };
   }
 
+  // Ini jangan dihapus dlu. Masih dipakek di export telegram
   private mapToSalesReportSummary(
     raw: SalesReportQuery,
   ): SalesReportSummaryRpcParams {
@@ -129,6 +261,7 @@ export class SalesReportService {
     return data;
   }
 
+  // TODO Ini udah selesai, nanti tinggal diaudit lagi
   async getSalesReport(
     query: SalesReportQuery,
   ): Promise<DataQueryResponse<SalesItemApiResponse[]>> {
@@ -139,7 +272,11 @@ export class SalesReportService {
       .select('*, product_id!inner(*), sales_id!inner(*)', { count: 'exact' })
       .is('deleted_at', null);
 
-    const client = executeSupabaseBasicQuery(supabase, query, "transaction_date");
+    const client = executeSupabaseBasicQuery(
+      supabase,
+      query,
+      'transaction_date',
+    );
 
     const { data, error, count } = await client;
 
@@ -156,6 +293,7 @@ export class SalesReportService {
     };
   }
 
+  // TODO Ini udah selesai, nanti tinggal diaudit lagi
   async getSalesReportProductSummary(
     query: SalesReportQuery,
   ): Promise<DataQueryResponse<SalesReportProductRpcReturn[]>> {
@@ -183,6 +321,7 @@ export class SalesReportService {
     return { meta, data };
   }
 
+  // Ini jangan dihapus dlu. Masih dipakek di export telegram
   async getSalesSummaryContent(
     query: SalesReportQuery,
   ): Promise<SalesReportSummaryRpcReturn> {

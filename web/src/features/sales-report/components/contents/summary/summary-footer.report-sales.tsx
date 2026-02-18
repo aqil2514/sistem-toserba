@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useSalesReport } from "@/features/sales-report/store/provider.sales-report";
-import { isSummaryContent } from "@/features/sales-report/utils/type-guard";
+import { useSalesReportSummary } from "@/features/sales-report/store/sales-report-summary.provider";
 import { api } from "@/lib/api";
 import { useState } from "react";
 
@@ -21,12 +20,10 @@ function getInsight(data: {
 }
 
 export function SalesReportSummaryFooter() {
-  const { data, query } = useSalesReport();
+  const { data, query } = useSalesReportSummary();
   const [isLoading, setIsLoading] = useState(false);
 
-  if (query.content !== "summary") return null;
   if (!data) return null;
-  if (!isSummaryContent(data, "summary")) return null;
 
   const insight = getInsight(data);
 

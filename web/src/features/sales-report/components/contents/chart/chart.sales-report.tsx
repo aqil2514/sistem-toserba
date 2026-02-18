@@ -1,62 +1,49 @@
-import { LineChartData } from "@/components/molecules/chart/line-chart";
+import { HeaderWithMutate } from "@/components/organisms/header/header-with-mutate";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { useSalesReport } from "@/features/sales-report/store/provider.sales-report";
 import {
-  ChartContent,
-  PieChartContent,
-} from "@/features/sales-report/types/api.report-sales";
-import {
-  isBreakdownOmzetChartContent,
-  isPerCategoryChartContent,
-} from "@/features/sales-report/utils/type-guard";
-import { formatDate } from "@/utils/format-date.fns";
+  SalesReportChartProvider,
+  useSalesReportChart,
+} from "@/features/sales-report/store/sales-report-chart.provider";
 import { SalesReportOmzetChart } from "./omzet-chart.sales-report";
-import { useEffect } from "react";
-import { SalesReportPerCategoryChart } from "./per-category.sales-report";
-import { PieChartData } from "@/components/molecules/chart/pie-chart";
-
-const mapToLineData = (raw: ChartContent): LineChartData[] => {
-  const result: LineChartData[] = raw.map((r) => ({
-    label: formatDate(r.date, "29 Des 2025"),
-    value: r.omzet,
-  }));
-  return result;
-};
-
-const mapToPieChart = (raw: PieChartContent): PieChartData[] => {
-  const result: PieChartData[] = raw.map((r) => ({
-    name: r.category,
-    value: r.omzet,
-  }));
-  return result;
-};
+import { useSalesReportChartQuery } from "@/features/sales-report/hooks/use-sales-report-chart-query";
+import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
+import { GroupBySalesReport } from "./filter/group-by-sales-report";
 
 export function SalesReportChart() {
-  const { data, isLoading, query, updateQuery } = useSalesReport();
-
-  useEffect(() => {
-    if (query.content === "chart")
-      return updateQuery("mode", "breakdown-omzet");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query.content]);
-
-  if (isLoading || !data) return <LoadingSpinner label="Memuat Data..." />;
-
-  if (
-    query.mode === "breakdown-omzet" &&
-    isBreakdownOmzetChartContent(data, query.content)
-  ) {
-    const mappedData = mapToLineData(data);
-    return <SalesReportOmzetChart data={mappedData} />;
-  }
-
-  if (
-    query.mode === "report-per-category" &&
-    isPerCategoryChartContent(data, query.content)
-  ) {
-    const mappedData = mapToPieChart(data);
-    return <SalesReportPerCategoryChart data={mappedData} />;
-  }
-
-  return null;
+  return (
+    <SalesReportChartProvider>
+      <InnerTemplate />
+    </SalesReportChartProvider>
+  );
 }
+
+const InnerTemplate = () => {
+  const { mutate, isLoading } = useSalesReportChart();
+  const { query } = useSalesReportChart();
+  const { updateDateRange } = useSalesReportChartQuery();
+
+  return (
+    <div className="space-y-4">
+      <HeaderWithMutate title="Diagram" mutate={mutate} />
+      <div className="flex gap-4">
+
+      <ToolbarDatepicker
+        date={{ from: query.from, to: query.to }}
+        onApply={updateDateRange}
+        setDate={updateDateRange}
+      />
+      <GroupBySalesReport />
+      </div>
+      {isLoading ? <LoadingSpinner /> : <ContentData />}
+    </div>
+  );
+};
+
+const ContentData = () => {
+  const { data } = useSalesReportChart();
+  if (!data) return null;
+  const mode = data.mode;
+  if (mode === "breakdown") {
+    return <SalesReportOmzetChart data={data.data} />;
+  }
+};

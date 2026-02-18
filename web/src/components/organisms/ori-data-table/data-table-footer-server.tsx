@@ -1,4 +1,4 @@
-import { BasicQuery, MetaResponseQuery } from "@/@types/general";
+import { BaseMeta, BasicQuery } from "@/@types/general";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,7 +15,7 @@ import React, { useMemo, useState } from "react";
 interface Props<T extends BasicQuery> {
   query: T;
   onQueryChange: <K extends keyof T>(key: K, value: T[K]) => void;
-  meta?: MetaResponseQuery;
+  meta?: BaseMeta;
 }
 
 export function DataTableFooterServer<T extends BasicQuery>({

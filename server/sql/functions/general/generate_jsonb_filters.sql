@@ -1,34 +1,18 @@
--- CREATE OR REPLACE FUNCTION generate_jsonb_filters(p_filters jsonb)
--- RETURNS text AS $$
--- DECLARE
---     f jsonb;
---     sql text := '';
--- BEGIN
---     IF jsonb_array_length(p_filters) > 0 THEN
---         FOR f IN SELECT * FROM jsonb_array_elements(p_filters) LOOP
---             sql := sql || ' AND ' ||
---                 CASE COALESCE(f->>'operator', 'ilike')
---                     WHEN 'eq' THEN f->>'key' || ' = ' || quote_literal(f->>'value')
---                     WHEN 'ilike' THEN f->>'key' || ' ILIKE ' || quote_literal(concat('%', f->>'value', '%'))
---                     WHEN 'gte' THEN f->>'key' || ' >= ' || quote_literal(f->>'value')
---                     WHEN 'lte' THEN f->>'key' || ' <= ' || quote_literal(f->>'value')
---                     ELSE f->>'key' || ' ILIKE ' || quote_literal(concat('%', f->>'value', '%'))
---                 END;
---         END LOOP;
---     END IF;
---     RETURN sql;
--- END;
--- $$ LANGUAGE plpgsql STABLE;
-
 CREATE OR REPLACE FUNCTION generate_jsonb_filters(p_filters jsonb)
 RETURNS text AS $$
 DECLARE
     f jsonb;
     sql text := '';
     op text;
+    key_sql text;
+    val text;
 BEGIN
-    IF jsonb_array_length(p_filters) > 0 THEN
-      FOR f IN SELECT * FROM jsonb_array_elements(p_filters) LOOP
+    IF p_filters IS NULL OR jsonb_array_length(p_filters) = 0 THEN
+        RETURN '';
+    END IF;
+
+    FOR f IN SELECT * FROM jsonb_array_elements(p_filters)
+    LOOP
         op := COALESCE(f->>'operator', 'ilike');
 
         IF op NOT IN (
@@ -39,23 +23,33 @@ BEGIN
             RAISE EXCEPTION 'Unsupported filter operator: %', op;
         END IF;
 
+        key_sql := safe_identifier(f->>'key');
+        val := f->>'value';
+
         sql := sql || ' AND ' ||
             CASE op
-                WHEN 'eq'  THEN format('%I = %L', f->>'key', f->>'value')
-                WHEN 'neq' THEN format('%I <> %L', f->>'key', f->>'value')
-                WHEN 'gt'  THEN format('%I > %L', f->>'key', f->>'value')
-                WHEN 'gte' THEN format('%I >= %L', f->>'key', f->>'value')
-                WHEN 'lt'  THEN format('%I < %L', f->>'key', f->>'value')
-                WHEN 'lte' THEN format('%I <= %L', f->>'key', f->>'value')
+                WHEN 'eq'  THEN key_sql || format(' = %L', val)
+                WHEN 'neq' THEN key_sql || format(' <> %L', val)
+                WHEN 'gt'  THEN key_sql || format(' > %L', val)
+                WHEN 'gte' THEN key_sql || format(' >= %L', val)
+                WHEN 'lt'  THEN key_sql || format(' < %L', val)
+                WHEN 'lte' THEN key_sql || format(' <= %L', val)
 
-                WHEN 'ilike' THEN format('%I ILIKE %L', f->>'key', concat('%', f->>'value', '%'))
-                WHEN 'not_ilike' THEN format('%I NOT ILIKE %L', f->>'key', concat('%', f->>'value', '%'))
+                WHEN 'ilike' THEN key_sql || format(
+                    ' ILIKE %L',
+                    concat('%', val, '%')
+                )
 
-                WHEN 'is_null' THEN format('%I IS NULL', f->>'key')
-                WHEN 'is_not_null' THEN format('%I IS NOT NULL', f->>'key')
+                WHEN 'not_ilike' THEN key_sql || format(
+                    ' NOT ILIKE %L',
+                    concat('%', val, '%')
+                )
+
+                WHEN 'is_null' THEN key_sql || ' IS NULL'
+                WHEN 'is_not_null' THEN key_sql || ' IS NOT NULL'
             END;
-      END LOOP;
-    END IF;
+    END LOOP;
+
     RETURN sql;
 END;
 $$ LANGUAGE plpgsql STABLE;

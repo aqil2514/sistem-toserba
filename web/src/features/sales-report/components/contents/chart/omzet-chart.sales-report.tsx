@@ -1,8 +1,8 @@
+import { GrayContainer } from "@/components/layout/container/gray-container";
 import {
   LineChartData,
   MyLineChartComp,
 } from "@/components/molecules/chart/line-chart";
-import React from "react";
 
 interface Props {
   data: LineChartData[];
@@ -11,8 +11,18 @@ interface Props {
 export function SalesReportOmzetChart({ data }: Props) {
   return (
     <div className="w-full">
-      <MyLineChartComp data={data} lineName="Omzet" stroke="green" />
-      <SalesChartInsight data={data} />
+      {data.length < 1 ? (
+        <GrayContainer>
+          <p className="text-sm font-semibold text-center">
+            Data terlalu sedikit untuk ditampilkan.
+          </p>
+        </GrayContainer>
+      ) : (
+        <>
+        <MyLineChartComp data={data} lineName="Omzet" stroke="green" />
+        <SalesChartInsight data={data} />
+        </>
+      )}
     </div>
   );
 }
