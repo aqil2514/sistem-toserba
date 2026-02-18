@@ -40,7 +40,8 @@ export class SalesReportController {
     switch (query.mode) {
       case 'breakdown':
         return await this.reportService.getSalesReportChartBreakdown(query);
-
+      case 'per-product':
+        return await this.reportService.getSalesReportChartPerProduct(query);
       default:
         break;
     }

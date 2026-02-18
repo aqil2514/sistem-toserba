@@ -38,11 +38,22 @@ export function useSalesReportChartQuery(defaultQuery?: SalesReportChartQuery) {
     router.replace(`?${params.toString()}`);
   };
 
+  const updateTop = (top: number | null) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (!top || top === null) return params.delete("top");
+
+    params.set("top", String(top));
+
+    router.replace(`?${params.toString()}`);
+  };
+
   return {
     ...basicQuery,
     updateMode,
     query,
     updateGroupBy,
+    updateTop
   };
 }
 
@@ -53,7 +64,12 @@ function parseSearchParamsToSalesReportChartQuery(
   return {
     ...basicQuery,
     mode: (searchParams.get("mode") as SalesReportChartQuery["mode"]) ?? "full",
-    groupBy: (searchParams.get("groupBy") as SalesReportChartQuery["groupBy"]) ?? "day",
+    groupBy:
+      (searchParams.get("groupBy") as SalesReportChartQuery["groupBy"]) ??
+      "day",
+    top:
+      (searchParams.get("top") as SalesReportChartQuery["top"]) ??
+      "10",
   };
 }
 
@@ -63,11 +79,17 @@ function mergeSalesReportChartQueryWithDefaults(
 ): SalesReportChartQuery {
   const basicQuery = mergeQueryWithDefaults(defaults, searchParams);
   const queryMode = searchParams.get("mode") as SalesReportChartQuery["mode"];
-  const groupByMode = searchParams.get("groupBy") as SalesReportChartQuery["groupBy"];
+  const groupByMode = searchParams.get(
+    "groupBy",
+  ) as SalesReportChartQuery["groupBy"];
+  const topMode = searchParams.get(
+    "top",
+  ) as SalesReportChartQuery["top"];
 
   return {
     ...basicQuery,
     mode: queryMode ? queryMode : defaults.mode,
-    groupBy: groupByMode ? groupByMode : defaults.groupBy
+    groupBy: groupByMode ? groupByMode : defaults.groupBy,
+    top: topMode ? topMode : defaults.top,
   };
 }

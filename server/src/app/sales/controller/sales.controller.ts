@@ -40,8 +40,6 @@ export class SalesController {
   @Get('report')
   async getSalesReport(@Query() query: SalesReportQuery) {
     if (query.content === 'chart') {
-      if (query.mode === 'breakdown-omzet')
-        return await this.salesReportService.getSalesBreakdown(query);
       if (query.mode === 'report-per-category')
         return await this.salesReportService.getSalesReportPerCategory(query);
     }

@@ -1,3 +1,4 @@
+import { LabelValue } from "@/@types/general";
 import {
   Select,
   SelectContent,
@@ -11,33 +12,37 @@ import { SalesReportChartReturn } from "@/features/sales-report/types/chart.repo
 import { SalesReportChartQuery } from "@/features/sales-report/types/query.report-sales";
 import { useQueryParams } from "@/hooks/use-query-params";
 
-const VISIBLE_IN: SalesReportChartReturn["mode"][] = ["breakdown"];
+const modeValues: LabelValue<SalesReportChartReturn["mode"]>[] = [
+  {
+    label: "Per Omzet",
+    value: "breakdown",
+  },
+  {
+    label: "Per Produk",
+    value: "per-product",
+  },
+];
 
-export function GroupBySalesReport() {
-  const { updateGroupBy, query } = useSalesReportChartQuery();
+export function ModeSalesReport() {
+  const { updateMode } = useSalesReportChartQuery();
   const { get } = useQueryParams();
 
-  const groupBy = get("groupBy") ?? "day";
-  const isVisible = VISIBLE_IN.includes(query.mode);
-
-  if (!isVisible) return null;
-
+  const groupBy = get("mode") ?? "breakdown";
   return (
     <Select
       value={groupBy}
-      onValueChange={(e) =>
-        updateGroupBy(e as SalesReportChartQuery["groupBy"])
-      }
+      onValueChange={(e) => updateMode(e as SalesReportChartQuery["mode"])}
     >
       <SelectTrigger className="w-45">
         <SelectValue placeholder="Theme" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="day">Harian</SelectItem>
-          <SelectItem value="week">Mingguan</SelectItem>
-          <SelectItem value="month">Bulanan</SelectItem>
-          <SelectItem value="year">Tahunan</SelectItem>
+          {modeValues.map((mode) => (
+            <SelectItem value={mode.value} key={mode.value}>
+              {mode.label}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>

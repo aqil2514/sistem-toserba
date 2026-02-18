@@ -11,6 +11,18 @@ export interface SalesReportPerCategoryCartType {
   mode: "per-category";
 }
 
+export interface SalesReportPerProductCartType {
+  data: {
+    product_id: string;
+    label: string;
+    total_quantity: number;
+    total_revenue: number;
+    total_margin: number;
+  }[];
+  mode:"per-product"
+}
+
 export type SalesReportChartReturn =
   | SalesReportBreakdownChartType
-  | SalesReportPerCategoryCartType;
+  | SalesReportPerCategoryCartType
+  | SalesReportPerProductCartType;

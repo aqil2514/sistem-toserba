@@ -11,7 +11,7 @@ interface Props {
 export function SalesReportOmzetChart({ data }: Props) {
   return (
     <div className="w-full">
-      {data.length < 1 ? (
+      {data.length < 2 ? (
         <GrayContainer>
           <p className="text-sm font-semibold text-center">
             Data terlalu sedikit untuk ditampilkan.

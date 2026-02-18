@@ -140,7 +140,7 @@ export class SalesReportService {
     const { data, error } = await this.supabase.rpc('get_breakdown_sales', {
       p_start_utc: startUtc,
       p_end_utc: endUtc,
-      p_mode: rawQuery.groupBy ?? "day",
+      p_mode: rawQuery.groupBy ?? 'day',
     });
 
     if (error) {
@@ -148,12 +148,32 @@ export class SalesReportService {
       throw error;
     }
 
-
     return {
       data,
       mode: 'breakdown',
     };
   }
+
+  async getSalesReportChartPerProduct(rawQuery: SalesReportChartDto) {
+    const query = this.queryService.mapToBasicQuery(rawQuery);
+    const { endUtc, startUtc } = formatQueryDate(query);
+    const { data, error } = await this.supabase.rpc('get_per_product_sales', {
+      p_start_utc: startUtc,
+      p_end_utc: endUtc,
+      p_limit: rawQuery.top ?? 10,
+    });
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    return {
+      data,
+      mode: 'per-product',
+    };
+  }
+
   // ====== CHART END ======
 
   // >>>>>> NEW END <<<<<<
@@ -220,23 +240,6 @@ export class SalesReportService {
       p_product_name,
       p_product_subcategory,
     };
-  }
-
-  async getSalesBreakdown(raw: SalesReportQuery) {
-    const { endUtc: p_end_utc, startUtc: p_start_utc } = formatQueryDate(raw);
-    const { data, error } = await this.supabase.rpc('get_breakdown_sales', {
-      p_end_utc,
-      p_start_utc,
-    });
-
-    if (error) {
-      console.error(error);
-      throw error;
-    }
-
-    if (!data) return [];
-
-    return data;
   }
 
   async getSalesReportPerCategory(
