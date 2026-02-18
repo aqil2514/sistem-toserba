@@ -1,3 +1,4 @@
+import { LabelValue } from "@/@types/general";
 import {
   Field,
   FieldError,
@@ -11,14 +12,16 @@ interface Props<T extends FieldValues> {
   form: UseFormReturn<T>;
   name: Path<T>;
   label: string;
-  placeholder?:string;
+  placeholder?: string;
+  datalist?: LabelValue[];
 }
 
 export function FormFieldText<T extends FieldValues>({
   form,
   name,
   label,
-  placeholder="Isi field ini"
+  placeholder = "Isi field ini",
+  datalist,
 }: Props<T>) {
   const isSubmitting = form.formState.isSubmitting;
   return (
@@ -26,7 +29,9 @@ export function FormFieldText<T extends FieldValues>({
       <Controller
         name={name}
         control={form.control}
-        render={({ field, fieldState }) => (
+        render={({ field, fieldState }) =>{ 
+          const datalistId = datalist ? `${field.name}-list` : undefined;
+          return (
           <Field data-invalid={fieldState.invalid}>
             <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
             <Input
@@ -35,10 +40,22 @@ export function FormFieldText<T extends FieldValues>({
               id={field.name}
               aria-invalid={fieldState.invalid}
               placeholder={placeholder}
+              list={datalistId}
             />
+            {datalist && (
+              <datalist id={datalistId}>
+                {datalist.map((data) => (
+                  <option
+                    value={data.value}
+                    label={data.label}
+                    key={data.value}
+                  />
+                ))}
+              </datalist>
+            )}
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
-        )}
+        )}}
       />
     </FieldGroup>
   );

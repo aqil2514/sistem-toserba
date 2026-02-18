@@ -13,7 +13,13 @@ $$
 WITH base AS (
   SELECT
     c.meta->>'customer_name' AS customer_name,
-    SUM(CASE WHEN c.status_cashflow = 'receivable' THEN c.price ELSE 0 END) AS total,
+    SUM(CASE 
+            WHEN c.status_cashflow = 'receivable' THEN c.price 
+            WHEN c.transfer_group_id IS NOT NULL 
+              AND c.status_cashflow = 'income' 
+            THEN c.price
+            ELSE 0 
+        END) AS total,
     SUM(CASE WHEN c.status_cashflow = 'expense' THEN c.price ELSE 0 END) AS paid
   FROM cashflow c
   WHERE c.via = 'Piutang'

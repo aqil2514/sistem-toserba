@@ -1,8 +1,10 @@
+import { LabelValue } from "@/@types/general";
 import { FormFieldDatePicker } from "@/components/forms/field-date-picker.form";
 import { FormFieldSelect } from "@/components/forms/field-select.form";
 import { FormFieldText } from "@/components/forms/field-text.form";
 import { FormFieldTextArea } from "@/components/forms/field-textarea.form";
 import { Separator } from "@/components/ui/separator";
+import { useCustomerName } from "@/features/sales/hooks/use-customer-name";
 import { SalesSchemaType } from "@/features/sales/schemas/sales-schema";
 import { UseFormReturn } from "react-hook-form";
 
@@ -26,12 +28,20 @@ interface Props {
 }
 
 export function SalesHeaderForm({ form }: Props) {
+    const customerName = useCustomerName();
+
+    const mappedCustomer:LabelValue[] = customerName.map((customer) => ({
+      label:customer,
+      value:customer
+    }) )
+
   return (
     <div className="space-y-4">
       <FormFieldText
         form={form}
         label="Nama Pembeli"
         name="customer_name"
+        datalist={mappedCustomer}
         placeholder="Contoh : Pembeli 1..."
       />
 

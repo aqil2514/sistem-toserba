@@ -46,7 +46,7 @@ export function ActivityLogCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Log Aktivitas</CardTitle>
+        <CardTitle>Aktivitas Terbaru</CardTitle>
         <CardDescription>
           Per : {formatDate(new Date(), "Senin, 29 Desember 2025")}
         </CardDescription>

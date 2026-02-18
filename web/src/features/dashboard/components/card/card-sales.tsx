@@ -21,6 +21,7 @@ import { useFetch } from "@/hooks/use-fetch";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ExternalLink, Pen, Trash } from "lucide-react";
+import Link from "next/link";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
@@ -78,7 +79,7 @@ export function SalesCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Data Penjualan</CardTitle>
+        <CardTitle>Penjualan Terbaru</CardTitle>
         <CardDescription>
           Per : {formatDate(new Date(), "Senin, 29 Desember 2025")}
         </CardDescription>
@@ -161,10 +162,15 @@ export function SalesCard() {
         </ScrollArea>
       </CardContent>
       <Separator />
-      <CardFooter>
+      <CardFooter className="space-x-4">
         <Button variant={"outline"} onClick={addHandler}>
           Tambah Baru
         </Button>
+        <Link href={"/sales"}>
+        <Button variant={"outline"} >
+          Halaman Penjualan
+        </Button>
+        </Link>
       </CardFooter>
     </Card>
   );
