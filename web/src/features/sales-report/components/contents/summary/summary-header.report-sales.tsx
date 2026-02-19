@@ -1,7 +1,7 @@
 import { InfoItem } from "@/components/molecules/items/info-item";
 import { useSalesReportSummary } from "@/features/sales-report/store/sales-report-summary.provider";
 import { formatDate } from "@/utils/format-date.fns";
-import { summaryReportFilterConfig } from "../../../constants/summary-report-filter-config";
+import { summaryReportFilterConfig } from "../../../constants/filter-config/summary-report-filter-config";
 
 export function SalesReportSummaryHeader() {
   const { query } = useSalesReportSummary();

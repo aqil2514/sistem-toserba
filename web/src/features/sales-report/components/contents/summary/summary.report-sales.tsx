@@ -7,7 +7,7 @@ import {
 } from "@/features/sales-report/store/sales-report-summary.provider";
 import { useQueryBasics } from "@/hooks/use-query-basics";
 import { useMemo } from "react";
-import { summaryReportFilterConfig } from "../../../constants/summary-report-filter-config";
+import { summaryReportFilterConfig } from "../../../constants/filter-config/summary-report-filter-config";
 import { GrayContainer } from "@/components/layout/container/gray-container";
 import { SalesReportSummaryHeader } from "./summary-header.report-sales";
 import { Separator } from "@/components/ui/separator";

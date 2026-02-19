@@ -6,28 +6,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useSalesReportChartQuery } from "@/features/sales-report/hooks/use-sales-report-chart-query";
-import { SalesReportChartReturn } from "@/features/sales-report/types/chart.report-sales-type";
-import { SalesReportChartQuery } from "@/features/sales-report/types/query.report-sales";
 import { useQueryParams } from "@/hooks/use-query-params";
 
-const VISIBLE_IN: SalesReportChartReturn["mode"][] = ["breakdown"];
+interface Props {
+  isVisible: boolean;
+}
 
-export function GroupBySalesReport() {
-  const { updateGroupBy, query } = useSalesReportChartQuery();
-  const { get } = useQueryParams();
+export function FilterGroupBy({ isVisible }: Props) {
+  const { get, set } = useQueryParams();
 
   const groupBy = get("groupBy") ?? "day";
-  const isVisible = VISIBLE_IN.includes(query.mode);
 
   if (!isVisible) return null;
 
   return (
     <Select
       value={groupBy}
-      onValueChange={(e) =>
-        updateGroupBy(e as SalesReportChartQuery["groupBy"])
-      }
+      onValueChange={(e) => set("groupBy", e)}
     >
       <SelectTrigger className="w-45">
         <SelectValue placeholder="Theme" />

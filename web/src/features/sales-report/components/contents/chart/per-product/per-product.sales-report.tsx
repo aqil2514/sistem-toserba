@@ -1,19 +1,12 @@
 import { SalesReportPerProductCartType } from "@/features/sales-report/types/chart.report-sales-type";
-import { TopSalesReport } from "./filter/top-sales-report";
 import React, { useMemo, useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { LabelValue } from "@/@types/general";
 import {
   MyPieChartComp,
   PieChartData,
 } from "@/components/molecules/chart/pie-chart";
+import { FilterTop } from "@/components/filters/filter-top";
+import { FilterValueType } from "@/components/filters/filter-value-type";
 
 interface Props {
   data: SalesReportPerProductCartType["data"];
@@ -54,36 +47,17 @@ export function SalesReportChartPerProduct({ data }: Props) {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <TopSalesReport narationText="Tampilkan data produk sebanyak" />
-        <ValueTypeSelector onValueChange={setValueType} value={valueType} />
+        <FilterTop
+          enterInfoToast="Menampilkan data produk sebanyak"
+          narationText="Tampilkan data produk sebanyak"
+        />
+        <FilterValueType
+          options={valueSelect}
+          onValueChange={setValueType}
+          value={valueType}
+        />
       </div>
       <MyPieChartComp data={mappedData} />
     </div>
   );
 }
-
-interface ValueTypeSelectorProps {
-  value: ValueType;
-  onValueChange: (value: ValueType) => void;
-}
-const ValueTypeSelector: React.FC<ValueTypeSelectorProps> = ({
-  onValueChange,
-  value,
-}) => {
-  return (
-    <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className="w-45">
-        <SelectValue placeholder="Theme" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          {valueSelect.map((mode) => (
-            <SelectItem value={mode.value} key={mode.value}>
-              {mode.label}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  );
-};

@@ -7,9 +7,11 @@ import {
 import { SalesReportOmzetChart } from "./omzet-chart.sales-report";
 import { useSalesReportChartQuery } from "@/features/sales-report/hooks/use-sales-report-chart-query";
 import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
-import { GroupBySalesReport } from "./filter/group-by-sales-report";
-import { SalesReportChartPerProduct } from "./per-product.sales-report";
-import { ModeSalesReport } from "./filter/mode-sales-report";
+import { SalesReportChartPerProduct } from "./per-product/per-product.sales-report";
+import { FilterGroupBy } from "@/components/filters/filter-group-by";
+import { VISIBLE_GROUP_BY } from "@/features/sales-report/constants/visibility.config";
+import { FilterMode } from "@/components/filters/filter-mode";
+import { salesReportChartMode } from "@/features/sales-report/constants/mode-config/sales-report-chart.mode-config";
 
 export function SalesReportChart() {
   return (
@@ -24,6 +26,8 @@ const InnerTemplate = () => {
   const { query } = useSalesReportChart();
   const { updateDateRange } = useSalesReportChartQuery();
 
+  const isVisibleGroupBy = VISIBLE_GROUP_BY.includes(query.mode ?? "breakdown");
+
   return (
     <div className="space-y-4">
       <HeaderWithMutate title="Diagram" mutate={mutate} />
@@ -33,8 +37,8 @@ const InnerTemplate = () => {
           onApply={updateDateRange}
           setDate={updateDateRange}
         />
-        <GroupBySalesReport />
-        <ModeSalesReport />
+        <FilterGroupBy isVisible={isVisibleGroupBy} />
+        <FilterMode defaultValue="breakdown" options={salesReportChartMode} />
       </div>
       {isLoading ? <LoadingSpinner /> : <ContentData />}
     </div>
@@ -50,7 +54,7 @@ const ContentData = () => {
     case "breakdown":
       return <SalesReportOmzetChart data={data.data} />;
     case "per-product":
-      return <SalesReportChartPerProduct data={data.data} />
+      return <SalesReportChartPerProduct data={data.data} />;
 
     default:
       break;

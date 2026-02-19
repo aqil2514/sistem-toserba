@@ -1,16 +1,15 @@
 import { Input } from "@/components/ui/input";
-import { useSalesReportChartQuery } from "@/features/sales-report/hooks/use-sales-report-chart-query";
 import { useQueryParams } from "@/hooks/use-query-params";
 import { FocusEvent, KeyboardEvent } from "react";
 import { toast } from "sonner";
 
-interface Props{
-narationText:string;
+interface Props {
+  narationText: string;
+  enterInfoToast: string;
 }
 
-export function TopSalesReport({narationText}:Props) {
-  const { get } = useQueryParams();
-  const { updateTop } = useSalesReportChartQuery();
+export function FilterTop({ narationText, enterInfoToast }: Props) {
+  const { get, set } = useQueryParams();
   const topDefault = get("top") ?? "10";
 
   const focusHandler = (e: FocusEvent<HTMLInputElement, Element>) => {
@@ -21,8 +20,8 @@ export function TopSalesReport({narationText}:Props) {
   const keyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
     if (e.key === "Enter") {
-      updateTop(target.valueAsNumber);
-      toast.info(`Menampilkan data produk sebanyak ${target.value}`);
+      set("top", target.value);
+      toast.info(`${enterInfoToast} ${target.value}`);
       return;
     }
   };
