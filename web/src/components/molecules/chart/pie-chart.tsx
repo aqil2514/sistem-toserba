@@ -1,57 +1,100 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { formatPercent } from "@/utils/format-percent";
-import { formatRupiah } from "@/utils/format-to-rupiah";
-import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { CartesianGrid, Cell, Pie, PieChart, TooltipProps } from "recharts";
+import {
+  NameType,
+  ValueType,
+} from "recharts/types/component/DefaultTooltipContent";
 
 export interface PieChartData {
   name: string;
   value: number;
-}
-
-interface Props {
-  data?: PieChartData[];
+  fill?: string;
 }
 
 const dummyData: PieChartData[] = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
+  { name: "data1", value: 400 },
+  { name: "data2", value: 300 },
+  { name: "data3", value: 300 },
+  { name: "data4", value: 200 },
 ];
 
-const COLORS = [
-  "#0088FE",
-  "#00C49F",
-  "#FFBB28",
-  "#FF8042",
-  "#A28BFE",
-  "#FF5C8D",
-];
+const defaultConfig = {
+  data1: {
+    label: "Data 1",
+  },
+  data2: {
+    label: "Data 2",
+  },
+  data3: {
+    label: "Data 3",
+  },
+  data4: {
+    label: "Data 4",
+  },
+} satisfies ChartConfig;
 
-export function MyPieChartComp({ data = dummyData }: Props) {
+interface Props {
+  data?: PieChartData[];
+  chartConfig?: ChartConfig;
+  onSliceClick?: (item: PieChartData, index: number) => void;
+  ToolTipContent?: (
+    props: TooltipProps<ValueType, NameType>,
+  ) => React.ReactNode;
+}
+
+export function MyPieChartComp({
+  data = dummyData,
+  chartConfig = defaultConfig,
+  onSliceClick,
+  ToolTipContent,
+}: Props) {
   return (
-    <PieChart
-      className="w-full"
-      style={{ width: "100%", aspectRatio: 3 }}
-      responsive
+    <ChartContainer
+      config={chartConfig}
+      className="[&_.recharts-pie-label-text]:fill-foreground mx-auto aspect-square max-h-96 pb-0"
     >
-      <Pie
-        data={data as any}
-        label={(label) => {
-          return `${label.name} (${formatPercent(label.percent ?? 0, {
-            maximumFractionDigits: 2,
-          })})`;
-        }}
-        dataKey={"value"}
-      >
-        {data.map((_, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
-      </Pie>
-      <Tooltip
-        formatter={(value, name) => [formatRupiah(Number(value)), name]}
-      />
-      <Legend />
-    </PieChart>
+      <PieChart accessibilityLayer>
+        <ChartTooltip
+          content={
+            ToolTipContent ? (
+              (props) => <ToolTipContent {...props} />
+            ) : (
+              <ChartTooltipContent />
+            )
+          }
+        />
+        <CartesianGrid stroke="#aaa" strokeDasharray="5 5"/>
+        <Pie
+          data={data}
+          dataKey={"value"}
+          onClick={(entry, index) => {
+            onSliceClick?.(entry as PieChartData, index);
+          }}
+        >
+          {data.map((item, index) => (
+            <Cell key={index} fill={getColor(item, index, chartConfig)} />
+          ))}
+        </Pie>
+      </PieChart>
+    </ChartContainer>
   );
 }
+
+const getColor = (item: PieChartData, index: number, config: ChartConfig) => {
+  if (item.fill) return item.fill;
+
+  const configItem = config[item.name];
+  if (configItem?.color) return configItem.color;
+
+  return getDynamicColor(index);
+};
+
+const getDynamicColor = (index: number) => {
+  const hue = (index * 137.508) % 360;
+  return `hsl(${hue}, 65%, 55%)`;
+};

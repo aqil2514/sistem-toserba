@@ -21,9 +21,8 @@ export function GlobalMovement({ data }: Props) {
   return (
     <>
       <MyLineChartComp
-        data={mappedData}
+        chartData={mappedData}
         lineName="Aset Keseluruhan"
-        stroke="green"
       />
       <DataTable columns={movementGlobalColumns} data={data} />
     </>

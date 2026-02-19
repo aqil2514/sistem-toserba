@@ -15,7 +15,7 @@ export function PurchaseReportBreakdownLineChart({ data }: Props) {
   return (
     <div className="space-y-4">
       <ChartDataSelect />
-      <MyLineChartComp data={mappedData} lineName="Total Belanja" />
+      <MyLineChartComp chartData={mappedData} lineName="Total Belanja" />
       <Insight data={data} />
     </div>
   );

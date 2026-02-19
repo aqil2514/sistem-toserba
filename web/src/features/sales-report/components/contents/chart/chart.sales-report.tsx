@@ -4,7 +4,7 @@ import {
   SalesReportChartProvider,
   useSalesReportChart,
 } from "@/features/sales-report/store/sales-report-chart.provider";
-import { SalesReportOmzetChart } from "./omzet-chart.sales-report";
+import { SalesReportOmzetChart } from "./omzet/omzet-chart.sales-report";
 import { useSalesReportChartQuery } from "@/features/sales-report/hooks/use-sales-report-chart-query";
 import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
 import { SalesReportChartPerProduct } from "./per-product/per-product.sales-report";

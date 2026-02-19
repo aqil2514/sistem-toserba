@@ -1,35 +1,10 @@
-import { useState } from "react";
-import { formatRupiah } from "@/utils/format-to-rupiah";
+import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from "recharts";
 import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  Tooltip,
-  XAxis,
-  YAxis,
-  ResponsiveContainer,
-} from "recharts";
-import type { LegendPayload } from "recharts";
-
-export interface MultiLineChartRow {
-  label: string;
-  [key: string]: string | number;
-}
-
-export interface MultiLineChartProps {
-  data?: MultiLineChartRow[];
-  lineKeys?: string[];
-}
-
-const COLORS: string[] = [
-  "#7c3aed",
-  "#2563eb",
-  "#16a34a",
-  "#dc2626",
-  "#f59e0b",
-  "#0ea5e9",
-];
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 
 export const dummyMultiLineData: MultiLineChartRow[] = [
   { label: "Jan", income: 4000000, expense: 2500000 },
@@ -39,61 +14,122 @@ export const dummyMultiLineData: MultiLineChartRow[] = [
   { label: "May", income: 7000000, expense: 4200000 },
 ];
 
+const dummyChartConfig = {
+  income: {
+    label: "Desktop",
+    color: "var(--chart-1)",
+  },
+  expense: {
+    label: "Mobile",
+    color: "var(--chart-2)",
+  },
+} satisfies ChartConfig;
+
 export const dummyLineKeys: string[] = ["income", "expense"];
 
-export function MultiLineChart({ data = dummyMultiLineData, lineKeys = dummyLineKeys }: MultiLineChartProps) {
-  const [hiddenLines, setHiddenLines] = useState<string[]>([]);
+export interface MultiLineChartRow {
+  label: string;
+  [key: string]: string | number;
+}
 
-  const handleLegendClick = (payload: LegendPayload) => {
-    const dataKey = String(payload.dataKey);
+export interface MultiLineChartProps {
+  data?: MultiLineChartRow[];
+  lineKeys?: string[];
+  chartConfig?: ChartConfig;
+}
 
-    setHiddenLines((prev) =>
-      prev.includes(dataKey)
-        ? prev.filter((k) => k !== dataKey)
-        : [...prev, dataKey],
-    );
-  };
+const COLORS: string[] = [
+  "#7c3aed", // violet
+  "#2563eb", // blue
+  "#16a34a", // green
+  "#dc2626", // red
+  "#f59e0b", // amber
+  "#0ea5e9", // sky
+  "#ec4899", // pink
+  "#14b8a6", // teal
+  "#84cc16", // lime
+  "#f97316", // orange
+  "#6366f1", // indigo
+  "#e11d48", // rose
+];
 
+export function MultiLineChart({
+  data = dummyMultiLineData,
+  lineKeys = dummyLineKeys,
+  chartConfig = dummyChartConfig,
+}: MultiLineChartProps) {
   return (
-    <ResponsiveContainer width="100%" aspect={3}>
+    <ChartContainer config={chartConfig}>
       <LineChart
+        accessibilityLayer
         data={data}
-        margin={{ top: 20, right: 20, bottom: 5, left: 0 }}
+        margin={{ left: 12, right: 12 }}
       >
         <CartesianGrid stroke="#aaa" strokeDasharray="5 5" />
-
-        <XAxis dataKey="label" />
-
-        <YAxis
-          width="auto"
-          label={{ value: "Nominal", position: "insideLeft", angle: -90 }}
+        <XAxis
+          dataKey={"label"}
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
         />
 
-        <Tooltip
-          formatter={(value, name) => [formatRupiah(Number(value)), name]}
-        />
+        <YAxis tickLine={false} axisLine={false} tickMargin={8} />
 
-        <Legend
-          align="right"
-          onClick={(e) => {
-            if (e && "dataKey" in e) {
-              handleLegendClick(e as LegendPayload);
-            }
-          }}
-        />
-
-        {lineKeys.map((key, index) => (
+        <Legend />
+        {lineKeys.map((d, i) => (
           <Line
-            key={key}
-            type="monotone"
-            dataKey={key}
-            stroke={COLORS[index % COLORS.length]}
+            key={d}
+            dataKey={d}
+            type={"monotone"}
+            stroke={COLORS[i]}
             strokeWidth={2}
-            hide={hiddenLines.includes(key)}
             dot={false}
           />
         ))}
+        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
       </LineChart>
-    </ResponsiveContainer>
+    </ChartContainer>
   );
+
+  // return (
+  //   <ResponsiveContainer width="100%" aspect={3}>
+  //     <LineChart
+  //       data={data}
+  //       margin={{ top: 20, right: 20, bottom: 5, left: 0 }}
+  //     >
+  //       <CartesianGrid stroke="#aaa" strokeDasharray="5 5" />
+
+  //       <XAxis dataKey="label" />
+
+  //       <YAxis
+  //         label={{ value: "Nominal", position: "insideLeft", angle: -90 }}
+  //       />
+
+  //       <Tooltip
+  //         formatter={(value, name) => [formatRupiah(Number(value)), name]}
+  //       />
+
+  //       <Legend
+  //         align="right"
+  //         onClick={(e) => {
+  //           if (e && "dataKey" in e) {
+  //             handleLegendClick(e as LegendPayload);
+  //           }
+  //         }}
+  //       />
+
+  //       {lineKeys.map((key, index) => (
+  //         <Line
+  //           key={key}
+  //           type="monotone"
+  //           dataKey={key}
+  //           stroke={COLORS[index % COLORS.length]}
+  //           strokeWidth={2}
+  //           hide={hiddenLines.includes(key)}
+  //           dot={false}
+  //         />
+  //       ))}
+  //     </LineChart>
+  //   </ResponsiveContainer>
+  // );
 }

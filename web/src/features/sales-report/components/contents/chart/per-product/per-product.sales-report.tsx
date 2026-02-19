@@ -7,12 +7,15 @@ import {
 } from "@/components/molecules/chart/pie-chart";
 import { FilterTop } from "@/components/filters/filter-top";
 import { FilterValueType } from "@/components/filters/filter-value-type";
+import { ToolTipProductSalesReport } from "./tool-tip-product.sales-report";
+import { ChartConfig } from "@/components/ui/chart";
+import { DetailPieChartItems } from "./detail-chart-items";
 
 interface Props {
   data: SalesReportPerProductCartType["data"];
 }
 
-type ValueType = "total_revenue" | "total_quantity" | "total_margin";
+export type ValueType = "total_revenue" | "total_quantity" | "total_margin";
 
 const valueSelect: LabelValue<ValueType>[] = [
   {
@@ -44,6 +47,19 @@ export function SalesReportChartPerProduct({ data }: Props) {
     });
   }, [data, valueType]);
 
+  const chartConfig = useMemo(() => {
+    const config = {} as ChartConfig;
+
+    mappedData.forEach((item, index) => {
+      config[item.name] = {
+        label: item.name,
+        color: `hsl(${(index * 137.508) % 360}, 60%, 55%)`,
+      };
+    });
+
+    return config;
+  }, [mappedData]);
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -57,7 +73,14 @@ export function SalesReportChartPerProduct({ data }: Props) {
           value={valueType}
         />
       </div>
-      <MyPieChartComp data={mappedData} />
+      <MyPieChartComp
+        data={mappedData}
+        chartConfig={chartConfig}
+        ToolTipContent={(props) => (
+          <ToolTipProductSalesReport valueType={valueType} {...props} />
+        )}
+      />
+      <DetailPieChartItems chartConfig={chartConfig} chartData={mappedData} />
     </div>
   );
 }
