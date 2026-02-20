@@ -4,7 +4,7 @@ import { mapToLineChart } from "@/features/purchase-report/utils/map-to-line-cha
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ChartDataSelect } from "./chart-content.purchase-report";
-import { MyLineChartComp } from "@/components/molecules/chart/line-chart";
+import { MyLineChartComp } from "@/components/molecules/chart/line-chart/line-chart";
 
 interface Props {
   data: PurchaseReportChartBreakdownMode["data"];

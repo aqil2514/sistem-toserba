@@ -2,7 +2,7 @@ import { GrayContainer } from "@/components/layout/container/gray-container";
 import {
   LineChartData,
   MyLineChartComp,
-} from "@/components/molecules/chart/line-chart";
+} from "@/components/molecules/chart/line-chart/line-chart";
 import { ToolTipOmzetSalesReport } from "./tool-tip-omzet.sales-report";
 import { DataTable } from "@/components/organisms/custom-data-table/core-table";
 import { columnsDefOmzet } from "./columns-def-omzet.sales-report";

@@ -10,7 +10,7 @@ import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
 import { useSalesReportDetailQuery } from "@/features/sales-report/hooks/use-sales-report-detail-query";
 import { SalesReportSummarizedProduct } from "./summarized-product.sales-report";
 import { FilterPanel } from "@/components/filters/filter-panel/master.filter-panel";
-import { filterConfigDataReportDetail } from "../../../constants/filter-config/data-report-filter-config";
+import { filterConfigDataReportDetail, filterConfigDataReportFullMode } from "../../../constants/filter-config/data-report-filter-config";
 import {
   Select,
   SelectContent,
@@ -38,7 +38,7 @@ const InnerTemplate = () => {
     <div className="space-y-4">
       <div className="flex gap-4">
         <FilterPanel
-          config={filterConfigDataReportDetail}
+          config={query.mode==="full" ? filterConfigDataReportFullMode : filterConfigDataReportDetail}
           initialValue={memoInitialValue}
           onApplyFilter={updateFilter}
         />

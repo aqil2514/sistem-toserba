@@ -1,5 +1,5 @@
-import { LineChartData } from "@/components/molecules/chart/line-chart";
-import { PieChartData } from "@/components/molecules/chart/pie-chart";
+import { LineChartData } from "@/components/molecules/chart/line-chart/line-chart";
+import { PieChartData } from "@/components/molecules/chart/pie-chart/pie-chart";
 
 export interface SalesReportBreakdownChartType {
   data: LineChartData[];

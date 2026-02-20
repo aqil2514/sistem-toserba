@@ -1,7 +1,7 @@
 import { PurchaseReportChartCategoryMode } from "@/features/purchase-report/types/api-response.purchase-report";
 import { ChartDataSelect } from "./chart-content.purchase-report";
 import { mapToPieChart } from "@/features/purchase-report/utils/map-to-pie-chart";
-import { MyPieChartComp } from "@/components/molecules/chart/pie-chart";
+import { MyPieChartComp } from "@/components/molecules/chart/pie-chart/pie-chart";
 import { formatDate } from "@/utils/format-date.fns";
 import { usePurchaseReport } from "@/features/purchase-report/store/provider.purchase-report";
 import { formatRupiah } from "@/utils/format-to-rupiah";

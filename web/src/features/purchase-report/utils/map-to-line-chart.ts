@@ -1,4 +1,4 @@
-import { LineChartData } from "@/components/molecules/chart/line-chart";
+import { LineChartData } from "@/components/molecules/chart/line-chart/line-chart";
 import { PurchaseReportChartBreakdownMode } from "../types/api-response.purchase-report";
 
 export function mapToLineChart(

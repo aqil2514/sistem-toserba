@@ -1,4 +1,4 @@
-import { LineChartData } from "@/components/molecules/chart/line-chart";
+import { LineChartData } from "@/components/molecules/chart/line-chart/line-chart";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ColumnDef } from "@tanstack/react-table";

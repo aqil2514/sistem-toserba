@@ -1,7 +1,7 @@
 import {
   MyPieChartComp,
   PieChartData,
-} from "@/components/molecules/chart/pie-chart";
+} from "@/components/molecules/chart/pie-chart/pie-chart";
 import React from "react";
 
 interface Props {

@@ -3,7 +3,7 @@ import { MovementAssetViaSummary } from "@/features/cashflow-report/types/api-re
 import {
   MultiLineChart,
   MultiLineChartRow,
-} from "@/components/molecules/chart/multi-line-chart";
+} from "@/components/molecules/chart/line-chart/multi-line-chart";
 import { movementAssetColumns } from "../columns/columns-asset.cashflow-report";
 
 interface Props {

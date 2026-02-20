@@ -1,21 +1,24 @@
-import { PieChartData } from "@/components/molecules/chart/pie-chart";
+import { PieChartData } from "@/components/molecules/chart/pie-chart/pie-chart";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { ChartConfig } from "@/components/ui/chart";
 import { formatPercent } from "@/utils/format-percent";
 import { formatRupiah } from "@/utils/format-to-rupiah";
+import React from "react";
 
 interface Props {
   chartConfig: ChartConfig;
   chartData: PieChartData[];
+  Footer?: (item: PieChartData) => React.ReactNode;
 }
 
-export function DetailPieChartItems({ chartConfig, chartData }: Props) {
+export function DetailPieChartItems({ chartConfig, chartData, Footer }: Props) {
   const totalValue = chartData.reduce((acc, curr) => acc + curr.value, 0);
 
   return (
@@ -75,6 +78,8 @@ export function DetailPieChartItems({ chartConfig, chartData }: Props) {
                 />
               </div>
             </CardContent>
+
+            {Footer && <CardFooter>{Footer(item)}</CardFooter>}
           </Card>
         );
       })}

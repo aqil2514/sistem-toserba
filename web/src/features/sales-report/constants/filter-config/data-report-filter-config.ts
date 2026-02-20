@@ -8,3 +8,18 @@ export const filterConfigDataReportDetail: FilterConfig[] = [
     withOperator: true,
   },
 ];
+
+export const filterConfigDataReportFullMode: FilterConfig[] = [
+  {
+    field: "product_id.name",
+    label: "Nama Produk",
+    type: "text",
+    withOperator: true,
+  },
+  {
+    field: "sales_id.customer_name",
+    label: "Nama Pembeli",
+    type: "text",
+    withOperator: true,
+  },
+];
