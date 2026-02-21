@@ -192,7 +192,7 @@ export class CashflowSalesService {
         category: this.receivable_category_id,
         note: 'Otomatis diisi melalui Sales',
         price,
-        product_service: `Piutang | ${customer}`,
+        product_service: `Belanja | ${customer}`,
         status_cashflow: 'receivable',
         transaction_at: new Date().toISOString(),
         via: 'Piutang',

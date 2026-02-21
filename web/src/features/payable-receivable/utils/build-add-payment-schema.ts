@@ -51,7 +51,7 @@ const buildPayableSchema = (vendor_name?: string): CashflowSchemaType => {
     payable_vendor_name: vendor_name,
     note: "Otomatis dari halaman utang piutang",
     price: 0,
-    product_service: `Pelunasan Piutang | ${vendor_name}`,
+    product_service: `Pelunasan Utang | ${vendor_name}`,
     transaction_at: new Date().toISOString(),
   };
 };

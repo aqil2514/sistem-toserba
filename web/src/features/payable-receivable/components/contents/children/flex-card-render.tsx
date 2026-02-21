@@ -22,6 +22,14 @@ interface Props {
   data: PayableTypes | ReceivableTypes;
 }
 
+// TODO 
+/**
+ * TODO :
+ * - Refactor
+ * - Utang piutang yang baru
+ * - Utang piutang yang udah ada
+ */
+
 export function FlexCardRender({ data }: Props) {
   const { update } = useQueryParams({ replace: true });
   const isReceivable = data.type === "receivable";
@@ -94,6 +102,9 @@ export function FlexCardRender({ data }: Props) {
               </DropdownMenuItem>
               <DropdownMenuItem onClick={addPaymentHandler}>
                 Tambah Pelunasan
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={addPaymentHandler}>
+                Tambah {isReceivable ? "Piutang" : "Utang"}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
