@@ -9,9 +9,10 @@ import { UseFormReturn } from "react-hook-form";
 
 interface Props {
   form: UseFormReturn<CashflowSchemaType>;
+  disabled?: boolean;
 }
 
-export function DebtorFormField({ form }: Props) {
+export function DebtorFormField({ form, disabled }: Props) {
   const { addDialog } = useCashflow();
   const { data, isLoading, mutate } = useFetch<string[]>(
     `${SERVER_URL}/sales/customer_name`,
@@ -32,6 +33,7 @@ export function DebtorFormField({ form }: Props) {
       name="receivable_customer_name"
       options={existCustomerName}
       placeholder="Cari atau buat pihak yang berhutang"
+      disabled={disabled}
     />
   );
 }

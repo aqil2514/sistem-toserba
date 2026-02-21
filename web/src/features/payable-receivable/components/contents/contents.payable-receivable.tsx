@@ -6,7 +6,6 @@ import { PayableReceivableFilter } from "../filters/filters.payable-receivable";
 import { PayableReceivableSummary } from "./children/summary";
 import { useQueryParams } from "@/hooks/use-query-params";
 import { FlexCardRender } from "./children/flex-card-render";
-import { PayableReceivableDetailDialog } from "../dialogs/detail-pr-dialog";
 
 export function PayableReceivableContent() {
   const { data, isLoading } = useReceivablePayable();
@@ -56,24 +55,22 @@ export function PayableReceivableContent() {
     (acc, curr) => acc + curr.rest,
     0,
   );
-  
+
   return (
     <>
-    <div className="space-y-4">
-      <PayableReceivableSummary
-        payableAmount={payableAmount}
-        receivableAmount={receivableAmount}
-      />
-      <Separator />
-      <PayableReceivableFilter />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {selectedData.map((data, i) => (
-          <FlexCardRender data={data} key={`data-${i}`} />
-        ))}
+      <div className="space-y-4">
+        <PayableReceivableSummary
+          payableAmount={payableAmount}
+          receivableAmount={receivableAmount}
+        />
+        <Separator />
+        <PayableReceivableFilter />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {selectedData.map((data, i) => (
+            <FlexCardRender data={data} key={`data-${i}`} />
+          ))}
+        </div>
       </div>
-    </div>
-
-    <PayableReceivableDetailDialog />
     </>
   );
 }

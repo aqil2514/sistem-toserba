@@ -23,7 +23,7 @@ interface Props {
 }
 
 export function FlexCardRender({ data }: Props) {
-  const { update } = useQueryParams({replace:true});
+  const { update } = useQueryParams({ replace: true });
   const isReceivable = data.type === "receivable";
   const name = isReceivable ? data.customer_name : data.vendor_name;
 
@@ -45,6 +45,13 @@ export function FlexCardRender({ data }: Props) {
     update({
       detail_type: data.type,
       detail_counterpart_name: name,
+    });
+  };
+
+  const addPaymentHandler = () => {
+    update({
+      add_payment_type: data.type,
+      add_payment_name: name,
     });
   };
 
@@ -84,6 +91,9 @@ export function FlexCardRender({ data }: Props) {
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={detailHandler}>
                 Lihat Detail
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={addPaymentHandler}>
+                Tambah Pelunasan
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

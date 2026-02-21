@@ -13,6 +13,7 @@ import { UseFormReturn, useWatch } from "react-hook-form";
 
 interface Props {
   form: UseFormReturn<CashflowSchemaType>;
+  disabled?: boolean;
 }
 
 const cashflowStatus: LabelValue<CashflowCategoryStatus>[] = [
@@ -38,7 +39,7 @@ const cashflowStatus: LabelValue<CashflowCategoryStatus>[] = [
   },
 ];
 
-export function CasfhlowCategoryField({ form }: Props) {
+export function CasfhlowCategoryField({ form, disabled }: Props) {
   const { addDialog } = useCashflow();
   const { data, isLoading, mutate } = useFetch<CashflowCategoryDb[]>(
     `${SERVER_URL}/cashflow/categories`,
@@ -74,12 +75,14 @@ export function CasfhlowCategoryField({ form }: Props) {
           label="Kategori"
           name="category.name"
           options={existCategories}
+          disabled={disabled}
         />
         <FormFieldSelect
           form={form}
           label="Status Cashflow"
           name="category.status"
           options={cashflowStatus}
+          disabled={disabled}
           placeholder="Pilih status Cashflow"
         />
       </div>

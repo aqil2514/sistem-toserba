@@ -12,13 +12,15 @@ interface Props<T extends FieldValues> {
   name: Path<T>;
   label: string;
   placeholder?:string;
+  disabled?:boolean;
 }
 
 export function FormFieldTextArea<T extends FieldValues>({
   form,
   name,
   label,
-  placeholder="Isi field ini"
+  placeholder="Isi field ini",
+  disabled
 }: Props<T>) {
   const isSubmitting = form.formState.isSubmitting;
   return (
@@ -31,7 +33,7 @@ export function FormFieldTextArea<T extends FieldValues>({
             <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
             <Textarea
               {...field}
-              disabled={isSubmitting}
+              disabled={isSubmitting || disabled}
               id={field.name}
               aria-invalid={fieldState.invalid}
               placeholder={placeholder}

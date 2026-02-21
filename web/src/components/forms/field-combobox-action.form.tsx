@@ -14,6 +14,7 @@ interface Props<T extends FieldValues> {
   label: string;
   placeholder?: string;
   options: string[];
+  disabled?: boolean;
 }
 
 export function FormFieldComboboxAction<T extends FieldValues>({
@@ -22,6 +23,7 @@ export function FormFieldComboboxAction<T extends FieldValues>({
   label,
   placeholder,
   options,
+  disabled
 }: Props<T>) {
   const [items, setItems] = useState<string[]>(options);
 
@@ -40,7 +42,7 @@ export function FormFieldComboboxAction<T extends FieldValues>({
               valuePlaceholder={placeholder}
               onValueChange={field.onChange}
               onItemsChange={setItems}
-              disabled={isSubmitting}
+              disabled={isSubmitting || disabled}
               value={field.value}
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}

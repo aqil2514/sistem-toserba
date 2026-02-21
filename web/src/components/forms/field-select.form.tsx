@@ -14,6 +14,7 @@ interface Props<T extends FieldValues, TOptions = unknown> {
   label: string;
   placeholder?:string;
   options: LabelValue<TOptions>[];
+  disabled?:boolean;
 }
 
 export function FormFieldSelect<T extends FieldValues, TOptions extends string>({
@@ -21,7 +22,8 @@ export function FormFieldSelect<T extends FieldValues, TOptions extends string>(
   name,
   label,
   placeholder="Isi field ini",
-  options
+  options,
+  disabled
 }: Props<T, TOptions>) {
   const isSubmitting = form.formState.isSubmitting;
   return (
@@ -37,7 +39,7 @@ export function FormFieldSelect<T extends FieldValues, TOptions extends string>(
               onValueChange={(value: TOptions) =>
                 field.onChange(value)
               }
-              disabled={isSubmitting}
+              disabled={isSubmitting || disabled}
               defaultValue={placeholder}
             >
               <SelectTrigger className="w-full">

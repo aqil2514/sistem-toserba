@@ -18,12 +18,19 @@ import { FormFieldText } from "@/components/forms/field-text.form";
 import { FormFieldCurrency } from "@/components/forms/field-currency.form";
 import { FormFieldTextArea } from "@/components/forms/field-textarea.form";
 
+export type OpenIdKeysTypes = "debt-repayment" | "settlement-of-receivables";
+
 interface Props {
   defaultValues?: CashflowSchemaType;
   submitHandler: (values: CashflowSchemaType) => void | Promise<void>;
+  openIdKey?: OpenIdKeysTypes;
 }
 
-export function CashflowForm({ submitHandler, defaultValues }: Props) {
+export function CashflowForm({
+  submitHandler,
+  defaultValues,
+  openIdKey,
+}: Props) {
   const form = useForm<CashflowSchemaType>({
     defaultValues: defaultValues ?? defaultCashflow,
     resolver: zodResolver(cashflowSchema),
@@ -35,6 +42,8 @@ export function CashflowForm({ submitHandler, defaultValues }: Props) {
     control: form.control,
     name: "category.status",
   });
+
+  const isSettlement = openIdKey === "settlement-of-receivables";
 
   return (
     <form
@@ -68,8 +77,13 @@ export function CashflowForm({ submitHandler, defaultValues }: Props) {
               withCalculator
             />
           </div>
-          <CasfhlowCategoryField form={form} />
-          {cashflow === "receivable" && <DebtorFormField form={form} />}
+          <CasfhlowCategoryField
+            form={form}
+            disabled={isSettlement}
+          />
+          {cashflow === "receivable" && (
+            <DebtorFormField disabled={isSettlement} form={form} />
+          )}
           {cashflow === "payable" && <VendorFormField form={form} />}
           <CashflowViaField form={form} />
           <FormFieldTextArea
@@ -77,6 +91,7 @@ export function CashflowForm({ submitHandler, defaultValues }: Props) {
             name="note"
             label="Catatan"
             placeholder="Contoh : Dapat harga diskon"
+            disabled={isSettlement}
           />
         </div>
       </ScrollArea>
