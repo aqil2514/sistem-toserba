@@ -7,6 +7,8 @@ import { buildUrl } from "@/utils/build-url";
 import { SERVER_URL } from "@/constants/url";
 import { useFetch } from "@/hooks/use-fetch";
 
+// TODO : NEXT REFACTORING INI
+
 interface CashflowReportContextType {
   query: CashflowReportQuery;
   updateQuery: <T extends keyof CashflowReportQuery>(
