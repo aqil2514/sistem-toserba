@@ -1,8 +1,8 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
-import { WebhookGuard } from '../../guards/webhook.guard';
-import { CashflowFormService } from './services/cashflow-form.service';
-import { CashflowWebhookDto } from './dto/cashflow-webhook.dto';
-import { CashflowDto } from './dto/cashflow.dto';
+import { WebhookGuard } from '../../../guards/webhook.guard';
+import { CashflowFormService } from '../services/cashflow-form.service';
+import { CashflowWebhookDto } from '../dto/cashflow-webhook.dto';
+import { CashflowDto } from '../dto/cashflow.dto';
 
 @UseGuards(WebhookGuard)
 @Controller('cashflow/webhook')

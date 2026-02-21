@@ -9,19 +9,18 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { Roles } from '../../decorator/roles.decorator';
-import { PasetoGuard } from '../../guards/paseto.guard';
-import { RoleGuard } from '../../guards/role.guard';
-import { CashflowDto } from './dto/cashflow.dto';
-import { CashflowFormService } from './services/cashflow-form.service';
-import { CashflowFetchService } from './services/cashflow-fetch.service';
-import { BasicQuery } from '../../@types/general';
-import { CashflowSalesService } from './services/cashflow-sales.service';
-import { CashflowPRService } from './services/cashflow-pr.service';
-import { CashflowReportService } from './services/cashflow-report.service';
-import { CashflowReportQuery } from './types/cashflow-report.types';
-import { CashflowResourcesService } from './services/cashflow-resources.service';
-import { CashflowCashCounterService } from './services/cashflow-cash-counter.service';
+import { Roles } from '../../../decorator/roles.decorator';
+import { PasetoGuard } from '../../../guards/paseto.guard';
+import { RoleGuard } from '../../../guards/role.guard';
+import { CashflowDto } from '../dto/cashflow.dto';
+import { CashflowFormService } from '../services/cashflow-form.service';
+import { CashflowFetchService } from '../services/cashflow-fetch.service';
+import { CashflowSalesService } from '../services/cashflow-sales.service';
+import { CashflowPRService } from '../services/cashflow-pr.service';
+import { CashflowReportService } from '../services/cashflow-report.service';
+import { CashflowReportQuery } from '../types/cashflow-report.types';
+import { CashflowResourcesService } from '../services/cashflow-resources.service';
+import { CashflowCashCounterService } from '../services/cashflow-cash-counter.service';
 
 @UseGuards(PasetoGuard, RoleGuard)
 @Roles('admin')
@@ -31,7 +30,6 @@ export class CashflowController {
     private readonly cashflowFormService: CashflowFormService,
     private readonly cashflowFetchService: CashflowFetchService,
     private readonly cashflowSalesService: CashflowSalesService,
-    private readonly cashflowPRService: CashflowPRService,
     private readonly cashflowReportService: CashflowReportService,
     private readonly cashflowResourcesService: CashflowResourcesService,
     private readonly cashflowCashCounterService: CashflowCashCounterService,
@@ -67,11 +65,6 @@ export class CashflowController {
     return await this.cashflowFetchService.getAllCashflowAsset();
   }
 
-  @Get('payable-receivable')
-  async getCashflowPayableReceivable() {
-    return await this.cashflowPRService.getPayableReceivable();
-  }
-
   @Get('report')
   async getCashflowReport(@Query() query: CashflowReportQuery) {
     if (query.content === 'summary')
@@ -80,7 +73,9 @@ export class CashflowController {
       if (query.mode === 'movement-global')
         return await this.cashflowReportService.getCashflowMovement(query);
       if (query.mode === 'movement-asset')
-        return await this.cashflowReportService.getCashflowMovementWithAsset(query);
+        return await this.cashflowReportService.getCashflowMovementWithAsset(
+          query,
+        );
     }
     return await this.cashflowReportService.getCashflowBreakdown(query);
   }

@@ -1,4 +1,6 @@
-CREATE OR REPLACE FUNCTION get_payable_summary()
+CREATE OR REPLACE FUNCTION get_payable_summary(
+  p_vendor_name TEXT DEFAULT ''
+)
 RETURNS TABLE(
   vendor_name TEXT,
   total NUMERIC,
@@ -13,18 +15,21 @@ $$
 WITH base AS (
   SELECT
     c.meta->>'vendor_name' AS vendor_name,
-    SUM(CASE WHEN c.status_cashflow IN ('expense', 'payable') AND c.via = 'Utang' THEN c.price ELSE 0 END) AS total,
-    SUM(CASE WHEN c.status_cashflow = 'income'  AND c.via = 'Utang' THEN c.price ELSE 0 END) AS paid
+    SUM(CASE WHEN c.status_cashflow IN ('expense', 'payable') THEN c.price ELSE 0 END) AS total,
+    SUM(CASE WHEN c.status_cashflow = 'income' THEN c.price ELSE 0 END) AS paid
   FROM cashflow c
   WHERE c.via = 'Utang'
-    AND c.meta->>'vendor_name' IS NOT NULL
+    AND (
+      p_vendor_name = ''
+      OR c.meta->>'vendor_name' ILIKE '%' || p_vendor_name || '%'
+    )
   GROUP BY c.meta->>'vendor_name'
 )
-SELECT 
+SELECT
   b.*,
   (b.total - b.paid) AS rest,
   CASE
-    WHEN (b.total - b.paid = 0) THEN 'paid'
+    WHEN (b.total - b.paid) = 0 THEN 'paid'
     ELSE 'unpaid'
   END AS status,
   'payable' AS type

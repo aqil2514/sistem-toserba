@@ -1,3 +1,5 @@
+import { CashflowCategoryDb } from './cashflow-category.types';
+
 export type CashflowCategoryStatus =
   | 'expense'
   | 'transfer'
@@ -19,6 +21,13 @@ export interface CashflowDb<T = unknown> {
   transfer_group_id?: string;
   source?: string;
   meta?: T;
+}
+
+export interface CashflowDbPopulated<T = unknown> extends Omit<
+  CashflowDb<T>,
+  'category'
+> {
+  category: CashflowCategoryDb;
 }
 
 export type CashflowDbInsert<T = unknown> = Omit<

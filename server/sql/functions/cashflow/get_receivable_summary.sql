@@ -1,4 +1,6 @@
-CREATE OR REPLACE FUNCTION get_receivable_summary()
+CREATE OR REPLACE FUNCTION get_receivable_summary(
+  p_customer_name TEXT DEFAULT ''
+)
 RETURNS TABLE(
   customer_name TEXT,
   total NUMERIC,
@@ -14,23 +16,25 @@ WITH base AS (
   SELECT
     c.meta->>'customer_name' AS customer_name,
     SUM(CASE 
-            WHEN c.status_cashflow = 'receivable' THEN c.price 
-            WHEN c.transfer_group_id IS NOT NULL 
-              AND c.status_cashflow = 'income' 
-            THEN c.price
-            ELSE 0 
+          WHEN c.status_cashflow = 'receivable' THEN c.price 
+          WHEN c.transfer_group_id IS NOT NULL 
+            AND c.status_cashflow = 'income' THEN c.price
+          ELSE 0 
         END) AS total,
     SUM(CASE WHEN c.status_cashflow = 'expense' THEN c.price ELSE 0 END) AS paid
   FROM cashflow c
   WHERE c.via = 'Piutang'
-    AND c.meta->>'customer_name' IS NOT NULL
+    AND (
+      p_customer_name = ''
+      OR c.meta->>'customer_name' ILIKE '%' || p_customer_name || '%'
+    )
   GROUP BY c.meta->>'customer_name'
 )
 SELECT 
   b.*,
   (b.total - b.paid) AS rest,
   CASE
-    WHEN (b.total - b.paid = 0) THEN 'paid'
+    WHEN (b.total - b.paid) = 0 THEN 'paid'
     ELSE 'unpaid'
   END AS status,
   'receivable' AS type
