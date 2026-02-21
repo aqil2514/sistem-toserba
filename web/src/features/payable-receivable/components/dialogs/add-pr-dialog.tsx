@@ -5,8 +5,14 @@ import {
 } from "@/features/cashflow/components/form/cashflow.form";
 import { useQueryParams } from "@/hooks/use-query-params";
 import { buildAddPaymentSchema } from "../../utils/build-add-payment-schema";
+import { CashflowSchemaType } from "@/features/cashflow/schema/cashflow.schema";
+import { api } from "@/lib/api";
+import { toast } from "sonner";
+import { isAxiosError } from "axios";
+import { useReceivablePayable } from "../../store/payable-receivable.provider";
 
 export function PayableReceivableAddDialog() {
+  const { mutate } = useReceivablePayable();
   const { get, update } = useQueryParams();
   const payment_type = get("add_payment_type");
   const counterpart_name = get("add_payment_name");
@@ -14,6 +20,27 @@ export function PayableReceivableAddDialog() {
   const open = payment_type !== null && counterpart_name !== null;
 
   if (!open) return null;
+
+  const addHandler = async (values: CashflowSchemaType) => {
+    try {
+      await api.post("/cashflow", values);
+      update({
+        add_payment_type: null,
+        add_payment_name: null,
+      });
+      toast.success("Data berhasil ditambah");
+
+      mutate?.();
+    } catch (error) {
+      if (isAxiosError(error)) {
+        const message =
+          error.response?.data.message?.[0] ?? "Terjadi kesalahan";
+
+        toast.error(message);
+      }
+      console.error(error);
+    }
+  };
 
   const isReceivable = payment_type === "receivable";
 
@@ -31,7 +58,7 @@ export function PayableReceivableAddDialog() {
     <DialogWithForm
       FormComponent={
         <CashflowForm
-          submitHandler={(values) => console.log(values)}
+          submitHandler={addHandler}
           defaultValues={defaultValues}
           openIdKey={openIdKey}
         />
