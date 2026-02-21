@@ -22,13 +22,6 @@ interface Props {
   data: PayableTypes | ReceivableTypes;
 }
 
-// TODO 
-/**
- * TODO :
- * - Refactor
- * - Utang piutang yang baru
- */
-
 export function FlexCardRender({ data }: Props) {
   const { update } = useQueryParams({ replace: true });
   const isReceivable = data.type === "receivable";
@@ -66,8 +59,8 @@ export function FlexCardRender({ data }: Props) {
     update({
       update_payment_type: data.type,
       update_payment_name: name,
-    })
-  }
+    });
+  };
 
   return (
     <Card className="rounded-2xl shadow-sm">
