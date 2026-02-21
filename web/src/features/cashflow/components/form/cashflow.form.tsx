@@ -44,6 +44,7 @@ export function CashflowForm({
   });
 
   const isSettlement = openIdKey === "settlement-of-receivables";
+  const isRepayment = openIdKey === "debt-repayment";
 
   return (
     <form
@@ -77,21 +78,18 @@ export function CashflowForm({
               withCalculator
             />
           </div>
-          <CasfhlowCategoryField
-            form={form}
-            disabled={isSettlement}
-          />
+          <CasfhlowCategoryField form={form} disabled={isSettlement || isRepayment} />
           {cashflow === "receivable" && (
             <DebtorFormField disabled={isSettlement} form={form} />
           )}
           {cashflow === "payable" && <VendorFormField form={form} />}
-          <CashflowViaField form={form} />
+          <CashflowViaField form={form} openKeyId={openIdKey} />
           <FormFieldTextArea
             form={form}
             name="note"
             label="Catatan"
             placeholder="Contoh : Dapat harga diskon"
-            disabled={isSettlement}
+            disabled={isSettlement || isRepayment}
           />
         </div>
       </ScrollArea>

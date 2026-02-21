@@ -9,9 +9,10 @@ import { UseFormReturn } from "react-hook-form";
 
 interface Props {
   form: UseFormReturn<CashflowSchemaType>;
+  disabled?:boolean;
 }
 
-export function VendorFormField({ form }: Props) {
+export function VendorFormField({ form, disabled }: Props) {
   const { addDialog } = useCashflow();
   const { data, isLoading, mutate } = useFetch<string[]>(
     `${SERVER_URL}/cashflow/vendor_name`,
@@ -32,6 +33,7 @@ export function VendorFormField({ form }: Props) {
       label="Utang ke"
       name="payable_vendor_name"
       placeholder="Cari atau Buat Nama Vendor"
+      disabled={disabled}
     />
   );
 }

@@ -16,12 +16,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Controller, UseFormReturn, useWatch } from "react-hook-form";
 import { DebtorFormField } from "./debtor.form-field";
 import { VendorFormField } from "./payable-vendor.form-field";
+import { OpenIdKeysTypes } from "../cashflow.form";
 
 interface Props {
   form: UseFormReturn<CashflowSchemaType>;
+  openKeyId?: OpenIdKeysTypes;
 }
 
-export function CashflowViaField({ form }: Props) {
+export function CashflowViaField({ form, openKeyId }: Props) {
   const { data, isLoading } = useFetch<string[]>(
     `${SERVER_URL}/cashflow/assets`,
   );
@@ -51,7 +53,12 @@ export function CashflowViaField({ form }: Props) {
     );
 
   return (
-    <TransferField form={form} items={viaItems} onItemsChange={setViaItems} />
+    <TransferField
+      form={form}
+      items={viaItems}
+      onItemsChange={setViaItems}
+      openKeyId={openKeyId}
+    />
   );
 }
 
@@ -79,6 +86,7 @@ const TransferField: React.FC<TransferFieldProps> = ({
   form,
   items,
   onItemsChange,
+  openKeyId,
 }) => {
   const transfer_fee = useWatch({
     control: form.control,
@@ -158,6 +166,7 @@ const TransferField: React.FC<TransferFieldProps> = ({
             label="Biaya Dari Aset"
             name="transfer_fee_asset"
             onItemsChange={onItemsChange}
+            openKeyId={openKeyId}
           />
         </div>
       )}
@@ -168,6 +177,7 @@ const TransferField: React.FC<TransferFieldProps> = ({
           label="Dari Aset"
           name="from_asset"
           onItemsChange={onItemsChange}
+          openKeyId={openKeyId}
         />
         <FieldComboboxComp
           form={form}
@@ -175,10 +185,11 @@ const TransferField: React.FC<TransferFieldProps> = ({
           label="Ke Aset"
           name="to_asset"
           onItemsChange={onItemsChange}
+          openKeyId={openKeyId}
         />
       </div>
-      {isReceivable && <DebtorFormField form={form} /> }
-      {isPayable && <VendorFormField form={form} /> }
+      {isReceivable && <DebtorFormField form={form} disabled={openKeyId === "settlement-of-receivables"} />}
+      {isPayable && <VendorFormField form={form} disabled={openKeyId === "debt-repayment"} />}
     </div>
   );
 };
@@ -197,8 +208,14 @@ const FieldComboboxComp: React.FC<FieldComboboxCompProps> = ({
   label,
   items,
   onItemsChange,
+  openKeyId,
 }) => {
   const isSubmitting = form.formState.isSubmitting;
+
+  const isSettlement =
+    name === "from_asset" && openKeyId === "settlement-of-receivables";
+  const isRepayment = name === "to_asset" && openKeyId === "debt-repayment"
+
   return (
     <FieldGroup>
       <Controller
@@ -214,7 +231,7 @@ const FieldComboboxComp: React.FC<FieldComboboxCompProps> = ({
               onItemsChange={onItemsChange}
               onValueChange={field.onChange}
               value={field.value ?? ""}
-              disabled={isSubmitting}
+              disabled={isSubmitting || isSettlement || isRepayment}
               valuePlaceholder="Cari atau Buat Aset Baru"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
