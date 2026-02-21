@@ -18,7 +18,11 @@ import { FormFieldText } from "@/components/forms/field-text.form";
 import { FormFieldCurrency } from "@/components/forms/field-currency.form";
 import { FormFieldTextArea } from "@/components/forms/field-textarea.form";
 
-export type OpenIdKeysTypes = "debt-repayment" | "settlement-of-receivables";
+export type OpenIdKeysTypes =
+  | "debt-repayment"
+  | "settlement-of-receivables"
+  | "debt-update"
+  | "settlement-update";
 
 interface Props {
   defaultValues?: CashflowSchemaType;
@@ -45,6 +49,8 @@ export function CashflowForm({
 
   const isSettlement = openIdKey === "settlement-of-receivables";
   const isRepayment = openIdKey === "debt-repayment";
+  const isUpdateDebt = openIdKey === "debt-update"
+  const isUpdateSettlement = openIdKey === "settlement-update"
 
   return (
     <form
@@ -78,18 +84,21 @@ export function CashflowForm({
               withCalculator
             />
           </div>
-          <CasfhlowCategoryField form={form} disabled={isSettlement || isRepayment} />
+          <CasfhlowCategoryField
+            form={form}
+            disabled={isSettlement || isRepayment || isUpdateSettlement || isUpdateDebt}
+          />
           {cashflow === "receivable" && (
-            <DebtorFormField disabled={isSettlement} form={form} />
+            <DebtorFormField disabled={isSettlement || isUpdateSettlement} form={form} />
           )}
-          {cashflow === "payable" && <VendorFormField form={form} />}
+          {cashflow === "payable" && <VendorFormField form={form} disabled={isRepayment || isUpdateDebt} />}
           <CashflowViaField form={form} openKeyId={openIdKey} />
           <FormFieldTextArea
             form={form}
             name="note"
             label="Catatan"
             placeholder="Contoh : Dapat harga diskon"
-            disabled={isSettlement || isRepayment}
+            disabled={isSettlement || isRepayment || isUpdateDebt || isUpdateSettlement}
           />
         </div>
       </ScrollArea>

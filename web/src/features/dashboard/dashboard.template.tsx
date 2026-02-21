@@ -13,7 +13,7 @@ export function DashboardTemplate({ mode }: Props) {
 
   return (
     <MainContainer>
-      <div className="grid grid-cols-3 w-full gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-4">
         <div>Soon</div>
         <SalesCard />
         <ActivityLogCard />

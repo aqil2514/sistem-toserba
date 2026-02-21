@@ -27,7 +27,6 @@ interface Props {
  * TODO :
  * - Refactor
  * - Utang piutang yang baru
- * - Utang piutang yang udah ada
  */
 
 export function FlexCardRender({ data }: Props) {
@@ -62,6 +61,13 @@ export function FlexCardRender({ data }: Props) {
       add_payment_name: name,
     });
   };
+
+  const updatePayRecHandler = () => {
+    update({
+      update_payment_type: data.type,
+      update_payment_name: name,
+    })
+  }
 
   return (
     <Card className="rounded-2xl shadow-sm">
@@ -103,7 +109,7 @@ export function FlexCardRender({ data }: Props) {
               <DropdownMenuItem onClick={addPaymentHandler}>
                 Tambah Pelunasan
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={addPaymentHandler}>
+              <DropdownMenuItem onClick={updatePayRecHandler}>
                 Tambah {isReceivable ? "Piutang" : "Utang"}
               </DropdownMenuItem>
             </DropdownMenuContent>

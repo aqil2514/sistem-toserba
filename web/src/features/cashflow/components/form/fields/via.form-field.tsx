@@ -21,6 +21,7 @@ import { OpenIdKeysTypes } from "../cashflow.form";
 interface Props {
   form: UseFormReturn<CashflowSchemaType>;
   openKeyId?: OpenIdKeysTypes;
+  disabled?: boolean;
 }
 
 export function CashflowViaField({ form, openKeyId }: Props) {
@@ -49,6 +50,7 @@ export function CashflowViaField({ form, openKeyId }: Props) {
         form={form}
         items={viaItems}
         onItemsChange={setViaItems}
+        openKeyId={openKeyId}
       />
     );
 
@@ -70,6 +72,7 @@ const NonTransferField: React.FC<TransferFieldProps> = ({
   form,
   items,
   onItemsChange,
+  openKeyId,
 }) => {
   return (
     <FieldComboboxComp
@@ -78,6 +81,7 @@ const NonTransferField: React.FC<TransferFieldProps> = ({
       onItemsChange={onItemsChange}
       label="Via"
       name="via"
+      openKeyId={openKeyId}
     />
   );
 };
@@ -188,8 +192,18 @@ const TransferField: React.FC<TransferFieldProps> = ({
           openKeyId={openKeyId}
         />
       </div>
-      {isReceivable && <DebtorFormField form={form} disabled={openKeyId === "settlement-of-receivables"} />}
-      {isPayable && <VendorFormField form={form} disabled={openKeyId === "debt-repayment"} />}
+      {isReceivable && (
+        <DebtorFormField
+          form={form}
+          disabled={openKeyId === "settlement-of-receivables"}
+        />
+      )}
+      {isPayable && (
+        <VendorFormField
+          form={form}
+          disabled={openKeyId === "debt-repayment"}
+        />
+      )}
     </div>
   );
 };
@@ -214,7 +228,9 @@ const FieldComboboxComp: React.FC<FieldComboboxCompProps> = ({
 
   const isSettlement =
     name === "from_asset" && openKeyId === "settlement-of-receivables";
-  const isRepayment = name === "to_asset" && openKeyId === "debt-repayment"
+  const isRepayment = name === "to_asset" && openKeyId === "debt-repayment";
+
+  const isNonTransfer = name === "via" && openKeyId === "debt-update" || openKeyId === "settlement-update"
 
   return (
     <FieldGroup>
@@ -231,7 +247,7 @@ const FieldComboboxComp: React.FC<FieldComboboxCompProps> = ({
               onItemsChange={onItemsChange}
               onValueChange={field.onChange}
               value={field.value ?? ""}
-              disabled={isSubmitting || isSettlement || isRepayment}
+              disabled={isSubmitting || isSettlement || isRepayment || isNonTransfer}
               valuePlaceholder="Cari atau Buat Aset Baru"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}

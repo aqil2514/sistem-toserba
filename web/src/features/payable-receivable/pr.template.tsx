@@ -11,6 +11,7 @@ import { HeaderWithMutate } from "@/components/organisms/header/header-with-muta
 import { PayableReceivableContent } from "./components/contents/contents.payable-receivable";
 import { PayableReceivableAddDialog } from "./components/dialogs/add-pr-dialog";
 import { PayableReceivableDetailDialog } from "./components/dialogs/detail-pr-dialog";
+import { PayableReceivableUpdateDialog } from "./components/dialogs/update-pr-dialog";
 
 interface Props {
   mode: TemplateMode;
@@ -30,17 +31,16 @@ const InnerTemplate = () => {
   const { mutate } = useReceivablePayable();
   return (
     <>
-    
-    <MainContainer>
-      <SectionContainer>
-        <HeaderWithMutate mutate={mutate} title="Utang Piutang" />
-        <PayableReceivableContent />
-      </SectionContainer>
-    </MainContainer>
+      <MainContainer>
+        <SectionContainer>
+          <HeaderWithMutate mutate={mutate} title="Utang Piutang" />
+          <PayableReceivableContent />
+        </SectionContainer>
+      </MainContainer>
 
-    <PayableReceivableAddDialog />
-    <PayableReceivableDetailDialog />
-
+      <PayableReceivableAddDialog />
+      <PayableReceivableDetailDialog />
+      <PayableReceivableUpdateDialog />
     </>
   );
 };
