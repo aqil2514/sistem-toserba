@@ -15,9 +15,10 @@ import {
   useCashflowReportMovement,
 } from "@/features/cashflow-report/store/cashflow-report-movement.provider";
 import { useQueryCashflowReportMovement } from "@/features/cashflow-report/hooks/use-query-cashflow-report-movement";
-import { CashflowReportMovement as CashflowReportMovementType } from "@/features/cashflow-report/types/api-return.types";
+import { CashflowReportMovement as CashflowReportMovementType } from "@/features/cashflow-report/types/cashflow-report-api-return.types";
 import { GlobalMovement } from "./chart/global-movement.cashflow-report";
 import { AssetMovement } from "./chart/asset-movement.cashflow.report";
+import { MutateButton } from "@/components/ui/mutate-button";
 
 export function CashflowReportMovement() {
   return (
@@ -28,7 +29,7 @@ export function CashflowReportMovement() {
 }
 
 const InnerTemplate = () => {
-  const { data, isLoading, query } = useCashflowReportMovement();
+  const { data, isLoading, query, mutate } = useCashflowReportMovement();
   const { updateDateRange } = useQueryCashflowReportMovement(query);
 
   if (isLoading) return <LoadingSpinner />;
@@ -44,7 +45,10 @@ const InnerTemplate = () => {
           onApply={updateDateRange}
           setDate={updateDateRange}
         />
-        <SelectMode />
+        <div className="flex gap-2">
+          <SelectMode />
+                <MutateButton mutate={mutate} />
+        </div>
       </div>
       <FlexRender data={data} />
     </div>

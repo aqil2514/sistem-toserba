@@ -1,4 +1,4 @@
-import { DailyCashflowSummaryRow } from "@/features/cashflow-report/types/api-return.types";
+import { DailyCashflowSummaryRow } from "@/features/cashflow-report/types/cashflow-report-api-return.types";
 
 interface Props {
   data: DailyCashflowSummaryRow[];

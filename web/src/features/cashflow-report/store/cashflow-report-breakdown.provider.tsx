@@ -1,5 +1,5 @@
 import { KeyedMutator } from "swr";
-import { CashflowBreakdownRpc } from "../types/api-return.types";
+import { CashflowBreakdownRpc } from "../types/cashflow-report-api-return.types";
 import React, { createContext, useContext, useMemo } from "react";
 import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";

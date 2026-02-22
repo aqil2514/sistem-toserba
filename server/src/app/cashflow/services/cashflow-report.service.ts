@@ -3,6 +3,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { BasicQuery, DataQueryResponse } from '../../../@types/general';
 import { formatQueryDate } from '../../../utils/format-date';
 import {
+  CashflowAllocationSummary,
   CashflowBreakdownRpc,
   DailyCashflowSummaryRow,
   MovementAssetSummary,
@@ -127,5 +128,30 @@ export class CashflowReportService {
       data,
       type: 'movement-asset',
     };
+  }
+
+  async getCashflowAllocation(
+    rawQuery: CashflowReportDto,
+  ): Promise<CashflowAllocationSummary[]> {
+    const query = this.queryService.mapToBasicQuery(rawQuery);
+
+    const { endUtc, startUtc } = formatQueryDate(query);
+
+    const { data, error } = await this.supabase.rpc(
+      'get_cashflow_category_summary',
+      {
+        p_start_utc: startUtc,
+        p_end_utc: endUtc,
+      },
+    );
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    console.log(data);
+
+    return data;
   }
 }

@@ -17,6 +17,7 @@ import {
   useCashflowReportBreakdown,
 } from "@/features/cashflow-report/store/cashflow-report-breakdown.provider";
 import { useQueryBasics } from "@/hooks/use-query-basics";
+import { MutateButton } from "@/components/ui/mutate-button";
 
 export function CashflowReportBreakdown() {
   return (
@@ -94,8 +95,7 @@ const sortingkeys: SortingKeyType[] = [
 ];
 
 const FilterSorting = () => {
-  // const { query, updateQuery } = useCashflowReport();
-  const { query } = useCashflowReportBreakdown();
+  const { query, mutate } = useCashflowReportBreakdown();
   const { updateFilter, updateSort, updateDateRange } = useQueryBasics(query);
   const memoQueryFilter = useMemo(() => query.filters ?? [], [query.filters]);
 
@@ -115,6 +115,7 @@ const FilterSorting = () => {
         onApply={updateDateRange}
         setDate={updateDateRange}
       />
+      <MutateButton mutate={mutate} />
     </div>
   );
 };

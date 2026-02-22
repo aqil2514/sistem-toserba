@@ -31,4 +31,9 @@ export class CashflowReportController {
         return await this.service.getCashflowMovement(query);
     }
   }
+
+  @Get('allocation')
+  async getCashflowReportAllocation(@Query() query: CashflowReportDto) {
+    return await this.service.getCashflowAllocation(query);
+  }
 }

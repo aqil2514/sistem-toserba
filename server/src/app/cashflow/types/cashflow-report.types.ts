@@ -53,3 +53,10 @@ export interface MovementAssetViaSummary {
     running_total: number;
   }[];
 }
+
+export interface CashflowAllocationSummary{
+  category_name: string;
+  status_cashflow: string;
+  total_price: number;
+  total_transactions: number;
+}

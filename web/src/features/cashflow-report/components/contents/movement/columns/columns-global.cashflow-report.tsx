@@ -1,4 +1,4 @@
-import { MovementAssetSummary } from "@/features/cashflow-report/types/api-return.types";
+import { MovementAssetSummary } from "@/features/cashflow-report/types/cashflow-report-api-return.types";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ColumnDef } from "@tanstack/react-table";

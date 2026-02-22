@@ -5,7 +5,7 @@ import { SERVER_URL } from "@/constants/url";
 import { startOfDay, startOfMonth } from "date-fns";
 import { buildUrlBasicQuery } from "@/utils/url-builder/build-url-basic-query";
 import { CashflowReportMovementQuery } from "../types/cashflow-report-query.types";
-import { CashflowReportMovement } from "../types/api-return.types";
+import { CashflowReportMovement } from "../types/cashflow-report-api-return.types";
 import { useQueryCashflowReportMovement } from "../hooks/use-query-cashflow-report-movement";
 
 interface CashflowReportdMovementContextType {

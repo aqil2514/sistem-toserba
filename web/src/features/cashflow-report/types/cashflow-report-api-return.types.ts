@@ -1,9 +1,15 @@
+// >>>>>> BREAKDOWN START <<<<<<
+
 export interface CashflowBreakdownRpc {
   price: number;
   status_cashflow: string;
   transaction_at: string;
   via: string;
 }
+
+// >>>>>> BREAKDOWN END <<<<<<
+
+// >>>>>> SUMMARY START <<<<<<
 
 export interface DailyCashflowSummaryRow {
   transaction_at: string;
@@ -27,6 +33,10 @@ export interface DailyCashflowSummaryRow {
   total_payable_period: number;
 }
 
+// >>>>>> SUMMARY END <<<<<<
+
+// >>>>>> MOVEMENT START <<<<<<
+
 export type CashflowReportMovement =
   | MovementAssetSummary
   | MovementAssetViaSummary;
@@ -47,3 +57,16 @@ export interface MovementAssetViaSummary {
     running_total: number;
   }[];
 }
+
+// >>>>>> MOVEMENT END <<<<<<
+
+// >>>>>> ALLOCATION START <<<<<<
+
+export interface CashflowAllocation {
+  category_name: string;
+  status_cashflow: string;
+  total_price: number;
+  total_transactions: number;
+}
+
+// >>>>>> ALLOCATION END <<<<<<

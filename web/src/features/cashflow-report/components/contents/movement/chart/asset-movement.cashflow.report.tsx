@@ -1,5 +1,5 @@
 import { DataTable } from "@/components/organisms/custom-data-table/core-table";
-import { MovementAssetViaSummary } from "@/features/cashflow-report/types/api-return.types";
+import { MovementAssetViaSummary } from "@/features/cashflow-report/types/cashflow-report-api-return.types";
 import {
   MultiLineChart,
   MultiLineChartRow,

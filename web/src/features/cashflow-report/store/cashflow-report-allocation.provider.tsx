@@ -1,5 +1,4 @@
 import { KeyedMutator } from "swr";
-import { DailyCashflowSummaryRow } from "../types/cashflow-report-api-return.types";
 import React, { createContext, useContext, useMemo } from "react";
 import { useFetch } from "@/hooks/use-fetch";
 import { SERVER_URL } from "@/constants/url";
@@ -7,17 +6,18 @@ import { BasicQuery } from "@/@types/general";
 import { startOfDay, startOfMonth } from "date-fns";
 import { useQueryBasics } from "@/hooks/use-query-basics";
 import { buildUrlBasicQuery } from "@/utils/url-builder/build-url-basic-query";
+import { CashflowAllocation } from "../types/cashflow-report-api-return.types";
 
-interface CashflowReportSummaryContextType {
-  data: DailyCashflowSummaryRow[];
+interface CashflowReportAllocationContextType {
+  data: CashflowAllocation[];
   error: Error;
   isLoading: boolean;
-  mutate: KeyedMutator<DailyCashflowSummaryRow[]>;
+  mutate: KeyedMutator<CashflowAllocation[]>;
 }
 
-const CashflowReportSummaryContext =
-  createContext<CashflowReportSummaryContextType>(
-    {} as CashflowReportSummaryContextType,
+const CashflowReportAllocationContext =
+  createContext<CashflowReportAllocationContextType>(
+    {} as CashflowReportAllocationContextType,
   );
 
 const defaultQuery: BasicQuery = {
@@ -29,7 +29,7 @@ const defaultQuery: BasicQuery = {
   sort: [],
 };
 
-export function CashflowReportSummaryProvider({
+export function CashflowReportAllocationProvider({
   children,
 }: {
   children: React.ReactNode;
@@ -39,7 +39,7 @@ export function CashflowReportSummaryProvider({
   const serverUrl = useMemo<string>(
     () =>
       buildUrlBasicQuery({
-        endpoint: "cashflow/report/summary",
+        endpoint: "cashflow/report/allocation",
         base: SERVER_URL,
         rawQuery: query,
       }),
@@ -51,7 +51,7 @@ export function CashflowReportSummaryProvider({
     error,
     isLoading,
     mutate,
-  } = useFetch<DailyCashflowSummaryRow[]>(serverUrl);
+  } = useFetch<CashflowAllocation[]>(serverUrl);
 
   const data = useMemo(() => {
     if (!rawData) return [];
@@ -59,17 +59,17 @@ export function CashflowReportSummaryProvider({
     return rawData;
   }, [rawData]);
 
-  const values: CashflowReportSummaryContextType = {
+  const values: CashflowReportAllocationContextType = {
     data,
     error,
     isLoading,
     mutate,
   };
   return (
-    <CashflowReportSummaryContext.Provider value={values}>
+    <CashflowReportAllocationContext.Provider value={values}>
       {children}
-    </CashflowReportSummaryContext.Provider>
+    </CashflowReportAllocationContext.Provider>
   );
 }
 
-export const useCashflowReportSummary = () => useContext(CashflowReportSummaryContext)
+export const useCashflowReportAllocation = () => useContext(CashflowReportAllocationContext)

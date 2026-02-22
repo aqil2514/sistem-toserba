@@ -4,7 +4,7 @@ import {
 } from "@/components/molecules/chart/line-chart/line-chart";
 import { DataTable } from "@/components/organisms/custom-data-table/core-table";
 import { movementGlobalColumns } from "../columns/columns-global.cashflow-report";
-import { MovementAssetSummary } from "@/features/cashflow-report/types/api-return.types";
+import { MovementAssetSummary } from "@/features/cashflow-report/types/cashflow-report-api-return.types";
 
 interface Props {
   data: MovementAssetSummary["data"];
