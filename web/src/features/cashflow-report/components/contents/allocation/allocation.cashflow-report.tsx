@@ -6,6 +6,7 @@ import { CashflowReportAllocationCard } from "./allocation-card.cashflow-report"
 import { CashflowFilterAllocation } from "./allocation-filter.cashflow-report";
 import { useQueryParams } from "@/hooks/use-query-params";
 import { useMemo } from "react";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 export function CashflowReportAllocation() {
   return (
@@ -16,7 +17,7 @@ export function CashflowReportAllocation() {
 }
 
 const InnerTemplate = () => {
-  const { data } = useCashflowReportAllocation();
+  const { data, isLoading } = useCashflowReportAllocation();
   const { get } = useQueryParams();
   const type = get("type") ?? "all";
   const categoryName = get("category-name") ?? "";
@@ -32,6 +33,8 @@ const InnerTemplate = () => {
 
     return filtered;
   }, [type, data, categoryName]);
+
+  if(isLoading) return <LoadingSpinner />
 
   return (
     <div className="space-y-4">
