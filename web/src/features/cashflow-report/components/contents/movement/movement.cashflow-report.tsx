@@ -1,18 +1,7 @@
-import { useCashflowReport } from "@/features/cashflow-report/store/cashflow-report.provider";
-import {
-  isMovementAssetGlobalSummary,
-  isMovementAssetViaSummary,
-} from "@/features/cashflow-report/types/type-guard";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
 import React from "react";
-import {
-  CashflowReportContent,
-  CashflowReportMode,
-} from "@/features/cashflow-report/types/cashflow-report-query.types";
-import { CashflowReportAPiReturn } from "@/features/cashflow-report/types/api-return.types";
-import { GlobalMovement } from "./chart/global-movement.cashflow-report";
-import { AssetMovement } from "./chart/asset-movement.cashflow.report";
+import { CashflowReportMovementMode } from "@/features/cashflow-report/types/cashflow-report-query.types";
 import {
   Select,
   SelectContent,
@@ -21,64 +10,67 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  CashflowReportdMovementProvider,
+  useCashflowReportMovement,
+} from "@/features/cashflow-report/store/cashflow-report-movement.provider";
+import { useQueryCashflowReportMovement } from "@/features/cashflow-report/hooks/use-query-cashflow-report-movement";
+import { CashflowReportMovement as CashflowReportMovementType } from "@/features/cashflow-report/types/api-return.types";
+import { GlobalMovement } from "./chart/global-movement.cashflow-report";
+import { AssetMovement } from "./chart/asset-movement.cashflow.report";
 
 export function CashflowReportMovement() {
-  const { data, isLoading, query, updateQuery } = useCashflowReport();
-
-  if (!data || isLoading) return <LoadingSpinner />;
-
-  if (data) {
-    return (
-      <div className="space-y-4">
-        <div className="flex justify-between items-center">
-          <ToolbarDatepicker
-            date={{
-              from: query.from,
-              to: query.to,
-            }}
-            onApply={(date) => {
-              if (!date) return;
-              updateQuery("from", date.from);
-              updateQuery("to", date.to);
-            }}
-            setDate={(date) => {
-              if (!date) return;
-              updateQuery("from", date.from);
-              updateQuery("to", date.to);
-            }}
-          />
-          <SelectMode />
-        </div>
-        <FlexRender content={query.content} data={data} mode={query.mode} />
-      </div>
-    );
-  }
+  return (
+    <CashflowReportdMovementProvider>
+      <InnerTemplate />
+    </CashflowReportdMovementProvider>
+  );
 }
+
+const InnerTemplate = () => {
+  const { data, isLoading, query } = useCashflowReportMovement();
+  const { updateDateRange } = useQueryCashflowReportMovement(query);
+
+  if (isLoading) return <LoadingSpinner />;
+
+  return (
+    <div className="space-y-4">
+      <div className="flex justify-between items-center">
+        <ToolbarDatepicker
+          date={{
+            from: query.from,
+            to: query.to,
+          }}
+          onApply={updateDateRange}
+          setDate={updateDateRange}
+        />
+        <SelectMode />
+      </div>
+      <FlexRender data={data} />
+    </div>
+  );
+};
 
 interface FlexRenderProps {
-  mode: CashflowReportMode;
-  content: CashflowReportContent;
-  data: CashflowReportAPiReturn;
+  data: CashflowReportMovementType;
 }
-const FlexRender: React.FC<FlexRenderProps> = ({ mode, content, data }) => {
-  if (
-    mode === "movement-global" &&
-    isMovementAssetGlobalSummary(content, data)
-  ) {
-    return <GlobalMovement data={data} />;
-  }
+const FlexRender: React.FC<FlexRenderProps> = ({ data }) => {
+  switch (data.type) {
+    case "movement-asset":
+      return <AssetMovement data={data.data} />;
 
-  if (mode === "movement-asset" && isMovementAssetViaSummary(data, content)) {
-    return <AssetMovement data={data} />;
+    default:
+      return <GlobalMovement data={data.data} />;
   }
 };
 
 const SelectMode = () => {
-  const { query, updateQuery } = useCashflowReport();
+  const { query } = useCashflowReportMovement();
+  const { updateMode } = useQueryCashflowReportMovement(query);
   return (
     <Select
-      value={query.mode as string}
-      onValueChange={(e) => updateQuery("mode", e as CashflowReportMode)}
+      value={query.mode}
+      onValueChange={(e) => updateMode(e as CashflowReportMovementMode)}
     >
       <SelectTrigger className="w-45">
         <SelectValue placeholder="Theme" />

@@ -7,10 +7,10 @@ import {
 import { movementAssetColumns } from "../columns/columns-asset.cashflow-report";
 
 interface Props {
-  data: MovementAssetViaSummary[];
+  data: MovementAssetViaSummary["data"];
 }
 
-function mapMovementAssetViaToChart(data: MovementAssetViaSummary[]): {
+function mapMovementAssetViaToChart(data: MovementAssetViaSummary["data"]): {
   chartData: MultiLineChartRow[];
   lineKeys: string[];
 } {
@@ -40,7 +40,7 @@ function mapMovementAssetViaToChart(data: MovementAssetViaSummary[]): {
 }
 
 export function AssetMovement({ data }: Props) {
- const {chartData, lineKeys} = mapMovementAssetViaToChart(data)
+  const { chartData, lineKeys } = mapMovementAssetViaToChart(data);
 
   return (
     <>

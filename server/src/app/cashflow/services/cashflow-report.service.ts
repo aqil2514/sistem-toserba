@@ -2,19 +2,29 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { BasicQuery, DataQueryResponse } from '../../../@types/general';
 import { formatQueryDate } from '../../../utils/format-date';
-import { CashflowBreakdownRpc, DailyCashflowSummaryRow, MovementAssetSummary, MovementAssetSummaryWithAsset } from '../types/cashflow-report.types';
+import {
+  CashflowBreakdownRpc,
+  DailyCashflowSummaryRow,
+  MovementAssetSummary,
+  MovementAssetViaSummary,
+} from '../types/cashflow-report.types';
 import { buildPaginationMeta } from '../../../utils/query-builder';
+import { CashflowReportDto } from '../dto/cashflow-report-query.dto';
+import { BasicQueryService } from '../../../services/query/query.service';
 
 @Injectable()
 export class CashflowReportService {
   constructor(
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
+
+    private readonly queryService: BasicQueryService,
   ) {}
 
   async getCashflowBreakdown(
-    query: BasicQuery,
+    rawQuery: CashflowReportDto,
   ): Promise<DataQueryResponse<CashflowBreakdownRpc[]>> {
+    const query = this.queryService.mapToBasicQuery(rawQuery);
     const { page, limit, filters, sort } = query;
     const { endUtc, startUtc } = formatQueryDate(query);
     const { data, error } = await this.supabase.rpc('get_breakdown_cashflow', {
@@ -45,7 +55,11 @@ export class CashflowReportService {
     };
   }
 
-  async getCashflowSummary(query: BasicQuery):Promise<DailyCashflowSummaryRow[]> {
+  async getCashflowSummary(
+    rawQuery: CashflowReportDto,
+  ): Promise<DailyCashflowSummaryRow[]> {
+    const query = this.queryService.mapToBasicQuery(rawQuery);
+
     const { endUtc, startUtc } = formatQueryDate(query);
 
     const { data, error } = await this.supabase.rpc(
@@ -64,7 +78,10 @@ export class CashflowReportService {
     return data;
   }
 
-  async getCashflowMovement(query: BasicQuery):Promise<MovementAssetSummary[]> {
+  async getCashflowMovement(
+    rawQuery: CashflowReportDto,
+  ): Promise<MovementAssetSummary> {
+    const query = this.queryService.mapToBasicQuery(rawQuery);
     const { endUtc, startUtc } = formatQueryDate(query);
 
     const { data, error } = await this.supabase.rpc(
@@ -80,10 +97,17 @@ export class CashflowReportService {
       throw error;
     }
 
-    return data;
+    return {
+      type: 'movement-global',
+      data,
+    };
   }
 
-  async getCashflowMovementWithAsset(query: BasicQuery):Promise<MovementAssetSummaryWithAsset[]> {
+  async getCashflowMovementWithAsset(
+    rawQuery: CashflowReportDto,
+  ): Promise<MovementAssetViaSummary> {
+    const query = this.queryService.mapToBasicQuery(rawQuery);
+
     const { endUtc, startUtc } = formatQueryDate(query);
 
     const { data, error } = await this.supabase.rpc(
@@ -99,6 +123,9 @@ export class CashflowReportService {
       throw error;
     }
 
-    return data;
+    return {
+      data,
+      type: 'movement-asset',
+    };
   }
 }

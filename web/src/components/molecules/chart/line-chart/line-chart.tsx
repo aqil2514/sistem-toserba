@@ -88,7 +88,7 @@ export function MyLineChartComp({
   chartConfig = dummyChartConfig,
   chartData = dummyData,
   ToolTipContent,
-  lineName
+  lineName,
 }: Props) {
   const configKeys = Object.keys(chartConfig);
   const firstConfig = configKeys?.[0] || undefined;
@@ -131,6 +131,7 @@ export function MyLineChartComp({
 
             return (
               <Dot
+                key={payload.label}
                 r={5}
                 cx={props.cx}
                 cy={props.cy}
@@ -141,7 +142,7 @@ export function MyLineChartComp({
           }}
           name={lineName ?? undefined}
         />
-        {lineName && <Legend  />}
+        {lineName && <Legend />}
       </LineChart>
     </ChartContainer>
   );

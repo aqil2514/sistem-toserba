@@ -38,10 +38,18 @@ export interface DailyCashflowSummaryRow {
 }
 
 export interface MovementAssetSummary {
-  date: string;
-  running_total: number;
+  type: 'movement-global';
+  data: {
+    date: string;
+    running_total: number;
+  }[];
 }
 
-export interface MovementAssetSummaryWithAsset extends MovementAssetSummary {
-  via: string;
+export interface MovementAssetViaSummary {
+  type: 'movement-asset';
+  data: {
+    date: string;
+    via: string;
+    running_total: number;
+  }[];
 }

@@ -24,7 +24,7 @@ export function DataTableFooterServer<T extends BasicQuery>({
   meta,
 }: Props<T>) {
   if(!meta) return null;
-  
+
   return (
     <div className="flex flex-col sm:flex-row gap-4 p-4">
       <Pagination

@@ -1,11 +1,3 @@
-import { DataQueryResponse } from "@/@types/general";
-
-export type CashflowReportAPiReturn =
-  | DataQueryResponse<CashflowBreakdownRpc[]>
-  | DailyCashflowSummaryRow[]
-  | MovementAssetSummary[]
-  | MovementAssetViaSummary[];
-
 export interface CashflowBreakdownRpc {
   price: number;
   status_cashflow: string;
@@ -35,13 +27,23 @@ export interface DailyCashflowSummaryRow {
   total_payable_period: number;
 }
 
+export type CashflowReportMovement =
+  | MovementAssetSummary
+  | MovementAssetViaSummary;
+
 export interface MovementAssetSummary {
-  date: string;
-  running_total: number;
+  type: "movement-global";
+  data: {
+    date: string;
+    running_total: number;
+  }[];
 }
 
 export interface MovementAssetViaSummary {
-  date: string;
-  via: string;
-  running_total: number;
+  type: "movement-asset";
+  data: {
+    date: string;
+    via: string;
+    running_total: number;
+  }[];
 }

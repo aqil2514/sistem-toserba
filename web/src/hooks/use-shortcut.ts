@@ -10,19 +10,8 @@ export const useShortcut = (
   }: { key: string; ctrl?: boolean; alt?: boolean; shift?: boolean }
 ) => {
   useEffect(() => {
-    // console.log("Shortcut hook mounted");
 
     const handler = (e: KeyboardEvent) => {
-      // console.log(
-      //   "Key pressed:",
-      //   e.key,
-      //   "ctrl:",
-      //   e.ctrlKey,
-      //   "alt:",
-      //   e.altKey,
-      //   "shift:",
-      //   e.shiftKey
-      // );
       if (
         e.key.toLowerCase() === key.toLowerCase() &&
         e.ctrlKey === ctrl &&
@@ -30,7 +19,6 @@ export const useShortcut = (
         e.shiftKey === shift
       ) {
         e.preventDefault();
-        // console.log("Shortcut triggered");
         callback();
       }
     };

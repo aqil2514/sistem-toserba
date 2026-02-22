@@ -1,11 +1,11 @@
 import { LabelValue } from "@/@types/general";
 import React from "react";
-import { CashflowReportContent } from "../../types/cashflow-report-query.types";
 import { CashflowReportBreakdown } from "./breakdown/breakdown.cashflow-report";
-import { useCashflowReport } from "../../store/cashflow-report.provider";
 import { CashflowReportSummary } from "./summary/summary.cashflow-report";
 import { TabsContentData } from "@/components/organisms/contents/tabs-content";
 import { CashflowReportMovement } from "./movement/movement.cashflow-report";
+import { useQueryParams } from "@/hooks/use-query-params";
+import { CashflowReportContent } from "../../types/cashflow-report-query.types";
 
 type TabsContentType = LabelValue<CashflowReportContent> & {
   content: React.ReactNode;
@@ -30,18 +30,14 @@ const contentTrigger: TabsContentType[] = [
 ];
 
 export function CashflowReportContents() {
-  const { query, updateQuery } = useCashflowReport();
+  const { get, resetToContent } = useQueryParams();
+
+  const content = get("content") ?? "summary";
 
   return (
     <TabsContentData
-      value={query.content}
-      onValueChange={(e) => {
-        updateQuery("content", e);
-        if (e === "movement") {
-          updateQuery("mode", "movement-global");
-          return;
-        }
-      }}
+      value={content}
+      onValueChange={resetToContent}
       tabContents={contentTrigger}
     />
   );

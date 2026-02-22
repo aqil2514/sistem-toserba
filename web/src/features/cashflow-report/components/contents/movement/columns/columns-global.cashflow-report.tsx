@@ -3,7 +3,7 @@ import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const movementGlobalColumns: ColumnDef<MovementAssetSummary>[] = [
+export const movementGlobalColumns: ColumnDef<MovementAssetSummary['data'][number]>[] = [
   {
     accessorKey: "date",
     header: "Tanggal",

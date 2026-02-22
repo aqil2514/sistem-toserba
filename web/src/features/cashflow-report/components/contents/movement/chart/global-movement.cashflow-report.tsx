@@ -7,7 +7,7 @@ import { movementGlobalColumns } from "../columns/columns-global.cashflow-report
 import { MovementAssetSummary } from "@/features/cashflow-report/types/api-return.types";
 
 interface Props {
-  data: MovementAssetSummary[];
+  data: MovementAssetSummary["data"];
 }
 
 export function GlobalMovement({ data }: Props) {
@@ -20,10 +20,7 @@ export function GlobalMovement({ data }: Props) {
 
   return (
     <>
-      <MyLineChartComp
-        chartData={mappedData}
-        lineName="Aset Keseluruhan"
-      />
+      <MyLineChartComp chartData={mappedData} lineName="Aset Keseluruhan" />
       <DataTable columns={movementGlobalColumns} data={data} />
     </>
   );

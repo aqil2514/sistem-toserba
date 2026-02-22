@@ -1,6 +1,5 @@
 import { DataTable } from "@/components/organisms/ori-data-table/data-table";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { useCashflowReport } from "@/features/cashflow-report/store/cashflow-report.provider";
 import { breakdownCashflowReportColumns } from "./breakdown-columns.cashflow-report";
 import { DataTableFooterServer } from "@/components/organisms/ori-data-table/data-table-footer-server";
 import { useMemo } from "react";
@@ -13,35 +12,46 @@ import { FilterConfig } from "@/components/filters/filter-panel/types.filter-pan
 import { viaCashflow } from "@/features/cashflow/constants/cashflow-filter-options.constants";
 import { ToolbarDatepicker } from "@/components/filters/filter-date-range";
 import { statusCashflowFilterOptions } from "@/features/cashflow-report/constants/filters";
-import { isBreakdownCashflowReport } from "@/features/cashflow-report/types/type-guard";
+import {
+  CashflowReportBreakdownProvider,
+  useCashflowReportBreakdown,
+} from "@/features/cashflow-report/store/cashflow-report-breakdown.provider";
+import { useQueryBasics } from "@/hooks/use-query-basics";
 
 export function CashflowReportBreakdown() {
-  const { data, isLoading, query, updateQuery } = useCashflowReport();
-
-  if (!data || isLoading) return <LoadingSpinner />;
-
-  if (data && isBreakdownCashflowReport(query.content, data))
-    return (
-      <div className="space-y-4">
-        <FilterSorting />
-        {isLoading || !data ? (
-          <LoadingSpinner />
-        ) : (
-          <>
-            <DataTable
-              columns={breakdownCashflowReportColumns}
-              data={data.data}
-            />
-            <DataTableFooterServer
-              meta={data.meta}
-              query={query}
-              onQueryChange={updateQuery}
-            />
-          </>
-        )}
-      </div>
-    );
+  return (
+    <CashflowReportBreakdownProvider>
+      <InnerTemplate />
+    </CashflowReportBreakdownProvider>
+  );
 }
+
+const InnerTemplate = () => {
+  const { data, isLoading, query } = useCashflowReportBreakdown();
+  const { updateFooter } = useQueryBasics();
+  if (isLoading) return <LoadingSpinner />;
+
+  return (
+    <div className="space-y-4">
+      <FilterSorting />
+      {isLoading || !data ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <DataTable
+            columns={breakdownCashflowReportColumns}
+            data={data.data}
+          />
+          <DataTableFooterServer
+            meta={data.meta}
+            query={query}
+            onQueryChange={updateFooter}
+          />
+        </>
+      )}
+    </div>
+  );
+};
 
 const filterConfig: FilterConfig[] = [
   {
@@ -84,35 +94,26 @@ const sortingkeys: SortingKeyType[] = [
 ];
 
 const FilterSorting = () => {
-  const { query, updateQuery } = useCashflowReport();
+  // const { query, updateQuery } = useCashflowReport();
+  const { query } = useCashflowReportBreakdown();
+  const { updateFilter, updateSort, updateDateRange } = useQueryBasics(query);
   const memoQueryFilter = useMemo(() => query.filters ?? [], [query.filters]);
 
   return (
     <div className="flex gap-4">
       <FilterPanel
         initialValue={memoQueryFilter}
-        onApplyFilter={(values) => updateQuery("filters", values)}
+        onApplyFilter={updateFilter}
         config={filterConfig}
       />
-      <SingleSorting
-        onSortStateChange={(values) => updateQuery("sort", values)}
-        sortingkeys={sortingkeys}
-      />
+      <SingleSorting onSortStateChange={updateSort} sortingkeys={sortingkeys} />
       <ToolbarDatepicker
         date={{
           from: query.from,
           to: query.to,
         }}
-        onApply={(date) => {
-          if (!date) return;
-          updateQuery("from", date.from);
-          updateQuery("to", date.to);
-        }}
-        setDate={(date) => {
-          if (!date) return;
-          updateQuery("from", date.from);
-          updateQuery("to", date.to);
-        }}
+        onApply={updateDateRange}
+        setDate={updateDateRange}
       />
     </div>
   );

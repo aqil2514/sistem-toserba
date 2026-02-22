@@ -11,13 +11,15 @@ import { CashflowCashCounterService } from './services/cashflow-cash-counter.ser
 import { CashCounterModule } from '../cash-counter/cash-counter.module';
 import { CashflowWebhookController } from './controller/cashflow-webhook.controller';
 import { CashflowPayableReceivableController } from './controller/cashflow-payable-receivable.controller';
+import { CashflowReportController } from './controller/cashflow-report.controller';
 
 @Module({
   imports: [SalesModule, CashCounterModule],
   controllers: [
     CashflowPayableReceivableController,
-    CashflowController,
     CashflowWebhookController,
+    CashflowReportController,
+    CashflowController,
   ],
   providers: [
     CashflowFormService,

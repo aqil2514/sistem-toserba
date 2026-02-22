@@ -1,7 +1,12 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { CashflowPRService } from '../services/cashflow-pr.service';
 import { CashflowPRDto } from '../dto/cashflow-pr.dto';
+import { Roles } from '../../../decorator/roles.decorator';
+import { PasetoGuard } from '../../../guards/paseto.guard';
+import { RoleGuard } from '../../../guards/role.guard';
 
+@UseGuards(PasetoGuard, RoleGuard)
+@Roles('admin')
 @Controller('cashflow/payable-receivable')
 export class CashflowPayableReceivableController {
   constructor(private readonly service: CashflowPRService) {}
