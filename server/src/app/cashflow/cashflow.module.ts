@@ -12,6 +12,7 @@ import { CashCounterModule } from '../cash-counter/cash-counter.module';
 import { CashflowWebhookController } from './controller/cashflow-webhook.controller';
 import { CashflowPayableReceivableController } from './controller/cashflow-payable-receivable.controller';
 import { CashflowReportController } from './controller/cashflow-report.controller';
+import { CashflowBalanceSnapshotService } from './services/cashflow-balance-snapshot.service';
 
 @Module({
   imports: [SalesModule, CashCounterModule],
@@ -25,6 +26,7 @@ import { CashflowReportController } from './controller/cashflow-report.controlle
     CashflowFormService,
     CashflowFetchService,
     CashflowSalesService,
+    CashflowBalanceSnapshotService,
     CashflowPRService,
     CashflowReportService,
     CashflowResourcesService,

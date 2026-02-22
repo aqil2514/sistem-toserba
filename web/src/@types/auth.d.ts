@@ -1,13 +1,13 @@
 export interface AuthUser {
-  provider: 'google'; // bisa di-extend nanti
+  provider: "google";
   providerId: string;
 
   email: string;
   name: string;
   avatar?: string;
 
-  role: 'admin' | 'user';
+  role: "admin" | "user";
 
-  iat: string; // ISO string
-  exp: string; // ISO string
+  iat: string;
+  exp: string;
 }
