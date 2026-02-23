@@ -4,13 +4,15 @@ import { Purchase } from "../types/purchase";
 
 export function mapPurchaseToFormValues(
   purchase: Purchase,
-  items: MappedResponse[]
+  items: MappedResponse[],
 ): PurchaseFormValues {
   return {
     purchase_date: new Date(purchase.purchase_date).toISOString(),
-    purchase_code: purchase.purchase_code ?? "",
-    supplier_name: purchase.supplier_name ?? "",
-    supplier_type: purchase.supplier_type ?? "",
+    purchase_code: purchase.purchase_code,
+    supplier_name: purchase.supplier_name,
+    supplier_type: purchase.supplier_type,
+    purchase_status: purchase.purchase_status,
+    purchase_type: purchase.purchase_type,
     notes: purchase.notes ?? "",
     items: items.map((item) => ({
       product_id: item.product_id,
@@ -19,3 +21,4 @@ export function mapPurchaseToFormValues(
     })),
   };
 }
+

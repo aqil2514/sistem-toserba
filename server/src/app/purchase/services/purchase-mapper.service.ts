@@ -13,7 +13,7 @@ export class PurchaseMapperService {
   constructor(
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
-    private readonly productFetcher:ProductFetchService
+    private readonly productFetcher: ProductFetchService,
   ) {}
 
   private async generatePurchaseCode(date: Date): Promise<string> {
@@ -46,6 +46,9 @@ export class PurchaseMapperService {
       supplier_name: raw.supplier_name,
       supplier_type: raw.supplier_type,
       purchase_code: code,
+      purchase_type: raw.purchase_type,
+      purchase_status: raw.purchase_status,
+      updated_at: new Date().toISOString()
     };
   }
 

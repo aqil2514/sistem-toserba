@@ -1,52 +1,47 @@
 import { UseFormReturn } from "react-hook-form";
-import {
-  defaultPurchaseItem,
-  PurchaseFormValues,
-} from "../../schema/purchase.schema";
+import { PurchaseFormValues } from "../../../schema/purchase.schema";
 import { Button } from "@/components/ui/button";
-import { PurchaseFormRss } from "../../types/purchase-form-rss";
-import React, { useMemo } from "react";
+import React, { useState } from "react";
 import { LabelValue } from "@/@types/general";
 import { FormFieldCombobox } from "@/components/forms/field-combobox.form";
 import { FormFieldNumber } from "@/components/forms/field-number.form";
 import { FormFieldCurrency } from "@/components/forms/field-currency.form";
 import { FormFieldArrayTabs } from "@/components/forms/field-array-tabs.form";
+import { defaultPurchaseItem } from "../../../schema/purchase-items.schema";
+import { useProductName } from "@/hooks/view-table/use-product-name";
+import { AddProductFormPurchaseDialog } from "../../dialog/add/dialog-add-product.purchase";
 
 interface Props {
   form: UseFormReturn<PurchaseFormValues>;
-  productList: PurchaseFormRss["products"];
-  setAddNewProduct: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function FormPurchaseItem({
-  form,
-  productList,
-  setAddNewProduct,
-}: Props) {
-  const list: LabelValue[] = useMemo(() => {
-    return productList
-      .map((product) => ({
-        label: product.name,
-        value: product.id,
-      }))
-      .sort((a, b) => a.label.localeCompare(b.label));
-  }, [productList]);
+export function FormPurchaseItem({ form }: Props) {
+  const { productNameLabelValue, mutate } = useProductName();
+  const [addNewProduct, setAddNewProduct] = useState<boolean>(false);
 
   return (
-    <FormFieldArrayTabs
-      form={form}
-      defaultItem={defaultPurchaseItem}
-      name="items"
-      title="Barang yang Dibeli"
-      formComponent={(form, index) => (
-        <FormComponent
-          form={form}
-          index={index}
-          list={list}
-          setAddNewProduct={setAddNewProduct}
-        />
-      )}
-    />
+    <>
+      <FormFieldArrayTabs
+        form={form}
+        defaultItem={defaultPurchaseItem}
+        name="items"
+        title="Barang yang Dibeli"
+        formComponent={(form, index) => (
+          <FormComponent
+            form={form}
+            index={index}
+            list={productNameLabelValue}
+            setAddNewProduct={setAddNewProduct}
+          />
+        )}
+      />
+
+      <AddProductFormPurchaseDialog
+        addNewProduct={addNewProduct}
+        mutate={mutate}
+        setAddNewProduct={setAddNewProduct}
+      />
+    </>
   );
 }
 

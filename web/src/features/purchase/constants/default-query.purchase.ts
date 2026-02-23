@@ -1,9 +1,15 @@
 import { BasicQuery } from "@/@types/general";
-import { endOfDay, startOfDay } from "date-fns";
+import { endOfDay, startOfDay, startOfMonth } from "date-fns";
 
 export const defaultQuery: BasicQuery = {
   page: 1,
   limit: 20,
-  from: startOfDay(new Date()),
+  from: startOfMonth(startOfDay(new Date())),
   to: endOfDay(new Date()),
+  sort:[
+    {
+      key:"purchase_date",
+      value:"desc"
+    }
+  ]
 };

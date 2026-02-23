@@ -7,8 +7,6 @@ import {
 import { MovementAssetViaSummary } from '../types/cashflow-report.types';
 import { BalanceSnapshotInsert } from '../types/cashflow-balance-snapshot.types';
 
-// TODO : NANTI SAMBUNGIN KE CRON JOB & TAMBAH QUERY AMBIL DATANYA
-
 @Injectable()
 export class CashflowBalanceSnapshotService {
   constructor(

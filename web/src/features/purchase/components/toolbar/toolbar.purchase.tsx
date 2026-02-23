@@ -6,9 +6,9 @@ import {
   SortingKeyType,
 } from "@/components/molecules/sorting/single-sorting";
 import { useQueryBasics } from "@/hooks/use-query-basics";
-import { usePurchaseConfig } from "../../hooks/use-purchase-config";
 import { FilterPanel } from "@/components/filters/filter-panel/master.filter-panel";
 import { FilterConfig } from "@/components/filters/filter-panel/types.filter-panel";
+import { useSupplierType } from "@/hooks/view-table/use-supplier-type";
 
 const sortingKey: SortingKeyType[] = [
   {
@@ -28,7 +28,7 @@ const sortingKey: SortingKeyType[] = [
 export function PurchaseToolbar() {
   const { query } = usePurchase();
   const { updateDateRange, updateFilter, updateSort } = useQueryBasics();
-  const { supplierType } = usePurchaseConfig();
+  const { supplierTypeLabelValue } = useSupplierType();
   const memoQueryFilter = useMemo(() => query.filters ?? [], [query.filters]);
 
   const filterConfig = useMemo<FilterConfig[]>(() => {
@@ -47,20 +47,17 @@ export function PurchaseToolbar() {
       },
     ];
 
-    if (supplierType) {
+    if (supplierTypeLabelValue) {
       const supplierTypeConfig: FilterConfig = {
         field: "supplier_type",
         label: "Tipe Supplier",
         type: "select",
-        selectOptions: supplierType.map((val) => ({
-          label: val,
-          value: val,
-        })),
+        selectOptions: supplierTypeLabelValue,
       };
       basicQuery.push(supplierTypeConfig);
     }
     return basicQuery;
-  }, [supplierType]);
+  }, [supplierTypeLabelValue]);
 
   return (
     <div className="flex flex-col sm:flex-row gap-4">

@@ -264,7 +264,6 @@ export class SalesReportService {
     return data;
   }
 
-  // TODO Ini udah selesai, nanti tinggal diaudit lagi
   async getSalesReport(
     query: SalesReportQuery,
   ): Promise<DataQueryResponse<SalesItemApiResponse[]>> {
@@ -296,7 +295,6 @@ export class SalesReportService {
     };
   }
 
-  // TODO Ini udah selesai, nanti tinggal diaudit lagi
   async getSalesReportProductSummary(
     query: SalesReportQuery,
   ): Promise<DataQueryResponse<SalesReportProductRpcReturn[]>> {

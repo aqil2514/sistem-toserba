@@ -1,11 +1,32 @@
-export interface Purchase {
-  id: string; // uuid
-  purchase_date: string; // ISO timestamp
-  supplier_name: string | null;
-  supplier_type: string | null;
-  notes: string | null;
-  purchase_code: string | null;
+export type PurchaseType = 'stock' | 'assets' | 'consumable';
+export type PurchaseStatus =
+  | 'ordered'
+  | 'partially_received'
+  | 'received'
+  | 'cancelled';
 
-  created_at: string;
+export interface Purchase<T = unknown> {
+  id: string;
+
+  purchase_date: string;
+
+  supplier_name: string;
+
+  notes: string | null;
+
+  created_at: string | null;
+
+  purchase_code: string;
+
+  supplier_type: string;
+
   deleted_at: string | null;
+
+  purchase_type: PurchaseType;
+
+  meta?: T;
+
+  purchase_status: PurchaseStatus;
+
+  updated_at: string;
 }

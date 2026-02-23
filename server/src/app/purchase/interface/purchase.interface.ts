@@ -1,19 +1,34 @@
-export interface Purchase {
-  id: string; // uuid
+export type PurchaseType = 'stock' | 'assets' | 'consumable';
+export type PurchaseStatus =
+  | 'ordered'
+  | 'partially_received'
+  | 'received'
+  | 'cancelled';
 
-  purchase_date: string; // timestamp without time zone
+export interface Purchase<T = unknown> {
+  id: string;
 
-  supplier_name: string | null;
+  purchase_date: string;
+
+  supplier_name: string;
 
   notes: string | null;
 
-  created_at: string | null; // timestamp without time zone
+  created_at: string | null;
 
-  purchase_code: string | null;
+  purchase_code: string;
 
-  supplier_type: string | null;
+  supplier_type: string;
 
-  deleted_at: string | null; // timestamp with time zone
+  deleted_at: string | null;
+
+  purchase_type: PurchaseType;
+
+  meta?: T;
+
+  purchase_status: PurchaseStatus;
+
+  updated_at: string;
 }
 
 export type PurchaseInsert = Omit<Purchase, 'id' | 'created_at' | 'deleted_at'>;

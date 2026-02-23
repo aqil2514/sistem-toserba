@@ -1,49 +1,79 @@
 import { z } from "zod";
+import {
+  defaultPurchaseItem,
+  purchaseItemSchema,
+} from "./purchase-items.schema";
 
-/**
- * ITEM BARANG MASUK
- */
-export const purchaseItemSchema = z.object({
-  product_id: z.string().min(1, "Produk wajib dipilih"),
-
-  quantity: z
-    .number()
-    .int("Jumlah harus bilangan bulat")
-    .min(1, "Jumlah minimal 1"),
-
-  price: z.number().min(1, "Harga harus lebih dari 0"),
-});
+const itemSchemaByType: Record<string, z.ZodType> = {
+  stock: purchaseItemSchema,
+};
 
 /**
  * PURCHASE (BARANG MASUK)
  */
-export const purchaseSchema = z.object({
-  purchase_date: z.iso
-    .datetime("Tanggal Transaksi wajib diisi")
-    .refine(
-      (val) => new Date(val) <= new Date(),
-      "Tanggal tidak boleh dari masa depan",
+export const purchaseSchema = z
+  .object({
+    purchase_date: z.iso
+      .datetime("Tanggal Transaksi wajib diisi")
+      .refine(
+        (val) => new Date(val) <= new Date(),
+        "Tanggal tidak boleh dari masa depan",
+      ),
+
+    purchase_code: z.string().optional(),
+
+    supplier_name: z.string().min(1, "Nama Suplier wajib diisi"),
+
+    supplier_type: z.string().min(1, "Tipe supplier wajib diisi"),
+
+    purchase_type: z.enum(
+      ["stock", "assets", "consumable", "unselect"],
+      "Tipe pembelian tidak valid",
     ),
 
-  purchase_code: z.string().optional(),
+    purchase_status: z.enum(
+      ["ordered", "partially_received", "received", "cancelled"],
+      "Status pembelian tidak valid",
+    ),
 
-  supplier_name: z.string().min(1, "Nama Suplier wajib diisi"),
+    notes: z.string().optional(),
 
-  supplier_type: z.string().min(1, "Tipe supplier wajib diisi"),
+    items: z.array(z.any()).optional(),
+  })
+  .superRefine(({ purchase_type, items }, ctx) => {
+    if (!purchase_type || purchase_type === "unselect")
+      return ctx.addIssue({
+        code: "custom",
+        message: "Tipe Pembelian wajib diisi!",
+        path: ["purchase_type"],
+      });
 
-  notes: z.string().optional(),
+    if (!items || items.length === 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Minimal harus ada 1 barang",
+        path: ["items"],
+      });
+      return;
+    }
 
-  items: z.array(purchaseItemSchema).min(1, "Minimal harus ada 1 barang"),
-});
+    const itemSchema = itemSchemaByType[purchase_type];
+    if (!itemSchema) return;
+
+    items.forEach((item, index) => {
+      const result = itemSchema.safeParse(item);
+      if (!result.success) {
+        result.error.issues.forEach((issue) => {
+          ctx.addIssue({
+            ...issue,
+            path: ["items", index, ...issue.path],
+          });
+        });
+      }
+    });
+  });
 
 export type PurchaseFormValues = z.infer<typeof purchaseSchema>;
-export type PurchaseItemFormValues = z.infer<typeof purchaseItemSchema>;
-
-export const defaultPurchaseItem: PurchaseItemFormValues = {
-  price: 0,
-  product_id: "",
-  quantity: 0,
-};
 
 export const EMPTY_VALUES: PurchaseFormValues = {
   purchase_date: new Date().toISOString(),
@@ -51,6 +81,11 @@ export const EMPTY_VALUES: PurchaseFormValues = {
   supplier_name: "",
   supplier_type: "",
   notes: "",
-  items: [defaultPurchaseItem],
+  purchase_status: "ordered",
+  purchase_type: "unselect",
+  items: [],
 };
 
+export const defaultItemByType: Record<string, object> = {
+  stock: defaultPurchaseItem,
+};
