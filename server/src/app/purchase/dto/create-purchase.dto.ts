@@ -7,10 +7,12 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { CreatePurchaseItemDto } from './create-purchase-item.dto';
+import { CreatePurchaseItemDto } from './items/create-purchase-item.dto';
 import { PURCHASE_TYPE } from '../enums/purchase-type.enum';
 import { PurchaseStatus, PurchaseType } from '../interface/purchase.interface';
 import { PURCHASE_STATUS } from '../enums/purchase-status.enum';
+import { CreatePurchaseItemAssetsDto } from './items/create-purchase-item-assets.dto';
+import { CreatePurchaseItemConsumablesDto } from './items/create-purchase-item-consumables.dto';
 
 export class CreatePurchaseDto {
   @IsOptional()
@@ -39,6 +41,17 @@ export class CreatePurchaseDto {
 
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => CreatePurchaseItemDto)
-  items: CreatePurchaseItemDto[];
+  @Type(({ object }) => {
+    const purchaseType = object.purchase_type;
+
+    const itemDto = {
+      [PURCHASE_TYPE.STOCK]: CreatePurchaseItemDto,
+      [PURCHASE_TYPE.CONSUMABLE]: CreatePurchaseItemConsumablesDto,
+      [PURCHASE_TYPE.ASSETS]: CreatePurchaseItemAssetsDto,
+    };
+    
+    return itemDto[purchaseType] ?? CreatePurchaseItemDto;
+  })
+  items: (CreatePurchaseItemDto | CreatePurchaseItemAssetsDto | CreatePurchaseItemConsumablesDto)[];
+
 }

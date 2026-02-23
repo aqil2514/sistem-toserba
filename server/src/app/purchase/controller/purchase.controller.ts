@@ -70,13 +70,13 @@ export class PurchaseController {
     return await this.purchaseFormService.softDeletePurchase(id);
   }
 
-  @Patch(':id')
-  async updatePurchase(
-    @Param('id') id: string,
-    @Body() body: UpdatePurchaseDto,
-  ) {
-    return await this.purchaseFormService.updatePurchase(id, body);
-  }
+  // @Patch(':id')
+  // async updatePurchase(
+  //   @Param('id') id: string,
+  //   @Body() body: UpdatePurchaseDto,
+  // ) {
+  //   return await this.purchaseFormService.updatePurchase(id, body);
+  // }
 
   @Patch(':item_id/remaining_quantity')
   async updateRemainingQuantityPurchase(
@@ -91,6 +91,6 @@ export class PurchaseController {
 
   @Post()
   async addPurchase(@Body() body: CreatePurchaseDto) {
-    return await this.purchaseFormService.createPurchase(body);
+    return await this.purchaseFormService.createNewPurchase(body);
   }
 }

@@ -1,3 +1,7 @@
+import { CreatePurchaseItemAssetsDto } from "../dto/items/create-purchase-item-assets.dto";
+import { CreatePurchaseItemConsumablesDto } from "../dto/items/create-purchase-item-consumables.dto";
+import { CreatePurchaseItemDto } from "../dto/items/create-purchase-item.dto";
+
 export type PurchaseType = 'stock' | 'assets' | 'consumable';
 export type PurchaseStatus =
   | 'ordered'
@@ -32,3 +36,8 @@ export interface Purchase<T = unknown> {
 }
 
 export type PurchaseInsert = Omit<Purchase, 'id' | 'created_at' | 'deleted_at'>;
+
+export type AnyPurchaseItemDto = 
+  | CreatePurchaseItemDto 
+  | CreatePurchaseItemAssetsDto 
+  | CreatePurchaseItemConsumablesDto;

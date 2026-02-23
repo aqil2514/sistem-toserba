@@ -13,6 +13,8 @@ import { PurchaseActivityService } from './purchase-activity.service';
 import { PurchaseFetcherService } from './purchase-fetcher.service';
 import { PurchaseItemInsert } from '../interface/items/purchase-items.interface';
 import { PurchaseInsert } from '../interface/purchase.interface';
+import { PurchaseAssetsDbInsert } from '../interface/items/purchase-assets.interface';
+import { PurchaseConsumablesDbInsert } from '../interface/items/purchase-consumables.interface';
 
 @Injectable()
 export class PurchaseFormService {
@@ -24,149 +26,242 @@ export class PurchaseFormService {
     private readonly fetcherService: PurchaseFetcherService,
   ) {}
 
-  async createPurchase(purchaseDto: CreatePurchaseDto) {
-    const mappedPurchase =
-      await this.mapperService.mapToPurchaseDb(purchaseDto);
+  // async createPurchase(purchaseDto: CreatePurchaseDto) {
+  //   const mappedPurchase =
+  //     await this.mapperService.mapToPurchaseDb(purchaseDto);
 
-    const { data: purchase, error: purchaseError } = await this.supabase
+  //   const { data: purchase, error: purchaseError } = await this.supabase
+  //     .from('purchases')
+  //     .insert(mappedPurchase)
+  //     .select()
+  //     .single();
+
+  //   if (purchaseError) {
+  //     console.error(purchaseError);
+  //     throw new InternalServerErrorException(
+  //       'Terjadi kesalahan saat tambah purchase data',
+  //     );
+  //   }
+
+  //   const mappedItem = await Promise.all(
+  //     purchaseDto.items.map(async (val) =>
+  //       this.mapperService.mapToPurchaseItemDb(val, purchase.id),
+  //     ),
+  //   );
+
+  //   const { error: itemError } = await this.supabase
+  //     .from('purchase_items')
+  //     .insert(mappedItem);
+
+  //   if (itemError) {
+  //     await this.supabase.from('purchases').delete().eq('id', purchase.id);
+
+  //     throw new InternalServerErrorException(
+  //       'Terjadi kesalahan saat tambah purchase item data',
+  //     );
+  //   }
+
+  //   await this.activityService.createPurchaseActivity(
+  //     mappedPurchase,
+  //     mappedItem,
+  //     purchase.id,
+  //   );
+
+  //   return {
+  //     message: 'Berhasil tambah data',
+  //     purchaseId: purchase.id,
+  //   };
+  // }
+
+  // async updatePurchase(purchaseId: string, dto: UpdatePurchaseDto) {
+  //   const [oldPurchase, oldItems] = await Promise.all([
+  //     this.fetcherService.getPurchaseById(purchaseId),
+  //     this.fetcherService.getPurchaseItemByPurchaseId(purchaseId),
+  //   ]);
+
+  //   // 1️⃣ Pastikan purchase ada & belum dihapus
+  //   const { data: existing, error: findError } = await this.supabase
+  //     .from('purchases')
+  //     .select('id')
+  //     .eq('id', purchaseId)
+  //     .is('deleted_at', null)
+  //     .maybeSingle();
+
+  //   if (findError || !existing) {
+  //     throw new NotFoundException('Purchase tidak ditemukan');
+  //   }
+
+  //   // 2️⃣ Update HEADER purchase
+  //   const mappedPurchase = this.mapperService.mapToPurchaseUpdateDb({
+  //     ...dto,
+  //   });
+
+  //   if (Object.keys(mappedPurchase).length === 0)
+  //     throw new BadRequestException('Tidak ada perubahan data header');
+
+  //   const { data: purchase, error: updateError } = await this.supabase
+  //     .from('purchases')
+  //     .update(mappedPurchase)
+  //     .eq('id', purchaseId)
+  //     .select()
+  //     .maybeSingle();
+
+  //   if (updateError) {
+  //     console.error(updateError);
+  //     throw new InternalServerErrorException('Gagal update data purchase');
+  //   }
+
+  //   if (!purchase) {
+  //     throw new NotFoundException('Purchase tidak ditemukan');
+  //   }
+
+  //   // 3️⃣ Hard delete item lama
+  //   const deletedAt = new Date().toISOString();
+
+  //   const { error: hardDeleteError } = await this.supabase
+  //     .from('purchase_items')
+  //     .delete()
+  //     .eq('purchase_id', purchaseId)
+  //     .is('deleted_at', null);
+
+  //   if (hardDeleteError) {
+  //     console.error(hardDeleteError);
+  //     throw new InternalServerErrorException('Gagal menghapus item lama');
+  //   }
+
+  //   const newItems: PurchaseItemInsert[] = []; // Buat log aktivitas
+  //   // 4️⃣ Insert item BARU (jika ada)
+  //   if (dto.items && dto.items.length > 0) {
+  //     const mappedItems = await Promise.all(
+  //       dto.items.map((item) =>
+  //         this.mapperService.mapToPurchaseItemDb(item, purchaseId),
+  //       ),
+  //     );
+
+  //     newItems.push(...mappedItems);
+
+  //     const { error: insertItemError } = await this.supabase
+  //       .from('purchase_items')
+  //       .insert(mappedItems);
+
+  //     if (insertItemError) {
+  //       console.error(insertItemError);
+
+  //       await this.supabase
+  //         .from('purchase_items')
+  //         .update({ deleted_at: null })
+  //         .eq('purchase_id', purchaseId)
+  //         .eq('deleted_at', deletedAt);
+
+  //       throw new InternalServerErrorException('Gagal menambahkan item baru');
+  //     }
+  //   }
+
+  //   await this.activityService.updatePurchaseActivity(
+  //     mappedPurchase as PurchaseInsert,
+  //     oldPurchase,
+  //     newItems,
+  //     oldItems,
+  //     purchaseId,
+  //   );
+
+  //   return {
+  //     purchase,
+  //     message: 'Purchase berhasil diperbarui',
+  //   };
+  // }
+
+  private async createHeaderPurchase(
+    headerData: PurchaseInsert,
+  ): Promise<string> {
+    const { data, error } = await this.supabase
       .from('purchases')
-      .insert(mappedPurchase)
-      .select()
-      .single();
+      .insert(headerData)
+      .select('id')
+      .maybeSingle();
 
-    if (purchaseError) {
-      console.error(purchaseError);
-      throw new InternalServerErrorException(
-        'Terjadi kesalahan saat tambah purchase data',
-      );
+    if (error) {
+      console.error(error);
+      throw error;
     }
 
-    const mappedItem = await Promise.all(
-      purchaseDto.items.map(async (val) =>
-        this.mapperService.mapToPurchaseItemDb(val, purchase.id),
-      ),
-    );
+    if (!data) throw new NotFoundException('Data tidak ditemukan');
 
-    const { error: itemError } = await this.supabase
-      .from('purchase_items')
-      .insert(mappedItem);
-
-    if (itemError) {
-      await this.supabase.from('purchases').delete().eq('id', purchase.id);
-
-      throw new InternalServerErrorException(
-        'Terjadi kesalahan saat tambah purchase item data',
-      );
-    }
-
-    await this.activityService.createPurchaseActivity(
-      mappedPurchase,
-      mappedItem,
-      purchase.id,
-    );
-
-    return {
-      message: 'Berhasil tambah data',
-      purchaseId: purchase.id,
-    };
+    return data.id;
   }
 
-  async updatePurchase(purchaseId: string, dto: UpdatePurchaseDto) {
-    const [oldPurchase, oldItems] = await Promise.all([
-      this.fetcherService.getPurchaseById(purchaseId),
-      this.fetcherService.getPurchaseItemByPurchaseId(purchaseId),
-    ]);
+  private async createNewPurchaseItems(items: PurchaseItemInsert[]) {
+    const { error } = await this.supabase.from('purchase_items').insert(items);
 
-    // 1️⃣ Pastikan purchase ada & belum dihapus
-    const { data: existing, error: findError } = await this.supabase
-      .from('purchases')
-      .select('id')
-      .eq('id', purchaseId)
-      .is('deleted_at', null)
-      .maybeSingle();
-
-    if (findError || !existing) {
-      throw new NotFoundException('Purchase tidak ditemukan');
+    if (error) {
+      console.error(error);
+      throw error;
     }
+  }
 
-    // 2️⃣ Update HEADER purchase
-    const mappedPurchase = this.mapperService.mapToPurchaseUpdateDb({
-      ...dto,
-    });
+  private async createNewPurchaseAssets(assets: PurchaseAssetsDbInsert[]) {
+    const { error } = await this.supabase
+      .from('purchase_assets')
+      .insert(assets);
 
-    if (Object.keys(mappedPurchase).length === 0)
-      throw new BadRequestException('Tidak ada perubahan data header');
-
-    const { data: purchase, error: updateError } = await this.supabase
-      .from('purchases')
-      .update(mappedPurchase)
-      .eq('id', purchaseId)
-      .select()
-      .maybeSingle();
-
-    if (updateError) {
-      console.error(updateError);
-      throw new InternalServerErrorException('Gagal update data purchase');
+    if (error) {
+      console.error(error);
+      throw error;
     }
+  }
 
-    if (!purchase) {
-      throw new NotFoundException('Purchase tidak ditemukan');
+  private async createNewPurchaseConsumables(
+    consumables: PurchaseConsumablesDbInsert[],
+  ) {
+    const { error } = await this.supabase
+      .from('purchase_consumables')
+      .insert(consumables);
+
+    if (error) {
+      console.error(error);
+      throw error;
     }
+  }
 
-    // 3️⃣ Hard delete item lama
-    const deletedAt = new Date().toISOString();
+  async createNewPurchase(purchaseDto: CreatePurchaseDto) {
+    const { items, ...header } = purchaseDto;
+    const mappedHeader = await this.mapperService.mapToPurchaseDb(purchaseDto);
+    const purchaseId = await this.createHeaderPurchase(mappedHeader);
 
-    const { error: hardDeleteError } = await this.supabase
-      .from('purchase_items')
-      .delete()
-      .eq('purchase_id', purchaseId)
-      .is('deleted_at', null);
-
-    if (hardDeleteError) {
-      console.error(hardDeleteError);
-      throw new InternalServerErrorException('Gagal menghapus item lama');
-    }
-
-    const newItems: PurchaseItemInsert[] = []; // Buat log aktivitas
-    // 4️⃣ Insert item BARU (jika ada)
-    if (dto.items && dto.items.length > 0) {
+    try {
       const mappedItems = await Promise.all(
-        dto.items.map((item) =>
-          this.mapperService.mapToPurchaseItemDb(item, purchaseId),
+        items.map((item) =>
+          this.mapperService.mapToPurchaseItemByType(
+            item,
+            purchaseId,
+            header.purchase_type,
+          ),
         ),
       );
 
-      newItems.push(...mappedItems);
-
-      const { error: insertItemError } = await this.supabase
-        .from('purchase_items')
-        .insert(mappedItems);
-
-      if (insertItemError) {
-        console.error(insertItemError);
-
-        await this.supabase
-          .from('purchase_items')
-          .update({ deleted_at: null })
-          .eq('purchase_id', purchaseId)
-          .eq('deleted_at', deletedAt);
-
-        throw new InternalServerErrorException('Gagal menambahkan item baru');
+      switch (header.purchase_type) {
+        case 'stock':
+          await this.createNewPurchaseItems(
+            mappedItems as PurchaseItemInsert[],
+          );
+          break;
+        case 'assets':
+          await this.createNewPurchaseAssets(
+            mappedItems as PurchaseAssetsDbInsert[],
+          );
+          break;
+        case 'consumable':
+          await this.createNewPurchaseConsumables(
+            mappedItems as PurchaseConsumablesDbInsert[],
+          );
+          break;
+        default:
+          throw new Error('Tipe data tidak dikenal');
       }
+    } catch (error) {
+      await this.supabase.from('purchases').delete().eq('id', purchaseId);
+      throw error;
     }
-
-    await this.activityService.updatePurchaseActivity(
-      mappedPurchase as PurchaseInsert,
-      oldPurchase,
-      newItems,
-      oldItems,
-      purchaseId,
-    );
-
-    return {
-      purchase,
-      message: 'Purchase berhasil diperbarui',
-    };
   }
 
   async updateQuantityRemaining(
