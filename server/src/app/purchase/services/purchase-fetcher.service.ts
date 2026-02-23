@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { Purchase } from '../interface/purchase.interface';
-import { PurchaseItem } from '../interface/purchase-items.interface';
+import { PurchaseItem } from '../interface/items/purchase-items.interface';
 
 @Injectable()
 export class PurchaseFetcherService {

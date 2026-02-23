@@ -7,7 +7,7 @@ import { FormFieldCombobox } from "@/components/forms/field-combobox.form";
 import { FormFieldNumber } from "@/components/forms/field-number.form";
 import { FormFieldCurrency } from "@/components/forms/field-currency.form";
 import { FormFieldArrayTabs } from "@/components/forms/field-array-tabs.form";
-import { defaultPurchaseItem } from "../../../schema/purchase-items.schema";
+import { defaultPurchaseItem } from "../../../schema/items/purchase-items.schema";
 import { useProductName } from "@/hooks/view-table/use-product-name";
 import { AddProductFormPurchaseDialog } from "../../dialog/add/dialog-add-product.purchase";
 

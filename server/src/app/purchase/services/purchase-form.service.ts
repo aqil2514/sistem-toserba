@@ -11,7 +11,7 @@ import { CreatePurchaseDto } from '../dto/create-purchase.dto';
 import { PurchaseMapperService } from './purchase-mapper.service';
 import { PurchaseActivityService } from './purchase-activity.service';
 import { PurchaseFetcherService } from './purchase-fetcher.service';
-import { PurchaseItemInsert } from '../interface/purchase-items.interface';
+import { PurchaseItemInsert } from '../interface/items/purchase-items.interface';
 import { PurchaseInsert } from '../interface/purchase.interface';
 
 @Injectable()

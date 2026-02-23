@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ActivityService } from '../../activity/activity.service';
-import { PurchaseItemInsert } from '../interface/purchase-items.interface';
+import { PurchaseItemInsert } from '../interface/items/purchase-items.interface';
 import { PurchaseInsert } from '../interface/purchase.interface';
 import { formatRupiah } from '../../../utils/format-to-rupiah';
 import {

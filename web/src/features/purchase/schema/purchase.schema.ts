@@ -2,10 +2,15 @@ import { z } from "zod";
 import {
   defaultPurchaseItem,
   purchaseItemSchema,
-} from "./purchase-items.schema";
+} from "./items/purchase-items.schema";
+import {
+  defaultPurchaseAsset,
+  purchaseAssetsSchema,
+} from "./items/purchase-assets.schema";
 
 const itemSchemaByType: Record<string, z.ZodType> = {
   stock: purchaseItemSchema,
+  assets: purchaseAssetsSchema,
 };
 
 /**
@@ -88,4 +93,5 @@ export const EMPTY_VALUES: PurchaseFormValues = {
 
 export const defaultItemByType: Record<string, object> = {
   stock: defaultPurchaseItem,
+  assets: defaultPurchaseAsset,
 };

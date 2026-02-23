@@ -11,7 +11,7 @@ import { Purchase, PurchaseInsert } from '../interface/purchase.interface';
 import { CreatePurchaseDto } from '../dto/create-purchase.dto';
 import { formatDateYYYYMMDD } from '../../../utils/format-date';
 import { CreatePurchaseItemDto } from '../dto/create-purchase-item.dto';
-import { PurchaseItemInsert } from '../interface/purchase-items.interface';
+import { PurchaseItemInsert } from '../interface/items/purchase-items.interface';
 import { UpdatePurchaseDto } from '../dto/update-purchase.dto';
 import { DataQueryResponse } from '../../../@types/general';
 import {

@@ -3,7 +3,7 @@ import { CreatePurchaseDto } from '../dto/create-purchase.dto';
 import { PurchaseInsert } from '../interface/purchase.interface';
 import { UpdatePurchaseDto } from '../dto/update-purchase.dto';
 import { CreatePurchaseItemDto } from '../dto/create-purchase-item.dto';
-import { PurchaseItemInsert } from '../interface/purchase-items.interface';
+import { PurchaseItemInsert } from '../interface/items/purchase-items.interface';
 import { formatDateYYYYMMDD } from '../../../utils/format-date';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { ProductFetchService } from '../../products/helpers/products-fetch.service';

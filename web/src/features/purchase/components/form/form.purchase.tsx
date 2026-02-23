@@ -18,6 +18,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { FormPurchaseItem } from "./items/form-item.purchase";
+import { FormPurchaseAssets } from "./items/form-assets.purchase";
 
 interface Props {
   initialValues?: PurchaseFormValues;
@@ -74,7 +75,7 @@ const FlexRenderItemForm: React.FC<FlexRenderItemFormProps> = ({
     case "stock":
       return <FormPurchaseItem form={form} />;
     case "assets":
-      return <p>Bagian aset belum siap</p>;
+      return <FormPurchaseAssets form={form} />
     case "consumable":
       return <p>Bagian Perlengkapan Toko juga belum siap</p>;
     default:
