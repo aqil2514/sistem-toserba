@@ -20,6 +20,7 @@ export function PurchaseColumnAction({ row }: Props) {
         update({
           action: "detail",
           id: row.original.id,
+          purchase_type: row.original.purchase_type
         }),
     },
     {

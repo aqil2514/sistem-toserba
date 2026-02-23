@@ -22,7 +22,7 @@ export function FormPurchaseConsumables({ form }: Props) {
         <FormComponent form={form} index={index} />
       )}
       name="items"
-      title="Aset yang dibeli"
+      title="Perlengkapan Toko yang dibeli"
     />
   );
 }
@@ -49,7 +49,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ form, index }) => {
     <div className="space-y-4">
       <FormFieldText
         form={form}
-        label="Nama Aset"
+        label="Nama Perlengkapan Toko"
         name={`items.${index}.consumable_name`}
         placeholder="Misal : Kulkas"
       />

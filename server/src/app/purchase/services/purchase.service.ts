@@ -7,7 +7,11 @@ import {
 } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { MappedResponse } from '../dto/purchase-response';
-import { Purchase, PurchaseInsert } from '../interface/purchase.interface';
+import {
+  Purchase,
+  PurchaseInsert,
+  PurchaseType,
+} from '../interface/purchase.interface';
 import { CreatePurchaseDto } from '../dto/create-purchase.dto';
 import { formatDateYYYYMMDD } from '../../../utils/format-date';
 import { CreatePurchaseItemDto } from '../dto/items/create-purchase-item.dto';
@@ -21,6 +25,12 @@ import {
 import { ProductFetchService } from '../../products/helpers/products-fetch.service';
 import { BasicQueryDto } from '../../../services/query/dto/query.dto';
 import { BasicQueryService } from '../../../services/query/query.service';
+import { PurchaseGetterService } from './helper/purchase-getter.service';
+import {
+  AnyItemTypes,
+  PurchaseDetailReturn,
+  PurchaseTypeItemMap,
+} from '../interface/purchase-api.interface';
 
 @Injectable()
 export class PurchaseService {
@@ -28,6 +38,7 @@ export class PurchaseService {
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
     private readonly queryService: BasicQueryService,
+    private readonly getterService: PurchaseGetterService,
   ) {}
 
   async findAll() {
@@ -68,33 +79,25 @@ export class PurchaseService {
     };
   }
 
-  async findByIdWithItems(purchaseId: string) {
-    const { data, error } = await this.supabase
-      .from('purchase_items')
-      .select('*, product_id(*), purchase_id(*)')
-      .eq('purchase_id', purchaseId);
+  async findByIdWithItems<K extends keyof PurchaseTypeItemMap>(
+    purchaseId: string,
+  ): Promise<PurchaseDetailReturn<K>> {
+    const header = await this.getterService.getPurchaseById(purchaseId);
+    const purchase_type = header.purchase_type as K;
 
-    if (error) throw error;
+    const itemByTipe: Record<PurchaseType, () => Promise<AnyItemTypes[]>> = {
+      assets: () =>
+        this.getterService.getPurchaseAssetsByPurchaseId(purchaseId),
+      consumable: () =>
+        this.getterService.getPurchaseConsumablesByPurchaseId(purchaseId),
+      stock: () => this.getterService.getPurchaseItemsByPurchaseId(purchaseId),
+    };
 
-    const mappedItems: MappedResponse[] | undefined =
-      data?.map((val) => {
-        const name = val.product_id.name;
-        const price = val.price;
-        const quantity = val.quantity;
-        const remaining_quantity = val.remaining_quantity;
-        const id = val.id;
-        return {
-          id,
-          name,
-          price,
-          quantity,
-          remaining_quantity,
-          unit: val.product_id.unit,
-          hpp: val.hpp,
-          product_id: val.product_id.id,
-        };
-      }) ?? [];
-
-    return mappedItems;
+    const items = (await itemByTipe[purchase_type]()) as PurchaseTypeItemMap[K];
+    return {
+      header,
+      type: purchase_type,
+      items,
+    };
   }
 }

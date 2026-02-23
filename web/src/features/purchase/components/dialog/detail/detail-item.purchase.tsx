@@ -1,48 +1,96 @@
-import { OneLineItem } from "@/components/molecules/items/one-line-item";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { PurchaseMappedDetail } from "@/features/purchase/types/purchase-mapped-detail";
+import { Badge } from "@/components/ui/badge";
+import { PurchaseAssetsDb } from "@/features/purchase/types/items/purchase-assets.interface";
+import { PurchaseConsumablesDb } from "@/features/purchase/types/items/purchase-consumables.interface";
+import { PurchaseItem } from "@/features/purchase/types/items/purchase-items.interface";
+import { PurchaseType } from "@/features/purchase/types/purchase";
+import { AnyItemTypes } from "@/features/purchase/types/purchase-api.types";
 import { formatRupiah } from "@/utils/format-to-rupiah";
+import React from "react";
 
 interface Props {
-  items: PurchaseMappedDetail[];
+  items: AnyItemTypes[];
+  type: PurchaseType;
 }
-export function DetailItem({ items }: Props) {
-  const totalPrice = items.reduce((acc, curr) => acc + curr.price, 0);
+
+export function FlexDetailItemRender({ items, type }: Props) {
+  switch (type) {
+    case "assets":
+      return <DetailAssetDb items={items as PurchaseAssetsDb[]} />;
+    case "stock":
+      return <DetailItemStock items={items as PurchaseItem[]} />;
+    default:
+      return <DetailConsumable items={items as PurchaseConsumablesDb[]} />;
+  }
+}
+
+const DetailItemStock: React.FC<{ items: PurchaseItem[] }> = ({ items }) => {
   return (
-    <div className="space-y-4">
-      <p className="text-muted-foreground font-semibold text-lg">
-        Item yang Dibeli
-      </p>
-      <Separator />
-      <ScrollArea className="h-96 px-4">
-        <div className="space-y-4">
-          {items.map((item) => (
-            <div
-              key={item.id}
-              className="border rounded-2xl border-gray-300 px-2 py-4 flex justify-between"
-            >
-              <div className="space-y-1">
-                <p className="font-semibold">{item.name}</p>
-                <p className="text-muted-foreground text-sm">
-                  Qty : {item.quantity} • Sisa : {item.remaining_quantity}{" "}
-                </p>
-              </div>
-              <div className="space-y-1">
-                <p className="font-semibold text-right">
-                  {formatRupiah(item.price)}
-                </p>
-                <p className="text-muted-foreground text-sm">
-                  HPP : {formatRupiah(item.hpp, 2)}{" "}
-                </p>
-              </div>
-            </div>
-          ))}
+    <div className="space-y-2">
+      {items.map((item) => (
+        <div key={item.id} className="rounded-md border p-3 space-y-1">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium">{item.product_name ?? "—"}</p>
+            <p className="text-sm font-semibold">{formatRupiah(item.price)}</p>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span>{item.quantity} pcs</span>
+            <span>·</span>
+            <span>HPP {formatRupiah(item.hpp)}</span>
+            <span>·</span>
+            <span>Sisa {item.remaining_quantity} pcs</span>
+          </div>
         </div>
-      </ScrollArea>
-      <Separator />
-      <OneLineItem label="Total Barang" value={items.length} />
-      <OneLineItem label="Total Nominal" value={formatRupiah(totalPrice)} />
+      ))}
     </div>
   );
-}
+};
+
+const DetailAssetDb: React.FC<{ items: PurchaseAssetsDb[] }> = ({ items }) => {
+  return (
+    <div className="space-y-2">
+      {items.map((item) => (
+        <div key={item.id} className="rounded-md border p-3 space-y-1">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium">{item.asset_name}</p>
+            <p className="text-sm font-semibold">
+              {formatRupiah(item.total_price)}
+            </p>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span>{item.unit_count} unit</span>
+            <span>·</span>
+            <span>{formatRupiah(item.unit_price)} / unit</span>
+            <span>·</span>
+            <Badge variant="outline" className="text-xs h-4">
+              {item.condition}
+            </Badge>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const DetailConsumable: React.FC<{ items: PurchaseConsumablesDb[] }> = ({
+  items,
+}) => {
+  return (
+    <div className="space-y-2">
+      {items.map((item) => (
+        <div key={item.id} className="rounded-md border p-3 space-y-1">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium">{item.consumable_name}</p>
+            <p className="text-sm font-semibold">
+              {formatRupiah(item.total_price)}
+            </p>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span>{item.quantity} pcs</span>
+            <span>·</span>
+            <span>{formatRupiah(item.unit_price)} / pcs</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
