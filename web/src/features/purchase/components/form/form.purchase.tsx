@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/card";
 import { FormPurchaseItem } from "./items/form-item.purchase";
 import { FormPurchaseAssets } from "./items/form-assets.purchase";
+import { FormPurchaseConsumables } from "./items/form-consumables.purchase";
 
 interface Props {
   initialValues?: PurchaseFormValues;
@@ -50,6 +51,7 @@ export function PurchaseForm({ onSubmit, initialValues }: Props) {
         onSubmit={form.handleSubmit(onSubmit, () =>
           toast.error("Ada data yang belum diisi"),
         )}
+        className="space-y-4"
       >
         <div className="grid md:grid-cols-2 gap-4">
           <FormHeader form={form} />
@@ -77,7 +79,7 @@ const FlexRenderItemForm: React.FC<FlexRenderItemFormProps> = ({
     case "assets":
       return <FormPurchaseAssets form={form} />
     case "consumable":
-      return <p>Bagian Perlengkapan Toko juga belum siap</p>;
+      return <FormPurchaseConsumables form={form} />
     default:
       return (
         <Card>
