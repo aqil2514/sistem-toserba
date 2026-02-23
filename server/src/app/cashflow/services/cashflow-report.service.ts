@@ -89,6 +89,7 @@ export class CashflowReportService {
 
   // >>>>>> CASHFLOW MOVEMENT START <<<<<<
 
+  // CASHFLOW GLOBAL BALANCE
   private async getCurrentBalance(): Promise<MovementAssetSummary['data']> {
     const { data, error } = await this.supabase.rpc(
       'get_asset_running_global',
@@ -151,18 +152,42 @@ export class CashflowReportService {
     };
   }
 
-  async getCashflowMovementWithAsset(
-    rawQuery: CashflowReportDto,
-  ): Promise<MovementAssetViaSummary> {
-    const query = this.queryService.mapToBasicQuery(rawQuery);
+  // CASHFLOW MOVEMENT WITH ASSET
+  private async getBalanceWithAsset(
+    startUtc: string,
+    endUtc: string,
+  ): Promise<MovementAssetViaSummary['data']> {
+    let supabase = this.supabase
+      .from('balance_snapshots')
+      .select('*')
+      .order('snapshot_date', { ascending: false });
 
-    const { endUtc, startUtc } = formatQueryDate(query);
+    applyDateRangeFilter(supabase, 'snapshot_date', startUtc, endUtc);
 
+    const { data, error } = await supabase;
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    const mappedData: MovementAssetViaSummary['data'] = data.map((d) => ({
+      date: d.snapshot_date,
+      running_total: d.closing_balance,
+      via: d.asset,
+    }));
+
+    return mappedData;
+  }
+
+  private async getCurrentBalanceWithAsset(): Promise<
+    MovementAssetViaSummary['data']
+  > {
     const { data, error } = await this.supabase.rpc(
       'get_asset_running_per_via',
       {
-        p_start_utc: startUtc,
-        p_end_utc: endUtc,
+        p_start_utc: startOfDayUTC(new Date()),
+        p_end_utc: endOfDayUTC(new Date()),
       },
     );
 
@@ -171,8 +196,31 @@ export class CashflowReportService {
       throw error;
     }
 
+    return data;
+  }
+
+  async getCashflowMovementWithAsset(
+    rawQuery: CashflowReportDto,
+  ): Promise<MovementAssetViaSummary> {
+    const query = this.queryService.mapToBasicQuery(rawQuery);
+
+    const { endUtc, startUtc } = formatQueryDate(query);
+    const today = new Date().toISOString().split('T')[0];
+    const endQuery = endUtc.split('T')[0];
+
+    const isIncludeToday = today === endQuery;
+
+    const rangeBalance = await this.getBalanceWithAsset(startUtc, endUtc);
+    if (!isIncludeToday) {
+      return {
+        data: rangeBalance,
+        type: 'movement-asset',
+      };
+    }
+    const todayBalance = await this.getCurrentBalanceWithAsset();
+
     return {
-      data,
+      data: [...todayBalance, ...rangeBalance],
       type: 'movement-asset',
     };
   }
