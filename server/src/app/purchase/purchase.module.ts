@@ -8,6 +8,7 @@ import { PurchaseFetcherController } from './controller/purchase-fetcher.control
 import { PurchaseFetcherService } from './services/purchase-fetcher.service';
 import { PurchaseMapperService } from './services/purchase-mapper.service';
 import { PurchaseActivityService } from './services/purchase-activity.service';
+import { PurchaseCreatorService } from './services/helper/purchase-creator.service';
 
 @Module({
   imports: [ProductsModule],
@@ -17,7 +18,8 @@ import { PurchaseActivityService } from './services/purchase-activity.service';
     PurchaseReportService,
     PurchaseFetcherService,
     PurchaseMapperService,
-    PurchaseActivityService
+    PurchaseActivityService,
+    PurchaseCreatorService
   ],
   controllers: [PurchaseController, PurchaseFetcherController],
 })
