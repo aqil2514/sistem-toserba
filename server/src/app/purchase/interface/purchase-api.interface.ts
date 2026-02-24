@@ -12,24 +12,10 @@ import {
 } from './items/purchase-items.interface';
 import { Purchase, PurchaseType } from './purchase.interface';
 
-export type PurchaseItemTableName =
-  | 'purchase_items'
-  | 'purchase_consumables'
-  | 'purchase_assets';
-
 export type ItemTableInsert =
   | PurchaseAssetsDbInsert
   | PurchaseItemInsert
   | PurchaseConsumablesDbInsert;
-
-export interface TableInsertMap extends Record<
-  PurchaseItemTableName,
-  ItemTableInsert
-> {
-  purchase_items: PurchaseItemInsert;
-  purchase_consumables: PurchaseConsumablesDbInsert;
-  purchase_assets: PurchaseAssetsDbInsert;
-}
 
 export type AnyItemTypes =
   | PurchaseItem
