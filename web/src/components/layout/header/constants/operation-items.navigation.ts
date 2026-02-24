@@ -15,15 +15,15 @@ const NAV_ITEMS: RouteItems[] = [
     icon: SquarePercent,
   },
   {
-    title: "Pembelian Stok",
+    title: "Pembelian Barang",
     href: "/purchase",
-    description: "Transaksi Pembelian Stok",
+    description: "Transaksi Pembelian stok, aset, dan perlengkapan",
     icon: ShoppingBasket,
   },
   {
     title: "Laporan Pembelian",
     href: "/purchase/report",
-    description: "Laporan Transaksi Pembelian Stok",
+    description: "Laporan Transaksi Pembelian Barang",
     icon: Barcode,
   },
 ];

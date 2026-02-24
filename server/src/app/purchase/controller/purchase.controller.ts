@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -69,13 +70,13 @@ export class PurchaseController {
     return await this.purchaseFormService.softDeletePurchase(id);
   }
 
-  // @Patch(':id')
-  // async updatePurchase(
-  //   @Param('id') id: string,
-  //   @Body() body: UpdatePurchaseDto,
-  // ) {
-  //   return await this.purchaseFormService.updatePurchase(id, body);
-  // }
+  @Put(':id')
+  async updatePurchase(
+    @Param('id') id: string,
+    @Body() body: CreatePurchaseDto,
+  ) {
+    return await this.purchaseFormService.updatePurchase(id, body);
+  }
 
   @Patch(':item_id/remaining_quantity')
   async updateRemainingQuantityPurchase(

@@ -5,18 +5,17 @@ import { MutateButton } from "@/components/ui/mutate-button";
 
 export function PurchaseHeader() {
   const { set } = useQueryParams();
-  const {mutate} = usePurchase()
+  const { mutate } = usePurchase();
   return (
     <div className="flex items-center justify-between">
-      <h1 className="text-lg font-semibold">Barang Masuk</h1>
+      <h1 className="text-lg font-semibold">Pembelian Barang</h1>
 
-<div className="flex gap-4">
-
-      <Button variant={"outline"} onClick={() => set("action", "add")}>
-        Tambah Pembelian
-      </Button>
-      <MutateButton mutate={mutate} />
-</div>
+      <div className="flex gap-4">
+        <Button variant={"outline"} onClick={() => set("action", "add")}>
+          Tambah Pembelian
+        </Button>
+        <MutateButton mutate={mutate} />
+      </div>
     </div>
   );
 }

@@ -39,9 +39,11 @@ export function PurchaseForm({ onSubmit, initialValues }: Props) {
 
   useEffect(() => {
     if (purchaseType === "unselect") return;
+    if(initialValues) return;
+
     form.setValue("items", [defaultItemByType[purchaseType]]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [purchaseType]);
+  }, [purchaseType, initialValues]);
 
   const isSubmitting = form.formState.isSubmitting;
 
@@ -77,9 +79,9 @@ const FlexRenderItemForm: React.FC<FlexRenderItemFormProps> = ({
     case "stock":
       return <FormPurchaseItem form={form} />;
     case "assets":
-      return <FormPurchaseAssets form={form} />
+      return <FormPurchaseAssets form={form} />;
     case "consumable":
-      return <FormPurchaseConsumables form={form} />
+      return <FormPurchaseConsumables form={form} />;
     default:
       return (
         <Card>

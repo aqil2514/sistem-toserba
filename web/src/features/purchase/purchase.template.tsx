@@ -14,19 +14,13 @@ import { PurchaseDeleteDialog } from "./components/dialog/delete/dialog-delete.p
 import { DataTableFooterServer } from "@/components/organisms/ori-data-table/data-table-footer-server";
 import { TemplateMode } from "@/@types/general";
 import { useQueryBasics } from "@/hooks/use-query-basics";
+import { UnavailableDemo } from "@/components/templates/unavailable-demo";
 
 interface Props {
   mode: TemplateMode;
 }
 export function PurchaseTemplate({ mode }: Props) {
-  if (mode === "demo")
-    return (
-      <MainContainer>
-        <SectionContainer>
-          <h1>Versi Demo Belum Tersedia</h1>
-        </SectionContainer>
-      </MainContainer>
-    );
+  if (mode === "demo") return <UnavailableDemo />
 
   return (
     <PurchaseProvider>

@@ -4,6 +4,11 @@ import { PurchaseItemInsert } from '../../interface/items/purchase-items.interfa
 import { PurchaseAssetsDbInsert } from '../../interface/items/purchase-assets.interface';
 import { PurchaseConsumablesDbInsert } from '../../interface/items/purchase-consumables.interface';
 import { SupabaseClient } from '@supabase/supabase-js';
+import {
+  AnyItemTypes,
+  PurchaseItemTableName,
+  TableInsertMap,
+} from '../../interface/purchase-api.interface';
 
 @Injectable()
 export class PurchaseCreatorService {
@@ -55,6 +60,18 @@ export class PurchaseCreatorService {
     const { error } = await this.supabase
       .from('purchase_consumables')
       .insert(consumables);
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async createNewItems<T extends keyof TableInsertMap>(
+    tableName: T,
+    payloads: TableInsertMap[T][],
+  ) {
+    const { error } = await this.supabase.from(tableName).insert(payloads);
 
     if (error) {
       console.error(error);

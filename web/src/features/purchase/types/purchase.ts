@@ -14,7 +14,7 @@ export interface Purchase<T = unknown> {
 
   notes: string | null;
 
-  created_at: string | null;
+  created_at: string;
 
   purchase_code: string;
 

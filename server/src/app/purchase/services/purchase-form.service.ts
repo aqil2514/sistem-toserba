@@ -1,24 +1,27 @@
 import {
-  BadRequestException,
   Inject,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { UpdatePurchaseDto } from '../dto/update-purchase.dto';
 import { CreatePurchaseDto } from '../dto/create-purchase.dto';
 import { PurchaseMapperService } from './helper/purchase-mapper.service';
 import { PurchaseActivityService } from './purchase-activity.service';
 import { PurchaseFetcherService } from './purchase-fetcher.service';
-import { PurchaseItemInsert } from '../interface/items/purchase-items.interface';
-import { PurchaseInsert } from '../interface/purchase.interface';
-import { PurchaseAssetsDbInsert } from '../interface/items/purchase-assets.interface';
-import { PurchaseConsumablesDbInsert } from '../interface/items/purchase-consumables.interface';
+import { PurchaseType } from '../interface/purchase.interface';
 import { PurchaseCreatorService } from './helper/purchase-creator.service';
+import { PurchaseUpdateService } from './helper/purchase-updater.service';
+import { TableInsertMap } from '../interface/purchase-api.interface';
 
 @Injectable()
 export class PurchaseFormService {
+  private itemTableName: Record<PurchaseType, keyof TableInsertMap> = {
+    assets: 'purchase_assets',
+    consumable: 'purchase_consumables',
+    stock: 'purchase_items',
+  };
+
   constructor(
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
@@ -26,6 +29,7 @@ export class PurchaseFormService {
     private readonly activityService: PurchaseActivityService,
     private readonly fetcherService: PurchaseFetcherService,
     private readonly creatorService: PurchaseCreatorService,
+    private readonly updaterService: PurchaseUpdateService,
   ) {}
 
   async createNewPurchase(purchaseDto: CreatePurchaseDto) {
@@ -45,29 +49,47 @@ export class PurchaseFormService {
         ),
       );
 
-      switch (purchase_type) {
-        case 'stock':
-          await this.creatorService.createNewPurchaseItems(
-            mappedItems as PurchaseItemInsert[],
-          );
-          break;
-        case 'assets':
-          await this.creatorService.createNewPurchaseAssets(
-            mappedItems as PurchaseAssetsDbInsert[],
-          );
-          break;
-        case 'consumable':
-          await this.creatorService.createNewPurchaseConsumables(
-            mappedItems as PurchaseConsumablesDbInsert[],
-          );
-          break;
-        default:
-          throw new Error('Tipe data tidak dikenal');
-      }
+      await this.creatorService.createNewItems(
+        this.itemTableName[mappedHeader.purchase_type],
+        mappedItems,
+      );
     } catch (error) {
       await this.supabase.from('purchases').delete().eq('id', purchaseId);
       throw error;
     }
+  }
+
+  async updatePurchase(oldPurchaseId: string, purchaseDto: CreatePurchaseDto) {
+    const { purchase_code } =
+      await this.updaterService.getOldCode(oldPurchaseId);
+    if (!purchase_code)
+      throw new NotFoundException('Data pembelian tidak ditemukan');
+    const mappedHeader = await this.mapperService.mapToPurchaseDb(
+      purchaseDto,
+      purchase_code,
+    );
+    const mappedItems = await Promise.all(
+      purchaseDto.items.map((item) =>
+        this.mapperService.mapToPurchaseItemByType(
+          item,
+          oldPurchaseId,
+          mappedHeader.purchase_type,
+        ),
+      ),
+    );
+
+    await Promise.all([
+      this.updaterService.updatePurchaseHeader(oldPurchaseId, mappedHeader),
+      this.updaterService.hardDeleteItems(
+        oldPurchaseId,
+        this.itemTableName[mappedHeader.purchase_type],
+      ),
+    ]);
+
+    await this.creatorService.createNewItems(
+      this.itemTableName[mappedHeader.purchase_type],
+      mappedItems,
+    );
   }
 
   async updateQuantityRemaining(

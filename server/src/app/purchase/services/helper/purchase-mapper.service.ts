@@ -27,42 +27,6 @@ export class PurchaseMapperService {
     private readonly productFetcher: ProductFetchService,
   ) {}
 
-  private async generatePurchaseCode(date: Date): Promise<string> {
-    const dateStr = formatDateYYYYMMDD(date);
-    const prefix = `PUR-${dateStr}-`;
-
-    const { data } = await this.supabase
-      .from('purchases')
-      .select('purchase_code')
-      .ilike('purchase_code', `${prefix}%`)
-      .order('purchase_code', { ascending: false })
-      .limit(1)
-      .maybeSingle();
-
-    let nextNumber = 1;
-
-    if (data?.purchase_code) {
-      const lastNumber = Number(data.purchase_code.split('-').pop());
-      nextNumber = lastNumber + 1;
-    }
-
-    return `${prefix}${String(nextNumber).padStart(4, '0')}`;
-  }
-
-  async mapToPurchaseDb(raw: CreatePurchaseDto): Promise<PurchaseInsert> {
-    const code = await this.generatePurchaseCode(new Date(raw.purchase_date));
-    return {
-      notes: raw.notes,
-      purchase_date: raw.purchase_date,
-      supplier_name: raw.supplier_name,
-      supplier_type: raw.supplier_type,
-      purchase_code: code,
-      purchase_type: raw.purchase_type,
-      purchase_status: raw.purchase_status,
-      updated_at: new Date().toISOString(),
-    };
-  }
-
   mapToPurchaseUpdateDb(raw: UpdatePurchaseDto): Partial<PurchaseInsert> {
     const payload: Partial<PurchaseInsert> = {};
 
@@ -103,6 +67,46 @@ export class PurchaseMapperService {
   }
 
   // NEW
+  private async generatePurchaseCode(date: Date): Promise<string> {
+    const dateStr = formatDateYYYYMMDD(date);
+    const prefix = `PUR-${dateStr}-`;
+
+    const { data } = await this.supabase
+      .from('purchases')
+      .select('purchase_code')
+      .ilike('purchase_code', `${prefix}%`)
+      .order('purchase_code', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    let nextNumber = 1;
+
+    if (data?.purchase_code) {
+      const lastNumber = Number(data.purchase_code.split('-').pop());
+      nextNumber = lastNumber + 1;
+    }
+
+    return `${prefix}${String(nextNumber).padStart(4, '0')}`;
+  }
+
+  async mapToPurchaseDb(
+    raw: CreatePurchaseDto,
+    oldCode?: string,
+  ): Promise<PurchaseInsert> {
+    const code =
+      oldCode ?? (await this.generatePurchaseCode(new Date(raw.purchase_date)));
+    return {
+      notes: raw.notes,
+      purchase_date: raw.purchase_date,
+      supplier_name: raw.supplier_name,
+      supplier_type: raw.supplier_type,
+      purchase_code: code,
+      purchase_type: raw.purchase_type,
+      purchase_status: raw.purchase_status,
+      updated_at: new Date().toISOString(),
+    };
+  }
+
   async mapToPurchaseItemByType(
     item: AnyPurchaseItemDto,
     purchase_id: string,

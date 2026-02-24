@@ -1,7 +1,35 @@
-import { PurchaseAssetsDb } from './items/purchase-assets.interface';
-import { PurchaseConsumablesDb } from './items/purchase-consumables.interface';
-import { PurchaseItem } from './items/purchase-items.interface';
+import {
+  PurchaseAssetsDb,
+  PurchaseAssetsDbInsert,
+} from './items/purchase-assets.interface';
+import {
+  PurchaseConsumablesDb,
+  PurchaseConsumablesDbInsert,
+} from './items/purchase-consumables.interface';
+import {
+  PurchaseItem,
+  PurchaseItemInsert,
+} from './items/purchase-items.interface';
 import { Purchase, PurchaseType } from './purchase.interface';
+
+export type PurchaseItemTableName =
+  | 'purchase_items'
+  | 'purchase_consumables'
+  | 'purchase_assets';
+
+export type ItemTableInsert =
+  | PurchaseAssetsDbInsert
+  | PurchaseItemInsert
+  | PurchaseConsumablesDbInsert;
+
+export interface TableInsertMap extends Record<
+  PurchaseItemTableName,
+  ItemTableInsert
+> {
+  purchase_items: PurchaseItemInsert;
+  purchase_consumables: PurchaseConsumablesDbInsert;
+  purchase_assets: PurchaseAssetsDbInsert;
+}
 
 export type AnyItemTypes =
   | PurchaseItem
