@@ -27,46 +27,6 @@ export class PurchaseMapperService {
     private readonly productFetcher: ProductFetchService,
   ) {}
 
-  mapToPurchaseUpdateDb(raw: UpdatePurchaseDto): Partial<PurchaseInsert> {
-    const payload: Partial<PurchaseInsert> = {};
-
-    if (raw.purchase_date) {
-      payload.purchase_date = raw.purchase_date;
-    }
-
-    if (raw.supplier_name !== undefined) {
-      payload.supplier_name = raw.supplier_name;
-    }
-
-    if (raw.supplier_type !== undefined) {
-      payload.supplier_type = raw.supplier_type;
-    }
-
-    if (raw.notes !== undefined) {
-      payload.notes = raw.notes;
-    }
-
-    return payload;
-  }
-
-  async mapToPurchaseItemDb(
-    raw: CreatePurchaseItemDto,
-    purchaseId: string,
-  ): Promise<PurchaseItemInsert> {
-    const hpp = raw.price / raw.quantity;
-    const product = await this.productFetcher.findById(raw.product_id);
-    return {
-      purchase_id: purchaseId,
-      price: raw.price,
-      quantity: raw.quantity,
-      hpp,
-      product_id: raw.product_id,
-      product_name: product[0]?.name ?? '',
-      remaining_quantity: raw.quantity,
-    };
-  }
-
-  // NEW
   private async generatePurchaseCode(date: Date): Promise<string> {
     const dateStr = formatDateYYYYMMDD(date);
     const prefix = `PUR-${dateStr}-`;

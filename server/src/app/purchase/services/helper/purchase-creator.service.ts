@@ -34,39 +34,6 @@ export class PurchaseCreatorService {
     return data.id;
   }
 
-  async createNewPurchaseItems(items: PurchaseItemInsert[]) {
-    const { error } = await this.supabase.from('purchase_items').insert(items);
-
-    if (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-
-  async createNewPurchaseAssets(assets: PurchaseAssetsDbInsert[]) {
-    const { error } = await this.supabase
-      .from('purchase_assets')
-      .insert(assets);
-
-    if (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-
-  async createNewPurchaseConsumables(
-    consumables: PurchaseConsumablesDbInsert[],
-  ) {
-    const { error } = await this.supabase
-      .from('purchase_consumables')
-      .insert(consumables);
-
-    if (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-
   async createNewItems<T extends keyof TableInsertMap>(
     tableName: T,
     payloads: TableInsertMap[T][],
