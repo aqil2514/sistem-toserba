@@ -6,7 +6,7 @@ import { PurchaseActivityService } from './purchase-activity.service';
 import { PurchaseType } from '../interface/purchase.interface';
 import { PurchaseUpdateService } from './helper/purchase-updater.service';
 import { SupabaseRepositoryService } from '../../../services/supabase/supabase.service';
-import { TableName } from 'src/services/supabase/enums/table-name.enum';
+import { TableName } from '../../../services/supabase/enums/table-name.enum';
 
 @Injectable()
 export class PurchaseFormService {
