@@ -1,25 +1,19 @@
-import {
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { CreatePurchaseDto } from '../dto/create-purchase.dto';
 import { PurchaseMapperService } from './helper/purchase-mapper.service';
 import { PurchaseActivityService } from './purchase-activity.service';
-import { PurchaseFetcherService } from './purchase-fetcher.service';
 import { PurchaseType } from '../interface/purchase.interface';
-import { PurchaseCreatorService } from './helper/purchase-creator.service';
 import { PurchaseUpdateService } from './helper/purchase-updater.service';
-import { TableInsertMap } from '../interface/purchase-api.interface';
+import { SupabaseRepositoryService } from '../../../services/supabase/supabase.service';
+import { TableName } from 'src/services/supabase/enums/table-name.enum';
 
 @Injectable()
 export class PurchaseFormService {
-  private itemTableName: Record<PurchaseType, keyof TableInsertMap> = {
-    assets: 'purchase_assets',
-    consumable: 'purchase_consumables',
-    stock: 'purchase_items',
+  private itemTableName: Record<PurchaseType, TableName> = {
+    assets: TableName.PURCHASE_ASSETS,
+    consumable: TableName.PURCHASE_CONSUMABLES,
+    stock: TableName.PURCHASE_ITEMS,
   };
 
   constructor(
@@ -27,16 +21,17 @@ export class PurchaseFormService {
     private readonly supabase: SupabaseClient,
     private readonly mapperService: PurchaseMapperService,
     private readonly activityService: PurchaseActivityService,
-    private readonly fetcherService: PurchaseFetcherService,
-    private readonly creatorService: PurchaseCreatorService,
     private readonly updaterService: PurchaseUpdateService,
+    private readonly dbService: SupabaseRepositoryService,
   ) {}
 
   async createNewPurchase(purchaseDto: CreatePurchaseDto) {
     const { items, purchase_type } = purchaseDto;
     const mappedHeader = await this.mapperService.mapToPurchaseDb(purchaseDto);
-    const purchaseId =
-      await this.creatorService.createHeaderPurchase(mappedHeader);
+    const purchaseId = await this.dbService.createNewDataAndSelectId(
+      TableName.PURCHASES,
+      mappedHeader,
+    );
 
     try {
       const mappedItems = await Promise.all(
@@ -49,7 +44,7 @@ export class PurchaseFormService {
         ),
       );
 
-      await this.creatorService.createNewItems(
+      await this.dbService.createNewData(
         this.itemTableName[mappedHeader.purchase_type],
         mappedItems,
       );
@@ -79,14 +74,20 @@ export class PurchaseFormService {
     );
 
     await Promise.all([
-      this.updaterService.updatePurchaseHeader(oldPurchaseId, mappedHeader),
-      this.updaterService.hardDeleteItems(
+      this.dbService.updateData(
+        TableName.PURCHASES,
+        mappedHeader,
+        'id',
         oldPurchaseId,
+      ),
+      this.dbService.hardDelete(
         this.itemTableName[mappedHeader.purchase_type],
+        oldPurchaseId,
+        'purchase_id',
       ),
     ]);
 
-    await this.creatorService.createNewItems(
+    await this.dbService.createNewData(
       this.itemTableName[mappedHeader.purchase_type],
       mappedItems,
     );
@@ -107,48 +108,15 @@ export class PurchaseFormService {
     }
   }
 
-  async softDeletePurchase(purchaseId: string) {
-    const deletedAt = new Date().toISOString();
-    const [beforeDeletedPurchase, beforeDeletedItems] = await Promise.all([
-      this.fetcherService.getPurchaseById(purchaseId),
-      this.fetcherService.getPurchaseItemByPurchaseId(purchaseId),
+  async softDeletePurchase(purchaseId: string, purchase_type: PurchaseType) {
+    await Promise.all([
+      this.dbService.softDelete(TableName.PURCHASES, 'id', purchaseId),
+      this.dbService.softDelete(
+        this.itemTableName[purchase_type],
+        'purchase_id',
+        purchaseId,
+      ),
     ]);
-
-    // 1. Soft delete purchase
-    const { data: purchase, error: purchaseError } = await this.supabase
-      .from('purchases')
-      .update({ deleted_at: deletedAt })
-      .eq('id', purchaseId)
-      .is('deleted_at', null)
-      .select()
-      .single();
-
-    if (purchaseError || !purchase) {
-      throw new NotFoundException('Purchase tidak ditemukan');
-    }
-
-    // 2. Soft delete purchase items
-    const { error: itemError } = await this.supabase
-      .from('purchase_items')
-      .update({ deleted_at: deletedAt })
-      .eq('purchase_id', purchaseId)
-      .is('deleted_at', null);
-
-    if (itemError) {
-      console.error(itemError);
-      throw new InternalServerErrorException(
-        'Gagal soft delete purchase items',
-      );
-    }
-
-    await this.activityService.deletePurchaseActivity(
-      beforeDeletedPurchase,
-      beforeDeletedItems,
-      purchaseId,
-    );
-
-    return {
-      message: 'Purchase berhasil dihapus',
-    };
+    return;
   }
 }

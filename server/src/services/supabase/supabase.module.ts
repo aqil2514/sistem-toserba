@@ -1,9 +1,10 @@
 import { Global, Module } from '@nestjs/common';
 import { createClient } from '@supabase/supabase-js';
+import { SupabaseRepositoryService } from './supabase.service';
 
 @Global()
 @Module({
-  providers: [
+  providers: [SupabaseRepositoryService,
     {
       provide: 'SUPABASE_CLIENT',
       useFactory: () => {
@@ -14,6 +15,6 @@ import { createClient } from '@supabase/supabase-js';
       },
     },
   ],
-  exports: ['SUPABASE_CLIENT'],
+  exports: ['SUPABASE_CLIENT', SupabaseRepositoryService],
 })
 export class SupabaseModule {}

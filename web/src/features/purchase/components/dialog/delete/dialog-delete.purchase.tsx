@@ -15,10 +15,11 @@ export function PurchaseDeleteDialog() {
 
   const open = get("action") === "delete";
   const id = get("id");
+  const purchaseType = get("purchase_type");
 
   const deleteHandler = async () => {
     try {
-      await api.delete(`/purchase/${id}`);
+      await api.delete(`/purchase/${id}?purchase_type=${purchaseType}`);
       toast.success("Data pembelian berhasil dihapus");
       mutate?.();
       update({
@@ -66,7 +67,7 @@ export function PurchaseDeleteDialog() {
     <DeleteDialog
       onDeleteHandle={deleteHandler}
       onOpenChange={(open) => {
-        if (!open) return update({ action: null, id: null });
+        if (!open) return update({ action: null, id: null, purchase_type:null });
       }}
       open={open}
       contents={contents}

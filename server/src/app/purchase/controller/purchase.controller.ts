@@ -19,6 +19,7 @@ import { PurchaseQuery } from '../interface/purchase-query.interface';
 import { PurchaseFormService } from '../services/purchase-form.service';
 import { PurchaseReportService } from '../services/purchase-report.service';
 import { BasicQueryDto } from '../../../services/query/dto/query.dto';
+import { PurchaseType } from '../interface/purchase.interface';
 
 @UseGuards(PasetoGuard, RoleGuard)
 @Roles('admin')
@@ -66,8 +67,11 @@ export class PurchaseController {
   }
 
   @Delete(':id')
-  async softDeletePurchase(@Param('id') id: string) {
-    return await this.purchaseFormService.softDeletePurchase(id);
+  async softDeletePurchase(
+    @Param('id') id: string,
+    @Query('purchase_type') type: PurchaseType,
+  ) {
+    return await this.purchaseFormService.softDeletePurchase(id, type);
   }
 
   @Put(':id')
