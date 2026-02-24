@@ -14,20 +14,14 @@ import { DeleteDialog } from "@/components/molecules/dialog/delete-dialog";
 import { api } from "@/lib/api";
 import { SERVER_URL } from "@/constants/url";
 import { TemplateMode } from "@/@types/general";
+import { UnavailableDemo } from "@/components/templates/unavailable-demo";
 
 interface Props {
   mode: TemplateMode;
 }
 
 export default function ProductTemplate({ mode }: Props) {
-  if (mode === "demo")
-    return (
-      <MainContainer>
-        <SectionContainer>
-          <h1>Versi Demo Belum Tersedia</h1>
-        </SectionContainer>
-      </MainContainer>
-    );
+  if (mode === "demo") return <UnavailableDemo />
 
   return (
     <ProductsProvider>
