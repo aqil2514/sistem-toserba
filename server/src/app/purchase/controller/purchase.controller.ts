@@ -19,7 +19,7 @@ import { PurchaseQuery } from '../interface/purchase-query.interface';
 import { PurchaseFormService } from '../services/purchase-form.service';
 import { PurchaseReportService } from '../services/purchase-report.service';
 import { BasicQueryDto } from '../../../services/query/dto/query.dto';
-import { PurchaseType } from '../interface/purchase.interface';
+import { PurchaseStatus, PurchaseType } from '../interface/purchase.interface';
 
 @UseGuards(PasetoGuard, RoleGuard)
 @Roles('admin')
@@ -91,6 +91,14 @@ export class PurchaseController {
       item_id,
       body.remaining_quantity,
     );
+  }
+
+  @Patch(':purchase_id/purchase_status')
+  async updatePurchaseState(
+    @Param('purchase_id') purchaseId: string,
+    @Body('purchase_status') purchase_status: PurchaseStatus,
+  ) {
+    return await this.purchaseFormService.updatePurchaseStatus(purchaseId, purchase_status)
   }
 
   @Post()

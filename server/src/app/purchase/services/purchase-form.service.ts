@@ -3,7 +3,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { CreatePurchaseDto } from '../dto/create-purchase.dto';
 import { PurchaseMapperService } from './helper/purchase-mapper.service';
 import { PurchaseActivityService } from './purchase-activity.service';
-import { PurchaseType } from '../interface/purchase.interface';
+import { PurchaseStatus, PurchaseType } from '../interface/purchase.interface';
 import { PurchaseUpdateService } from './helper/purchase-updater.service';
 import { SupabaseRepositoryService } from '../../../services/supabase/supabase.service';
 import { TableName } from '../../../services/supabase/enums/table-name.enum';
@@ -98,9 +98,24 @@ export class PurchaseFormService {
     remaining_quantity: number,
   ) {
     const { error } = await this.supabase
-      .from('purchase_items')
+      .from(TableName.PURCHASE_ITEMS)
       .update({ remaining_quantity })
       .eq('id', purchase_item_id);
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async updatePurchaseStatus(
+    purchase_id: string,
+    purchase_status: PurchaseStatus,
+  ) {
+    const { error } = await this.supabase
+      .from(TableName.PURCHASES)
+      .update({ updated_at: new Date().toISOString(), purchase_status })
+      .eq('id', purchase_id);
 
     if (error) {
       console.error(error);

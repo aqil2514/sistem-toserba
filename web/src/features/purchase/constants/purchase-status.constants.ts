@@ -21,3 +21,17 @@ export const purchaseStatusOptions: LabelValue<string>[] = [
     value: key,
   })),
 ];
+
+export const purchaseStatusTitle: Record<PurchaseStatus, string> = {
+  cancelled: "Pembelian Dibatalkan",
+  ordered: "Pembelian Dipesan",
+  partially_received: "Diterima Sebagian",
+  received: "Pembelian Diterima",
+};
+
+export const purchaseStatusDescription: Record<PurchaseStatus, string> = {
+  cancelled: "Pembelian ini telah dibatalkan dan tidak akan diproses lebih lanjut.",
+  ordered: "Pembelian telah dipesan dan sedang diproses.",
+  partially_received: "Sebagian barang telah diterima, sisanya masih dalam proses pengiriman.",
+  received: "Semua barang telah diterima dan pembelian telah selesai.",
+};

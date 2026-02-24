@@ -6,11 +6,8 @@ import {
   purchaseTypeClassName,
   purchaseTypeLabel,
 } from "../../constants/purchase-type.constants";
-import {
-  purchaseStatusClassName,
-  purchaseStatusLabel,
-} from "../../constants/purchase-status.constants";
 import { Badge } from "@/components/ui/badge";
+import { PurchaseStatusBadge } from "./purchase-status.purchase";
 
 export const purchaseColumns: ColumnDef<Purchase>[] = [
   {
@@ -52,16 +49,7 @@ export const purchaseColumns: ColumnDef<Purchase>[] = [
   {
     accessorKey: "purchase_status",
     header: "Status Pembelian",
-    cell: ({ row }) => {
-      return (
-        <Badge
-          variant="outline"
-          className={purchaseStatusClassName[row.original.purchase_status]}
-        >
-          {purchaseStatusLabel[row.original.purchase_status]}
-        </Badge>
-      );
-    },
+    cell: ({ row }) => <PurchaseStatusBadge row={row} />,
   },
   {
     accessorKey: "action",
