@@ -29,7 +29,7 @@ export function FormPurchaseItem({ form }: Props) {
   const totalPrice = useMemo<number>(() => {
     if (!items) return 0;
 
-    return items.reduce((acc, curr) => acc + curr.price * curr.quantity, 0);
+    return items.reduce((acc, curr) => acc + curr.price, 0);
   }, [items]);
 
   return (
