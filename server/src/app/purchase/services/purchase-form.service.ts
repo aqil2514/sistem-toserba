@@ -76,14 +76,14 @@ export class PurchaseFormService {
     await Promise.all([
       this.dbService.updateData(
         TableName.PURCHASES,
-        mappedHeader,
         'id',
         oldPurchaseId,
+        mappedHeader,
       ),
       this.dbService.hardDelete(
         this.itemTableName[mappedHeader.purchase_type],
-        oldPurchaseId,
         'purchase_id',
+        oldPurchaseId,
       ),
     ]);
 

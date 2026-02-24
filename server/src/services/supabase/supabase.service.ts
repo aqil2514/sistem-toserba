@@ -9,7 +9,7 @@ export class SupabaseRepositoryService {
     private readonly supabase: SupabaseClient,
   ) {}
 
-  async createNewData(tableName: TableName, payload: any) {
+  async createNewData<T extends object>(tableName: TableName, payload: T) {
     const { error } = await this.supabase.from(tableName).insert(payload);
 
     if (error) {
@@ -18,9 +18,9 @@ export class SupabaseRepositoryService {
     }
   }
 
-  async createNewDataAndSelectId(
+  async createNewDataAndSelectId<T extends object>(
     tableName: TableName,
-    payload: any,
+    payload: T,
     idColumn: string = 'id',
   ): Promise<string> {
     const { data, error } = await this.supabase
@@ -39,11 +39,11 @@ export class SupabaseRepositoryService {
     return data[idColumn];
   }
 
-  async updateData(
+  async updateData<T extends object>(
     tableName: TableName,
-    payload: any,
     columnValue: string,
     cellValue: string,
+    payload: Partial<T>,
   ) {
     const { error } = await this.supabase
       .from(tableName)
@@ -58,14 +58,14 @@ export class SupabaseRepositoryService {
 
   async softDelete(
     tableName: TableName,
-    columnName: string,
-    rowId: string,
+    columnValue: string,
+    cellValue: string,
     deleteColumnName: string = 'deleted_at',
   ) {
     const { error } = await this.supabase
       .from(tableName)
       .update({ [deleteColumnName]: new Date().toISOString() })
-      .eq(columnName, rowId);
+      .eq(columnValue, cellValue);
 
     if (error) {
       console.error(error);
@@ -75,8 +75,8 @@ export class SupabaseRepositoryService {
 
   async hardDelete(
     tableName: TableName,
+    columnValue: string,
     cellValue: string,
-    columnValue: string = 'id',
   ) {
     const { error } = await this.supabase
       .from(tableName)
