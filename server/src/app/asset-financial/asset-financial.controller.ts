@@ -5,6 +5,8 @@ import { Roles } from '../../decorator/roles.decorator';
 import { AssetFinancialFetchService } from './services/asset-financial-fetch.service';
 import { BasicQuery } from '../../@types/general';
 
+@UseGuards(PasetoGuard, RoleGuard)
+@Roles('admin')
 @Controller('asset-financial')
 export class AssetFinancialController {
   constructor(
@@ -12,9 +14,7 @@ export class AssetFinancialController {
   ) {}
 
   @Get('summary')
-  @UseGuards(PasetoGuard, RoleGuard)
-  @Roles('admin')
-  async getAssetSummary(@Query() query:BasicQuery) {
+  async getAssetSummary(@Query() query: BasicQuery) {
     return await this.assetFinancialFetchService.getSummaryAsset(query);
   }
 }

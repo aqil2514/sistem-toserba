@@ -1,4 +1,4 @@
-import { Activity, CupSoda, LayoutDashboard } from "lucide-react";
+import { Activity, CupSoda, LayoutDashboard, Store } from "lucide-react";
 import { NavItemsTypes, RouteItems } from "../types/nav-items.interface";
 
 const NAV_ITEMS: RouteItems[] = [
@@ -13,6 +13,12 @@ const NAV_ITEMS: RouteItems[] = [
     href: "/products",
     description: "Daftar produk yang dijual",
     icon: CupSoda,
+  },
+  {
+    title: "Aset Fisik",
+    href: "/assets",
+    description: "Daftar Aset yang dimiliki oleh warung saat ini",
+    icon: Store,
   },
   {
     title: "Aktivitas",

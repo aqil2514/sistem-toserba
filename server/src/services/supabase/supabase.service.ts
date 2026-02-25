@@ -1,6 +1,8 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { TableName } from './enums/table-name.enum';
+import { GetOption } from './interfaces/get-option.interface';
+import { isNull } from 'util';
 
 @Injectable()
 export class SupabaseRepositoryService {
@@ -8,6 +10,23 @@ export class SupabaseRepositoryService {
     @Inject('SUPABASE_CLIENT')
     private readonly supabase: SupabaseClient,
   ) {}
+
+  async getAllData<T = unknown>(options: GetOption): Promise<T[]> {
+    const { tableName, deletedColumn, select } = options;
+    let client = this.supabase.from(tableName).select(select);
+
+    if (deletedColumn) {
+      client = client.is(deletedColumn, null);
+    }
+
+    const { data, error } = await client;
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+
+    return (data ?? []) as T[];
+  }
 
   async createNewData<T extends object>(tableName: TableName, payload: T) {
     const { error } = await this.supabase.from(tableName).insert(payload);

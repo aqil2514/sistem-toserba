@@ -1,3 +1,5 @@
+import { Purchase, PurchaseStatus } from '../purchase.interface';
+
 export interface PurchaseAssetsDb {
   id: string;
   purchase_id: string;
@@ -8,6 +10,18 @@ export interface PurchaseAssetsDb {
   condition: string;
   created_at: string;
   deleted_at: string;
+}
+
+export interface PurchaseAssetsDbPopulated extends Omit<
+  PurchaseAssetsDb,
+  'purchase_id'
+> {
+  purchase: string;
+  purchase_date: string;
+  notes: string;
+  purchase_code: string;
+  purchase_status: PurchaseStatus;
+  supplier_type: string;
 }
 
 export type PurchaseAssetsDbInsert = Omit<

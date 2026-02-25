@@ -17,6 +17,7 @@ import { BasicQueryModule } from '../services/query/query.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PusherModule } from '../services/pusher/pusher.module';
 import { RealtimeModule } from '../services/realtime/realtime.module';
+import { AssetsModule } from './assets/assets.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { RealtimeModule } from '../services/realtime/realtime.module';
     CashCounterModule,
     ActivityModule,
     DashboardModule,
+    AssetsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
