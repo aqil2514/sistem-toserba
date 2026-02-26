@@ -11,11 +11,13 @@ import { PurchaseDetailReturn } from "@/features/purchase/types/purchase-api.typ
 import { api } from "@/lib/api";
 import { toast } from "sonner";
 import { isAxiosError } from "axios";
+import { useWindow } from "@/hooks/use-window";
 
 export function PurchaseEditDialog() {
   const { mutate } = usePurchase();
 
   const { get, update } = useQueryParams();
+  const { postNewMessage } = useWindow();
 
   const open = get("action") === "edit";
   const id = get("id");
@@ -33,6 +35,13 @@ export function PurchaseEditDialog() {
   const submitHandler = async (values: PurchaseFormValues) => {
     try {
       await api.put(`/purchase/${id}`, values);
+      if (window.opener) {
+        postNewMessage(window.opener, "EDIT_ASSET_SUCCESS");
+        window.close()
+
+        return;
+      }
+
       toast.success("Edit Data Pembelian Berhasil");
       mutate?.();
       update({

@@ -5,6 +5,7 @@ import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
 import { ColumnDef } from "@tanstack/react-table";
 import { AssetConditionCell } from "./asset-condition-cell";
+import { AssetMenuRow } from "./assets-menu-rows";
 
 
 
@@ -43,5 +44,10 @@ export const assetsColumnDef: ColumnDef<PurchaseAssetsDbPopulated>[] = [
     accessorKey: "condition",
     header: "Kondisi",
     cell: ({ row }) => <AssetConditionCell row={row} />,
+  },
+  {
+    accessorKey: "action",
+    header: "Aksi",
+    cell: ({ row }) => <AssetMenuRow row={row} />,
   },
 ];
