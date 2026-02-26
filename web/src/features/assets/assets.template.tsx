@@ -8,6 +8,7 @@ import { HeaderWithMutate } from "@/components/organisms/header/header-with-muta
 import { DataTable } from "@/components/organisms/custom-data-table/core-table";
 import { assetsColumnDef } from "./columns/assets-columns";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { AssetSummary } from "./components/summary.assets";
 
 interface Props {
   mode: TemplateMode;
@@ -30,6 +31,7 @@ const InnerTemplate = () => {
     <MainContainer>
       <SectionContainer>
         <HeaderWithMutate title="Daftar Aset" mutate={mutate} />
+        <AssetSummary />
         {isLoading ? <LoadingSpinner /> : <DataTable columns={assetsColumnDef} data={data ?? []}  />}
       </SectionContainer>
     </MainContainer>

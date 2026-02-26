@@ -1,20 +1,12 @@
 import {
-  PurchaseAssetsCondition,
   PurchaseAssetsDbPopulated,
 } from "@/features/purchase/types/items/purchase-assets.interface";
 import { formatDate } from "@/utils/format-date.fns";
 import { formatRupiah } from "@/utils/format-to-rupiah";
-import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
+import { AssetConditionCell } from "./asset-condition-cell";
 
-const conditionConfig: Record<
-  PurchaseAssetsCondition,
-  { label: string; variant: "default" | "secondary" | "destructive" }
-> = {
-  new: { label: "Baru", variant: "default" },
-  second: { label: "Bekas", variant: "secondary" },
-  damaged: { label: "Rusak", variant: "destructive" },
-};
+
 
 export const assetsColumnDef: ColumnDef<PurchaseAssetsDbPopulated>[] = [
   {
@@ -50,10 +42,6 @@ export const assetsColumnDef: ColumnDef<PurchaseAssetsDbPopulated>[] = [
   {
     accessorKey: "condition",
     header: "Kondisi",
-    cell: ({ getValue }) => {
-      const condition = getValue<PurchaseAssetsCondition>();
-      const { label, variant } = conditionConfig[condition];
-      return <Badge variant={variant}>{label}</Badge>;
-    },
+    cell: ({ row }) => <AssetConditionCell row={row} />,
   },
 ];

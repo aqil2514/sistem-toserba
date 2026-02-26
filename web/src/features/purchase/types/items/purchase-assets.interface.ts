@@ -14,10 +14,7 @@ export interface PurchaseAssetsDb {
   deleted_at: string;
 }
 
-export interface PurchaseAssetsDbPopulated extends Omit<
-  PurchaseAssetsDb,
-  "purchase_id"
-> {
+export interface PurchaseAssetsDbPopulated extends PurchaseAssetsDb{
   purchase: {
     supplier_name:string;
     purchase_date: string;

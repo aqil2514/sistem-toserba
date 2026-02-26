@@ -17,4 +17,10 @@ export class AssetsService {
 
     return assets;
   }
+
+  async updateAssetCondition(id: string, newCondition: string) {
+    await this.supabase.updateData(TableName.PURCHASE_ASSETS, 'id', id, {
+      condition: newCondition,
+    });
+  }
 }

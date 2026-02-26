@@ -64,10 +64,15 @@ export class SupabaseRepositoryService {
     cellValue: string,
     payload: Partial<T>,
   ) {
+    console.log(tableName)
+    console.log(columnValue)
+    console.log(cellValue)
+    console.log(payload)
     const { error } = await this.supabase
       .from(tableName)
       .update(payload)
       .eq(columnValue, cellValue);
+
 
     if (error) {
       console.error(error);
